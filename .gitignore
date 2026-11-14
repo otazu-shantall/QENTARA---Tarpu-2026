@@ -1,0 +1,22 @@
+# Dependencias y compilados
+node_modules/
+dist/
+*.tsbuildinfo
+.npm-cache/
+__pycache__/
+*.pyc
+.venv/
+
+# Resultados de pruebas y temporales
+test-results/
+tmp/
+
+# Archivos pesados o locales
+*.rar
+*.zip
+.claude/settings.local.json
+
+# Claves y configuración privada: nunca al repositorio
+.env
+.env.*
+*.local.txt
