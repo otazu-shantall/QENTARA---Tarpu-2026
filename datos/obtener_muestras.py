@@ -14,7 +14,7 @@ Uso (desde la raíz del repositorio; este archivo va en datos/):
     python datos/obtener_muestras.py                 # todo
     python datos/obtener_muestras.py --ver           # solo muestra los comandos
     python datos/obtener_muestras.py --fuentes power soilgrids
-    python datos/obtener_muestras.py --fuentes ndvi --puntos chivay
+    python datos/obtener_muestras.py --fuentes ndvi --puntos majes_riego
 
 Notas:
 - Solo usa la biblioteca estándar de Python. No necesita cuenta ni clave.
@@ -31,8 +31,10 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 
+# Majes: el punto anterior (-16.351, -72.190) cae en el casco urbano y no describe
+# parcelas; se usa un punto sobre campos de riego (comprobado en vista satélite).
 PUNTOS = {
-    'majes': {'lat': '-16.351', 'lon': '-72.190'},
+    'majes_riego': {'lat': '-16.367023', 'lon': '-72.185771'},
     'chivay': {'lat': '-15.64', 'lon': '-71.60'},
 }
 
