@@ -35,7 +35,7 @@
 | Borradores de la entrega | 🟡 | `entrega/` | Formulario en inglés, guion, referencias y registro de IA, por completar. |
 | Backend, base de datos, autenticación | ❌ | — | Solo propuestos (SUP-015, SUP-026). |
 | Motor agronómico | ❌ | — | Reglas y pesos solo propuestos (SUP-018, SUP-019). |
-| Repositorio git | ❌ | — | La carpeta no es un repositorio. Hay `.gitignore` listo; falta inicializarlo y publicarlo (el enlace de la entrega debe ser público). |
+| Repositorio git | ✅ | [https://github.com/otazu-shantall/QENTARA---Tarpu-2026](https://github.com/otazu-shantall/QENTARA---Tarpu-2026) | Publicado el 14/11/2026, rama `main`. Falta confirmar que sea público y elegir la licencia. |
 
 ## Para retomar
 

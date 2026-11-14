@@ -67,7 +67,7 @@ Cada área trabaja **solo en su carpeta**. Así nadie pisa el trabajo de otro.
 
 Para unir: se abre un *pull request* hacia `main`, lo mira otra persona y se fusiona. Si dos áreas necesitan cambiar el mismo archivo, se avisan antes.
 
-> La carpeta **todavía no es un repositorio de git**. Falta inicializarlo y subirlo a GitHub. El enlace al proyecto final de la entrega debe ser público.
+> Repositorio: **[https://github.com/otazu-shantall/QENTARA---Tarpu-2026](https://github.com/otazu-shantall/QENTARA---Tarpu-2026)**. Para empezar: `git clone https://github.com/otazu-shantall/QENTARA---Tarpu-2026.git` y luego `git checkout -b <area>/<tema>`. El enlace al proyecto final de la entrega debe ser público.
 
 ## Reglas comunes
 

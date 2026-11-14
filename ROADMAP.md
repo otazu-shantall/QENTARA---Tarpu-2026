@@ -23,7 +23,8 @@ Derecho B → pitch e investigación      · repartir de nuevo
 
 - [ ] Leer este roadmap y la guía de tu área.
 - [ ] Revisar que estás registrado en el **mismo evento local** que el resto y que apareces en *Members* del equipo.
-- [ ] Erick: inicializar git y publicar el repositorio, para que cada uno trabaje en su rama (`datos/…`, `frontend/…`, `backend/…`, `entrega/…`).
+- [x] Repositorio publicado: [https://github.com/otazu-shantall/QENTARA---Tarpu-2026](https://github.com/otazu-shantall/QENTARA---Tarpu-2026).
+- [ ] Clonarlo (`git clone https://github.com/otazu-shantall/QENTARA---Tarpu-2026.git`) y crear tu rama: `datos/…`, `frontend/…`, `backend/…` o `entrega/…`.
 - [ ] Cada uno abre su **plantilla de propuesta** (enlace en su sección) y la va llenando durante la fase 1.
 
 ---
