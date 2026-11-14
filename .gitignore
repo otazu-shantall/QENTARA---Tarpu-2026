@@ -15,6 +15,7 @@ tmp/
 *.rar
 *.zip
 .claude/settings.local.json
+datos/ndvi/cache/
 
 # Claves y configuración privada: nunca al repositorio
 .env
