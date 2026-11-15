@@ -44,6 +44,8 @@ La IA no debe usarse para idear la solución. La idea, el alcance y los límites
 | 15/11/2026 | Erick | Claude Code | Guía única de Derecho en PDF (entrega, pitch, video y documentación), documento del esquema mixto (DT-22) y alineación de la documentación | `entrega/Guia_Derecho_Entrega_y_Pitch.pdf`, `docs/11-esquema-mixto.md`, `docs/` | ✅ en el pie de cada página y en los metadatos del PDF; en el encabezado de docs/11 |
 | 15/11/2026 | Erick | Claude Code | Guía para lanzar las extracciones y retomar tras un corte; descargas atómicas y reintentos en `pesados.py` | `trabajo/README.md`, `trabajo/extraccion_pesada/pesados.py` | ✅ en el encabezado |
 | 15/11/2026 | Erick | Claude Code | Fichas EcoCrop de forrajes, regla de cultivos por sector (generador y catálogo), métodos citados (Kc, LS, textura, rotación, beneficios) y decisiones DT-19 a DT-21 | `backend/investigacion/`, `backend/catalogo/sectores.json`, `backend/herramientas/generar_sectores.py`, `docs/06` | ✅ en el encabezado del script y en la descripción de los JSON |
+| 15/11/2026 | Damaris | Claude Code | T03, modelo lógico de los datos del esquema mixto: entidades, identificación de celdas, vacíos, procedencia y diagrama | `trabajo/T03-modelado-datos/modelo-logico.md` | ✅ en el encabezado |
+| 15/11/2026 | Damaris | Claude Code | T03, agregaciones de la pantalla 5: método citado, celdas, período y vacíos de cada indicador | `trabajo/T03-modelado-datos/agregaciones.md` | ✅ en el encabezado |
 | | | | | | |
 
 ## Pendientes
