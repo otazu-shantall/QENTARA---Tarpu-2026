@@ -33,6 +33,9 @@ La IA no debe usarse para idear la solución. La idea, el alcance y los límites
 | 14/11/2026 | Erick | Claude Code | Código del backend (API, motor, agente, exportación) y sus pruebas | `backend/tarpu_api/`, `backend/tests/` | ✅ en el encabezado de cada archivo |
 | 15/11/2026 | Erick | Claude Code | Investigación de fuentes, sectores y cultivos (datos reunidos de EcoCrop, INEI, GAEZ y POWER) y script de prueba de Earthdata | `backend/investigacion/`, `backend/herramientas/prueba_earthdata.py`, `prueba_earthdata_area.py` y `redatam_cenagro.py`, `docs/tareas/T01-paquete-extraccion.md`, `backend/PLAN-*.md` | ✅ en el encabezado del script y en la descripción del JSON |
 | 15/11/2026 | Damaris | Claude Code | Paquete de extracción `tarpu_datos` (NASA POWER, SoilGrids por WCS, FAO GAEZ, horas de luz FAO-56 y MODIS por ORNL), sus comprobaciones y las notas técnicas de T01 | `trabajo/T01-paquete-extraccion/tarpu_datos/`, `trabajo/T01-paquete-extraccion/README.md` (§9) | ✅ en el encabezado de cada archivo y en la §9 |
+| 15/11/2026 | Erick | Claude Code | Scripts de extracción pesada de AppEEARS (NASADEM, HLS, SMAP, imágenes de Chivay) y diagnóstico de la prueba por área | `trabajo/extraccion_pesada/` | ✅ en el encabezado del script y del README |
+| 15/11/2026 | Erick | Claude Code | Guía para lanzar las extracciones y retomar tras un corte; descargas atómicas y reintentos en `pesados.py` | `trabajo/README.md`, `trabajo/extraccion_pesada/pesados.py` | ✅ en el encabezado |
+| 15/11/2026 | Erick | Claude Code | Fichas EcoCrop de forrajes, regla de cultivos por sector (generador y catálogo), métodos citados (Kc, LS, textura, rotación, beneficios) y decisiones DT-19 a DT-21 | `backend/investigacion/`, `backend/catalogo/sectores.json`, `backend/herramientas/generar_sectores.py`, `docs/06` | ✅ en el encabezado del script y en la descripción de los JSON |
 | | | | | | |
 
 ## Pendientes

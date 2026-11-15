@@ -20,12 +20,13 @@ Todo lo del backend está en esta carpeta; [README.md](README.md) es el índice.
 ## Reglas
 
 - **Estado:** el código existe en `tarpu_api/` y tiene pruebas en `tests/`. Antes de cambiar algo, ejecuta `.venv/Scripts/python -m pytest` desde `backend/`, y vuelve a ejecutarlo después. Si cambias un módulo, actualiza [MODULOS.md](MODULOS.md) y, si cambia una conexión, [DISENO.md](DISENO.md).
-- **Fuentes (DT-17):** solo NASA POWER, NDVI de MODIS (ORNL) y SoilGrids, consultadas en el centroide. No añadas otra fuente sin una decisión nueva en `../docs/06`.
+- **Fuentes (DT-19, reemplaza DT-17):** POWER (19 variables), SoilGrids WCS, FAO GAEZ, MODIS de ORNL (NDVI, ET, LST, cobertura), NASADEM, HLS y SMAP (AppEEARS, bajados una vez) y el IV CENAGRO 2012. Cultivos por sector: DT-20 (`catalogo/sectores.json`). Métodos citados: `investigacion/metodos_citados_2026-11-15.json`. No añadas otra fuente sin una decisión nueva en `../docs/06`.
 - **Capas:** API → lógica → núcleo → apoyo; nada importa hacia arriba (`tests/test_capas.py` lo comprueba).
 - **Stack decidido para el hackathon:**
   - DT-13: Python 3.13, FastAPI y Pydantic v2, sin base de datos; las rutas `GET` se exportan a JSON estático en `Codigo/public/api/` con `exportar.py`.
   - DT-14: agente guiado con plantillas y datos reales, **sin modelo de IA**.
-  - DT-15: publicación en Vercel o Netlify.
+  - DT-15: publicación en Vercel o Netlify (sitio estático).
+  - DT-21: **la API no se publica**; FastAPI solo corre en local para generar los JSON.
   - No añadas otro framework ni una base de datos sin una decisión nueva en `../docs/06`.
 - **DT-16, cero supuestos (la regla más importante):**
   - todo valor que devuelva el backend viene de una fuente real, con su procedencia, o lo declaró el usuario (`origen: "declarado"`);

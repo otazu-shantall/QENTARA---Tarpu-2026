@@ -45,7 +45,7 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 
 **Preguntas que debes responder:**
 
-1. ¿Qué fuentes entran en la demo? **Decidido (DT-17):** solo NASA POWER, el NDVI de MODIS y SoilGrids.
+1. ¿Qué fuentes entran en la demo? **Decidido (DT-19, reemplaza DT-17):** POWER, SoilGrids, GAEZ, MODIS (ORNL), NASADEM, HLS, SMAP y el censo agropecuario 2012.
 2. Para cada una: ¿cómo se pide?, ¿qué devuelve?, ¿en qué unidades?, ¿con qué resolución?, ¿cómo vienen los faltantes?
 3. ¿Qué nos dice cada dato sobre **las rotaciones**? Por ejemplo, épocas sin cultivo, heladas, falta de agua o pendiente.
 4. ¿Hay diferencia entre la **costa** (Majes) y la **sierra** (Chivay)? ¿Cuál usamos en la demo?

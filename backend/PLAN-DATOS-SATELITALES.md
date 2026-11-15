@@ -1,6 +1,6 @@
 # Plan de datos satelitales de TARPU (versión 2)
 
-> Área de **Erick**, 14/11/2026. **Propuesta para aprobar**: si se aprueba, reemplaza DT-17 con una decisión nueva en `docs/06`. Nada está implementado.
+> Área de **Erick**, 14/11/2026. **Aprobado el 15/11/2026 como DT-19** (reemplaza DT-17; ver `docs/06`). ECOSTRESS queda fuera. Extracción: T01 y `trabajo/extraccion_pesada/`.
 >
 > **Medido** = comprobado con peticiones reales el 14/11/2026, en el punto de Majes riego (−16,367023; −72,185771) o en el de Chivay (−15,64; −71,60). **Pendiente** = sin comprobar.
 >

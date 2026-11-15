@@ -108,7 +108,7 @@ Detalle en [ROADMAP.md](../ROADMAP.md).
 Detalle en [backend/DISENO.md](../backend/DISENO.md).
 
 ### DT-17 · Solo tres fuentes de datos en la demo
-**Tomada · 14/11/2026 (Erick).** La demo usa **solo**:
+**Reemplazada por DT-19 el 15/11/2026.** Tomada el 14/11/2026 (Erick). La demo usa **solo**:
 
 | Fuente | Qué da | Escala | Acceso |
 |---|---|---|---|
@@ -131,12 +131,47 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 | **S2 · Valles interandinos** | Quechua | 2300–3500 m |
 | **S3 · Altoandino** | Suni + Puna | 3500–4800 m |
 
-- **Límites:** los de las regiones naturales de Javier Pulgar Vidal. **Pendiente:** verificarlos en la obra original (se consultó una fuente secundaria).
+- **Límites:** los de las regiones naturales de Javier Pulgar Vidal. **Comprobados el 15/11/2026** con la variable de piso del censo agropecuario del INEI (ver DT-20).
 - **Qué define cada sector:** las variables que se muestran primero, las fuentes lentas que se piden y el orden de los criterios al comparar cultivos (orden, no pesos).
 - **Uso interno:** el usuario ve un mapa normal; los sectores no se muestran como capa.
 - **Ampliación:** la misma lógica servirá después para todo el Perú. Hará falta añadir las regiones de selva de Pulgar Vidal.
 - **Evidencia:** la climatología regional de NASA POWER (2001–2025) muestra 0 días de helada al año por debajo de ≈ 2300 m, y de 22,8 a 319 por encima de ≈ 3500 m. Detalle en [backend/PLAN-SECTORES-AREQUIPA.md](../backend/PLAN-SECTORES-AREQUIPA.md).
 - **Cuenta de Earthdata:** la creó Erick para las fuentes que la necesitan. Las credenciales van en `backend/.env`, que git ignora; nunca en el repositorio ni en el chat.
+
+### DT-19 · Fuentes y variables de la demo (reemplaza DT-17)
+**Tomada · 15/11/2026 (Erick).** DT-17 se quedaba corta. La demo usa estas fuentes, todas medidas con peticiones reales en Majes riego y Chivay (detalle en [backend/PLAN-DATOS-SATELITALES.md](../backend/PLAN-DATOS-SATELITALES.md)):
+
+| Fuente | Variables | Escala | Acceso | Quién la baja |
+|---|---|---|---|---|
+| **NASA POWER** (diaria, comunidad AG) | 19: `T2M`, `T2M_MAX`, `T2M_MIN`, `T2M_RANGE`, `PRECTOTCORR`, `RH2M`, `T2MDEW`, `FROST_DAYS`, `ALLSKY_SFC_SW_DWN`, `ALLSKY_SFC_PAR_TOT`, `CLOUD_AMT`, `WS2M`, `GWETTOP`, `GWETROOT`, `GWETPROF`, `TSOIL1`, `TSOIL2`, `TS_MIN`, `EVLAND` | ≈ 55 × 67 km | Sin cuenta | T01 |
+| **SoilGrids** (WCS) | `phh2o`, `clay`, `sand`, `silt`, `soc`, `nitrogen`, `cec`, `bdod`, `cfvo`, `wv0033`, `wv1500`; 0–5, 5–15 y 15–30 cm; media, Q0,05 y Q0,95 | 250 m | Sin cuenta | T01 |
+| **FAO GAEZ v4** | Índice de aptitud de papa y cebada (riego, gravedad, secano), 1981–2010 | ≈ 9 km | Sin cuenta | T01 |
+| **MODIS** (ORNL) | `MOD13Q1` NDVI y confiabilidad; `MOD16A2GF` ET y PET; `MOD11A2` temperatura de superficie de día y de noche; `MCD12Q1` cobertura `LC_Type1` | 250 m a 1 km | Sin cuenta | T01 |
+| **NASADEM** (AppEEARS) | Altitud; pendiente calculada (método de Horn, clases FAO 2006) | 30 m | Cuenta Earthdata | `trabajo/extraccion_pesada/` |
+| **HLS** L30 y S30 (AppEEARS) | NDVI por punto; imágenes de Chivay | 30 m | Cuenta Earthdata | `trabajo/extraccion_pesada/` |
+| **SMAP** L3E y L4 (AppEEARS) | Humedad del suelo (L3 observada; L4 superficie y raíz, modelada) | 9 km | Cuenta Earthdata | `trabajo/extraccion_pesada/` |
+| **IV CENAGRO 2012** (INEI) | Superficie sembrada por cultivo y piso altitudinal; meses de siembra | Unidad agropecuaria | Sin cuenta | Hecho (`backend/investigacion/`) |
+
+**Métodos con cita** (en `backend/investigacion/`): horas de luz (FAO-56), factor K del suelo (EPIC, Sharpley y Williams 1990, ec. 2.96), factor LS (USLE, Wischmeier y Smith 1978, válido solo en pendientes de 3 a 18 %), Kc del cultivo (FAO-56, Tabla 12), rotación de sierra (SENASA, guía BPA de haba).
+
+**Fuera:** ECOSTRESS (2 pasadas en Majes y 1 en Chivay en tres meses: demasiado irregular), `IMERG_PRECTOT` y `RZMC` de POWER (vacíos), MCD12Q2 (vacío), GLDAS por Data Rods (servicio que se da de baja).
+
+**Consecuencias:** se necesita la cuenta de Earthdata solo para NASADEM, HLS y SMAP; esos datos se bajan una vez para los lugares de ejemplo y se guardan (no en vivo). Lo demás sigue consultándose en el centroide de la parcela, con la escala de cada dato a la vista.
+
+### DT-20 · Qué cultivos muestra TARPU en cada sector
+**Tomada · 15/11/2026 (Erick).** En cada sector (DT-18) se ordenan las especies por **superficie sembrada en el IV CENAGRO 2012**, sumando los nombres del censo que son la misma especie de EcoCrop (p. ej., maíz amiláceo, chala y choclo son *Zea mays*). Se muestran primero **las 8 con más superficie que tengan ficha de EcoCrop**; las demás con ficha van a **«ver más»**.
+
+- Las asociaciones del censo («Haba-Maíz») y los nombres sin especie identificable no se evalúan y se listan aparte.
+- «Rye grass» no dice la especie: el usuario la declara (*Lolium perenne* o *L. multiflorum*).
+- El orden es por superficie de 2012, **no un puntaje**: no dice qué cultivo es mejor.
+- Resultado en `backend/catalogo/sectores.json` (lo genera `backend/herramientas/generar_sectores.py`):
+  - **S1:** alfalfa, arroz, maíz, tuna, olivo, cebolla, papa, ajo.
+  - **S2:** alfalfa, maíz, papa, arveja, orégano, haba, cebolla, tuna.
+  - **S3:** alfalfa, papa, cebada, maíz, haba, avena, olluco, arveja.
+- **Límites de los pisos:** la variable `WPISO` del censo (INEI, *Guía estadística del IV CENAGRO*). En los microdatos de Arequipa, los rangos de altitud por piso coinciden con los de Pulgar Vidal (Quechua 2301–3500 m; Suni 3501–4000 m). Esto cierra el pendiente de DT-18.
+
+### DT-21 · La API no se publica
+**Tomada · 15/11/2026 (Erick).** No se aloja la API en ningún servidor ni se ofrece como servicio. FastAPI se usa solo en local para generar los JSON (DT-13). La demo pública es el sitio estático (DT-15), que **muestra los datos y permite descargarlos** (CSV, JSON y PDF). Sin servidor no hay claves que proteger en producción ni costos de alojamiento. Consultar una parcela nueva en vivo queda para después de la hackathon.
 
 ## Riesgos
 

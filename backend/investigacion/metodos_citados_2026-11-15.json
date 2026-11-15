@@ -1,0 +1,77 @@
+{
+ "descripcion": "Métodos y valores con cita para el motor de TARPU (rotación de costa, beneficios, agua del cultivo, factor LS y textura). Investigado el 15/11/2026. Solo se copia lo que la fuente dice; lo que no se pudo leer queda en 'pendiente'. Escrito con asistencia de IA (Claude Code), declarado en entrega/uso-de-ia.md.",
+ "agua_del_cultivo_fao56": {
+  "fuente": "Allen, Pereira, Raes y Smith (1998). Crop evapotranspiration. FAO Irrigation and Drainage Paper 56, cap. 6, Tabla 12. https://www.fao.org/4/x0490e/x0490e0b.htm",
+  "titulo_tabla": "TABLE 12. Single (time-averaged) crop coefficients, Kc, and mean maximum plant heights for non stressed, well-managed crops in subhumid climates (RHmin ≈ 45%, u2 ≈ 2 m/s) for use with the FAO Penman-Monteith ETo.",
+  "uso": "ETc = Kc × ETo. ETo se calcula con Penman-Monteith (FAO-56, ec. 6) a partir de POWER (T2M_MAX, T2M_MIN, RH2M, WS2M, ALLSKY_SFC_SW_DWN). Los Kc son de clima subhúmedo; en clima árido, Kc mid y Kc end se ajustan con las ecuaciones 62 y 65 (u2 y RHmin), que en la web están como imagen.",
+  "kc": {
+   "papa":        {"fila": "Potato", "kc_mid": 1.15, "kc_end": 0.75, "altura_m": 0.6, "nota": "nota 4: Kc end ≈ 0,40 en ciclos largos con desecado del follaje"},
+   "cebada":      {"fila": "Barley", "kc_mid": 1.15, "kc_end": 0.25, "altura_m": 1},
+   "avena":       {"fila": "Oats", "kc_mid": 1.15, "kc_end": 0.25, "altura_m": 1},
+   "trigo":       {"fila": "Spring Wheat", "kc_mid": 1.15, "kc_end": "0.25-0.4", "altura_m": 1},
+   "maiz":        {"fila": "Maize, Field (grain)", "kc_mid": 1.20, "kc_end": "0.60-0.35", "altura_m": 2},
+   "maiz_choclo": {"fila": "Maize, Sweet", "kc_mid": 1.15, "kc_end": 1.05, "altura_m": 1.5},
+   "alfalfa":     {"fila": "Alfalfa Hay, averaged cutting effects", "kc_ini": 0.40, "kc_mid": 0.95, "kc_end": 0.90, "altura_m": 0.7},
+   "cebolla":     {"fila": "Onions, dry", "kc_mid": 1.05, "kc_end": 0.75, "altura_m": 0.4},
+   "ajo":         {"fila": "Garlic", "kc_mid": 1.00, "kc_end": 0.70, "altura_m": 0.3},
+   "zanahoria":   {"fila": "Carrots", "kc_mid": 1.05, "kc_end": 0.95, "altura_m": 0.3},
+   "arveja":      {"fila": "Peas, Fresh", "kc_ini": 0.5, "kc_mid": 1.15, "kc_end": 1.10, "altura_m": 0.5},
+   "frijol":      {"fila": "Beans, dry and pulses", "kc_ini": 0.4, "kc_mid": 1.15, "kc_end": 0.35, "altura_m": 0.4},
+   "haba":        {"fila": "Fababean (broad bean), Dry/Seed", "kc_ini": 0.5, "kc_mid": 1.15, "kc_end": 0.30, "altura_m": 0.8},
+   "arroz":       {"fila": "Rice", "kc_ini": 1.05, "kc_mid": 1.20, "kc_end": "0.90-0.60", "altura_m": 1},
+   "olivo":       {"fila": "Olives (40 to 60% ground coverage by canopy)", "kc_ini": 0.65, "kc_mid": 0.70, "kc_end": 0.70, "altura_m": "3-5"},
+   "vid":         {"fila": "Grapes, Table or Raisin", "kc_ini": 0.30, "kc_mid": 0.85, "kc_end": 0.45, "altura_m": 2},
+   "cana_de_azucar": {"fila": "Sugar Cane", "kc_ini": 0.40, "kc_mid": 1.25, "kc_end": 0.75, "altura_m": 3},
+   "tomate":      {"fila": "Tomato", "kc_mid": 1.15, "kc_end": "0.70-0.90", "altura_m": 0.6},
+   "zapallo":     {"fila": "Pumpkin, Winter Squash", "kc_mid": 1.00, "kc_end": 0.80, "altura_m": 0.4},
+   "alcachofa":   {"fila": "Artichokes", "kc_ini": 0.5, "kc_mid": 1.00, "kc_end": 0.95, "altura_m": 0.7},
+   "camote":      {"fila": "Sweet Potato", "kc_mid": 1.15, "kc_end": 0.65, "altura_m": 0.4},
+   "algodon":     {"fila": "Cotton", "kc_mid": "1.15-1.20", "kc_end": "0.70-0.50", "altura_m": "1.2-1.5"},
+   "paprika":     {"fila": "Sweet Peppers (bell)", "kc_mid": 1.05, "kc_end": 0.90, "altura_m": 0.7, "nota": "fila de pimiento; páprika es Capsicum annuum, la misma especie"},
+   "palta":       {"fila": "Avocado, no ground cover", "kc_ini": 0.60, "kc_mid": 0.85, "kc_end": 0.75, "altura_m": 3},
+   "rye_grass":   {"fila": "Rye Grass hay, averaged cutting effects", "kc_ini": 0.95, "kc_mid": 1.05, "kc_end": 1.00, "altura_m": 0.3}
+  },
+  "sin_fila_en_la_tabla": ["quinua", "tuna", "oca", "olluco", "mashua", "kiwicha", "canihua", "oregano", "dactylis"],
+  "pendiente": [
+   "El Kc ini de la mayoría de filas está como imagen en la web (x0490e2a.gif): leerlo del PDF de FAO-56.",
+   "Las ecuaciones 62 y 65 (ajuste por clima) están como imagen: copiarlas del PDF antes de usarlas.",
+   "Duración de etapas (Tabla 11): FAO dice que es solo una guía general; no hay filas para Perú ni los Andes."
+  ]
+ },
+ "factor_ls": {
+  "fuente": "Wischmeier y Smith (1978). Predicting Rainfall Erosion Losses. USDA Agriculture Handbook 537, p. 12-15 y apéndice métrico. https://www.ars.usda.gov/ARSUserFiles/60600505/RUSLE/AH_537%20Predicting%20Rainfall%20Soil%20Losses.pdf",
+  "ecuacion": "LS = (λ/72,6)^m · (65,41 sin²θ + 4,56 sinθ + 0,065), con λ en pies; en metros, λ/22,1 (72,6 pies = 22,1 m)",
+  "exponente_m": {"pendiente >= 5 %": 0.5, "3,5 a 4,5 %": 0.4, "1 a 3 %": 0.3, "< 1 %": 0.2},
+  "longitud_de_pendiente": "Distancia desde el origen del escurrimiento hasta donde empieza la deposición o el agua entra en un cauce definido (p. 15).",
+  "limite_de_validez": "La ecuación se obtuvo en tierras de cultivo con lluvia natural, en pendientes de 3 a 18 % y longitudes de unos 30 a 300 pies (≈ 9 a 91 m); fuera de ese rango no se ha comprobado con mediciones directas (p. 12).",
+  "consecuencia_para_tarpu": "En Chivay la pendiente mediana de la zona es 33 % (NASADEM, Horn): está fuera del rango validado. TARPU muestra la pendiente y su clase FAO 2006, y el LS solo donde la pendiente está entre 3 y 18 %; fuera de ese rango, 'sin regla validada'. La longitud de pendiente no sale del DEM sin un método adicional: la declara el usuario o queda sin evaluar.",
+  "reemplaza": "Lo anotado antes (Moore y Burch 1986 por un tutorial de NCSU, m 0,2-0,6 y n 1,0-1,3) se reemplaza por la fuente primaria de USLE."
+ },
+ "textura": {
+  "ecocrop": "EcoCrop clasifica la textura como 'heavy', 'medium', 'light', 'wide' u 'organic', pero sus páginas (about, home) no definen esas clases (revisado el 15/11/2026; gaez.fao.org no se pudo abrir).",
+  "soilgrids": "SoilGrids da arena, limo y arcilla (g/kg) por profundidad.",
+  "decision": "Sin una definición publicada que una las clases de EcoCrop con porcentajes, TARPU no evalúa la textura: muestra los porcentajes de SoilGrids y, aparte, lo que dice EcoCrop. Estado: sin_regla.",
+  "pendiente": "Clase textural USDA a partir de arena, limo y arcilla: copiar los límites del Soil Survey Manual (USDA Handbook 18) o de la tabla 5 del glosario de la Soil Science Society of America (https://agronomy.org/files/publications/soils-glossary/table-5.pdf) antes de mostrarla."
+ },
+ "rotacion": {
+  "sierra": {
+   "fuente": "SENASA (MIDAGRI), guía de Buenas Prácticas Agrícolas de haba, §3.5",
+   "opciones": ["papa – cebada grano – forrajes – haba", "papa – quinua – cebada grano – haba"],
+   "regla": "no sembrar haba más de 2-3 campañas seguidas"
+  },
+  "costa": {
+   "fuente": "Agraria.pe, 31/10/2013: declaraciones de Elizabeth Heros Aguilar (Departamento de Suelos, UNALM) en un simposio de la UNALM. https://www.agraria.pe/index.php/noticias/%E2%80%9Crotar-cultivos-de-arroz-por-maiz-es-inadecuado-para-recuper-5519",
+   "dice": "Rotar arroz con maíz no recupera la fertilidad porque ambos demandan mucho nitrógeno; menciona alternar arroz con menestras en la costa y la selva alta, y el barbecho.",
+   "limites": "Es una declaración en prensa, no una guía oficial; no da una secuencia para Arequipa. No se encontró una guía de INIA o MIDAGRI con una secuencia de rotación para Camaná, Majes o La Joya.",
+   "consecuencia_para_tarpu": "En S1, TARPU no propone una secuencia. Solo puede señalar, con esta cita, que arroz seguido de maíz es una sucesión de dos cultivos exigentes en nitrógeno."
+  }
+ },
+ "beneficios": {
+  "leguminosas": {
+   "dice": "Las leguminosas (haba, arveja, frijol, alfalfa) fijan nitrógeno del aire en simbiosis con Rhizobium.",
+   "fuentes": ["FAO, Plataforma de conocimientos sobre agroecología: https://www.fao.org/agroecology/database/detail/es/c/1757381", "IPS (2016), evento FAO-ICARDA sobre suelos y leguminosas: https://www.ipsnews.net/2016/04/soil-and-pulses-symbiosis-for-life/"],
+   "decision": "Las cifras de kg de N por hectárea varían mucho entre fuentes (de unos 70 a 300). TARPU muestra el beneficio sin cifra."
+  },
+  "pendiente": "Beneficios de los demás cultivos (cereales, tubérculos, forrajes): no se encontró una fuente oficial; no se muestran."
+ }
+}

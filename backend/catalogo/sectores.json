@@ -1,0 +1,1064 @@
+{
+ "descripcion": "Sectores internos de TARPU para Arequipa (DT-18) y cultivos que se muestran en cada uno (DT-20). Uso interno: el usuario ve un mapa normal.",
+ "fuentes": {
+  "pisos": "INEI, IV Censo Nacional Agropecuario 2012, Guía estadística (variable WPISO, piso altitudinal: 1 Costa o chala, 2 Yunga fluvial, 3 Quechua, 4 Suni, 5 Puna, 6 Janca, 7 Rupa Rupa, 8 Omagua, 9 Yunga marítima). http://censos1.inei.gob.pe/Cenagro/redatam/doc/Guia%20Estadistica.pdf",
+  "limites": "Regiones naturales de J. Pulgar Vidal. Comprobado con los microdatos del censo (2012.zip, registro 01, WALTITUD por WPISO, Arequipa): Costa 2–461 m; Yunga marítima 502–2299 m; Quechua 2301–3500 m; Suni 3501–4000 m; Puna 4005–4782 m; Janca 4801–5139 m.",
+  "superficie": "REDATAM IV CENAGRO del INEI (http://censos1.inei.gob.pe/Cenagro/redatam/), tabla Cultivos x Piso altitudinal, selección Dpto. Arequipa, suma de superficie sembrada (CCULTIVO.CP025), universo UNIDADAG.RESULTADO < 3 AND UNIDADAG.WP01901=1",
+  "fichas": "FAO EcoCrop (ver backend/investigacion/cultivos_arequipa_2026-11-14.json y ecocrop_forrajes_2026-11-15.json)"
+ },
+ "regla_cultivos": "Especies ordenadas por superficie sembrada en el sector (IV CENAGRO 2012), sumando los nombres del censo de una misma especie; se muestran primero las 8 con ficha EcoCrop y el resto con ficha en «ver más». Sin ficha o con especie sin declarar, no se evalúan.",
+ "advertencias": [
+  "Datos de 2012: describen dónde se sembraba entonces.",
+  "Solo se listan cultivos con 20 ha o más.",
+  "El piso altitudinal es el que asigna el INEI a la unidad agropecuaria.",
+  "La superficie es de 2012: indica dónde se sembraba entonces, no qué conviene sembrar.",
+  "Una misma ficha de EcoCrop cubre todos los usos de una especie (p. ej., maíz chala y maíz amiláceo son Zea mays).",
+  "El orden es por superficie, no un puntaje: no dice qué cultivo es mejor."
+ ],
+ "sectores": {
+  "S1": {
+   "nombre": "Costa y valles bajos",
+   "pisos_inei": {
+    "1": "Costa o chala",
+    "9": "Yunga marítima"
+   },
+   "altitud_m": [
+    0,
+    2300
+   ],
+   "principales": [
+    {
+     "clave": "alfalfa",
+     "cientifico": "Medicago sativa",
+     "ha_2012": 15690.5,
+     "nombres_censo": {
+      "Alfalfa": 15690.5
+     }
+    },
+    {
+     "clave": "arroz",
+     "cientifico": "Oryza sativa",
+     "ha_2012": 8984.5,
+     "nombres_censo": {
+      "Arroz": 8984.5
+     }
+    },
+    {
+     "clave": "maiz",
+     "cientifico": "Zea mays",
+     "ha_2012": 8081.5,
+     "nombres_censo": {
+      "Maíz chala": 6416.0,
+      "Maíz amiláceo": 111.3,
+      "Maíz choclo": 409.5,
+      "Maíz morado": 615.0,
+      "Maíz amarillo duro": 529.7
+     }
+    },
+    {
+     "clave": "tuna",
+     "cientifico": "Opuntia ficus-indica",
+     "ha_2012": 5889.0,
+     "nombres_censo": {
+      "Tuna para cochinilla": 5628.7,
+      "Tuna": 260.3
+     }
+    },
+    {
+     "clave": "olivo",
+     "cientifico": "Olea europaea",
+     "ha_2012": 4916.4,
+     "nombres_censo": {
+      "Olivo": 4916.4
+     }
+    },
+    {
+     "clave": "cebolla",
+     "cientifico": "Allium cepa",
+     "ha_2012": 3896.9,
+     "nombres_censo": {
+      "Cebolla": 3896.9
+     }
+    },
+    {
+     "clave": "papa",
+     "cientifico": "Solanum tuberosum",
+     "ha_2012": 2491.7,
+     "nombres_censo": {
+      "Papa blanca": 2465.8,
+      "Papa amarilla": 25.9
+     }
+    },
+    {
+     "clave": "ajo",
+     "cientifico": "Allium sativum",
+     "ha_2012": 2284.7,
+     "nombres_censo": {
+      "Ajo": 2284.7
+     }
+    }
+   ],
+   "ver_mas": [
+    {
+     "clave": "trigo",
+     "cientifico": "Triticum aestivum",
+     "ha_2012": 2083.7,
+     "nombres_censo": {
+      "Trigo": 2083.7
+     }
+    },
+    {
+     "clave": "palta",
+     "cientifico": "Persea americana",
+     "ha_2012": 1426.1,
+     "nombres_censo": {
+      "Palto": 1426.1
+     }
+    },
+    {
+     "clave": "cana_de_azucar",
+     "cientifico": "Saccharum officinarum",
+     "ha_2012": 1023.3,
+     "nombres_censo": {
+      "Caña de azúcar para azúcar": 959.8,
+      "Caña de azúcar para alcohol": 63.5
+     }
+    },
+    {
+     "clave": "alcachofa",
+     "cientifico": "Cynara scolymus",
+     "ha_2012": 991.9,
+     "nombres_censo": {
+      "Alcachofa": 991.9
+     }
+    },
+    {
+     "clave": "zapallo",
+     "cientifico": "Cucurbita maxima",
+     "ha_2012": 916.0,
+     "nombres_censo": {
+      "Zapallo": 916.0
+     }
+    },
+    {
+     "clave": "vid",
+     "cientifico": "Vitis vinifera",
+     "ha_2012": 852.8,
+     "nombres_censo": {
+      "Vid": 852.8
+     }
+    },
+    {
+     "clave": "paprika",
+     "cientifico": "Capsicum annuum",
+     "ha_2012": 756.0,
+     "nombres_censo": {
+      "Paprika": 756.0
+     }
+    },
+    {
+     "clave": "zanahoria",
+     "cientifico": "Daucus carota",
+     "ha_2012": 603.1,
+     "nombres_censo": {
+      "Zanahoria": 603.1
+     }
+    },
+    {
+     "clave": "frijol",
+     "cientifico": "Phaseolus vulgaris",
+     "ha_2012": 582.2,
+     "nombres_censo": {
+      "Frijol": 582.2
+     }
+    },
+    {
+     "clave": "tomate",
+     "cientifico": "Lycopersicon esculentum",
+     "ha_2012": 406.6,
+     "nombres_censo": {
+      "Tomate": 406.6
+     }
+    },
+    {
+     "clave": "arveja",
+     "cientifico": "Pisum sativum",
+     "ha_2012": 227.7,
+     "nombres_censo": {
+      "Arveja": 227.7
+     }
+    },
+    {
+     "clave": "algodon",
+     "cientifico": "Gossypium hirsutum",
+     "ha_2012": 224.9,
+     "nombres_censo": {
+      "Algodón": 224.9
+     }
+    },
+    {
+     "clave": "camote",
+     "cientifico": "Ipomoea batatas",
+     "ha_2012": 159.2,
+     "nombres_censo": {
+      "Camote": 159.2
+     }
+    },
+    {
+     "clave": "quinua",
+     "cientifico": "Chenopodium quinoa",
+     "ha_2012": 141.2,
+     "nombres_censo": {
+      "Quinua": 141.2
+     }
+    },
+    {
+     "clave": "avena",
+     "cientifico": "Avena sativa",
+     "ha_2012": 133.4,
+     "nombres_censo": {
+      "Avena forrajera": 78.4,
+      "Avena grano": 55.0
+     }
+    },
+    {
+     "clave": "haba",
+     "cientifico": "Vicia faba",
+     "ha_2012": 64.4,
+     "nombres_censo": {
+      "Haba": 64.4
+     }
+    },
+    {
+     "clave": "oregano",
+     "cientifico": "Origanum vulgare",
+     "ha_2012": 58.3,
+     "nombres_censo": {
+      "Orégano": 58.3
+     }
+    },
+    {
+     "clave": "mashua",
+     "cientifico": "Tropaeolum tuberosum",
+     "ha_2012": 56.7,
+     "nombres_censo": {
+      "Mashua": 56.7
+     }
+    },
+    {
+     "clave": "cebada",
+     "cientifico": "Hordeum vulgare",
+     "ha_2012": 38.9,
+     "nombres_censo": {
+      "Cebada grano": 28.5,
+      "Cebada forrajera": 10.4
+     }
+    },
+    {
+     "clave": "kiwicha",
+     "cientifico": "Amaranthus caudatus",
+     "ha_2012": 21.6,
+     "nombres_censo": {
+      "Kiwicha": 21.6
+     }
+    }
+   ],
+   "requiere_especie": [
+    {
+     "nombre_censo": "Rye grass",
+     "ha_2012": 57.6,
+     "fichas_posibles": [
+      "rye_grass_perenne",
+      "rye_grass_italiano"
+     ]
+    }
+   ],
+   "asociaciones_no_evaluadas": [
+    {
+     "nombre_censo": "Palto-Alfalfa",
+     "ha_2012": 75.6
+    },
+    {
+     "nombre_censo": "Olivo-Alfalfa",
+     "ha_2012": 53.0
+    },
+    {
+     "nombre_censo": "Maíz-Frijol",
+     "ha_2012": 36.4
+    },
+    {
+     "nombre_censo": "Maíz-Zapallo",
+     "ha_2012": 26.8
+    },
+    {
+     "nombre_censo": "Alfalfa-Maíz",
+     "ha_2012": 11.7
+    },
+    {
+     "nombre_censo": "Maíz-Papa",
+     "ha_2012": 4.3
+    },
+    {
+     "nombre_censo": "Haba-Maíz",
+     "ha_2012": 2.7
+    },
+    {
+     "nombre_censo": "Papa-Haba",
+     "ha_2012": 0.4
+    }
+   ],
+   "sin_ficha_ecocrop": [
+    {
+     "nombre_censo": "Vergel Fruticola",
+     "ha_2012": 631.6
+    },
+    {
+     "nombre_censo": "Aji",
+     "ha_2012": 266.1
+    },
+    {
+     "nombre_censo": "Tara",
+     "ha_2012": 232.6
+    },
+    {
+     "nombre_censo": "Chia",
+     "ha_2012": 168.6
+    },
+    {
+     "nombre_censo": "Sandia",
+     "ha_2012": 133.6
+    },
+    {
+     "nombre_censo": "Vainita",
+     "ha_2012": 129.7
+    },
+    {
+     "nombre_censo": "Apio",
+     "ha_2012": 117.9
+    },
+    {
+     "nombre_censo": "Vergel horticola",
+     "ha_2012": 102.8
+    },
+    {
+     "nombre_censo": "Beterraga",
+     "ha_2012": 95.0
+    },
+    {
+     "nombre_censo": "Lechuga",
+     "ha_2012": 88.9
+    },
+    {
+     "nombre_censo": "Poro",
+     "ha_2012": 73.2
+    },
+    {
+     "nombre_censo": "Melón",
+     "ha_2012": 72.8
+    },
+    {
+     "nombre_censo": "Mandarina",
+     "ha_2012": 70.3
+    },
+    {
+     "nombre_censo": "Perejil",
+     "ha_2012": 68.5
+    },
+    {
+     "nombre_censo": "Granado",
+     "ha_2012": 68.2
+    },
+    {
+     "nombre_censo": "Pallar",
+     "ha_2012": 54.1
+    },
+    {
+     "nombre_censo": "Peral",
+     "ha_2012": 52.7
+    },
+    {
+     "nombre_censo": "Espinaca",
+     "ha_2012": 48.0
+    },
+    {
+     "nombre_censo": "Pasto gramalote",
+     "ha_2012": 40.8
+    },
+    {
+     "nombre_censo": "Cebolla china",
+     "ha_2012": 39.0
+    },
+    {
+     "nombre_censo": "Culantro",
+     "ha_2012": 38.6
+    },
+    {
+     "nombre_censo": "Lúcumo",
+     "ha_2012": 37.5
+    },
+    {
+     "nombre_censo": "Col",
+     "ha_2012": 35.7
+    },
+    {
+     "nombre_censo": "Yuca",
+     "ha_2012": 34.5
+    },
+    {
+     "nombre_censo": "Arvejón",
+     "ha_2012": 33.1
+    },
+    {
+     "nombre_censo": "Pecano",
+     "ha_2012": 30.0
+    },
+    {
+     "nombre_censo": "Pasto marafalfa",
+     "ha_2012": 23.0
+    },
+    {
+     "nombre_censo": "Fresa",
+     "ha_2012": 22.4
+    },
+    {
+     "nombre_censo": "Clavel",
+     "ha_2012": 20.6
+    },
+    {
+     "nombre_censo": "Melocotonero",
+     "ha_2012": 15.8
+    },
+    {
+     "nombre_censo": "Brócoli",
+     "ha_2012": 13.5
+    },
+    {
+     "nombre_censo": "Ilusión",
+     "ha_2012": 4.3
+    }
+   ]
+  },
+  "S2": {
+   "nombre": "Valles interandinos",
+   "pisos_inei": {
+    "3": "Quechua"
+   },
+   "altitud_m": [
+    2300,
+    3500
+   ],
+   "principales": [
+    {
+     "clave": "alfalfa",
+     "cientifico": "Medicago sativa",
+     "ha_2012": 15210.9,
+     "nombres_censo": {
+      "Alfalfa": 15210.9
+     }
+    },
+    {
+     "clave": "maiz",
+     "cientifico": "Zea mays",
+     "ha_2012": 3275.6,
+     "nombres_censo": {
+      "Maíz chala": 225.8,
+      "Maíz amiláceo": 1950.8,
+      "Maíz choclo": 725.5,
+      "Maíz morado": 201.7,
+      "Maíz amarillo duro": 171.8
+     }
+    },
+    {
+     "clave": "papa",
+     "cientifico": "Solanum tuberosum",
+     "ha_2012": 2398.8,
+     "nombres_censo": {
+      "Papa blanca": 1889.9,
+      "Papa amarilla": 481.0,
+      "Papa nativa": 27.9
+     }
+    },
+    {
+     "clave": "arveja",
+     "cientifico": "Pisum sativum",
+     "ha_2012": 845.4,
+     "nombres_censo": {
+      "Arveja": 845.4
+     }
+    },
+    {
+     "clave": "oregano",
+     "cientifico": "Origanum vulgare",
+     "ha_2012": 603.0,
+     "nombres_censo": {
+      "Orégano": 603.0
+     }
+    },
+    {
+     "clave": "haba",
+     "cientifico": "Vicia faba",
+     "ha_2012": 591.1,
+     "nombres_censo": {
+      "Haba": 591.1
+     }
+    },
+    {
+     "clave": "cebolla",
+     "cientifico": "Allium cepa",
+     "ha_2012": 511.9,
+     "nombres_censo": {
+      "Cebolla": 511.9
+     }
+    },
+    {
+     "clave": "tuna",
+     "cientifico": "Opuntia ficus-indica",
+     "ha_2012": 478.9,
+     "nombres_censo": {
+      "Tuna para cochinilla": 192.5,
+      "Tuna": 286.4
+     }
+    }
+   ],
+   "ver_mas": [
+    {
+     "clave": "zanahoria",
+     "cientifico": "Daucus carota",
+     "ha_2012": 471.9,
+     "nombres_censo": {
+      "Zanahoria": 471.9
+     }
+    },
+    {
+     "clave": "cebada",
+     "cientifico": "Hordeum vulgare",
+     "ha_2012": 436.6,
+     "nombres_censo": {
+      "Cebada grano": 384.5,
+      "Cebada forrajera": 52.1
+     }
+    },
+    {
+     "clave": "ajo",
+     "cientifico": "Allium sativum",
+     "ha_2012": 323.4,
+     "nombres_censo": {
+      "Ajo": 323.4
+     }
+    },
+    {
+     "clave": "avena",
+     "cientifico": "Avena sativa",
+     "ha_2012": 213.1,
+     "nombres_censo": {
+      "Avena forrajera": 160.2,
+      "Avena grano": 52.9
+     }
+    },
+    {
+     "clave": "zapallo",
+     "cientifico": "Cucurbita maxima",
+     "ha_2012": 181.0,
+     "nombres_censo": {
+      "Zapallo": 181.0
+     }
+    },
+    {
+     "clave": "trigo",
+     "cientifico": "Triticum aestivum",
+     "ha_2012": 106.1,
+     "nombres_censo": {
+      "Trigo": 106.1
+     }
+    },
+    {
+     "clave": "vid",
+     "cientifico": "Vitis vinifera",
+     "ha_2012": 106.0,
+     "nombres_censo": {
+      "Vid": 106.0
+     }
+    },
+    {
+     "clave": "quinua",
+     "cientifico": "Chenopodium quinoa",
+     "ha_2012": 83.6,
+     "nombres_censo": {
+      "Quinua": 83.6
+     }
+    },
+    {
+     "clave": "kiwicha",
+     "cientifico": "Amaranthus caudatus",
+     "ha_2012": 59.7,
+     "nombres_censo": {
+      "Kiwicha": 59.7
+     }
+    },
+    {
+     "clave": "palta",
+     "cientifico": "Persea americana",
+     "ha_2012": 47.2,
+     "nombres_censo": {
+      "Palto": 47.2
+     }
+    },
+    {
+     "clave": "olluco",
+     "cientifico": "Ullucus tuberosus",
+     "ha_2012": 7.4,
+     "nombres_censo": {
+      "Olluco": 7.4
+     }
+    },
+    {
+     "clave": "frijol",
+     "cientifico": "Phaseolus vulgaris",
+     "ha_2012": 5.9,
+     "nombres_censo": {
+      "Frijol": 5.9
+     }
+    },
+    {
+     "clave": "camote",
+     "cientifico": "Ipomoea batatas",
+     "ha_2012": 4.3,
+     "nombres_censo": {
+      "Camote": 4.3
+     }
+    },
+    {
+     "clave": "cana_de_azucar",
+     "cientifico": "Saccharum officinarum",
+     "ha_2012": 1.1,
+     "nombres_censo": {
+      "Caña de azúcar para azúcar": 1.0,
+      "Caña de azúcar para alcohol": 0.1
+     }
+    },
+    {
+     "clave": "mashua",
+     "cientifico": "Tropaeolum tuberosum",
+     "ha_2012": 0.5,
+     "nombres_censo": {
+      "Mashua": 0.5
+     }
+    },
+    {
+     "clave": "algodon",
+     "cientifico": "Gossypium hirsutum",
+     "ha_2012": 0.2,
+     "nombres_censo": {
+      "Algodón": 0.2
+     }
+    },
+    {
+     "clave": "dactylis",
+     "cientifico": "Dactylis glomerata",
+     "ha_2012": 0.1,
+     "nombres_censo": {
+      "Pasto dactilys": 0.1
+     }
+    }
+   ],
+   "requiere_especie": [
+    {
+     "nombre_censo": "Rye grass",
+     "ha_2012": 11.1,
+     "fichas_posibles": [
+      "rye_grass_perenne",
+      "rye_grass_italiano"
+     ]
+    }
+   ],
+   "asociaciones_no_evaluadas": [
+    {
+     "nombre_censo": "Haba-Maíz",
+     "ha_2012": 113.0
+    },
+    {
+     "nombre_censo": "Maíz-Papa",
+     "ha_2012": 47.7
+    },
+    {
+     "nombre_censo": "Alfalfa-Maíz",
+     "ha_2012": 31.9
+    },
+    {
+     "nombre_censo": "Maíz-Zapallo",
+     "ha_2012": 7.8
+    },
+    {
+     "nombre_censo": "Maíz-Frijol",
+     "ha_2012": 6.9
+    },
+    {
+     "nombre_censo": "Papa-Haba",
+     "ha_2012": 6.7
+    },
+    {
+     "nombre_censo": "Palto-Alfalfa",
+     "ha_2012": 2.6
+    },
+    {
+     "nombre_censo": "Alfalfa-Dactylis",
+     "ha_2012": 1.4
+    },
+    {
+     "nombre_censo": "Trebol-Rye grass",
+     "ha_2012": 0.3
+    }
+   ],
+   "sin_ficha_ecocrop": [
+    {
+     "nombre_censo": "Arvejón",
+     "ha_2012": 133.4
+    },
+    {
+     "nombre_censo": "Pasto gramalote",
+     "ha_2012": 119.9
+    },
+    {
+     "nombre_censo": "Vergel Fruticola",
+     "ha_2012": 105.9
+    },
+    {
+     "nombre_censo": "Brócoli",
+     "ha_2012": 60.6
+    },
+    {
+     "nombre_censo": "Vergel horticola",
+     "ha_2012": 51.7
+    },
+    {
+     "nombre_censo": "Ilusión",
+     "ha_2012": 35.1
+    },
+    {
+     "nombre_censo": "Vainita",
+     "ha_2012": 30.6
+    },
+    {
+     "nombre_censo": "Lechuga",
+     "ha_2012": 29.8
+    },
+    {
+     "nombre_censo": "Fresa",
+     "ha_2012": 18.1
+    },
+    {
+     "nombre_censo": "Clavel",
+     "ha_2012": 14.4
+    },
+    {
+     "nombre_censo": "Melocotonero",
+     "ha_2012": 11.0
+    },
+    {
+     "nombre_censo": "Col",
+     "ha_2012": 10.0
+    },
+    {
+     "nombre_censo": "Peral",
+     "ha_2012": 7.4
+    },
+    {
+     "nombre_censo": "Beterraga",
+     "ha_2012": 7.0
+    },
+    {
+     "nombre_censo": "Tara",
+     "ha_2012": 5.7
+    },
+    {
+     "nombre_censo": "Chia",
+     "ha_2012": 3.8
+    },
+    {
+     "nombre_censo": "Apio",
+     "ha_2012": 1.6
+    },
+    {
+     "nombre_censo": "Espinaca",
+     "ha_2012": 1.3
+    },
+    {
+     "nombre_censo": "Cebolla china",
+     "ha_2012": 1.0
+    },
+    {
+     "nombre_censo": "Poro",
+     "ha_2012": 0.8
+    },
+    {
+     "nombre_censo": "Lúcumo",
+     "ha_2012": 0.8
+    },
+    {
+     "nombre_censo": "Granado",
+     "ha_2012": 0.6
+    },
+    {
+     "nombre_censo": "Aji",
+     "ha_2012": 0.5
+    },
+    {
+     "nombre_censo": "Yuca",
+     "ha_2012": 0.4
+    },
+    {
+     "nombre_censo": "Pallar",
+     "ha_2012": 0.2
+    },
+    {
+     "nombre_censo": "Culantro",
+     "ha_2012": 0.2
+    }
+   ]
+  },
+  "S3": {
+   "nombre": "Altoandino",
+   "pisos_inei": {
+    "4": "Suni",
+    "5": "Puna"
+   },
+   "altitud_m": [
+    3500,
+    4800
+   ],
+   "principales": [
+    {
+     "clave": "alfalfa",
+     "cientifico": "Medicago sativa",
+     "ha_2012": 3357.4,
+     "nombres_censo": {
+      "Alfalfa": 3357.4
+     }
+    },
+    {
+     "clave": "papa",
+     "cientifico": "Solanum tuberosum",
+     "ha_2012": 1120.6,
+     "nombres_censo": {
+      "Papa blanca": 879.5,
+      "Papa amarilla": 10.3,
+      "Papa nativa": 230.8
+     }
+    },
+    {
+     "clave": "cebada",
+     "cientifico": "Hordeum vulgare",
+     "ha_2012": 751.6,
+     "nombres_censo": {
+      "Cebada grano": 727.9,
+      "Cebada forrajera": 23.7
+     }
+    },
+    {
+     "clave": "maiz",
+     "cientifico": "Zea mays",
+     "ha_2012": 679.3,
+     "nombres_censo": {
+      "Maíz amiláceo": 522.6,
+      "Maíz choclo": 144.6,
+      "Maíz amarillo duro": 12.1
+     }
+    },
+    {
+     "clave": "haba",
+     "cientifico": "Vicia faba",
+     "ha_2012": 631.0,
+     "nombres_censo": {
+      "Haba": 631.0
+     }
+    },
+    {
+     "clave": "avena",
+     "cientifico": "Avena sativa",
+     "ha_2012": 189.6,
+     "nombres_censo": {
+      "Avena forrajera": 176.8,
+      "Avena grano": 12.8
+     }
+    },
+    {
+     "clave": "olluco",
+     "cientifico": "Ullucus tuberosus",
+     "ha_2012": 124.9,
+     "nombres_censo": {
+      "Olluco": 124.9
+     }
+    },
+    {
+     "clave": "arveja",
+     "cientifico": "Pisum sativum",
+     "ha_2012": 77.1,
+     "nombres_censo": {
+      "Arveja": 77.1
+     }
+    }
+   ],
+   "ver_mas": [
+    {
+     "clave": "tuna",
+     "cientifico": "Opuntia ficus-indica",
+     "ha_2012": 52.7,
+     "nombres_censo": {
+      "Tuna para cochinilla": 5.8,
+      "Tuna": 46.9
+     }
+    },
+    {
+     "clave": "dactylis",
+     "cientifico": "Dactylis glomerata",
+     "ha_2012": 27.7,
+     "nombres_censo": {
+      "Pasto dactilys": 27.7
+     }
+    },
+    {
+     "clave": "vid",
+     "cientifico": "Vitis vinifera",
+     "ha_2012": 22.6,
+     "nombres_censo": {
+      "Vid": 22.6
+     }
+    },
+    {
+     "clave": "trigo",
+     "cientifico": "Triticum aestivum",
+     "ha_2012": 19.9,
+     "nombres_censo": {
+      "Trigo": 19.9
+     }
+    },
+    {
+     "clave": "quinua",
+     "cientifico": "Chenopodium quinoa",
+     "ha_2012": 19.5,
+     "nombres_censo": {
+      "Quinua": 19.5
+     }
+    },
+    {
+     "clave": "oregano",
+     "cientifico": "Origanum vulgare",
+     "ha_2012": 8.7,
+     "nombres_censo": {
+      "Orégano": 8.7
+     }
+    },
+    {
+     "clave": "cebolla",
+     "cientifico": "Allium cepa",
+     "ha_2012": 4.4,
+     "nombres_censo": {
+      "Cebolla": 4.4
+     }
+    },
+    {
+     "clave": "mashua",
+     "cientifico": "Tropaeolum tuberosum",
+     "ha_2012": 3.2,
+     "nombres_censo": {
+      "Mashua": 3.2
+     }
+    },
+    {
+     "clave": "palta",
+     "cientifico": "Persea americana",
+     "ha_2012": 1.5,
+     "nombres_censo": {
+      "Palto": 1.5
+     }
+    },
+    {
+     "clave": "kiwicha",
+     "cientifico": "Amaranthus caudatus",
+     "ha_2012": 0.2,
+     "nombres_censo": {
+      "Kiwicha": 0.2
+     }
+    }
+   ],
+   "requiere_especie": [
+    {
+     "nombre_censo": "Rye grass",
+     "ha_2012": 312.7,
+     "fichas_posibles": [
+      "rye_grass_perenne",
+      "rye_grass_italiano"
+     ]
+    }
+   ],
+   "asociaciones_no_evaluadas": [
+    {
+     "nombre_censo": "Alfalfa-Dactylis",
+     "ha_2012": 686.6
+    },
+    {
+     "nombre_censo": "Trebol-Rye grass",
+     "ha_2012": 52.2
+    },
+    {
+     "nombre_censo": "Haba-Maíz",
+     "ha_2012": 29.1
+    },
+    {
+     "nombre_censo": "Papa-Haba",
+     "ha_2012": 19.1
+    },
+    {
+     "nombre_censo": "Alfalfa-Maíz",
+     "ha_2012": 4.4
+    },
+    {
+     "nombre_censo": "Maíz-Papa",
+     "ha_2012": 4.0
+    },
+    {
+     "nombre_censo": "Maíz-Frijol",
+     "ha_2012": 0.7
+    }
+   ],
+   "sin_ficha_ecocrop": [
+    {
+     "nombre_censo": "Arvejón",
+     "ha_2012": 50.0
+    },
+    {
+     "nombre_censo": "Trébol",
+     "ha_2012": 24.2
+    },
+    {
+     "nombre_censo": "Vergel Fruticola",
+     "ha_2012": 18.9
+    },
+    {
+     "nombre_censo": "Vergel horticola",
+     "ha_2012": 6.1
+    },
+    {
+     "nombre_censo": "Pasto gramalote",
+     "ha_2012": 0.5
+    },
+    {
+     "nombre_censo": "Melocotonero",
+     "ha_2012": 0.5
+    },
+    {
+     "nombre_censo": "Peral",
+     "ha_2012": 0.3
+    },
+    {
+     "nombre_censo": "Lechuga",
+     "ha_2012": 0.1
+    },
+    {
+     "nombre_censo": "Fresa",
+     "ha_2012": 0.1
+    }
+   ]
+  }
+ }
+}

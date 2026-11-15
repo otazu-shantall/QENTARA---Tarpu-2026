@@ -18,7 +18,7 @@ QENTARA - Tarpu 2026/
 ├── datos/                   DATOS SATELITALES (Damaris). Consulta real a NASA POWER y fichas de fuentes.
 ├── backend/                 BACKEND, CONECTORES Y MOTOR (Erick). Todo el diseño del área reunido; índice en backend/README.md.
 ├── entrega/                 ENTREGA, PITCH E INVESTIGACIÓN (Derecho). Formulario, guion, referencias, uso de IA.
-├── trabajo/                 TAREAS EN CURSO, una carpeta por tarea (T01: paquete de extracción de datos).
+├── trabajo/                 TAREAS EN CURSO: T01 (paquete de extracción) y extraccion_pesada/ (datos de AppEEARS).
 ├── tmp/                     Auxiliares de sesiones anteriores (generador del PDF, capturas). No es software de TARPU.
 ├── TARPU_QENTARA_Contexto_Integral.md   Antecedente histórico completo.
 ├── Logo Tarpu.png, Tarpu_ Branding.png  Branding original aportado por el equipo.

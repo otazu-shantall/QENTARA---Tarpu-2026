@@ -14,7 +14,7 @@ El equipo está **en pleno hackathon** (NASA Space Apps, 14 y 15/11/2026), sigui
 - **De demostración:** parcelas, indicadores, series, registros y respuestas del agente.
 - **Datos reales ya obtenidos:** consultas a NASA POWER (`datos/`), que el backend ya usa.
 - **Construido sin conectar a las pantallas:** el backend (`backend/`: API, motor sin puntaje y agente guiado), con datos reales de NASA POWER y pruebas que pasan.
-- **Sin conectar:** los conectores de MODIS y SoilGrids (DT-17), cálculo NDVI, modelo de IA, autenticación y evaluación agronómica revisada por especialistas.
+- **Sin conectar:** los conectores de MODIS, SoilGrids y GAEZ (tarea T01) y los datos de AppEEARS (DT-19), cálculo NDVI, modelo de IA, autenticación y evaluación agronómica revisada por especialistas.
 
 No confundas el prototipo ni la extensión del informe con un producto validado. El detalle está en [docs/00-estado-actual.md](docs/00-estado-actual.md).
 
@@ -124,7 +124,7 @@ Los especialistas agronómicos revisan métodos y reglas. No son el intermediari
 Son antecedentes y propuestas, no acuerdos:
 
 - **Stack del producto:** MapLibre, Plotly, Python/FastAPI, PostgreSQL/PostGIS, colas, Redis y hosting (SUP-015). El prototipo usa React, TypeScript, Vite, Lucide, Leaflet 1.9.4 y CSS propio, y eso no aprueba el stack del producto.
-- **Datos:** **la demo usa solo NASA POWER, el NDVI de MODIS (servicio de ORNL) y SoilGrids (DT-17)**, consultados en el centroide de la parcela. No propongas otras fuentes para la demo sin una decisión nueva. El análisis completo, con las fuentes que quedan para después, está en [datos/analisis-recursos.md](datos/analisis-recursos.md). Los recursos de USDA, USGS, PRISM y OpenET solo cubren Estados Unidos.
+- **Datos:** **las fuentes y variables de la demo son las de DT-19** (POWER, SoilGrids, GAEZ, MODIS de ORNL, NASADEM, HLS, SMAP y el censo agropecuario 2012), consultadas en el centroide o bajadas una vez para los lugares de ejemplo. Los cultivos por sector siguen DT-20 y la API no se publica (DT-21). No propongas otras fuentes para la demo sin una decisión nueva. El análisis completo, con las fuentes que quedan para después, está en [datos/analisis-recursos.md](datos/analisis-recursos.md). Los recursos de USDA, USGS, PRISM y OpenET solo cubren Estados Unidos.
 - **Catálogo:** papa, quinua, haba y cebada son candidatos por revisar.
 - **Motor:** reglas transparentes y comparación explicable antes que modelos entrenados. Fórmulas, pesos y mínimos son experimentales.
 - **Negocio:** freemium, planes, precios, mercado, costos y proyecciones por contrastar. Las cifras de ejemplo son sintéticas.

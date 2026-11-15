@@ -1,6 +1,6 @@
 # Estado actual
 
-> Última actualización: **14 de noviembre de 2026**. Desafío: **Field Shift: Adapting Farms with NASA Data** ([08](08-desafio-oficial.md)); el envío oficial cierra el **domingo 15/11/2026 a las 11:59 p. m.**, hora del evento local ([09](09-entrega-oficial.md)). El equipo se dividió en cuatro áreas ([07](07-equipo-y-areas.md)). TARPU está en **planificación y definición de producto**, con un **prototipo visual** local (landing y dashboard de siete vistas). El informe maestro está en la versión **0.4** (23/10/2026). El backend ya funciona con datos reales de NASA POWER, pero todavía no está conectado a las pantallas. No hay cálculo NDVI, modelo de IA ni autenticación.
+> Última actualización: **15 de noviembre de 2026**. Desafío: **Field Shift: Adapting Farms with NASA Data** ([08](08-desafio-oficial.md)); el envío oficial cierra el **domingo 15/11/2026 a las 11:59 p. m.**, hora del evento local ([09](09-entrega-oficial.md)). El equipo se dividió en cuatro áreas ([07](07-equipo-y-areas.md)). TARPU está en **planificación y definición de producto**, con un **prototipo visual** local (landing y dashboard de siete vistas). El informe maestro está en la versión **0.4** (23/10/2026). El backend ya funciona con datos reales de NASA POWER, pero todavía no está conectado a las pantallas. No hay cálculo NDVI, modelo de IA ni autenticación.
 >
 > **Informes de cada trabajo:** [informes/](informes/README.md). **Si algo quedó a medias**, la bitácora para retomar está en [informes/en-curso.md](informes/en-curso.md).
 
@@ -19,6 +19,14 @@
 - **Datos, fase 1 (14/11/2026):**
   - **Fuentes listas:** POWER, SoilGrids y NDVI MOD13Q1 tienen script, muestras y ficha, para Chivay y Majes. Ninguna llega todavía a la app.
   - **Cambio de punto en Majes:** se pasó al punto de riego (−16,367023; −72,185771), porque el anterior (−16,351; −72,190) caía en el casco urbano. La muestra de POWER del punto de riego es `power_majes_riego_20250101_20251231.*`; la del punto urbano se conserva solo como referencia.
+
+- **Nueva base de datos y reglas (15/11/2026):**
+  - **DT-19** reemplaza DT-17: POWER (19 variables), SoilGrids, GAEZ, MODIS de ORNL, NASADEM, HLS, SMAP y el IV CENAGRO 2012.
+  - **DT-20:** en cada sector se muestran los 8 cultivos con más superficie en el censo 2012 que tengan ficha EcoCrop, y el resto en «ver más» (`backend/catalogo/sectores.json`).
+  - **DT-21:** la API no se publica; la web estática muestra y descarga los datos.
+  - **Lugar de ejemplo S2:** Cabanaconde (Caylloma), −15,612386; −71,984857, 2908 m según el censo; maíz amiláceo.
+  - **Métodos con cita** en `backend/investigacion/metodos_citados_2026-11-15.json`: Kc de FAO-56, factor LS de USLE (válido solo en pendientes de 3 a 18 %; Chivay tiene 33 %), textura sin regla (EcoCrop no define sus clases), rotación de costa sin secuencia oficial encontrada.
+- **Prueba por área de AppEEARS (14–15/11/2026):** `modis_zonas` (7 capas × 2015–2026 × 2 zonas) siguió «processing» más de 2 h; no fue un error del script, sino el volumen. Los datos pesados se piden ahora en tareas pequeñas por punto con `trabajo/extraccion_pesada/pesados.py`.
 
 ## Inventario
 
@@ -44,6 +52,9 @@
 | Guías de las cuatro áreas | ✅ | `datos/`, `backend/`, `entrega/`, `docs/areas/frontend.md` | Base para que cada uno arranque. |
 | Borradores de la entrega | 🟡 | `entrega/` | Formulario en inglés, guion, referencias y registro de IA, por completar. |
 | **Backend (API, motor y agente)** | ✅ construido | `backend/tarpu_api/` (índice en `backend/README.md`) | FastAPI con datos reales de NASA POWER, probado en vivo de punta a punta (14/11/2026); 15 pruebas que pasan. Motor sin puntaje ni pesos (DT-16) con rangos citados de FAO EcoCrop; agente guiado sin modelo de IA. MODIS y SoilGrids aparecen «no disponible» en el backend hasta conectar los scripts de `datos/` (tarea T01). Falta conectarlo a las pantallas. |
+| Paquete de extracción T01 | 🟡 ejecutado en Majes riego y Chivay (Damaris) | `trabajo/T01-paquete-extraccion/` | Falta el lugar S2 (Cabanaconde) y subir `salida/`. Instrucciones en `trabajo/README.md`. |
+| Extracción pesada (AppEEARS) | 🟡 scripts listos | `trabajo/extraccion_pesada/` | NASADEM, HLS, SMAP e imágenes de Chivay para los tres lugares de ejemplo; los ejecuta un compañero con la cuenta de Earthdata. |
+| Cultivos por sector y métodos citados | ✅ | `backend/catalogo/sectores.json`, `backend/investigacion/` | DT-20; Kc, LS, K, horas de luz, rotación de sierra. |
 | Base de datos, autenticación | ❌ | — | Demo sin base de datos (DT-13); PostGIS y cuentas siguen propuestos (SUP-015, SUP-026). |
 | Repositorio git | ✅ | [https://github.com/otazu-shantall/QENTARA---Tarpu-2026](https://github.com/otazu-shantall/QENTARA---Tarpu-2026) | Publicado el 14/11/2026, rama `main`. Falta confirmar que sea público y elegir la licencia. |
 

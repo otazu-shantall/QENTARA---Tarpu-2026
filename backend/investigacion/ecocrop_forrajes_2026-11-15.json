@@ -1,0 +1,322 @@
+{
+ "descripcion": "Fichas de FAO EcoCrop de los forrajes que el censo agropecuario 2012 (INEI) registra en los sectores S2 y S3 de Arequipa. Valores copiados sin modificar de la ficha de cada especie (consultada el 15/11/2026).",
+ "fuente": "FAO EcoCrop, https://ecocrop.apps.fao.org/ecocrop/srv/en/ (dataSheet?id=…)",
+ "consultado": "2026-11-15",
+ "advertencias": [
+  "En EcoCrop la casilla 'Latitude' se copia tal cual; no se usa en el motor.",
+  "El censo dice 'Rye grass' sin especie: puede ser Lolium perenne o Lolium multiflorum. TARPU no elige una: pide al usuario que la declare.",
+  "Lolium perenne (altitud absoluta máx. 2000 m), Lolium multiflorum (2440 m) y Dactylis glomerata (3000 m) tienen en EcoCrop un techo de altitud menor que la altitud de Chivay (NASADEM 3643 m), aunque el censo los registra sembrados por encima de 3500 m. Es un conflicto entre fuentes y se muestra como tal (estado conflicto_entre_fuentes).",
+  "Fotoperiodo: las dos especies de Lolium y Dactylis figuran como 'long day (>14 hours)'. En Arequipa el día dura entre 10,95 y 13,05 h (FAO-56), así que la condición de EcoCrop no se cumple; mismo caso que el ajo y la zanahoria."
+ ],
+ "cultivos": {
+  "avena": {
+   "cientifico": "Avena sativa",
+   "id": 481,
+   "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=481",
+   "temp_opt": [
+    16.0,
+    20.0
+   ],
+   "temp_abs": [
+    5.0,
+    30.0
+   ],
+   "lluvia_opt": [
+    600.0,
+    1000.0
+   ],
+   "lluvia_abs": [
+    250.0,
+    1500.0
+   ],
+   "ph_opt": [
+    5.0,
+    6.0
+   ],
+   "ph_abs": [
+    4.5,
+    7.5
+   ],
+   "altitud_opt": [
+    null,
+    null
+   ],
+   "altitud_abs": [
+    null,
+    null
+   ],
+   "latitud_opt": [
+    45.0,
+    40.0
+   ],
+   "latitud_abs": [
+    60.0,
+    60.0
+   ],
+   "letal_reposo": -15.0,
+   "letal_temprano": -1.0,
+   "ciclo_dias": [
+    110.0,
+    270.0
+   ],
+   "profundidad": {
+    "optimo": "medium (50-150 cm)",
+    "absoluto": "shallow (20-50 cm)"
+   },
+   "textura": {
+    "optimo": "heavy, medium, light",
+    "absoluto": "heavy, medium, light"
+   },
+   "fertilidad": {
+    "optimo": "high",
+    "absoluto": "moderate"
+   },
+   "salinidad": {
+    "optimo": "low (<4 dS/m)",
+    "absoluto": "low (<4 dS/m)"
+   },
+   "drenaje": {
+    "optimo": "well (dry spells)",
+    "absoluto": "well (dry spells)"
+   },
+   "fotoperiodo": "neutral day (12-14 hours), long day (>14 hours)",
+   "forma_vida": "grass",
+   "vida": "annual",
+   "nombre_censo": [
+    "Avena forrajera",
+    "Avena grano"
+   ]
+  },
+  "rye_grass_perenne": {
+   "cientifico": "Lolium perenne",
+   "id": 1362,
+   "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1362",
+   "temp_opt": [
+    14.0,
+    25.0
+   ],
+   "temp_abs": [
+    4.0,
+    35.0
+   ],
+   "lluvia_opt": [
+    700.0,
+    1750.0
+   ],
+   "lluvia_abs": [
+    500.0,
+    2300.0
+   ],
+   "ph_opt": [
+    5.0,
+    7.0
+   ],
+   "ph_abs": [
+    4.5,
+    8.4
+   ],
+   "altitud_opt": [
+    null,
+    null
+   ],
+   "altitud_abs": [
+    null,
+    2000.0
+   ],
+   "latitud_opt": [
+    33.0,
+    30.0
+   ],
+   "latitud_abs": [
+    60.0,
+    64.0
+   ],
+   "letal_reposo": -2.0,
+   "letal_temprano": 0.0,
+   "ciclo_dias": [
+    90.0,
+    270.0
+   ],
+   "profundidad": {
+    "optimo": "medium (50-150 cm)",
+    "absoluto": "shallow (20-50 cm)"
+   },
+   "textura": {
+    "optimo": "heavy, medium",
+    "absoluto": "heavy, medium"
+   },
+   "fertilidad": {
+    "optimo": "high",
+    "absoluto": "moderate"
+   },
+   "salinidad": {
+    "optimo": "low (<4 dS/m)",
+    "absoluto": "medium (4-10 dS/m)"
+   },
+   "drenaje": {
+    "optimo": "well (dry spells)",
+    "absoluto": "well (dry spells)"
+   },
+   "fotoperiodo": "long day (>14 hours)",
+   "forma_vida": "grass",
+   "vida": "annual, biennial, perennial",
+   "nombre_censo": [
+    "Rye grass (especie sin declarar)"
+   ]
+  },
+  "rye_grass_italiano": {
+   "cientifico": "Lolium multiflorum",
+   "id": 7389,
+   "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=7389",
+   "temp_opt": [
+    14.0,
+    30.0
+   ],
+   "temp_abs": [
+    2.0,
+    38.0
+   ],
+   "lluvia_opt": [
+    500.0,
+    900.0
+   ],
+   "lluvia_abs": [
+    200.0,
+    1800.0
+   ],
+   "ph_opt": [
+    5.0,
+    7.5
+   ],
+   "ph_abs": [
+    4.5,
+    8.2
+   ],
+   "altitud_opt": [
+    null,
+    null
+   ],
+   "altitud_abs": [
+    null,
+    2440.0
+   ],
+   "latitud_opt": [
+    28.0,
+    25.0
+   ],
+   "latitud_abs": [
+    48.0,
+    51.0
+   ],
+   "letal_reposo": -4.0,
+   "letal_temprano": 0.0,
+   "ciclo_dias": [
+    90.0,
+    270.0
+   ],
+   "profundidad": {
+    "optimo": "medium (50-150 cm)",
+    "absoluto": "shallow (20-50 cm)"
+   },
+   "textura": {
+    "optimo": "medium",
+    "absoluto": "heavy, medium, light"
+   },
+   "fertilidad": {
+    "optimo": "high",
+    "absoluto": "moderate"
+   },
+   "salinidad": {
+    "optimo": "low (<4 dS/m)",
+    "absoluto": "medium (4-10 dS/m)"
+   },
+   "drenaje": {
+    "optimo": "well (dry spells)",
+    "absoluto": "poorly (saturated >50% of year), well (dry spells)"
+   },
+   "fotoperiodo": "long day (>14 hours)",
+   "forma_vida": "grass",
+   "vida": "annual, perennial",
+   "nombre_censo": [
+    "Rye grass (especie sin declarar)"
+   ]
+  },
+  "dactylis": {
+   "cientifico": "Dactylis glomerata",
+   "id": 5184,
+   "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=5184",
+   "temp_opt": [
+    12.0,
+    26.0
+   ],
+   "temp_abs": [
+    5.0,
+    31.0
+   ],
+   "lluvia_opt": [
+    500.0,
+    1000.0
+   ],
+   "lluvia_abs": [
+    300.0,
+    1700.0
+   ],
+   "ph_opt": [
+    6.0,
+    6.5
+   ],
+   "ph_abs": [
+    4.5,
+    7.5
+   ],
+   "altitud_opt": [
+    null,
+    null
+   ],
+   "altitud_abs": [
+    null,
+    3000.0
+   ],
+   "latitud_opt": [
+    35.0,
+    null
+   ],
+   "latitud_abs": [
+    65.0,
+    70.0
+   ],
+   "letal_reposo": -12.0,
+   "letal_temprano": 0.0,
+   "ciclo_dias": [
+    80.0,
+    180.0
+   ],
+   "profundidad": {
+    "optimo": "shallow (20-50 cm)",
+    "absoluto": "shallow (20-50 cm)"
+   },
+   "textura": {
+    "optimo": "heavy, medium",
+    "absoluto": "heavy, medium, light"
+   },
+   "fertilidad": {
+    "optimo": "high",
+    "absoluto": "moderate"
+   },
+   "salinidad": {
+    "optimo": "low (<4 dS/m)",
+    "absoluto": "medium (4-10 dS/m)"
+   },
+   "drenaje": {
+    "optimo": "well (dry spells)",
+    "absoluto": "well (dry spells), excessive (dry/moderately dry)"
+   },
+   "fotoperiodo": "long day (>14 hours)",
+   "forma_vida": "grass",
+   "vida": "perennial",
+   "nombre_censo": [
+    "Pasto dactilys"
+   ]
+  }
+ }
+}

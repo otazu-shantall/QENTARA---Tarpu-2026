@@ -53,7 +53,7 @@ backend/
 
 | Qué | Dónde | Por qué ahí |
 |---|---|---|
-| Decisiones DT-13 a DT-17 | [docs/06](../docs/06-decisiones-y-riesgos.md) | Todas las decisiones del equipo se registran en un solo archivo |
+| Decisiones DT-13 a DT-21 | [docs/06](../docs/06-decisiones-y-riesgos.md) | Todas las decisiones del equipo se registran en un solo archivo |
 | Recorrido del usuario y escala | [docs/10](../docs/10-recorrido-y-escala.md) | Lo comparten backend y frontend |
 | Conectores a las fuentes | [datos/](../datos/README.md) | Son del área de Damaris; el backend solo los invoca |
 | Pantallas | [Codigo/](../Codigo/README.md) | Área de Shantall |
@@ -65,17 +65,20 @@ backend/
 3. `procesamiento` pide en segundo plano los datos del **centroide** de la parcela a los conectores del área de datos. `ingesta` e `indicadores` los convierten en conteos, promedios y totales con su procedencia.
 4. El **motor** compara cada cultivo del catálogo con rangos **citados** de FAO EcoCrop, criterio por criterio, sin puntaje ni pesos.
 5. El **agente** responde preguntas con esos datos y sus citas, sin modelo de IA.
-6. Todo sale por una **API FastAPI**; `exportar` copia las rutas GET a JSON para la web publicada.
+6. Todo sale por una **API FastAPI que solo corre en local** (DT-21); `exportar` copia las rutas GET a JSON para la web publicada.
 
 En la demo **no hay base de datos**: `almacen.py` guarda JSON en disco y es el único que lo toca, para que pasar después a PostGIS cambie un solo archivo.
 
-## Fuentes de datos (DT-17)
+## Fuentes de datos (DT-19, reemplaza DT-17)
 
 | Fuente | Escala | Estado |
 |---|---|---|
-| NASA POWER | Celda ≈ 55 × 67 km | ✅ conectada y probada en vivo |
-| NDVI de MODIS (ORNL) | Píxel nominal de 250 m | ⏳ falta el conector en `datos/`; mientras tanto aparece «no disponible» con su motivo |
-| SoilGrids | 250 m | ⏳ falta el conector en `datos/`; el criterio de suelo sale `sin_dato` |
+| NASA POWER (19 variables) | Celda ≈ 55 × 67 km | ✅ conectada y probada en vivo (hoy con las variables de DT-17; ampliar en T01) |
+| SoilGrids (WCS), FAO GAEZ, MODIS de ORNL (NDVI, ET, LST, cobertura) | 250 m a 9 km | ⏳ paquete de extracción, tarea T01 (Damaris), en `trabajo/T01-paquete-extraccion/` |
+| NASADEM, HLS, SMAP (AppEEARS) | 30 m a 9 km | ⏳ se bajan una vez para los tres lugares de ejemplo con `trabajo/extraccion_pesada/pesados.py` |
+| IV CENAGRO 2012 (INEI) | Unidad agropecuaria | ✅ en `investigacion/`; da los cultivos por sector (`catalogo/sectores.json`, DT-20) |
+
+Métodos con cita (Kc de FAO-56, factor LS de USLE con su rango válido, factor K de EPIC, horas de luz, rotación de SENASA, textura sin regla): [investigacion/metodos_citados_2026-11-15.json](investigacion/metodos_citados_2026-11-15.json).
 
 ## Decisiones
 
@@ -83,9 +86,12 @@ En la demo **no hay base de datos**: `almacen.py` guarda JSON en disco y es el �
 |---|---|
 | DT-13 | FastAPI para trabajar en vivo y exportación a JSON para la web publicada; sin base de datos en la demo |
 | DT-14 | Agente guiado con plantillas y datos reales, sin modelo de IA |
-| DT-15 | Publicación en Vercel o Netlify |
+| DT-15 | Publicación en Vercel o Netlify (sitio estático) |
 | **DT-16** | **Cero supuestos:** todo valor viene de una fuente real o lo declara el usuario; ninguna regla sin cita; nada sintético en la demo |
-| **DT-17** | **Solo tres fuentes:** NASA POWER, NDVI de MODIS y SoilGrids, consultadas en el centroide |
+| ~~DT-17~~ | Reemplazada por DT-19 |
+| **DT-19** | Fuentes y variables de la demo: POWER, SoilGrids, GAEZ, MODIS (ORNL), NASADEM, HLS, SMAP y el censo agropecuario 2012 |
+| **DT-20** | Cultivos por sector: los 8 con más superficie en el censo 2012 que tengan ficha EcoCrop, más «ver más» |
+| **DT-21** | La API no se publica: FastAPI solo en local para generar los JSON; la web muestra y descarga los datos |
 
 ## Lo que el desafío espera y cómo se responde
 
