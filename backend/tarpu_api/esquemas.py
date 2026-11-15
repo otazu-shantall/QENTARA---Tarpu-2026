@@ -26,6 +26,12 @@ class _Estricto(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+class TrabajoEntrada(_Estricto):
+    lat: Annotated[float, Field(ge=-90, le=90)]
+    lon: Annotated[float, Field(ge=-180, le=180)]
+    nombre: Annotated[str | None, Field(default=None, max_length=60, pattern=r"^[A-Za-z0-9_-]+$")] = None
+
+
 class ParcelaNueva(_Estricto):
     nombre: Annotated[str, Field(min_length=1, max_length=80, description="Nombre que le da el usuario")]
     contorno: dict[str, Any] = Field(description="GeoJSON Polygon en [longitud, latitud], dibujado por el usuario")

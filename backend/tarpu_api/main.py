@@ -12,10 +12,12 @@ from contextlib import asynccontextmanager
 from fastapi import BackgroundTasks, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
-from . import __version__, agente, almacen, base, catalogo, config, datos_detallados, errores, indicadores, meta, motor, parcelas, procesamiento
-from .esquemas import ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, Sobre, sobre
+from . import __version__, agente, almacen, base, coordenada, catalogo, config, datos_detallados, errores, indicadores, meta, motor, parcelas, procesamiento
+from .esquemas import TrabajoEntrada, ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, Sobre, sobre
 
 @asynccontextmanager
 async def _ciclo(_: FastAPI):
@@ -55,6 +57,36 @@ def _solo_en_vivo() -> None:
 @app.get("/api/meta", response_model=Sobre, tags=["meta"])
 def get_meta():
     return sobre(meta.obtener())
+
+
+@app.get("/api/base/sectores", response_model=Sobre, tags=["base de Arequipa"])
+def get_base_sectores():
+    """Mapa de sectores (DT-18) calculado desde NASADEM: límites, colores y conteos. Uso interno y de prueba."""
+    m = base.mapa_sectores()
+    return sobre(m, procedencia=[{"origen": "derivado", "metodo": m["metodo"], "fuente": "NASADEM_HGT v001"}], avisos=[m["aviso"]])
+
+
+@app.get("/api/base/sectores.png", tags=["base de Arequipa"])
+def get_base_sectores_png():
+    return FileResponse(base.ruta_mapa_sectores(), media_type="image/png")
+
+
+@app.post("/api/trabajos", response_model=Sobre, status_code=202, tags=["capa 2 por coordenada"])
+def post_trabajo(entrada: TrabajoEntrada):
+    """Lanza (o reutiliza) la extracción de datos pesados para un punto (DT-22)."""
+    _solo_en_vivo()
+    return sobre(coordenada.iniciar(entrada.lat, entrada.lon, entrada.nombre))
+
+
+@app.get("/api/trabajos/{clave}", response_model=Sobre, tags=["capa 2 por coordenada"])
+def get_trabajo(clave: str):
+    return sobre(coordenada.estado(clave))
+
+
+@app.get("/api/archivo", response_model=Sobre, tags=["datos detallados"])
+def get_archivo(ruta: str):
+    """Contenido en crudo de un .csv o .json del almacén (original, normalizado o procedencia)."""
+    return sobre(coordenada.archivo(ruta))
 
 
 @app.get("/api/base", response_model=Sobre, tags=["base de Arequipa"])
@@ -161,3 +193,14 @@ def post_agente(entrada: PreguntaEntrada):
 def get_datos(parcela_id: str):
     parcelas.obtener(parcela_id)
     return sobre(datos_detallados.obtener(parcela_id), avisos=["Consulta detallada: no pasa por el motor de comparación."])
+
+
+# ---------------------------------------------------------------- pantalla de prueba de la integración
+_PRUEBA = Path(__file__).resolve().parent.parent / "prueba_web"
+if _PRUEBA.exists():
+    app.mount("/prueba", StaticFiles(directory=_PRUEBA, html=True), name="prueba")
+
+
+@app.get("/", include_in_schema=False)
+def raiz():
+    return RedirectResponse("/prueba/")

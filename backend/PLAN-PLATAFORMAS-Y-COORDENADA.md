@@ -42,6 +42,22 @@ backend/
 - **Cabanaconde (S2):** NASADEM da 2663 m y 125 % de pendiente, frente a los 2908 m que declara el censo para su sector censal. Las coordenadas del censo son de un sector, no de una chacra. **Antes de usarlo como lugar de ejemplo hay que elegir el punto en la vista satelital.**
 - **GAEZ:** algunas capas vienen vacías en el archivo (TIFF disperso); se leen como 0 según la convención de GDAL, igual que lo que devuelve GAEZ por punto.
 
+## 2 bis. Pantalla de prueba
+
+`backend/prueba_web/index.html`, servida por la propia API en `/prueba/`. No es el diseño de TARPU; sirve para comprobar que todo está conectado:
+
+- **Mapa:** de Arequipa, con los sectores calculados desde NASADEM (`GET /api/base/sectores` y `.png`; celdas de 0,01°, generado en 3 s).
+- **Datos base:** clic en cualquier punto → la capa 1 en crudo (`GET /api/base`).
+- **Datos pesados:** botón «Extraer datos pesados» → `POST /api/trabajos` y `GET /api/trabajos/{clave}` cada 4 s.
+- **Archivos en crudo:** original, normalizado y procedencia de cada fuente (`GET /api/archivo`, solo `.csv` y `.json` del almacén).
+
+Probado el 15/11/2026:
+
+- Chivay, capa 1: 534 ms.
+- Chivay, trabajo de capa 2: menos de 20 s, porque reutilizó lo ya bajado.
+- El NDVI de Chivay se ve en crudo (272 fechas).
+- Sin errores en el servidor ni en la consola.
+
 ## 3. Plataformas (propuesta, a confirmar)
 
 Un solo proveedor, **Google Cloud**, porque la capa 2 ya se decidió allí (DT-22) y así todo queda en un proyecto.

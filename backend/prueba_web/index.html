@@ -1,0 +1,195 @@
+<!doctype html>
+<!-- Pantalla de PRUEBA de la integración del backend (capa 1, capa 2 y actualización, DT-22). No es el diseño de TARPU.
+     La sirve la propia API en /prueba/. Escrito con asistencia de IA (Claude Code). Declarado en entrega/uso-de-ia.md. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TARPU · prueba de integración</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root { --ink:#141714; --ink2:#4b504c; --line:#d9dbd5; --bg:#f6f6f3; --card:#fff; --verde:#2e7d4f; --rojo:#a12622; --ambar:#8a5a0b; }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--ink); background:var(--bg); }
+  header { padding:10px 16px; border-bottom:1px solid var(--line); background:var(--card); display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+  header h1 { font-size:16px; margin:0; }
+  header .nota { color:var(--ink2); font-size:12px; }
+  main { display:grid; grid-template-columns: minmax(0,1fr) 520px; height: calc(100vh - 54px); }
+  #mapa { height:100%; }
+  aside { overflow:auto; border-left:1px solid var(--line); background:var(--card); padding:14px 16px 40px; }
+  h2 { font-size:15px; margin:18px 0 6px; }
+  h3 { font-size:13px; margin:12px 0 4px; color:var(--ink2); text-transform:uppercase; letter-spacing:.04em; }
+  .fila { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  button { font:inherit; padding:7px 12px; border:1px solid var(--ink); background:var(--ink); color:#fff; border-radius:6px; cursor:pointer; }
+  button.sec { background:#fff; color:var(--ink); }
+  button:disabled { opacity:.5; cursor:default; }
+  table { border-collapse:collapse; width:100%; font-size:13px; }
+  td, th { border-bottom:1px solid var(--line); padding:4px 6px; text-align:left; vertical-align:top; }
+  th { background:var(--bg); }
+  pre { background:#111; color:#e6e6e6; padding:10px; border-radius:6px; overflow:auto; max-height:420px; font-size:12px; }
+  details { margin:6px 0; }
+  summary { cursor:pointer; color:var(--verde); font-weight:600; }
+  .estado { display:inline-block; padding:1px 8px; border-radius:10px; font-size:12px; background:var(--bg); border:1px solid var(--line); }
+  .listo { color:var(--verde); } .parcial, .en_proceso, .pendiente { color:var(--ambar); } .error, .sin_dato, .no_disponible, .sin_datos { color:var(--rojo); }
+  .aviso { background:#fdf1da; border-left:3px solid var(--ambar); padding:6px 10px; margin:6px 0; font-size:13px; }
+  .leyenda { background:#fff; padding:8px 10px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.2); font-size:12px; }
+  .leyenda i { display:inline-block; width:12px; height:12px; margin-right:6px; vertical-align:-2px; border-radius:2px; }
+  .vacio { color:var(--ink2); }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; height:auto; } #mapa { height:60vh; } aside { border-left:0; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>TARPU · prueba de integración del backend</h1>
+  <span class="nota">Haz clic en el mapa: a la derecha salen los datos de la base de Arequipa en ese punto, en crudo. Luego puedes extraer los datos pesados de ese punto.</span>
+  <div class="fila">
+    <button class="sec" data-ir="-16.367023,-72.185771">Majes riego</button>
+    <button class="sec" data-ir="-15.64,-71.60">Chivay</button>
+    <button class="sec" data-ir="-15.612386,-71.984857">Cabanaconde (censo)</button>
+    <label class="nota">Opacidad de sectores <input id="opacidad" type="range" min="0" max="1" step="0.05" value="0.65"></label>
+  </div>
+</header>
+<main>
+  <div id="mapa"></div>
+  <aside id="panel"><p class="vacio">Selecciona un punto en el mapa.</p></aside>
+</main>
+<script>
+const API = '';  // misma API que sirve esta página
+const panel = document.getElementById('panel');
+const mapa = L.map('mapa', { zoomControl: true }).setView([-16.0, -72.6], 7);
+const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  { maxZoom: 18, attribution: 'Imágenes: Esri, Maxar, Earthstar Geographics' }).addTo(mapa);
+const calles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' });
+let capaSectores = null, marcador = null, sondeo = null;
+
+const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+const json = o => `<pre>${esc(JSON.stringify(o, null, 1))}</pre>`;
+const chip = e => `<span class="estado ${esc(e)}">${esc(e)}</span>`;
+async function pedir(ruta, opciones) {
+  const r = await fetch(API + ruta, opciones);
+  const cuerpo = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(`${r.status} ${JSON.stringify(cuerpo)}`);
+  return cuerpo;
+}
+
+async function cargarSectores() {
+  const s = await pedir('/api/base/sectores');
+  const m = s.data;
+  capaSectores = L.imageOverlay(API + '/api/base/sectores.png', m.limites_mapa, { opacity: 0.65, interactive: false }).addTo(mapa);
+  L.rectangle(m.limites_mapa, { color: '#111', weight: 1, fill: false, dashArray: '4 4' }).addTo(mapa);
+  L.control.layers({ 'Satélite (Esri)': satelite, 'Calles (OSM)': calles }, { 'Sectores S1 · S2 · S3': capaSectores }).addTo(mapa);
+  const leyenda = L.control({ position: 'bottomleft' });
+  leyenda.onAdd = () => {
+    const d = L.DomUtil.create('div', 'leyenda');
+    const fila = (k, v) => `<div><i style="background:rgba(${v.color_rgba.slice(0, 3).join(',')},1)"></i>${k} · ${v.altitud_m ? v.altitud_m.join('–') + ' m' : esc(v.descripcion)}</div>`;
+    d.innerHTML = '<b>Sectores (DT-18, desde NASADEM)</b>' + Object.entries(m.sectores).map(([k, v]) => fila(k, v)).join('')
+      + fila('fuera', m.fuera) + `<div class="nota" style="max-width:240px">${esc(m.aviso)}</div>`;
+    return d;
+  };
+  leyenda.addTo(mapa);
+}
+document.getElementById('opacidad').addEventListener('input', e => capaSectores && capaSectores.setOpacity(+e.target.value));
+document.querySelectorAll('[data-ir]').forEach(b => b.addEventListener('click', () => {
+  const [lat, lon] = b.dataset.ir.split(',').map(Number);
+  mapa.setView([lat, lon], 12); seleccionar(lat, lon);
+}));
+mapa.on('click', e => seleccionar(+e.latlng.lat.toFixed(6), +e.latlng.lng.toFixed(6)));
+
+async function seleccionar(lat, lon) {
+  if (sondeo) { clearInterval(sondeo); sondeo = null; }
+  if (marcador) marcador.remove();
+  marcador = L.marker([lat, lon]).addTo(mapa);
+  panel.innerHTML = `<h2>Punto ${lat}, ${lon}</h2><p class="vacio">Leyendo la base de Arequipa…</p>`;
+  const t0 = performance.now();
+  let s;
+  try { s = await pedir(`/api/base?lat=${lat}&lon=${lon}`); }
+  catch (e) { panel.innerHTML += `<div class="aviso">${esc(e.message)}</div>`; return; }
+  const ms = Math.round(performance.now() - t0);
+  const d = s.data;
+  if (d.estado !== 'listo') { panel.innerHTML = `<h2>Punto ${lat}, ${lon}</h2>${chip(d.estado)}<div class="aviso">${esc(d.motivo)}</div>${json(s)}`; return; }
+  const r = d.relieve, sec = d.sector, cl = d.clima, suelo = d.suelo.capas;
+  const sueloFilas = Object.values(suelo).filter(c => c.estadistico === 'mean')
+    .map(c => `<tr><td>${esc(c.propiedad)}</td><td>${esc(c.profundidad)}</td><td>${esc(c.valor)} ${esc(c.unidad)}</td><td>${esc(c.crudo)}</td></tr>`).join('');
+  const gaez = d.aptitud.capas.filter(c => c.indice).map(c => `<tr><td>${esc(c.cultivo)}</td><td>${esc(c.agua)}</td><td>${esc(c.indice)}</td></tr>`).join('');
+  panel.innerHTML = `
+    <h2>Punto ${lat}, ${lon}</h2>
+    <div class="nota">Capa 1 · base de Arequipa · respondió en ${ms} ms</div>
+    ${(s.avisos || []).map(a => `<div class="aviso">${esc(a)}</div>`).join('')}
+    <h3>Relieve (NASADEM)</h3>
+    <table><tr><th>Altitud</th><td>${esc(r.altitud_m)} m</td></tr><tr><th>Pendiente</th><td>${esc(r.pendiente_pct)} % · ${esc(r.clase_pendiente)}</td></tr></table>
+    <h3>Sector</h3>
+    <table><tr><th>${esc(sec.sector ?? sec.estado)}</th><td>${esc(sec.nombre ?? sec.motivo)}</td></tr>
+      <tr><th>Cultivos (DT-20)</th><td>${esc((sec.cultivos_principales || []).join(', '))}</td></tr>
+      <tr><th>Ver más</th><td>${esc((sec.cultivos_ver_mas || []).join(', '))}</td></tr></table>
+    <h3>Clima · celda de NASA POWER</h3>
+    <table><tr><th>Celda</th><td>${esc(cl.celda)} · elevación ${esc(cl.elevacion_celda_m)} m</td></tr>
+      <tr><th>Período</th><td>${esc(cl.desde)} a ${esc(cl.hasta)}</td></tr>
+      <tr><th>Días vacíos</th><td>${esc(JSON.stringify(cl.dias_faltantes_por_variable || {}))}</td></tr></table>
+    ${cl.archivos ? botonesArchivos(cl.archivos) : ''}
+    <h3>Suelo (SoilGrids, medias)</h3>
+    <table><tr><th>Propiedad</th><th>Prof.</th><th>Valor</th><th>Crudo</th></tr>${sueloFilas}</table>
+    <h3>Aptitud (GAEZ, índice 0–10 000, solo distintos de 0)</h3>
+    ${gaez ? `<table><tr><th>Cultivo</th><th>Agua</th><th>Índice</th></tr>${gaez}</table>` : '<p class="vacio">Todas las capas valen 0 en este punto.</p>'}
+    <details><summary>Respuesta completa de /api/base (en crudo)</summary>${json(s)}</details>
+    <h2>Capa 2 · datos pesados de este punto</h2>
+    <p class="nota">POWER hasta ayer y MODIS (NDVI, ET y PET, temperatura de superficie, cobertura) por ORNL. HLS y SMAP: pendientes de Earth Engine. La primera vez tarda minutos; si el punto ya se pidió, se reutiliza.</p>
+    <div class="fila"><input id="nombre" placeholder="nombre (opcional, sin espacios)" style="padding:6px;border:1px solid var(--line);border-radius:6px">
+      <button id="extraer">Extraer datos pesados</button></div>
+    <div id="trabajo"></div>
+    <div id="visor"></div>`;
+  enlazarArchivos();
+  document.getElementById('extraer').onclick = () => extraer(lat, lon);
+}
+
+function botonesArchivos(archivos) {
+  return '<div class="fila">' + Object.entries(archivos || {}).map(([k, ruta]) =>
+    `<button class="sec" data-archivo="${esc(ruta)}">ver ${esc(k)}</button>`).join('') + '</div>';
+}
+function enlazarArchivos() {
+  document.querySelectorAll('[data-archivo]').forEach(b => b.onclick = async () => {
+    const visor = document.getElementById('visor');
+    visor.innerHTML = '<p class="vacio">Cargando archivo…</p>';
+    try {
+      const s = await pedir('/api/archivo?ruta=' + encodeURIComponent(b.dataset.archivo));
+      visor.innerHTML = `<h3>${esc(s.data.ruta)} · ${s.data.bytes} bytes${s.data.recortado ? ' (recortado)' : ''}</h3><pre>${esc(s.data.contenido)}</pre>`;
+      visor.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) { visor.innerHTML = `<div class="aviso">${esc(e.message)}</div>`; }
+  });
+}
+
+async function extraer(lat, lon) {
+  const boton = document.getElementById('extraer');
+  boton.disabled = true;
+  const nombre = document.getElementById('nombre').value.trim() || undefined;
+  try {
+    const s = await pedir('/api/trabajos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lat, lon, nombre }) });
+    mostrarTrabajo(s.data);
+    const clave = s.data.clave;
+    sondeo = setInterval(async () => {
+      try {
+        const e = await pedir('/api/trabajos/' + clave);
+        mostrarTrabajo(e.data);
+        if (!['pendiente', 'en_proceso'].includes(e.data.estado)) { clearInterval(sondeo); sondeo = null; boton.disabled = false; }
+      } catch (err) { document.getElementById('trabajo').innerHTML += `<div class="aviso">${esc(err.message)}</div>`; }
+    }, 4000);
+  } catch (e) { boton.disabled = false; document.getElementById('trabajo').innerHTML = `<div class="aviso">${esc(e.message)}</div>`; }
+}
+
+function mostrarTrabajo(t) {
+  const filas = Object.entries(t.fuentes).map(([f, v]) => {
+    const productos = v.productos ? Object.entries(v.productos).map(([p, x]) =>
+      `<div>${esc(p)} ${chip(x.estado)} ${x.faltan ? `· ${x.faltan} fechas vacías` : ''} ${botonesArchivos(x.archivos)}</div>`).join('') : '';
+    return `<tr><td><b>${esc(f)}</b></td><td>${chip(v.estado)} ${esc(v.motivo || '')}${v.archivos ? botonesArchivos(v.archivos) : ''}${productos}</td></tr>`;
+  }).join('');
+  document.getElementById('trabajo').innerHTML = `
+    <h3>Trabajo ${esc(t.clave)} · ${chip(t.estado)}</h3>
+    <table>${filas}<tr><td>aviso</td><td>${chip(t.aviso.estado)} ${esc(t.aviso.nota || '')}</td></tr></table>
+    <details><summary>Estado del trabajo (en crudo)</summary>${json(t)}</details>`;
+  enlazarArchivos();
+}
+
+cargarSectores().catch(e => panel.innerHTML = `<div class="aviso">No se pudo cargar el mapa de sectores: ${esc(e.message)}</div>`);
+</script>
+</body>
+</html>

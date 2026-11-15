@@ -24,3 +24,14 @@ def procedencia(resultado: dict) -> list[dict]:
         if parte.get("procedencia"):
             salida.append({"origen": "fuente", "bloque": clave, **parte["procedencia"]})
     return salida
+
+
+def mapa_sectores() -> dict:
+    """Metadatos del mapa de sectores (DT-18) calculado desde NASADEM; lo genera si falta (unos 3 s)."""
+    from tarpu_datos.base import mapa
+    return mapa.generar()
+
+
+def ruta_mapa_sectores():
+    from tarpu_datos.base import mapa
+    return mapa.ruta_png()

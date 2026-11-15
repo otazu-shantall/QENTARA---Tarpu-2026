@@ -61,6 +61,8 @@ def _guardar(t: dict) -> None:
 def crear(lat: float, lon: float, nombre: str | None = None) -> dict:
     """Crea (o devuelve) el trabajo del punto. No lo ejecuta; para eso, iniciar()."""
     clave = clave_punto(lat, lon)
+    if not nombre:  # si el punto ya está registrado con un nombre (p. ej. «chivay»), se reutiliza su carpeta
+        nombre = next((n for n, p in actualizacion.puntos().items() if clave_punto(p['lat'], p['lon']) == clave), None)
     previo = estado(clave)
     if previo and previo['estado'] in ('listo', 'parcial', 'en_proceso'):
         return previo
