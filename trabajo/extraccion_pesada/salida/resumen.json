@@ -1,0 +1,72 @@
+{
+ "eb50630c-bea1-498b-b2a6-34f3571e83c3": {
+  "nombre": "relieve_3_zonas",
+  "plan": "relieve",
+  "desde": "2025-01-01",
+  "hasta": "2026-10-31",
+  "estado": "descargada",
+  "minutos": 3.3,
+  "archivos": 13,
+  "bytes": 556532
+ },
+ "639408df-1c89-4c7a-8987-318e2f9d993a": {
+  "nombre": "smap_l3_puntos",
+  "plan": "smap",
+  "desde": "2025-01-01",
+  "hasta": "2026-10-31",
+  "estado": "descargada",
+  "minutos": 37.9,
+  "archivos": 5,
+  "bytes": 663474
+ },
+ "0afa89d8-45ec-44f7-9cbd-28269d5c12b6": {
+  "nombre": "smap_l4_puntos",
+  "plan": "smap",
+  "desde": "2025-01-01",
+  "hasta": "2026-10-31",
+  "estado": "descargada",
+  "minutos": 172.9,
+  "archivos": 5,
+  "bytes": 2373893
+ },
+ "4bc42f84-f66a-4bad-8161-1ace98b0fad7": {
+  "nombre": "hls_landsat_puntos",
+  "plan": "hls",
+  "desde": "2025-01-01",
+  "hasta": "2026-10-31",
+  "estado": "descargada",
+  "minutos": 174.2,
+  "archivos": 5,
+  "bytes": 133452
+ },
+ "9619b02c-2f07-4f27-95aa-1637a0f05031": {
+  "nombre": "hls_sentinel_puntos",
+  "plan": "hls",
+  "desde": "2025-01-01",
+  "hasta": "2026-10-31",
+  "estado": "descargada",
+  "minutos": 176.5,
+  "archivos": 5,
+  "bytes": 217459
+ },
+ "ca0f1357-04f6-43e5-b4f1-e9378294213e": {
+  "nombre": "img_chivay_landsat",
+  "plan": "imagenes_chivay",
+  "desde": "2026-08-01",
+  "hasta": "2026-10-31",
+  "estado": "descargada",
+  "minutos": 179.9,
+  "archivos": 27,
+  "bytes": 4219334
+ },
+ "fa100b20-548e-43c2-afe1-23c62f01820d": {
+  "nombre": "img_chivay_sentinel",
+  "plan": "imagenes_chivay",
+  "desde": "2026-08-01",
+  "hasta": "2026-10-31",
+  "estado": "descargada",
+  "minutos": 184.1,
+  "archivos": 59,
+  "bytes": 9834324
+ }
+}

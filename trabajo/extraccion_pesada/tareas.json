@@ -81,8 +81,13 @@
   "desde": "2026-08-01",
   "hasta": "2026-10-31",
   "enviada": "2026-11-15T16:13:22+00:00",
-  "estado": "enviada",
-  "ultimo_estado": "processing"
+  "estado": "descargada",
+  "ultimo_estado": "done",
+  "minutos": 179.9,
+  "terminada": "2026-11-15T19:13:13+00:00",
+  "archivos": 27,
+  "bytes": 4219334,
+  "carpeta": "C:\\Qentara\\QENTARA---Tarpu-2026\\trabajo\\extraccion_pesada\\salida\\img_chivay_landsat"
  },
  "fa100b20-548e-43c2-afe1-23c62f01820d": {
   "nombre": "img_chivay_sentinel",
@@ -91,7 +96,12 @@
   "desde": "2026-08-01",
   "hasta": "2026-10-31",
   "enviada": "2026-11-15T16:13:23+00:00",
-  "estado": "enviada",
-  "ultimo_estado": "pending"
+  "estado": "descargada",
+  "ultimo_estado": "done",
+  "minutos": 184.1,
+  "terminada": "2026-11-15T19:17:30+00:00",
+  "archivos": 59,
+  "bytes": 9834324,
+  "carpeta": "C:\\Qentara\\QENTARA---Tarpu-2026\\trabajo\\extraccion_pesada\\salida\\img_chivay_sentinel"
  }
 }
