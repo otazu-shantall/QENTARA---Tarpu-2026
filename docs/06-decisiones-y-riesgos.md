@@ -196,6 +196,8 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 
 ### DT-24 · Frontend nuevo basado en las referencias actuales
 
+**Sustituida en ubicación y presentación por DT-25.** La conexión previa con la API se conserva en Git y en el informe 08.
+
 **Indicada · 15/11/2026 (usuario de este chat).** Alcance de la petición de frontend.
 
 - Construir una implementación nueva en `Codigo/`, tomando las referencias recién aportadas y el contenido actual del proyecto.
@@ -203,6 +205,16 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 - Letras cómodas para personas mayores, controles amplios, logo de TARPU en negro o blanco, agente y chat accesibles desde el recorrido.
 - Considerar las futuras integraciones y mantener este trabajo en el frontend. La aprobación final del diseño y la conexión de servicios tienen seguimiento propio.
 - Reemplaza la dirección de DT-05 para la interfaz vigente. DT-05 conserva su valor histórico para el prototipo anterior.
+
+### DT-25 · Frontend de escritorio en `frontend/`
+
+**Indicada por Shantall · 15/11/2026.** Alcance del área de frontend y su integración en el repositorio.
+
+- `frontend/` contiene la implementación vigente; se retira `Codigo/` después de incorporar los cambios remotos. Las versiones anteriores permanecen en Git.
+- Se conserva el trabajo actual de datos, backend, extracción, Supabase, infraestructura y entrega. No se sustituye por el estado anterior del prototipo local.
+- La interfaz se diseña para computadora, con sidebar izquierda, temas claro/oscuro desde el inicio, Estudio técnico, varias parcelas y asistente de chat/voz con burbujas; avatar humano posterior.
+- El frontend incorpora una muestra local de POWER y escenarios rotulados para revisar el diseño. Su conexión con el backend actual no se da por trasladada; DT-16 sigue aplicando a la entrega.
+- Los registros locales anteriores de frontend se conservan en [historial](historial/decisiones-frontend-locales.md), sin reemplazar la numeración del equipo.
 
 ## Riesgos
 

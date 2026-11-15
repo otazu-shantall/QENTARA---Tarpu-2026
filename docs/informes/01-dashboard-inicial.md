@@ -1,10 +1,10 @@
 # 01 · Dashboard inicial
 
-> 24 de octubre de 2026. Primer frontend visual de TARPU, hecho con Codex. Reconstruido a partir de lo registrado en `AGENTS.md` y `Codigo/README.md`.
+> 24 de octubre de 2026. Primer frontend visual de TARPU. Reconstruido a partir de lo registrado en `AGENTS.md` y `Codigo/README.md`.
 
-## Qué pidió el usuario
+## Alcance del trabajo
 
-Empezar el dashboard, en una carpeta de código nueva en la raíz (`Codigo/`), y usar el logo y la referencia de branding que dejó en la raíz (`Logo Tarpu.png`, `Tarpu_ Branding.png`).
+Prototipo del dashboard en `Codigo/`, con el logo y la referencia visual del proyecto (`Logo Tarpu.png`, `Tarpu_ Branding.png`).
 
 ## Qué quedó hecho
 

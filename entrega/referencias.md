@@ -24,6 +24,10 @@
 | Esri World Imagery | Mapa base satelital e imágenes de la landing | https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer | **Por revisar** |
 | OpenStreetMap | Mapa base de calles | https://www.openstreetmap.org/copyright | ODbL; atribución obligatoria |
 
+### Logo del equipo en el nuevo frontend
+
+Logo QENTARA: imagen proporcionada como recurso del equipo, utilizada sin alteraciones en `frontend/public/brand/qentara-logo.jpeg`. Procedencia de archivos en [frontend/ASSETS.md](../frontend/ASSETS.md). Las fotografías de la galería adicional y la adaptación anterior del logo ya no se utilizan en la interfaz.
+
 ## Software y bibliotecas
 
 | Recurso | Uso | Licencia |

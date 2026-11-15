@@ -6,6 +6,8 @@
 
 Estados: ✅ existe · 🟡 existe con datos de demostración o incompleto · ❌ falta.
 
+El frontend vigente está en `frontend/` (DT-25). Su revisión visual incluye escenarios rotulados; estos no cumplen por sí solos DT-16 ni constituyen la demo final.
+
 ## 1. La demostración
 
 Un recorrido completo que el agricultor pueda seguir de principio a fin, con al menos un dato real. Se prioriza este recorrido sobre sumar fuentes o funciones.
@@ -13,14 +15,14 @@ Un recorrido completo que el agricultor pueda seguir de principio a fin, con al 
 | # | Entregable | Cuenta como hecho cuando… | Estado |
 |---|---|---|---|
 | 1.1 | Parcela | Una parcela dibujada sobre un campo real de la imagen, con su contexto declarado por un agricultor real (con permiso) o por el presentador en vivo, rotulado como «declarado por el usuario» | ❌ el prototipo solo tiene parcelas sintéticas, que se retiran (DT-16) |
-| 1.2 | Dato climático real | Una serie de POWER (u otra fuente verificada) con fuente, período, unidad y faltantes visibles **en la app** | 🟡 consulta real hecha en `datos/`; falta mostrarla en la app |
-| 1.3 | Procedencia | Desde el indicador se llega a la fuente, el producto, la fecha y el método | 🟡 rótulos de referencia, sin fuente real |
+| 1.2 | Dato climático real | Una serie de POWER (u otra fuente verificada) con fuente, período, unidad y faltantes visibles **en la app** | 🟡 muestra histórica local de POWER visible en `frontend/`; conexión con backend pendiente |
+| 1.3 | Procedencia | Desde el indicador se llega a la fuente, el producto, la fecha y el método | 🟡 procedencia disponible para la muestra POWER; escenarios sintéticos separados |
 | 1.4 | Pregunta al agente | El agente responde sobre ese dato, muestra en qué se apoya y reconoce lo que falta | 🟡 respuestas guiadas, sin modelo |
-| 1.5 | Datos detallados | Se abren los registros de esa misma consulta, sin pasar por una recomendación, con su nivel (original, normalizado o derivado) | 🟡 tabla y filtros con sintéticos |
-| 1.6 | Descarga | Se descarga la selección en un formato reutilizable (CSV o JSON) con unidades, fechas, procedencia y advertencias | 🟡 funciona con sintéticos |
-| 1.7 | Reporte legible | Un PDF que resume la selección y sus límites, distinto del archivo de datos | 🟡 impresión desde el navegador |
+| 1.5 | Datos detallados | Se abren los registros de esa misma consulta, sin pasar por una recomendación, con su nivel (original, normalizado o derivado) | 🟡 Estudio técnico con muestra POWER y escenarios separados |
+| 1.6 | Descarga | Se descarga la selección en un formato reutilizable (CSV o JSON) con unidades, fechas, procedencia y advertencias | 🟡 CSV/JSON/GeoJSON con origen de la selección; sin descarga masiva de proveedores |
+| 1.7 | Reporte legible | Un PDF que resume la selección y sus límites, distinto del archivo de datos | ❌ PDF pendiente en el frontend vigente |
 | 1.8 | Comparación de rotaciones | Al menos **tres estrategias, incluida la actual**, cada una con motivo, evidencia, vacíos y riesgos (lo sugiere el desafío) | 🟡 pantalla sin evidencia real |
-| 1.9 | Interfaz | Landing y dashboard comprensibles en escritorio y teléfono, con lo sintético rotulado | ✅ prototipo visual |
+| 1.9 | Interfaz | Landing y espacio de trabajo para computadora, con lectura accesible y ejemplos identificados | ✅ prototipo visual |
 | 1.10 | Estados de fallo | Si una fuente falla, se muestra como no disponible; nada simula una integración ausente | 🟡 mapa sí; datos no aplican todavía |
 
 ## 2. Envío oficial

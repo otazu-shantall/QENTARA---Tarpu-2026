@@ -1,19 +1,19 @@
 # TARPU / QENTARA - Instrucciones para asistentes de IA
 
-Fecha de actualización: **14 de noviembre de 2026**. Idioma de trabajo: **español** (documentación, textos de interfaz y mensajes). El código (identificadores, tipos) va en inglés.
+Fecha de actualización: **15 de noviembre de 2026**. Idioma de trabajo: **español** (documentación, textos de interfaz y mensajes). El código (identificadores, tipos) va en inglés.
 
-Este archivo contiene **las reglas**. El estado, el historial del código y la organización viven en [`docs/`](docs/README.md). `CLAUDE.md` importa este archivo para que Codex y Claude Code lean lo mismo. Cada carpeta de área (`datos/`, `Codigo/`, `backend/`, `entrega/`) tiene además su propio `AGENTS.md` con las reglas de esa área. Codex los combina con este al trabajar dentro de la carpeta.
+Este archivo contiene **las reglas**. El estado, el historial del código y la organización viven en [`docs/`](docs/README.md). `CLAUDE.md` importa este archivo para que Codex y Claude Code lean lo mismo. Cada carpeta de área (`datos/`, `frontend/`, `backend/`, `entrega/`) tiene además su propio `AGENTS.md` con las reglas de esa área. Codex los combina con este al trabajar dentro de la carpeta.
 
 ## 1. Situación
 
 Este espacio pertenece a **QENTARA**, el equipo que desarrolla **TARPU**, una plataforma de apoyo a decisiones agrícolas vinculada a NASA Space Apps Challenge 2026, que se quiere fundamentar para continuar después de la hackathon.
 
-El equipo está **en pleno hackathon** (NASA Space Apps, 14 y 15/11/2026), siguiendo el [ROADMAP](ROADMAP.md). Antes de responder, mira en qué fase está en [docs/informes/en-curso.md](docs/informes/en-curso.md). Hay un **prototipo visual local** (landing y dashboard de siete vistas) en `Codigo/`, que sirve de guía y no es el diseño final.
+El equipo está **en pleno hackathon** (NASA Space Apps, 14 y 15/11/2026), siguiendo el [ROADMAP](ROADMAP.md). Antes de responder, mira en qué fase está en [docs/informes/en-curso.md](docs/informes/en-curso.md). El frontend vigente está en `frontend/` (DT-25). `Codigo/` se retiró; sus versiones, incluida la conexión previa con la API, se conservan en Git. El prototipo de escritorio mantiene sus rótulos de demostración y no es la entrega validada.
 
 - **Real:** el mapa base y las imágenes satelitales (Esri y OpenStreetMap).
 - **De demostración:** parcelas, indicadores, series, registros y respuestas del agente.
 - **Datos reales ya obtenidos:** consultas a NASA POWER (`datos/`), que el backend ya usa.
-- **Construido sin conectar a las pantallas:** el backend (`backend/`: API, motor sin puntaje y agente guiado), con datos reales de NASA POWER y pruebas que pasan.
+- **Construido:** el backend (`backend/`: API, motor sin puntaje, agente guiado y extracción) y Supabase local. Su conexión con el frontend vigente está pendiente; la integración anterior se documenta en el informe 08.
 - **Sin conectar:** los conectores de MODIS, SoilGrids y GAEZ (tarea T01) y los datos de AppEEARS (DT-19), cálculo NDVI, modelo de IA, autenticación y evaluación agronómica revisada por especialistas.
 
 No confundas el prototipo ni la extensión del informe con un producto validado. El detalle está en [docs/00-estado-actual.md](docs/00-estado-actual.md).
@@ -38,7 +38,7 @@ Quien te habla **integra QENTARA**. Trabaja con esa persona como integrante del 
 - **Desafío:** *Field Shift: Adapting Farms with NASA Data*, NASA Space Apps 2026 (14 y 15 de noviembre de 2026). Ver [docs/08](docs/08-desafio-oficial.md).
 - **Equipo de cinco** (DT-09). Ver [docs/07](docs/07-equipo-y-areas.md). **Cada área trabaja solo en su carpeta:**
   - Damaris: datos satelitales (`datos/`);
-  - Shantall: frontend y experiencia de usuario (`Codigo/`);
+  - Shantall: frontend y experiencia de usuario (`frontend/`);
   - Erick: backend, conectores y motor (`backend/`);
   - dos integrantes de Derecho: entrega, pitch e investigación (`entrega/`).
 - **Roadmap del hackathon** (DT-12): [ROADMAP.md](ROADMAP.md). Tres fases: planificar cada área, reunión de unión a las 2 horas y construir con una nueva división.
@@ -55,6 +55,10 @@ Quien te habla **integra QENTARA**. Trabaja con esa persona como integrante del 
   - Las imágenes o videos generados con IA llevan marca de agua visible.
   - No uses ni modifiques la marca de NASA.
 
+### Frontend de escritorio (DT-25)
+
+Web para computadora con sidebar izquierda, inicio y acceso, temas claro/oscuro, Estudio técnico y asistente por chat y voz. El avatar humano queda como ampliación. El prototipo local conserva ejemplos señalizados; antes de la entrega deben reconciliarse con los datos y el contrato del equipo, sin presentar integración o validación ausentes.
+
 ### Cero supuestos (DT-16)
 
 **Regla del equipo para toda la demo:** cada valor viene de una fuente real con su procedencia, o lo declara el usuario y se rotula así. Ninguna regla, umbral, rango, límite ni peso se usa sin cita. Nada sintético: ni parcelas, ni personajes, ni valores de ejemplo. Sin interpretaciones sin evidencia («parece», «puede indicar»). Lo que no se sabe se lista como tarea de verificación; nunca se rellena. Si no puedes verificar algo, dilo en vez de suponerlo.
@@ -64,7 +68,7 @@ Quien te habla **integra QENTARA**. Trabaja con esa persona como integrante del 
 1. Este `AGENTS.md`.
 2. [docs/README.md](docs/README.md) y [docs/00-estado-actual.md](docs/00-estado-actual.md). Si hay un trabajo a medias, lee antes [docs/informes/en-curso.md](docs/informes/en-curso.md) y sigue desde «Siguiente paso exacto».
 3. El [informe maestro](Documentación/TARPU_Documentacion_Maestra.md), **versión 0.4** (23/10/2026). En especial la guía, el apartado 01, el anexo D (supuestos) y el anexo G (decisiones). Si hay una versión posterior, revisa su historial.
-4. Para el frontend: [Codigo/README.md](Codigo/README.md) y los archivos actuales, antes de cambiar arquitectura o dependencias.
+4. Para el frontend: [frontend/README.md](frontend/README.md), [frontend/AGENTS.md](frontend/AGENTS.md), [docs/areas/frontend.md](docs/areas/frontend.md) y los archivos actuales, antes de cambiar arquitectura o dependencias.
 5. Como antecedente: [TARPU_QENTARA_Contexto_Integral.md](TARPU_QENTARA_Contexto_Integral.md) (ver [docs/historial/](docs/historial/README.md)).
 
 Cómo resolver diferencias:
@@ -193,17 +197,17 @@ No des por sincronizados los formatos porque sus nombres coincidan.
 - **No ejecutes `editar_v03.py` ni `editar_v04.py`**: aplican transformaciones de revisiones concretas.
 - `tmp/` no es software de TARPU ni tiene prioridad sobre la documentación actual.
 
-### Código (`Codigo/`)
+### Código de frontend (`frontend/`)
 
-Ver [Codigo/README.md](Codigo/README.md) y [docs/desarrollo.md](docs/desarrollo.md). El historial de cambios está en [docs/informes/](docs/informes/README.md).
+Ver [frontend/README.md](frontend/README.md) y [docs/desarrollo.md](docs/desarrollo.md). El historial de cambios está en [docs/informes/](docs/informes/README.md).
 
-- No añadas documentos maestros ni archivos de procesamiento de informes a `Codigo/`.
+- No añadas documentos maestros ni archivos de procesamiento de informes a `frontend/`.
 - Mantén los fixtures identificados mientras existan; la entrega final no los muestra (DT-16): se sustituyen por datos de la API.
 - Las zonas de La Joya, Majes y Camaná son centros aproximados de navegación, **no coordenadas ni límites de parcelas**.
 - No descargues regiones de teselas ni las incluyas en exportaciones.
 - No pongas claves de proveedores en el frontend.
-- El logo vigente es el de blanco y negro de `Codigo/public/brand/` (`tarpu-logo-*`, `tarpu-mark-*`); el original a color se conserva.
-- Después de un cambio, desde la raíz: `npm --prefix Codigo run build` y `npm --prefix Codigo test`. Si hay un navegador disponible, también `npm --prefix Codigo run test:ui`, con `dev` encendido.
+- El logo vigente es el de blanco y negro de `frontend/public/brand/` (`tarpu-logo-*`, `tarpu-mark-*`); el original a color se conserva.
+- Después de un cambio, desde la raíz: `npm --prefix frontend run build` y `npm --prefix frontend test`. Si hay un navegador disponible, también `npm --prefix frontend run test:ui`, con `dev` encendido.
 
 Este `AGENTS.md` se actualiza cuando cambian las reglas o se cierra una decisión importante. El estado del día a día va en `docs/00-estado-actual.md`.
 

@@ -1,10 +1,10 @@
 # 03 · Rediseño visual y landing
 
-> 9 de noviembre de 2026. Hecho con Claude Code. Decisiones: DT-05 (dirección visual, propuesta) y DT-06 (logo en blanco y negro).
+> 9 de noviembre de 2026. Decisiones: DT-05 (dirección visual, propuesta) y DT-06 (logo en blanco y negro).
 
-## Qué pidió el usuario
+## Alcance del trabajo
 
-Cambiar todo, desde la landing hasta el dashboard, para que se vea más bonito y fresco, con más vida en la landing. Usar el logo existente, pero en blanco y negro. Aportó cinco referencias ([diseno/](../diseno/README.md)).
+Rediseño de landing y dashboard con mayor jerarquía visual, logo monocromo y cinco referencias de composición ([diseno/](../diseno/README.md)).
 
 ## Qué quedó hecho
 
@@ -41,7 +41,7 @@ Cambiar todo, desde la landing hasta el dashboard, para que se vea más bonito y
 
 ## Lo que falta
 
-- El visto bueno de la dirección visual (DT-05) y de la identidad (SUP-013).
+- La validación de la dirección visual (DT-05) y de la identidad (SUP-013).
 - Pruebas en teléfonos reales y con usuarios.
 - Pendientes del prototipo que no se tocaron:
   - las series del gráfico no coinciden con los registros;

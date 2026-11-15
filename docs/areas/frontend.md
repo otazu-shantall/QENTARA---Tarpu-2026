@@ -1,101 +1,84 @@
 # Frontend y experiencia de usuario
 
-**Implementación vigente · 15/11/2026.** Trabajar sobre `Codigo/src/nuevo/`, según el pedido del usuario y las referencias actuales (DT-24). La entrada activa carga esa implementación. Rutas `#/campo`, `#/cultivos`, `#/datos` y `#/agente`, además de la portada. Detalle en [Codigo/README.md](../../Codigo/README.md) y [informe 07](../informes/07-frontend-nuevo.md). La descripción de siete vistas y los archivos de la primera versión que siguen en esta guía son antecedentes.
+El nuevo frontend de escritorio está en `frontend/`: primer prototipo interactivo, con temas claro y oscuro para comparar. La carpeta `Codigo/` fue retirada (DT-25); sus versiones se conservan en Git. La identidad visual y las pantallas definitivas siguen en revisión; el enfoque es claro, conciso y comprensible para personas mayores.
 
-> Guía para **Shantall**. Lo que hay en `Codigo/` es un **ejemplo para guiarse, no el diseño final**. El enfoque: **claro, conciso y fácil de usar para personas mayores**. Las pantallas definitivas se acuerdan en la etapa 2 ([07](../07-equipo-y-areas.md)).
+La revisión vigente incorpora **Estudio técnico**, historial diario/semanal/mensual, dos parcelas con datos de ejemplo, catálogo por familias, inicio panorámico con sección QENTARA y registro/acceso con campos completos. La sala de voz tiene aura, pausa y reescucha automática por turnos. Cuenta de IA sin vincular; no se consume una suscripción en esta demo. [Informe 10](../informes/10-estudio-tecnico-y-conversacion.md).
 
-## Empezar
+El ajuste visual vigente añade cabecera fija y sidebar de vidrio, paletas clara/oscura, texto más grande, capas ilustrativas del contorno, prioridad de ejemplo y gráficos de área/líneas/barras. Las barras de desplazamiento están ocultas y las tablas mantienen foco y desplazamiento. [Informe 11](../informes/11-vidrio-capas-y-graficos.md).
 
-```bash
-npm --prefix Codigo install
+El inicio comparte los tonos del dashboard y ofrece cambio de tema claro/oscuro en la navbar, con persistencia y continuidad entre pantallas. Se mantiene el hero satelital, sin galería fotográfica adicional. La sección del equipo usa el nuevo logo QENTARA y el pie sigue compacto. [Informe 15](../informes/15-tema-publico-y-logo-qentara.md).
+
+## Ejecutar y comprobar
+
+Desde la raíz:
+
+```powershell
+npm --prefix frontend ci
+npm --prefix frontend run dev
 ```
 
-```bash
-npm --prefix Codigo run dev
+Abrir [http://127.0.0.1:5174/](http://127.0.0.1:5174/) y entrar por «Descubre TARPU». El acceso es de demostración: no crea cuentas ni pide contraseñas.
+
+```powershell
+npm --prefix frontend run build
+npm --prefix frontend test
+npm --prefix frontend run test:ui
 ```
 
-Abre http://127.0.0.1:5173/ (landing) y http://127.0.0.1:5173/#/overview (dashboard). Más en [desarrollo.md](../desarrollo.md).
+La suite de navegador requiere `dev` encendido y Google Chrome. Arquitectura, rutas, límites y puntos de integración: [frontend/README.md](../../frontend/README.md). La conexión anterior con la API está documentada en el [informe 08](../informes/08-frontend-conectado-api.md); todavía no se trasladó al frontend vigente.
 
-## Qué hay hoy
+## Qué funciona
 
-| Pantalla | Ruta | Archivo |
-|---|---|---|
-| Landing | `#/` | `Codigo/src/features/landing/LandingPage.tsx` |
-| Vista general | `#/overview` | `features/dashboard/OverviewPage.tsx` |
-| Mis parcelas | `#/parcels` | `features/parcels/ParcelsPage.tsx` |
-| Monitor satelital | `#/monitor` | `features/monitor/MonitorPage.tsx` |
-| Clima e históricos | `#/climate` | `features/climate/ClimatePage.tsx` |
-| Rotaciones | `#/rotations` | `features/rotations/RotationsPage.tsx` |
-| Explorar datos | `#/data` | `features/data/DataPage.tsx` |
-| Mis informes | `#/reports` | `features/reports/ReportsPage.tsx` |
-| Agente | panel lateral | `features/assistant/AssistantDrawer.tsx` |
-
-Qué muestra cada una y qué es real o de demostración: [04-modulos.md](../04-modulos.md). Capturas: [diseno/capturas/](../diseno/capturas/). Referencias y sistema visual: [diseno/README.md](../diseno/README.md).
-
-## Dónde se cambia cada cosa
-
-| Quiero cambiar… | Archivo |
+| Pantalla o función | Estado |
 |---|---|
-| Colores, tipografía, radios, sombras | `Codigo/src/styles/tokens.css` |
-| Botones, formularios, diálogos | `Codigo/src/styles/base.css` |
-| El dashboard | `Codigo/src/styles/app.css` |
-| La landing | `Codigo/src/styles/landing.css` |
-| El menú | `Codigo/src/components/layout/Sidebar.tsx` y `data/demo.ts` (`navItems`) |
-| Los datos de ejemplo | `Codigo/src/data/demo.ts` |
-| Los textos del agente | `Codigo/src/lib/domain.ts` |
+| Inicio y acceso | Imagen aérea de referencia de Majes, introducción, «Descubre» y entrada local |
+| Espacio de trabajo | Sidebar izquierda, cuatro destinos principales, tema claro/oscuro y datos avanzados secundarios |
+| Mapa y parcela | Esri/OSM, geolocalización voluntaria, dibujo y edición por vértices, validación y guardado local |
+| Contexto e historial | 365 registros reales de NASA POWER para Majes en 2025; contexto regional, sin diagnóstico de parcela |
+| Estudio técnico | Series, nueve variables representables, registros, diccionario y calidad; CSV/JSON y GeoJSON del contorno |
+| Recomendaciones | Ocho fichas por hortalizas, legumbres, frutas y flores; comparación con continuidad y pautas generales; sin motor de aptitud |
+| Asistente | Chat guiado y sala de voz por turnos con reescucha, pausa, finalización y subtítulos opcionales; IA remota pendiente |
+| Informes | Resúmenes locales descargables como JSON; PDF pendiente |
 
-## El prototipo actual frente al enfoque para personas mayores
+Una parcela nueva muestra «Sin dato». La muestra de Majes no se asocia a su geometría. No hay autenticación, backend, modelo de IA ni capas científicas calculadas. Los estados de voz se probaron mediante dobles del navegador; la prueba con micrófono físico sigue pendiente.
 
-El prototipo se diseñó como un dashboard moderno. Para personas mayores con poca experiencia digital **hay cosas que revisar**:
+## Dónde se trabaja
 
-| Hoy en el prototipo | Problema para una persona mayor | Qué probar |
-|---|---|---|
-| Textos de 11 a 13 px en etiquetas, notas y tablas | Cuestan de leer | Cuerpo de 18 px o más; nada por debajo de 16 px |
-| Texto gris claro sobre blanco | Poco contraste | Contraste mínimo de 4,5:1 (WCAG AA); mejor 7:1 en lo importante |
-| Siete vistas en el menú | Demasiadas opciones | Tres o cuatro destinos con nombres de todos los días |
-| Barra con iconos pequeños | Los iconos solos no se entienden | Icono grande siempre con su palabra |
-| Palabras como «NDVI», «m³/m³», «derivado» | Jerga técnica | Lenguaje llano primero; el término técnico, opcional |
-| Varias tarjetas y un mapa a la vez | Mucha información junta | **Una pregunta por pantalla** y un botón principal claro |
-| Botones y chips pequeños | Difíciles de tocar | Áreas táctiles de 48 px o más, con separación |
-| Animaciones en la landing | Pueden distraer o marear | Movimiento mínimo dentro de la app |
-| Solo texto | Lectura difícil para algunos | Explorar lectura en voz alta y dictado de preguntas |
+| Elemento | Ubicación |
+|---|---|
+| Rutas y estado compartido | `frontend/src/app/` |
+| Sidebar y cabecera | `frontend/src/components/layout/WorkspaceLayout.tsx` |
+| Tokens y temas | `frontend/src/styles/tokens.css` |
+| Pantallas | `frontend/src/features/` |
+| Contratos y adaptador local | `frontend/src/services/` |
+| Validación del contorno y resúmenes | `frontend/src/lib/` |
+| Esquemas de datos | `frontend/src/types/domain.ts` |
+| Logo monocromo | `frontend/public/brand/`, copiado del recurso vigente de `Codigo/` |
 
-## Principios para el diseño nuevo
+## Criterios de diseño
 
-1. **Una cosa a la vez.** Cada pantalla responde una pregunta: «¿Cómo está mi campo?», «¿Qué puedo sembrar después?».
-2. **Primero la respuesta, después el detalle.** Una frase clara arriba; los números y el mapa, debajo y opcionales.
-3. **Palabras del campo.** «Lluvia» en vez de «precipitación acumulada»; «verdor del cultivo» junto a «NDVI».
-4. **Grande y con contraste.** Letra grande, botones grandes, pocos colores.
-5. **Decir siempre de dónde viene el dato y qué no significa**, en una línea sencilla.
-6. **Nunca dejar sin salida.** Botón de volver siempre visible; errores que digan qué hacer.
-7. **El teléfono primero.** Es el orden de plataformas: web, Android, iOS.
+1. Respuesta comprensible primero y detalle opcional después; etiquetas junto a iconos.
+2. Computadora con ratón y teclado, mapa amplio y sidebar izquierda.
+3. Variables con significado: humedad del aire diferenciada de humedad del suelo; NDVI no equivale a fertilidad.
+4. Fechas, fuente y límites visibles. Un histórico no es un pronóstico.
+5. Estados vacíos, errores y alternativa manual a ubicación/voz. No fabricar valores para completar una pantalla.
+6. Datos avanzados secundarios con retorno visible, sin confundir navegación con autorización.
 
-## Lo que el desafío espera de la interfaz
+El cuerpo y los controles principales tienen texto ampliado; quedan pendientes una auditoría completa de contraste y lector de pantalla y las pruebas con agricultores. Chat y voz forman parte del recorrido inicial; el avatar humano es posterior (DT-14).
 
-Del [desafío oficial](../08-desafio-oficial.md):
+## Revisión e integración pendientes
 
-- que sea fácil de interpretar para agricultores con poca experiencia técnica;
-- que el agricultor pueda indicar sus **prioridades o restricciones** (agua disponible, equipos, mercado);
-- que recuerde que la herramienta **apoya y no reemplaza** el criterio local;
-- que compare **al menos tres estrategias de rotación**, incluida la actual, con sus razones, su evidencia, sus vacíos y sus riesgos.
+- Comparar legibilidad y jerarquía de los temas con usuarios y elegir la dirección visual.
+- Acordar contrato, autorización, geometrías y caché privada con backend.
+- Relacionar capas con fuentes realmente disponibles, escala y calidad.
+- Incorporar evaluación agronómica y comparación de tres estrategias con razones, evidencia, vacíos y riesgos.
+- Probar micrófono/audio reales y decidir el proveedor de conversación.
+- Resolver PDF y versión en inglés de la entrega con el área correspondiente.
 
-## Recorrido mínimo a diseñar
+Referencias: [guía de diseño](../diseno/guia-frontend.md), [propuesta del área](propuesta-frontend.md), [informe de implementación](../informes/09-arquitectura-y-prototipo-frontend.md).
 
-| Paso | Pantalla | Dato que necesita del backend |
-|---|---|---|
-| 1 | Elegir o ubicar mi parcela | Lista de parcelas |
-| 2 | Cómo está mi campo (clima real de NASA POWER) | Serie climática con fuente y período |
-| 3 | Qué puedo sembrar después: tres opciones comparadas | Estrategias con motivos, evidencia, vacíos y riesgos |
-| 4 | Preguntar a Tarpu | Respuesta con la evidencia en que se apoya |
-| 5 | Ver y descargar los datos | Registros y metadatos |
+## Integración con el trabajo del equipo
 
-El contrato de datos se acuerda con Erick: [backend/README.md](../../backend/README.md).
+Los contratos actuales están en [T03](../../trabajo/T03-modelado-datos/contrato-pantallas.md), el backend en [su índice](../../backend/README.md) y el esquema mixto en [docs/11](../11-esquema-mixto.md). La conexión previa de `Codigo/src/nuevo/` permanece en el historial Git anterior a DT-25. El prototipo de `frontend/` no hereda automáticamente esa conexión.
 
-## Reglas
-
-- **DT-16, cero supuestos:** la entrega final no muestra ningún dato sintético; los fixtures de `Codigo/src/data/demo.ts` se sustituyen por datos de la API. Mientras existan, conservan sus rótulos. Cada dato indica su fuente y su resolución, o «declarado por ti».
-- No pintar colores de «salud» sobre parcelas sin un dato que lo respalde.
-- El logo vigente es el de blanco y negro (`Codigo/public/brand/`).
-- **Todo lo que se vea en la entrega debe estar en inglés** o tener versión en inglés. Hay que decidirlo pronto: ver [09](../09-entrega-oficial.md).
-- Después de cambiar algo: `npm --prefix Codigo run build` y `npm --prefix Codigo test`.
-- Declarar el uso de IA en [entrega/uso-de-ia.md](../../entrega/uso-de-ia.md).
+DT-16 sigue rigiendo para la entrega: los ejemplos sintéticos del prototipo local no constituyen la demo final. La sustitución por evidencia real y la validación del contrato siguen pendientes.

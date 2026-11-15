@@ -1,59 +1,30 @@
 # Desarrollo
 
-> Cómo levantar y probar el prototipo. La referencia completa del código está en [Codigo/README.md](../Codigo/README.md).
+El frontend vigente de escritorio está en `frontend/` (DT-25). Requisitos, rutas y arquitectura en [frontend/README.md](../frontend/README.md).
 
-## Requisitos
+## Frontend
 
-- **Node.js 24** o posterior y npm.
-- **Internet** para el mapa, las imágenes satelitales y las fuentes tipográficas.
-- **Google Chrome** instalado, solo para la suite de navegador (`test:ui`).
-
-## Levantar
-
-Desde la raíz del proyecto:
-
-```bash
-npm --prefix Codigo install
+```powershell
+npm --prefix frontend ci
+npm --prefix frontend run dev
 ```
 
-```bash
-npm --prefix Codigo run dev
+Abrir http://127.0.0.1:5174/. Inicio con selector de tema; acceso de demostración mediante «Descubre TARPU».
+
+```powershell
+npm --prefix frontend run build
+npm --prefix frontend test
+npm --prefix frontend run test:ui
 ```
 
-| Dirección | Qué abre |
-|---|---|
-| http://127.0.0.1:5173/ | Landing |
-| http://127.0.0.1:5173/#/campo | Dashboard nuevo y mapa |
-| `#/cultivos`, `#/datos`, `#/agente` | Cultivos, registros y conversación |
+Chrome requiere el servidor de desarrollo encendido. Resultados en `frontend/test-results/`; producción en `frontend/dist/`, ambos ignorados.
 
-En la app de escritorio de Claude, la configuración `tarpu-dashboard` de `.claude/launch.json` levanta el mismo servidor y abre la vista previa.
+## Backend y datos del equipo
 
-## Probar
+Se conservan sin cambios las áreas `backend/`, `datos/`, `trabajo/`, `supabase/` e `infra/`. Su ejecución y pruebas están en [backend/README.md](../backend/README.md), [datos/README.md](../datos/README.md) y [docs/12](12-carpetas-docker-y-despliegue.md). La configuración de lanzamiento del backend conserva sus entradas.
 
-| Comando | Qué comprueba |
-|---|---|
-| `npm --prefix Codigo run build` | Tipos de TypeScript y compilación de producción (`Codigo/dist/`) |
-| `npm --prefix Codigo test` | 8 pruebas de lógica: filtros, faltantes, CSV y límites del agente |
-| `npm --prefix Codigo run test:ui` | Recorrido completo en Chrome: landing, mapa, agente, descarga, persistencia y 8 vistas móviles sin desborde. Requiere tener `dev` encendido en otra terminal |
+La interfaz conectada anterior de `Codigo/src/nuevo/` permanece en Git hasta `e08ea68` y en los informes [07](informes/07-frontend-nuevo.md) y [08](informes/08-frontend-conectado-api.md). La carpeta fue retirada; su conexión con la API no se ha trasladado a `frontend/`.
 
-Las capturas y resultados de `test:ui` quedan en `Codigo/test-results/` (ignorado). Las del diseño vigente se copiaron a [diseno/capturas/](diseno/capturas/).
+Antes de exportar JSON desde backend, indicar un destino explícito con `--destino` según su herramienta o configurar `TARPU_EXPORT_DIR`; el valor anterior menciona `Codigo/public/api`. No ejecutar esa exportación como si conectara automáticamente la app nueva. El puerto del frontend ahora es 5174; la configuración CORS deberá revisarse con el backend al integrar.
 
-## Dónde está cada cosa
-
-| Qué | Dónde |
-|---|---|
-| Rutas y composición | `Codigo/src/nuevo/App.tsx` |
-| Consultas reales guardadas | `Codigo/src/nuevo/reference-data.json`, generadas con `Codigo/scripts/prepare-reference-data.py` |
-| Conversación y respuestas guiadas | `Codigo/src/nuevo/Chat.tsx`, `Codigo/src/nuevo/data.ts` |
-| Mapa y dashboard | `Codigo/src/nuevo/FieldMap.tsx`, `Codigo/src/nuevo/FieldDashboard.tsx` |
-| Portada | `Codigo/src/nuevo/Landing.tsx` |
-| Estilos | `Codigo/src/nuevo/styles.css`, `dashboard.css`, `landing.css` |
-| Logos | `Codigo/public/brand/` |
-
-## Reglas al tocar el código
-
-- Comprobar primero el estado real de los archivos.
-- No quitar los rótulos de demostración mientras no haya datos reales comprobados.
-- No poner claves de proveedores en el frontend.
-- No empaquetar ni descargar teselas en masa.
-- Después de un cambio verificable, actualizar [00-estado-actual.md](00-estado-actual.md) y dejar el informe en [informes/](informes/README.md).
+El contrato actual se revisa en [T03](../trabajo/T03-modelado-datos/contrato-pantallas.md). No se introducen claves en el frontend ni se presentan los escenarios locales como datos reales.

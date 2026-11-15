@@ -18,3 +18,7 @@ Material de sesiones anteriores. Se conserva como referencia; **la documentació
 - **Territorio y plazos:** las definiciones confirmadas después (todo Arequipa, DEC-001; sin calendarios de desarrollo, DEC-004) mandan sobre cualquier redacción anterior.
 - **Supuestos cerrados:** SUP-001, SUP-003 y SUP-004 se cerraron por confirmación y no se reutilizan.
 - **Prioridad:** no se restaura una propuesta antigua del contexto si ya fue corregida o aceptada después.
+
+## Registro local de frontend
+
+[Decisiones de frontend anteriores a la integración](decisiones-frontend-locales.md): conserva los identificadores locales que coincidían con otros del equipo. El registro vigente es `docs/06`, con DT-25 para frontend.

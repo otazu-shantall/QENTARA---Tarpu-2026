@@ -21,6 +21,7 @@ Orden de lectura recomendado:
 | 12 | [Carpetas, Docker y despliegue](12-carpetas-docker-y-despliegue.md) | **Plan del backend completo:** carpetas oficiales, Supabase simulado con Docker, una sola imagen para Cloud Run, reutilización por celda y huecos para T03. |
 | 11 | [Esquema mixto](11-esquema-mixto.md) | **Enfoque vigente del motor (DT-22):** base de Arequipa guardada, extracción por coordenada en Google Cloud con aviso al usuario y lugares de ejemplo completos para el jurado. |
 | 10 | [Recorrido y escala](10-recorrido-y-escala.md) | Lo que ve el usuario paso a paso, cómo se dibuja la parcela, cómo se calcula solo su espacio, cómo se muestran los datos y en qué rango de tamaño, territorio y fechas es posible. |
+| — | [Guía de diseño del frontend](diseno/guia-frontend.md) | Diseño, arquitectura y referencias del área; estado vigente en frontend/README.md. |
 | — | [areas/frontend.md](areas/frontend.md) | Guía del área de frontend y experiencia de usuario. |
 | — | [tareas/](tareas/README.md) | Tareas autocontenidas para repartir: qué hacer, recursos y cómo comprobarlo. |
 | — | [areas/propuesta-*.md](areas/) | Plantillas de propuesta de cada área para la reunión de unión: [datos](areas/propuesta-datos.md), [frontend](areas/propuesta-frontend.md), [backend](../backend/PROPUESTA.md) (vive en `backend/`, con todo lo del área), [entrega](areas/propuesta-entrega.md). |
@@ -35,7 +36,7 @@ Orden de lectura recomendado:
 | Área | Carpeta | Guía |
 |---|---|---|
 | Datos satelitales | `datos/` | [datos/README.md](../datos/README.md) |
-| Frontend | `Codigo/` | [areas/frontend.md](areas/frontend.md) |
+| Frontend | `frontend/` | [areas/frontend.md](areas/frontend.md) |
 | Backend, conectores y motor | `backend/` | [backend/README.md](../backend/README.md) |
 | Entrega, pitch e investigación | `entrega/` | [entrega/README.md](../entrega/README.md) |
 

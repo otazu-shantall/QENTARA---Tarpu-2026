@@ -2,7 +2,7 @@
 
 > Desafío: **Field Shift: Adapting Farms with NASA Data**. Envío oficial: **domingo 15/11/2026, 11:59 p. m.**, hora del evento local.
 >
-> Este documento explica **qué le toca a cada uno** y **cómo nos organizamos** en tres fases. El punto de unión se fijó a las **2 horas** de empezar la fase 1, por acuerdo del equipo (Erick, 14/11/2026). Más detalle de las áreas en [docs/07-equipo-y-areas.md](docs/07-equipo-y-areas.md).
+> Este documento explica **qué le toca a cada uno** y **cómo nos organizamos** en tres fases. El punto de unión se fijó a las **2 horas** de empezar la fase 1, según DT-12 (14/11/2026). Más detalle de las áreas en [docs/07-equipo-y-areas.md](docs/07-equipo-y-areas.md).
 
 ## Las tres fases
 
@@ -13,8 +13,8 @@ FASE 1 · Planificar cada área          FASE 2 · Unir             FASE 3 · Co
 Damaris   → datos                      · presentar propuestas     · tareas con dueño
 Shantall  → frontend y UX              · decidir recorrido,       · integración
 Erick     → backend y motor              pantallas, datos,        · demo y envío
-Derecho A → entrega y legal              contrato, demo           
-Derecho B → pitch e investigación      · repartir de nuevo        
+Derecho A → entrega y legal              contrato, demo
+Derecho B → pitch e investigación      · repartir de nuevo
 ```
 
 **Qué es TARPU, en una frase, para que todos remen hacia lo mismo:** una herramienta que ayuda al agricultor de Arequipa a entender su campo con datos de NASA y a **comparar al menos tres opciones de rotación, incluida la actual**, mostrando el porqué, la evidencia, lo que falta saber y los riesgos. **Apoya al agricultor; no decide por él.**
@@ -63,7 +63,8 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 | Lo que tienes | Dónde |
 |---|---|
 | Guía del área | [docs/areas/frontend.md](docs/areas/frontend.md) |
-| Prototipo de ejemplo (**guía, no diseño final**) | `Codigo/`: `npm --prefix Codigo run dev` |
+| Prototipo anterior | Retirado del árbol actual; conservado en Git y en los informes 07/08 |
+| Nuevo desarrollo | `frontend/`, primer prototipo de escritorio implementado (DT-25) |
 | Referencias visuales y capturas | [docs/diseno/](docs/diseno/README.md) |
 
 **Preguntas que debes responder:**
@@ -93,7 +94,7 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 **Preguntas que debes responder:**
 
 1. **Stack:** ¿Python con FastAPI u otro? ¿Base de datos o archivos? ¿Dónde se publica, si se publica?
-2. **Contrato:** ¿qué rutas y qué forma de JSON llegan a cada pantalla? Se cruza con lo que pide Shantall y lo que trae Damaris.
+2. **Contrato:** ¿qué rutas y qué forma de JSON llegan a cada pantalla? Se cruza con los requisitos del frontend y las muestras del área de datos.
 3. **Motor de rotaciones, versión 0:** ¿qué entradas usa? ¿Cómo arma las **tres estrategias** (la actual y dos alternativas)? ¿Qué criterios aplica? ¿Cuándo dice «no evaluable»?
 4. **Agente:** ¿respuestas guiadas con los datos reales, o un modelo de IA? Si es un modelo, ¿cuál, y cómo se declara?
 5. ¿Los datos se piden **en vivo** o se guardan antes, para que la demo no dependa de la red?
@@ -187,7 +188,7 @@ Datos ──▶ Backend ──▶ Frontend ──▶ Integración ──▶ Grab
 | Scripts de datos de la demo | Damaris | Cada fuente elegida deja original, normalizado y procedencia en `datos/muestras/` |
 | API con el contrato v1 | Erick | Cada pantalla puede pedir su dato real |
 | Motor de rotaciones v0 | Erick | Devuelve tres estrategias con motivo, evidencia, vacíos y riesgos, o «no evaluable» |
-| Pantallas definitivas | Shantall | El recorrido se completa en el teléfono, con letra grande y lenguaje claro |
+| Pantallas definitivas | Shantall | El recorrido se completa en computadora, con sidebar izquierda, letra legible, lenguaje claro y asistente por chat y voz (DT-25) |
 | Integración | Erick y Shantall | La app muestra al menos un dato real de NASA |
 | Formulario y referencias | Derecho A | Todos los campos en inglés, sin pendientes |
 | Demo | Derecho B, con capturas de Shantall | Video ≤ 30 s con subtítulos en inglés, o ≤ 7 diapositivas, con enlace público probado |
@@ -208,7 +209,7 @@ Datos ──▶ Backend ──▶ Frontend ──▶ Integración ──▶ Grab
 
 ## Reglas para todos
 
-- **Cada uno en su carpeta** y en su rama: `datos/` Damaris · `Codigo/` Shantall · `backend/` Erick · `entrega/` Derecho. `docs/` es de todos.
+- **Cada uno en su carpeta** y en su rama: `datos/` Damaris · `frontend/` Shantall (`Codigo/` permanece en el historial Git) · `backend/` Erick · `entrega/` Derecho. `docs/` es de todos. El nuevo frontend tiene un primer prototipo independiente; la integración de equipo sigue pendiente.
 - **No inventar datos.** Lo sintético se rotula; lo que falta se dice.
 - **Límites científicos:** el NDVI no es fertilidad; un histórico no es un pronóstico; un dato regional no es una medición en la parcela.
 - **Declarar la IA** que se use en [entrega/uso-de-ia.md](entrega/uso-de-ia.md).

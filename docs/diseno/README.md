@@ -1,16 +1,18 @@
 # Diseño
 
-> 09/11/2026 · Dirección **DT-05, propuesta**: «mapa protagonista» para el dashboard y «landing editorial». Sale de cinco referencias que aportó el usuario. Se toma la idea de cada una, sin copiarlas. La identidad visual sigue sin aprobar (SUP-013).
+> 09/11/2026 · Dirección **DT-05, propuesta**: «mapa protagonista» para el dashboard y «landing editorial». Composición basada en cinco referencias visuales. La identidad visual sigue sin aprobar (SUP-013).
 
 **Capturas del diseño actual:** [capturas/](capturas/)
+
+**Diseño del frontend · 14/11/2026 (DT-25):** [guía de diseño y arquitectura del frontend](guia-frontend.md). Web para computadora en `frontend/`: inicio/acceso, sidebar, delimitación, históricos y datos avanzados. Chat y voz son iniciales, con burbujas de estado; el avatar humano va después. Las variantes clara y oscura ya se pueden recorrer en el nuevo prototipo; la elección sigue abierta. Arquitectura y ejecución: [frontend/README.md](../../frontend/README.md). La guía reúne seis capturas y las cinco referencias guardadas que se revisaron visualmente. Los valores y capturas de esta página describen el prototipo existente, no el diseño final.
 
 - [landing en escritorio](capturas/landing-escritorio.png) y [en móvil](capturas/landing-movil.png);
 - [vista general en escritorio](capturas/vista-general-escritorio.png) y [en móvil](capturas/vista-general-movil.png);
 - [datos](capturas/datos-escritorio.png) y [agente](capturas/agente.png).
 
-## Referencias y qué tomamos
+## Referencias de composición
 
-| # | Referencia | Qué nos gustó | Dónde se aplica |
+| # | Referencia | Aporte al diseño | Dónde se aplica |
 |---|---|---|---|
 | 1 | [ref-1-mapa-con-panel-izquierdo](referencias/ref-1-mapa-con-panel-izquierdo.webp) | Panel de datos a la izquierda, mapa satelital grande, tarjeta flotante con lecturas y caja oscura de «Insights» | **Vista general**: panel, mapa fijo y tarjeta flotante de la parcela |
 | 2 | [ref-2-zona-con-panel-derecho](referencias/ref-2-zona-con-panel-derecho.webp) | Panel lateral derecho con pestañas, lista en árbol y tabla con etiquetas de color | **Monitor** (pestañas Fuentes/Límites con árbol) y **Explorar datos** (etiquetas por variable) |
@@ -31,7 +33,7 @@ Contradicen los límites científicos de TARPU o serían datos inventados.
 
 | Elemento | Valor |
 |---|---|
-| Logo | **Blanco y negro** (DT-06): `Codigo/public/brand/tarpu-logo-black.png` y `-white.png` (logotipo), `tarpu-mark-black.png` y `-white.png` (símbolo). El sol queda integrado. El original a color solo aparece en la referencia de branding |
+| Logo | **Blanco y negro** (DT-06): `frontend/public/brand/tarpu-logo-black.png` y `-white.png` (logotipo), `tarpu-mark-black.png` y `-white.png` (símbolo). El sol queda integrado. El original a color solo aparece en la referencia de branding |
 | Fondo de la app | `#F2F2EF` (gris cálido). Tarjetas y barra lateral en blanco |
 | Texto | `#111311` principal · `#4B504C` secundario · `#868B85` tenue |
 | Acción principal | Negro `#111311` en botón píldora |
@@ -43,7 +45,7 @@ Contradicen los límites científicos de TARPU o serían datos inventados.
 | Sombras | Mínimas en tarjetas; grandes solo en lo que flota (tarjetas del mapa, diálogos) |
 | Móvil | La barra de iconos pasa a navegación inferior. El resumen textual va antes del mapa |
 
-Los valores viven en `Codigo/src/styles/tokens.css`. Se cambian ahí, no en los componentes.
+La paleta vigente vive en `frontend/src/styles/polish.css`, sobre los tokens base de `frontend/src/styles/tokens.css`. Los valores de las capturas antiguas son antecedentes.
 
 ## Movimiento
 
@@ -59,6 +61,6 @@ Los valores viven en `Codigo/src/styles/tokens.css`. Se cambian ahí, no en los 
 
 ## Pendiente de este diseño
 
-- El visto bueno de la dirección (DT-05) y de la identidad visual (SUP-013).
-- Pruebas de legibilidad en teléfonos reales y con agricultores.
+- La validación de la dirección (DT-05) y de la identidad visual (SUP-013).
+- Pruebas de legibilidad en computadora y con agricultores para la propuesta actual (DT-25). Las capturas móviles conservadas pertenecen al prototipo anterior.
 - Diseñar las pantallas de lo que aún no existe: dibujar la parcela, registrar el historial, la capa de vegetación y la comparación con reglas.
