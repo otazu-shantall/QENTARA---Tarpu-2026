@@ -192,26 +192,23 @@ export function WorkspaceLayout() {
                 {parcel.kind === 'example'
                   ? 'Datos y contorno de ejemplo'
                   : parcel.kind === 'reference'
-                    ? 'Muestra histórica real · NASA POWER'
-                    : 'Parcela declarada · sin observaciones asociadas'}
+                    ? `Lugar de referencia real · ${parcel.location}`
+                    : 'Tu parcela · contorno declarado por ti'}
               </strong>
               <span>
                 {parcel.kind === 'example'
                   ? 'Valores ficticios para explorar la interfaz. No son un diagnóstico ni una recomendación.'
                   : parcel.kind === 'reference'
-                    ? 'Majes · 2025 · contexto regional, sin actualización en vivo.'
-                    : 'Tu contorno no genera automáticamente indicadores ambientales.'}
+                    ? 'Punto de consulta con datos de NASA y del censo, leídos del servidor. No es el límite de una parcela.'
+                    : 'Los datos de tu campo se leen del servidor, cada uno con su fuente y su escala.'}
               </span>
             </p>
-            <button
-              className="text-link"
-              onClick={() =>
-                selectParcel(parcel.kind === 'reference' ? 'example-olivos' : 'reference-majes')
-              }
-            >
-              {parcel.kind === 'reference' ? 'Ver ejemplo completo' : 'Ver muestra real'}
-              <Icon name="upRight" size={16} />
-            </button>
+            {parcel.kind !== 'declared' && (
+              <Link className="text-link" to="/app/parcela/nueva">
+                Analizar mi campo
+                <Icon name="upRight" size={16} />
+              </Link>
+            )}
           </div>
           <Outlet />
         </main>
@@ -228,14 +225,14 @@ export function WorkspaceLayout() {
       {help && (
         <Dialog title="Una demostración con límites claros" onClose={() => setHelp(false)}>
           <p>
-            La muestra climática de Majes procede de NASA POWER y corresponde a 2025. Es contexto
-            regional, no una medición dentro de una parcela. El mapa base utiliza Esri u
-            OpenStreetMap.
+            Los datos llegan del servidor de TARPU: clima diario de NASA POWER (celda regional),
+            relieve de NASADEM, suelo estimado de SoilGrids, cultivos del censo 2012 y, al pedirlos,
+            datos satelitales de MODIS. El mapa base utiliza Esri u OpenStreetMap.
           </p>
           <p>
-            Hay dos parcelas ficticias para explorar el diseño. Las parcelas dibujadas se guardan en
-            este navegador, sin observaciones ambientales asociadas. El asistente usa respuestas
-            guiadas; todavía no hay un modelo de IA ni motor agronómico conectado.
+            Majes, Cabanaconde y Chivay son puntos de consulta, no límites de parcelas. Las parcelas
+            que dibujas se guardan en este navegador. El asistente usa respuestas guiadas; todavía no
+            hay un modelo de IA conectado.
           </p>
           <a
             href="https://power.larc.nasa.gov/docs/services/api/temporal/daily/"

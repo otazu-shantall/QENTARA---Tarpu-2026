@@ -18,7 +18,7 @@ export function ObservationControls({
           value={period}
           onChange={(e) => setPeriod(Number(e.target.value) as ViewPeriod)}
         >
-          <option value={365}>Todo el período disponible</option>
+          <option value={365}>Últimos 365 días disponibles</option>
           <option value={90}>Últimos 90 días disponibles</option>
           <option value={30}>Últimos 30 días disponibles</option>
         </select>

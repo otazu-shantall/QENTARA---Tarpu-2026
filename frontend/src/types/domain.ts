@@ -14,6 +14,8 @@ export const parcelSchema = z.object({
   boundary: z.array(coordinateSchema),
   crop: z.string(),
   irrigation: z.string(),
+  /** Punto de consulta de un lugar de referencia (no es un límite de parcela). */
+  point: z.object({ lat: z.number(), lon: z.number() }).optional(),
 })
 export type Parcel = z.infer<typeof parcelSchema>
 export const observationSchema = z.object({

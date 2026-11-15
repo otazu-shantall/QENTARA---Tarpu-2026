@@ -6,6 +6,7 @@ import type { Coordinate } from '../../types/domain'
 import { areaHectares, boundaryError } from '../../lib/geometry'
 import { number } from '../../lib/evidence'
 import { Icon } from '../../components/ui/Icon'
+import { ServerFields } from './ServerFields'
 const FieldMap = lazy(() =>
   import('../monitor/FieldMap').then((module) => ({ default: module.FieldMap })),
 )
@@ -69,8 +70,8 @@ export function ParcelEditorPage() {
         <span className="step-counter">01 / UBICAR Y DELIMITAR</span>
         <h2>Marca cada esquina.</h2>
         <p>
-          Acércate a tu terreno y añade sus puntos sobre el mapa. Cierra el contorno para corregir
-          sus esquinas. Con teclado, enfoca el mapa, desplázate con las flechas y usa «Añadir
+          Busca tu terreno en el mapa de Arequipa, acércate y marca sus esquinas. Cierra el contorno
+          para corregirlas. Al guardarlo, TARPU lee sus datos. Con teclado, enfoca el mapa, desplázate con las flechas y usa «Añadir
           esquina en el centro del mapa».
         </p>
         <div className="boundary-stat">
@@ -147,9 +148,9 @@ export function ParcelEditorPage() {
         )}
         <p className="small-note">
           Contorno declarado y superficie aproximada. No acredita propiedad ni un deslinde legal. Se
-          guarda solo en este navegador; la cobertura de Arequipa debe verificarse al integrar el
-          servicio.
+          guarda en este navegador; sus datos se leen de la base de Arequipa del servidor.
         </p>
+        {!points.length && <ServerFields />}
         <button className="text-link" onClick={() => navigate('/app')}>
           <Icon name="back" size={16} /> Cancelar y volver
         </button>

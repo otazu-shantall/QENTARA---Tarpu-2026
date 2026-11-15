@@ -1,0 +1,233 @@
+/* Vidrio (glassmorfismo) en el dashboard, al estilo de las pestañas y tarjetas flotantes de Codex,
+   y estilos del panel de datos reales de la parcela. Escrito con asistencia de IA (Claude Code).
+   Registro en entrega/uso-de-ia.md. */
+:root {
+  --glass: color-mix(in srgb, var(--surface) 72%, transparent);
+  --glass-strong: color-mix(in srgb, var(--surface) 86%, transparent);
+  --glass-border: color-mix(in srgb, #ffffff 55%, var(--line));
+  --glass-blur: blur(18px) saturate(150%);
+  --glass-shadow: 0 10px 36px #17382c14, inset 0 1px 0 #ffffff80;
+}
+:root[data-theme='dark'] {
+  --glass: color-mix(in srgb, var(--surface) 64%, transparent);
+  --glass-strong: color-mix(in srgb, var(--surface) 82%, transparent);
+  --glass-border: color-mix(in srgb, #ffffff 12%, var(--line));
+  --glass-shadow: 0 10px 36px #0005, inset 0 1px 0 #ffffff14;
+}
+
+/* Tarjetas y bandas del espacio de trabajo */
+.workspace-main .card,
+.workspace-main .metric-card,
+.workspace-main .environment-card,
+.workspace-main .source-context,
+.workspace-main .insight-intro,
+.workspace-main .context-note,
+.workspace-main .evidence-strip,
+.workspace-main .parcel-select,
+.editor-form {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+/* Pestañas y controles flotantes sobre el mapa, como en Codex */
+.map-caption,
+.map-toolbar,
+.map-field-label,
+.map-legend,
+.map-layer-menu,
+.drawing-instruction,
+.map-status {
+  background: color-mix(in srgb, #10251c 55%, transparent) !important;
+  color: #fff !important;
+  border: 1px solid #ffffff2e !important;
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 8px 28px #0003;
+}
+.map-toolbar button {
+  background: transparent !important;
+  color: #fff !important;
+}
+.map-toolbar button:hover {
+  background: #ffffff1f !important;
+}
+.map-field-label span,
+.map-legend span,
+.map-layer-menu p {
+  color: #e8efe6 !important;
+}
+.map-layer-menu button {
+  color: #fff !important;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .workspace-main .card,
+  .workspace-main .metric-card,
+  .workspace-main .environment-card,
+  .editor-form {
+    background: var(--surface);
+  }
+}
+
+/* Panel de datos reales de la parcela */
+.parcel-data {
+  display: grid;
+  gap: 18px;
+  margin: 22px 0 8px;
+}
+.parcel-readings {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.parcel-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+.parcel-data h3 {
+  margin: 4px 0 12px;
+  font-size: 21px;
+}
+.texture-row {
+  display: grid;
+  grid-template-columns: 70px 1fr 82px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-size: 16px;
+}
+.texture-row > div {
+  height: 10px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--line) 70%, transparent);
+  overflow: hidden;
+}
+.texture-row > div > span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: var(--green);
+}
+.texture-row strong {
+  text-align: right;
+}
+.crop-ranking {
+  columns: 2;
+  margin: 6px 0 10px;
+  padding-left: 24px;
+  font-size: 17px;
+  line-height: 1.8;
+}
+.parcel-notices {
+  display: flex;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, #d8a24a 45%, var(--line));
+  background: color-mix(in srgb, #f6e7c6 45%, transparent);
+  font-size: 15px;
+}
+:root[data-theme='dark'] .parcel-notices {
+  background: color-mix(in srgb, #6b5420 35%, transparent);
+}
+.parcel-notices ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.api-waiting {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+.extraction-card .extraction-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.extraction-card .button {
+  min-height: 48px;
+}
+.source-states {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.source-states li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-strong);
+  font-size: 16px;
+}
+.source-states li small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 14px;
+}
+.source-states .source-listo,
+.source-states .source-listo_con_vacios {
+  border-color: color-mix(in srgb, var(--green) 45%, var(--line));
+}
+.source-states .source-error,
+.source-states .source-cancelado,
+.source-states .source-interrumpido {
+  border-color: #d99a86;
+}
+.extraction-actions {
+  display: flex;
+  gap: 10px;
+}
+.server-fields {
+  margin: 18px 0 8px;
+}
+.server-fields ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.server-fields button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-strong);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.server-fields button span {
+  display: grid;
+}
+.server-fields small {
+  color: var(--muted);
+  font-size: 14px;
+}
+@media (max-width: 1100px) {
+  .parcel-readings {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .parcel-readings {
+    grid-template-columns: 1fr;
+  }
+  .crop-ranking {
+    columns: 1;
+  }
+}

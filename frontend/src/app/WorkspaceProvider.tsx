@@ -1,4 +1,5 @@
 // Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md.
+// 15/11/2026 (Claude Code): lugares de referencia reales leídos de la API y sin parcelas de ejemplo (DT-16).
 import { useState, useEffect } from 'react'
 import { WorkspaceContext } from './WorkspaceContext'
 import type { ReactNode } from 'react'
@@ -6,20 +7,45 @@ import { z } from 'zod'
 import { useQuery } from '@tanstack/react-query'
 import { parcelSchema } from '../types/domain'
 import type { Parcel, ViewPeriod } from '../types/domain'
-import { evidenceRepository } from '../services/local'
+import { remoteEvidenceRepository as evidenceRepository } from '../services/remote'
 import { selectPeriod } from '../lib/evidence'
-import { exampleParcels } from '../data/scenarios'
 import { boundaryError } from '../lib/geometry'
 
-const reference: Parcel = {
-  id: 'reference-majes',
-  name: 'Majes',
-  location: 'Arequipa · zona de referencia',
-  kind: 'reference',
-  boundary: [],
-  crop: 'Sin registrar',
-  irrigation: 'Sin registrar',
-}
+// Puntos de consulta de los lugares de ejemplo (DT-22). Son puntos, no límites de parcela.
+// Majes riego y Chivay: datos/; Cabanaconde: censo 2012, sector censal de Caylloma (trabajo/extraccion_pesada/README.md).
+const references: Parcel[] = [
+  {
+    id: 'reference-majes',
+    name: 'Majes',
+    location: 'Costa · punto de riego',
+    kind: 'reference',
+    boundary: [],
+    crop: 'Sin registrar',
+    irrigation: 'Sin registrar',
+    point: { lat: -16.367023, lon: -72.185771 },
+  },
+  {
+    id: 'reference-cabanaconde',
+    name: 'Cabanaconde',
+    location: 'Valle interandino · Caylloma',
+    kind: 'reference',
+    boundary: [],
+    crop: 'Sin registrar',
+    irrigation: 'Sin registrar',
+    point: { lat: -15.612386, lon: -71.984857 },
+  },
+  {
+    id: 'reference-chivay',
+    name: 'Chivay',
+    location: 'Altura · Caylloma',
+    kind: 'reference',
+    boundary: [],
+    crop: 'Sin registrar',
+    irrigation: 'Sin registrar',
+    point: { lat: -15.64, lon: -71.6 },
+  },
+]
+const reference = references[0]
 function readParcels() {
   try {
     const parsed = z
@@ -34,16 +60,15 @@ function readParcels() {
 }
 function useWorkspaceState() {
   const [parcels, setParcels] = useState<Parcel[]>(() => [
-    ...exampleParcels,
-    reference,
+    ...references,
     ...readParcels(),
   ])
   const [selected, setSelected] = useState(() => {
     try {
       const saved = localStorage.getItem('tarpu.prototype.selected')
-      return parcels.some((p) => p.id === saved) ? saved! : exampleParcels[0].id
+      return parcels.some((p) => p.id === saved) ? saved! : reference.id
     } catch {
-      return exampleParcels[0].id
+      return reference.id
     }
   })
   const [period, setPeriod] = useState<ViewPeriod>(365)

@@ -6,6 +6,7 @@
 
 ## Resumen
 
+- **Frontend unido (15/11/2026, DT-26):** `frontend/` usa la portada de Codex y el panel de Shantall con vidrio, y lee datos reales de la API: Majes, Cabanaconde y Chivay como puntos de consulta; la parcela dibujada con relieve, suelo, zona y cultivos del censo, clima de POWER y extracción satelital con «Detener» (MODIS entra en Historial y Estudio). Sin parcelas de ejemplo ni sectores en el mapa. Detalle en [informe 17](informes/17-frontend-unido.md).
 - **Frontend vigente (15/11/2026, DT-25):** `frontend/`, con inicio, acceso de demostración, sidebar, parcelas, historial, Estudio técnico, exportaciones y chat/voz guiados. Selector claro/oscuro persistente desde el inicio, nuevo logo QENTARA y pie compacto. Muestra histórica local de POWER de Majes (2025), escenarios sintéticos rotulados y parcelas nuevas sin indicadores. Backend y datos del equipo se conservan; falta conectar este frontend al contrato actual. [Arquitectura](../frontend/README.md) e [informe de integración](informes/16-integracion-repositorio-frontend.md).
 
 

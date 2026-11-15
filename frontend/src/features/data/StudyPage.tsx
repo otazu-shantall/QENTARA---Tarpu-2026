@@ -36,14 +36,14 @@ const definitions: Record<Metric, { code: string; description: string; method: s
     method: 'Promedio de registros válidos',
   },
   soilMoisture: {
-    code: 'SOIL_MOISTURE_DEMO',
-    description: 'Contenido volumétrico ilustrativo. Sin producto real conectado.',
-    method: 'Solo escenario sintético; sin estimación de suelo real',
+    code: 'SMAP (sin conectar)',
+    description: 'Humedad del suelo de SMAP, celda de 9 km. Todavía no llega al servidor.',
+    method: 'Sin datos hasta conectar SMAP; un faltante no es 0',
   },
   vegetation: {
-    code: 'NDVI_DEMO',
-    description: 'Índice de vegetación ilustrativo. No demuestra fertilidad.',
-    method: 'Solo escenario sintético; sin cálculo NDVI conectado',
+    code: 'MOD13Q1 250m_16_days_NDVI',
+    description: 'Verdor de MODIS, píxel de 250 m cada 16 días. No demuestra fertilidad.',
+    method: 'Valor del proveedor en la fecha de cada composición; fiabilidad 2 (nieve) y 3 (nubes) quedan sin valor (MOD13 User Guide)',
   },
   solarRadiation: {
     code: 'ALLSKY_SFC_SW_DWN',
@@ -51,9 +51,9 @@ const definitions: Record<Metric, { code: string; description: string; method: s
     method: 'Promedio de la energía diaria disponible',
   },
   surfaceTemperature: {
-    code: 'LST_DEMO',
-    description: 'Temperatura superficial ilustrativa; distinta del aire.',
-    method: 'Solo escenario sintético; sin producto térmico conectado',
+    code: 'MOD11A2 LST_Day_1km',
+    description: 'Temperatura de la superficie de día, píxel de 1 km cada 8 días; distinta del aire.',
+    method: 'Valor del proveedor en Kelvin menos 273,15 (°C) en la fecha de cada composición',
   },
 }
 export function StudyPage() {
@@ -95,7 +95,7 @@ export function StudyPage() {
             {evidence?.origin === 'synthetic'
               ? 'ESCENARIO SINTÉTICO'
               : evidence
-                ? 'MUESTRA HISTÓRICA REAL'
+                ? 'HISTÓRICO REAL CON FUENTE'
                 : 'SIN OBSERVACIONES'}
           </small>
         </div>
@@ -143,7 +143,7 @@ export function StudyPage() {
                       ? evidence?.origin === 'synthetic'
                         ? 'Ejemplo'
                         : 'Disponible'
-                      : 'Sin conectar'}
+                      : 'Sin dato'}
                   </span>
                 </button>
               ))}

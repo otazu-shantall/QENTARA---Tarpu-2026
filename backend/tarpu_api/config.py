@@ -36,7 +36,8 @@ class Config:
     almacen_dir: Path = field(default_factory=lambda: _ruta("almacen"))
     catalogo: Path = field(default_factory=lambda: _ruta("catalogo/ecocrop_2026-11-14.json"))
     export_dir: Path = field(default_factory=lambda: _ruta("../Codigo/public/api"))
-    cors: list[str] = field(default_factory=lambda: ["http://127.0.0.1:5173", "http://localhost:5173"])
+    cors: list[str] = field(default_factory=lambda: ["http://127.0.0.1:5173", "http://localhost:5173",
+                                                       "http://127.0.0.1:5174", "http://localhost:5174"])
     power_inicio: str = "2015-01-01"
     power_fin: str = "2025-12-31"
 

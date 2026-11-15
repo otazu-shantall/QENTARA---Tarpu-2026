@@ -1,4 +1,5 @@
 // Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md.
+// 15/11/2026 (Claude Code): imagen Esri Clarity con zoom 21, vista de toda Arequipa al dibujar y punto de referencia.
 import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -6,6 +7,8 @@ import type { Coordinate } from '../../types/domain'
 import { buildParcelOverlay, parcelLayers } from '../../lib/parcelOverlay'
 import type { ParcelLayer } from '../../lib/parcelOverlay'
 import { Icon } from '../../components/ui/Icon'
+
+const AREQUIPA: L.LatLngTuple = [-16.2, -72.3]
 
 export function FieldMap({
   points = [],
@@ -15,6 +18,7 @@ export function FieldMap({
   onError,
   illustrative = false,
   analysisLayer = 'none',
+  center,
 }: {
   points?: Coordinate[]
   drawing?: boolean
@@ -23,6 +27,8 @@ export function FieldMap({
   onError?: (message: string) => void
   illustrative?: boolean
   analysisLayer?: ParcelLayer
+  /** Punto de consulta (lugar de referencia). Se marca en el mapa; no es un límite de parcela. */
+  center?: { lat: number; lon: number; label?: string }
 }) {
   const container = useRef<HTMLDivElement>(null)
   const map = useRef<L.Map | null>(null)
@@ -39,15 +45,16 @@ export function FieldMap({
   useEffect(() => {
     if (!container.current) return
     const instance = L.map(container.current, {
-      center: [-16.351, -72.19],
-      zoom: 14,
+      // Sin contorno ni punto, se abre sobre toda Arequipa para ubicar el terreno.
+      center: center ? [center.lat, center.lon] : AREQUIPA,
+      zoom: center ? 14 : drawing ? 8 : 14,
       zoomControl: false,
       zoomAnimation: false,
       fadeAnimation: false,
       markerZoomAnimation: false,
       scrollWheelZoom: true,
       minZoom: 5,
-      maxZoom: 19,
+      maxZoom: 21,
     })
     map.current = instance
     vertices.current = L.layerGroup().addTo(instance)
@@ -85,18 +92,23 @@ export function FieldMap({
     const source =
       basemap === 'satellite'
         ? {
-            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            // «Clarity»: la misma imagen de Esri con menos compresión. En zonas rurales de Arequipa hay
+            // imagen real hasta el zoom 17; desde ahí se amplía la última tesela real (maxNativeZoom).
+            url: 'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             credit:
-              'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+              'Tiles © Esri (World Imagery Clarity) — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+            native: 17,
           }
         : {
             url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             credit:
               '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            native: 19,
           }
     const tiles = L.tileLayer(source.url, {
       attribution: source.credit,
-      maxZoom: 19,
+      maxNativeZoom: source.native,
+      maxZoom: 21,
       keepBuffer: 1,
     }).addTo(map.current)
     let loaded = false
@@ -152,9 +164,30 @@ export function FieldMap({
     if (points.length && closed)
       map.current?.fitBounds(
         points.map(([lng, lat]) => [lat, lng] as L.LatLngTuple),
-        { padding: illustrative ? [42, 42] : [60, 60], maxZoom: illustrative ? 18 : 17 },
+        { padding: illustrative ? [42, 42] : [60, 60], maxZoom: 18 },
       )
   }, [closed])
+  // Lugar de referencia: un punto de consulta, no un contorno.
+  useEffect(() => {
+    const instance = map.current
+    if (!instance || !center || points.length) return
+    instance.setView([center.lat, center.lon], 14, { animate: false })
+    const marker = L.circleMarker([center.lat, center.lon], {
+      radius: 9,
+      color: '#ffffff',
+      weight: 3,
+      fillColor: '#315c41',
+      fillOpacity: 1,
+    }).addTo(instance)
+    marker.bindTooltip(`${center.label ?? 'Punto de consulta'} · punto de consulta`, {
+      permanent: true,
+      direction: 'right',
+      offset: [12, 0],
+    })
+    return () => {
+      marker.remove()
+    }
+  }, [center?.lat, center?.lon, center?.label, points.length])
   useEffect(() => {
     const instance = map.current
     if (!instance || drawing || !closed) return
@@ -212,7 +245,7 @@ export function FieldMap({
       <div
         ref={container}
         className="leaflet-surface"
-        aria-label="Mapa de referencia de Majes, Arequipa"
+        aria-label="Mapa de Arequipa"
       />
       <div className="map-caption">
         <span className="live-dot" />
@@ -220,7 +253,9 @@ export function FieldMap({
         <span className="map-caption-divider" />
         {illustrative && analysisLayer !== 'none'
           ? 'CAPA ILUSTRATIVA · SIN MEDICIÓN'
-          : 'Vista de referencia'}
+          : drawing
+            ? 'Ubica y marca tu campo'
+            : 'Imagen satelital'}
       </div>
       <div className="map-toolbar">
         <button
@@ -246,9 +281,9 @@ export function FieldMap({
           <Icon name="layers" />
         </button>
         <button
-          title="Volver a Majes"
-          aria-label="Volver a Majes"
-          onClick={() => map.current?.setView([-16.351, -72.19], 14)}
+          title="Ver toda Arequipa"
+          aria-label="Ver toda Arequipa"
+          onClick={() => map.current?.setView(AREQUIPA, 8)}
         >
           <Icon name="compass" />
         </button>
@@ -285,8 +320,8 @@ export function FieldMap({
             Mapa de calles {basemap === 'streets' && <Icon name="check" size={16} />}
           </button>
           <p>
-            Los productos científicos están sin conectar. Las capas de ejemplo son patrones
-            ficticios dentro del contorno.
+            Imagen nítida de Esri hasta el zoom 17 en el campo; más cerca, se amplía la última
+            imagen real.
           </p>
         </div>
       )}
@@ -349,7 +384,7 @@ export function FieldMap({
         <span>
           {illustrative && analysisLayer !== 'none'
             ? 'Patrón sintético · no es un dato satelital'
-            : 'Imagen de referencia · sin capa de análisis'}
+            : 'Imagen Esri · los datos están en las tarjetas'}
         </span>
       </div>
     </div>

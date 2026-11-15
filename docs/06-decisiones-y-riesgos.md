@@ -216,6 +216,16 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 - El frontend incorpora una muestra local de POWER y escenarios rotulados para revisar el diseño. Su conexión con el backend actual no se da por trasladada; DT-16 sigue aplicando a la entrega.
 - Los registros locales anteriores de frontend se conservan en [historial](historial/decisiones-frontend-locales.md), sin reemplazar la numeración del equipo.
 
+### DT-26 · Frontend unido: portada de Codex, panel de Shantall y datos reales
+
+**Indicada por Erick · 15/11/2026.** Complementa DT-25 (no la reemplaza): `frontend/` sigue siendo la implementación vigente.
+
+- **Portada:** la de Codex (la de vidrio, hasta `e08ea68`), en `frontend/src/features/landing/CodexLanding.tsx`. La portada de Shantall queda en el código, sin ruta.
+- **Panel:** el de Shantall (sidebar, Mi campo, Historial, Recomendaciones, Estudio técnico e Informes), con vidrio en tarjetas, pestañas y controles del mapa, al estilo de Codex.
+- **Datos:** reales, de la API (esquema mixto, DT-22), siguiendo el contrato de T03: Majes, Cabanaconde y Chivay como puntos de consulta, y el contorno dibujado con su base de Arequipa y su extracción satelital (con «Detener»). **Se retiran del selector las parcelas de ejemplo** (DT-16).
+- **Mapa:** el de la pantalla de prueba (imagen nítida, zoom 21, dibujo por esquinas, campos ya analizados en el servidor). **El usuario no ve los sectores**: solo el mapa, su parcela y sus datos.
+- Lo que falta pulir se acuerda después; ver [informe 17](informes/17-frontend-unido.md).
+
 ## Riesgos
 
 Prioridades cualitativas del informe (SUP-032), sin probabilidad medida.

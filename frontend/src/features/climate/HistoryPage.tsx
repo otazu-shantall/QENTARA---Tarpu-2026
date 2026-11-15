@@ -43,7 +43,7 @@ export function HistoryPage() {
             {evidence?.origin === 'synthetic'
               ? 'Ejemplo visual'
               : evidence
-                ? 'Muestra histórica'
+                ? 'Histórico real'
                 : 'Sin datos'}
           </span>
         </div>
@@ -52,7 +52,7 @@ export function HistoryPage() {
           {metrics.map((m) => (
             <button key={m} aria-pressed={metric === m} onClick={() => setMetric(m)}>
               {metricLabels[m]}
-              <small>{points.some((p) => p[m] != null) ? metricUnits[m] : 'Sin conectar'}</small>
+              <small>{points.some((p) => p[m] != null) ? metricUnits[m] : 'Sin dato'}</small>
             </button>
           ))}
         </div>

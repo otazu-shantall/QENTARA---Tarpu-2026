@@ -8,6 +8,8 @@ import './styles/landing.css'
 import './styles/workspace.css'
 import './styles/expansion.css'
 import './styles/polish.css'
+import './styles/landing-codex.css'
+import './styles/glass.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

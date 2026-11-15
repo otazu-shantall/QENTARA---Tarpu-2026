@@ -1,10 +1,11 @@
 // Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md.
+// 15/11/2026 (Claude Code): la portada es la de Codex (CodexLanding).
 import { lazy, Suspense, useLayoutEffect } from 'react'
 import { HashRouter, Routes, Route, Link, Navigate, useLocation } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WorkspaceProvider } from './WorkspaceProvider'
 import { WorkspaceLayout } from '../components/layout/WorkspaceLayout'
-import { LandingPage } from '../features/landing/LandingPage'
+import { CodexLanding } from '../features/landing/CodexLanding'
 import { AccessPage } from '../features/auth/AccessPage'
 import { OverviewPage } from '../features/dashboard/OverviewPage'
 const HistoryPage = lazy(() =>
@@ -47,7 +48,7 @@ export function App() {
             }
           >
             <Routes>
-              <Route path="/" element={<LandingPage />} />
+              <Route path="/" element={<CodexLanding />} />
               <Route path="/acceso" element={<AccessPage />} />
               <Route path="/app" element={<WorkspaceLayout />}>
                 <Route index element={<OverviewPage />} />

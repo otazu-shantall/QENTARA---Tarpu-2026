@@ -1,19 +1,18 @@
 // Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md.
-import { lazy, Suspense, useState } from 'react'
-import { parcelLayers } from '../../lib/parcelOverlay'
-import type { ParcelLayer } from '../../lib/parcelOverlay'
+// 15/11/2026 (Claude Code): datos reales de la API (ParcelDataPanel), sin capas de ejemplo.
+import { lazy, Suspense } from 'react'
 import { Link } from 'react-router'
 import { useWorkspace } from '../../app/WorkspaceContext'
 import { summarize, number } from '../../lib/evidence'
 import { Icon } from '../../components/ui/Icon'
 import { EnvironmentalSignals } from './EnvironmentalSignals'
 import { EvidenceChart } from '../climate/EvidenceChart'
+import { ParcelDataPanel } from './ParcelDataPanel'
 const FieldMap = lazy(() =>
   import('../monitor/FieldMap').then((module) => ({ default: module.FieldMap })),
 )
 export function OverviewPage() {
   const { parcel, points, evidence, loading, error, retry, setAssistantOpen } = useWorkspace()
-  const [mapLayer, setMapLayer] = useState<ParcelLayer>('temperature')
   const summary = summarize(points)
   return (
     <>
@@ -38,56 +37,38 @@ export function OverviewPage() {
               Delimitar mi parcela <Icon name="upRight" size={16} />
             </Link>
           </div>
-          <div className="parcel-layer-picker" role="group" aria-label="Capa visual de la parcela">
-            {(Object.keys(parcelLayers) as ParcelLayer[]).map((layer) => (
-              <button
-                key={layer}
-                disabled={parcel.kind !== 'example' && layer !== 'none'}
-                aria-pressed={(parcel.kind === 'example' ? mapLayer : 'none') === layer}
-                onClick={() => setMapLayer(layer)}
-              >
-                <span className={`layer-dot layer-${layer}`} />
-                {parcelLayers[layer].label}
-              </button>
-            ))}
-            <span>
-              {parcel.kind === 'example'
-                ? 'Visualización de ejemplo'
-                : 'Capas científicas sin conectar'}
-            </span>
-          </div>
           <div className="overview-map">
             <Suspense fallback={<div className="map-placeholder">Preparando el mapa…</div>}>
               <FieldMap
                 key={parcel.id}
-                illustrative={parcel.kind === 'example'}
-                analysisLayer={mapLayer}
                 points={parcel.boundary}
+                center={parcel.point ? { ...parcel.point, label: parcel.name } : undefined}
                 closed={parcel.boundary.length > 2}
               />
             </Suspense>
             <div className="map-field-label">
               <Icon name="pin" size={21} />
               <div>
-                <strong>{parcel.kind === 'reference' ? 'Una mirada a Majes' : parcel.name}</strong>
+                <strong>{parcel.kind === 'reference' ? `Una mirada a ${parcel.name}` : parcel.name}</strong>
                 <span>
                   {parcel.kind === 'reference'
-                    ? 'El mapa muestra la zona, no límites de una parcela.'
-                    : parcel.kind === 'example'
-                      ? 'Contorno ficticio para explorar el diseño.'
-                      : 'Delimitación local · sin datos ambientales asociados.'}
+                    ? 'Punto de consulta: el mapa muestra la zona, no límites de una parcela.'
+                    : 'Contorno declarado por ti · datos leídos del servidor.'}
                 </span>
               </div>
             </div>
           </div>
+          <ParcelDataPanel />
           <div className="section-title metrics-heading">
             <h2>El contexto ambiental</h2>
             <span className="muted">
               {evidence
                 ? evidence.origin === 'synthetic'
                   ? 'Escenario de ejemplo · 2026'
-                  : 'Muestra guardada · 2025'
-                : 'Sin observaciones asociadas'}
+                  : `${evidence.source} · ${evidence.period.replace(' / ', ' a ')}`
+                : loading
+                  ? 'Leyendo la serie…'
+                  : 'Sin observaciones asociadas'}
             </span>
           </div>
           {error ? (
@@ -165,8 +146,8 @@ export function OverviewPage() {
               {evidence
                 ? evidence.origin === 'synthetic'
                   ? 'Explora cómo se verían los cambios del campo: frío, calor, agua y vegetación. Los valores son ficticios y no describen un terreno real.'
-                  : 'Hay una muestra climática de Majes disponible para explorar. Su escala es regional: úsala como contexto, no como diagnóstico del campo.'
-                : 'El contorno está guardado. Para conocer el ambiente necesitamos asociar observaciones con fecha, fuente y cobertura.'}
+                  : 'El clima viene de NASA POWER en una celda de unos 55 × 67 km: es contexto regional, no un diagnóstico del campo. El relieve y el suelo se leen dentro de tu contorno.'
+                : 'Sin conexión con el servidor de TARPU no hay observaciones. Revisa que esté encendido y vuelve a intentar.'}
             </p>
             <div className="evidence-mini">
               <Icon name="shield" size={20} />
@@ -175,14 +156,14 @@ export function OverviewPage() {
                   {evidence
                     ? evidence.origin === 'synthetic'
                       ? 'Datos sintéticos · demostración'
-                      : 'Datos reales · muestra histórica'
+                      : 'Datos reales · con su fuente'
                     : 'Datos aún no disponibles'}
                 </strong>
                 <small>
                   {evidence
                     ? evidence.origin === 'synthetic'
                       ? 'TARPU · escenario ilustrativo de 2026'
-                      : 'NASA POWER · enero–diciembre 2025'
+                      : evidence.product
                     : 'La geometría no genera indicadores'}
                 </small>
               </div>
