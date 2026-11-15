@@ -1,0 +1,654 @@
+<title>Backend de TARPU</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<!-- Diagrama interactivo del backend de TARPU. Generado con asistencia de IA (Claude Code) el 14/11/2026; ver entrega/uso-de-ia.md. Fuente del contenido: backend/DISENO.md y backend/MODULOS.md -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Concepto: sala de máquinas nocturna. Columnas = capas del backend; las bolitas son peticiones y datos que viajan entre archivos. */
+:root{
+  color-scheme: dark;
+  --bg:#090E11; --bg2:#0D1418; --panel:#111A1F; --card:#131D23; --card-hi:#18252C;
+  --line:#1F2D35; --line2:#2A3B45; --fg:#E3ECEC; --muted:#93A6AA; --dim:#5E7379;
+  --api:#4FD1C5; --logic:#A98CFA; --core:#F0B64C; --sup:#6EA8FF; --ext:#8CD36C; --front:#B5C0CB;
+  --p-req:#B9A3FF; --p-data:#45E0CF; --p-write:#FFC85A; --p-ext:#9BE070;
+  --ok:#6FD39A; --todo:#F0B64C; --later:#7E8C92;
+  --f-display:"Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Inter", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--f-body);font-size:14px;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:20px 40px}
+.wrap{max-width:1720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+
+/* cabecera */
+header{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between}
+.eyebrow{font:600 11px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+h1{font:700 clamp(26px,3.4vw,40px)/1.05 var(--f-display);margin:8px 0 8px;letter-spacing:-.01em;text-wrap:balance}
+.lead{color:var(--muted);max-width:68ch;margin:0}
+.status{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--line2);border-radius:999px;font-size:12px;color:var(--muted);background:var(--bg2)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--todo);box-shadow:0 0 10px var(--todo)}
+
+/* barra de recorridos */
+.toolbar{display:flex;flex-direction:column;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+.flows{display:flex;flex-wrap:wrap;gap:6px}
+.flow-btn{font:500 12.5px/1 var(--f-body);color:var(--muted);background:transparent;border:1px solid var(--line2);border-radius:8px;padding:8px 11px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.flow-btn b{font:600 11px/1 var(--f-mono);color:var(--dim)}
+.flow-btn:hover{color:var(--fg);border-color:var(--dim)}
+.flow-btn[aria-pressed="true"]{color:var(--bg);background:var(--fg);border-color:var(--fg)}
+.flow-btn[aria-pressed="true"] b{color:var(--bg)}
+.controls{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
+.ctl{display:flex;gap:6px;align-items:center}
+.ctl button{font:500 12px/1 var(--f-body);color:var(--fg);background:var(--card);border:1px solid var(--line2);border-radius:7px;padding:7px 10px;cursor:pointer}
+.ctl button:hover{border-color:var(--dim)}
+.ctl button[aria-pressed="true"]{background:var(--card-hi);border-color:var(--api);color:var(--api)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;gap:7px;align-items:center}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.d-req{background:var(--p-req);box-shadow:0 0 8px var(--p-req)}
+.d-data{background:var(--p-data);box-shadow:0 0 8px var(--p-data)}
+.d-write{background:var(--p-write);box-shadow:0 0 8px var(--p-write)}
+.d-ext{background:var(--p-ext);box-shadow:0 0 8px var(--p-ext)}
+button:focus-visible,.node:focus-visible,li:focus-visible{outline:2px solid var(--api);outline-offset:2px}
+
+/* escenario */
+.viewport{position:relative;overflow-x:auto;overflow-y:hidden;border:1px solid var(--line);border-radius:14px;
+  background:radial-gradient(1200px 500px at 30% -10%, #0F1B20 0%, transparent 70%), var(--bg2)}
+.sizer{position:relative}
+.stage{position:absolute;left:0;top:0;transform-origin:0 0}
+.col-band{position:absolute;top:0;bottom:0;border-left:1px dashed var(--line);}
+.col-label{position:absolute;top:14px;font:600 10.5px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+svg.wires{position:absolute;left:0;top:0;overflow:visible}
+.wire{fill:none;stroke:var(--line2);stroke-width:1.3;transition:stroke .3s,opacity .3s,stroke-width .3s}
+.wire.later{stroke-dasharray:4 5}
+.dimmed .wire{opacity:.18}
+.dimmed .wire.on{opacity:.75;stroke:var(--dim)}
+.wire.hot{opacity:1 !important;stroke-width:2.4}
+.wire.hot.t-req{stroke:var(--p-req)} .wire.hot.t-data{stroke:var(--p-data)} .wire.hot.t-write{stroke:var(--p-write)} .wire.hot.t-ext{stroke:var(--p-ext)}
+.wire.hover{stroke:var(--muted);opacity:1}
+
+.node{position:absolute;background:var(--card);border:1px solid var(--line2);border-radius:11px;padding:11px 12px 12px;cursor:pointer;
+  transition:opacity .3s,border-color .25s,box-shadow .25s,transform .25s;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.node::before{content:"";position:absolute;left:12px;right:12px;top:0;height:2px;border-radius:0 0 2px 2px;background:var(--c)}
+.node:hover{border-color:var(--c)}
+.node.sel{border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 10px 30px rgba(0,0,0,.45)}
+.node.later{border-style:dashed;background:transparent;box-shadow:none}
+.dimmed .node{opacity:.28}
+.dimmed .node.on{opacity:1}
+.node.active{border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 0 26px -4px var(--c)}
+.node .k{font:600 9.5px/1.25 var(--f-body);letter-spacing:.11em;text-transform:uppercase;color:var(--dim);padding-right:74px}
+.node .t{font:600 15px/1.2 var(--f-display);margin-top:5px}
+.node .s{color:var(--muted);font-size:11.8px;line-height:1.42;margin-top:4px}
+.node .files{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.node .files.stack{flex-direction:column}
+.f{font:500 10.8px/1.2 var(--f-mono);color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:5px;padding:4px 6px;display:flex;gap:6px;align-items:center;transition:background .25s,border-color .25s,color .25s}
+.f em{font-style:normal;color:var(--dim);font-family:var(--f-body);font-size:10.5px}
+.f .n{font:600 10px/1 var(--f-mono);color:var(--c);min-width:10px}
+.f.lit{background:color-mix(in srgb,var(--c) 18%,var(--bg2));border-color:var(--c)}
+.st{position:absolute;top:10px;right:10px;font:600 9px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;padding:4px 6px;border-radius:5px;border:1px solid currentColor}
+.st-ok{color:var(--ok)} .st-todo{color:var(--todo)} .st-later{color:var(--later)} .st-proto{color:var(--front)}
+.L-front{--c:var(--front)} .L-api{--c:var(--api)} .L-logic{--c:var(--logic)} .L-core{--c:var(--core)} .L-sup{--c:var(--sup)} .L-ext{--c:var(--ext)}
+.L-store{--c:var(--p-write)}
+
+circle.p{filter:url(#glow)}
+
+/* paneles inferiores */
+.below{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px}
+@media (max-width:900px){.below{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0}
+.panel h2{font:600 17px/1.2 var(--f-display);margin:0 0 4px}
+.panel .sub{color:var(--muted);font-size:12.5px;margin:0 0 12px}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;padding:7px 9px;border-radius:8px;cursor:pointer;color:var(--muted);font-size:13px;border:1px solid transparent}
+ol.steps li::before{content:counter(s,decimal-leading-zero);font:600 11px/1.6 var(--f-mono);color:var(--dim)}
+ol.steps li:hover{background:var(--card)}
+ol.steps li.cur{background:var(--card-hi);border-color:var(--line2);color:var(--fg)}
+ol.steps li.cur::before{color:var(--fg)}
+ol.steps li .who{font:500 11px/1.4 var(--f-mono);color:var(--dim);display:block}
+ol.steps li .ty{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.empty{color:var(--dim);font-size:13px}
+.detail .k{font:600 10px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.detail h3{font:600 20px/1.2 var(--f-display);margin:6px 0 6px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.detail h3 .st{position:static}
+.detail p{margin:0 0 10px;max-width:72ch}
+.detail h4{font:600 11px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+.detail ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.detail code,.detail .mono{font-family:var(--f-mono);font-size:12px;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:1px 5px}
+.ftable{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 12px;font-size:13px}
+.ftable .mono{align-self:start;white-space:nowrap}
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;min-width:560px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;white-space:nowrap}
+th{color:var(--muted);font-weight:600;font-size:11.5px}
+.src{color:var(--dim);font-size:12px;margin-top:8px}
+.src a{color:var(--muted)}
+footer{color:var(--dim);font-size:12px;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+@media (prefers-reduced-motion: reduce){.node,.wire,.f{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">QENTARA · TARPU · NASA Space Apps 2026 · Field Shift</div>
+      <h1>Backend de TARPU por dentro</h1>
+      <p class="lead">Cada recuadro es un módulo o un archivo; cada bolita es una petición o un dato que viaja entre ellos. Elige un paso del recorrido para ver qué archivos intervienen y en qué orden, o toca cualquier recuadro para leer qué hace.</p>
+    </div>
+    <span class="status"><i></i>Diseño del 14/11/2026 · todavía sin código · sin supuestos (DT-16)</span>
+  </header>
+
+  <section class="toolbar" aria-label="Recorridos">
+    <div class="flows" id="flows" role="group" aria-label="Elegir recorrido"></div>
+    <div class="controls">
+      <div class="ctl">
+        <button id="play" type="button" aria-pressed="false">Pausar</button>
+        <button id="prev" type="button">← Paso</button>
+        <button id="next" type="button">Paso →</button>
+        <span style="width:8px"></span>
+        <button type="button" class="spd" data-s="0.5" aria-pressed="false">0,5×</button>
+        <button type="button" class="spd" data-s="1" aria-pressed="true">1×</button>
+        <button type="button" class="spd" data-s="2" aria-pressed="false">2×</button>
+      </div>
+      <div class="legend">
+        <span><i class="dot d-req"></i>Petición o llamada</span>
+        <span><i class="dot d-data"></i>Datos que vuelven</span>
+        <span><i class="dot d-write"></i>Escritura en disco</span>
+        <span><i class="dot d-ext"></i>Hacia el área de datos y las fuentes</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="viewport" id="viewport">
+    <div class="sizer" id="sizer">
+      <div class="stage" id="stage">
+        <svg class="wires" id="wires" aria-hidden="true">
+          <defs>
+            <filter id="glow" x="-200%" y="-200%" width="500%" height="500%">
+              <feGaussianBlur stdDeviation="2.6" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <g id="wireG"></g>
+          <g id="partG"></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="below">
+    <section class="panel" aria-live="polite">
+      <h2 id="flowTitle">Todo el backend</h2>
+      <p class="sub" id="flowSub">Tráfico de todas las conexiones a la vez. Elige un recorrido arriba para seguirlo paso a paso.</p>
+      <ol class="steps" id="steps"></ol>
+    </section>
+    <section class="panel detail" id="detail">
+      <div class="empty">Toca un recuadro del diagrama para ver qué hace, qué archivos tiene, qué lee, qué escribe y sus reglas.</div>
+    </section>
+  </div>
+
+  <footer>
+    <span>Contenido tomado de backend/DISENO.md y backend/MODULOS.md · Diagramas estáticos en esta misma carpeta: tarpu-backend-mapa y tarpu-backend-archivos</span>
+    <span>Hecho con asistencia de IA (Claude Code), declarado en entrega/uso-de-ia.md</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+const STAGE_W = 1680;
+const COLS = {
+  front:{x:20,  w:200, label:"Consumidores",            c:"var(--front)"},
+  api:  {x:272, w:222, label:"Capa 4 · API",            c:"var(--api)"},
+  logic:{x:546, w:262, label:"Capa 3 · Lógica",         c:"var(--logic)"},
+  core: {x:862, w:232, label:"Capa 2 · Núcleo",         c:"var(--core)"},
+  sup:  {x:1148,w:218, label:"Capa 1 · Apoyo",          c:"var(--sup)"},
+  ext:  {x:1420,w:244, label:"Disco · catálogo · fuentes", c:"var(--ext)"}
+};
+
+/* ---------- nodos: módulos y archivos ---------- */
+const N = [
+ {id:"front",col:"front",y:330,L:"front",st:"proto",k:"Consumidor · Codigo/ · Shantall",t:"Web TARPU",
+  s:"Pide cada pantalla a la API en vivo, o lee los JSON publicados.",
+  d:{hace:"El prototipo visual en React. Hoy muestra datos de demostración rotulados; con el backend, cada pantalla pide su ruta. La dirección base es VITE_API_BASE: http://127.0.0.1:8000 en vivo, vacía en la web publicada.",
+     lee:["GET /api/… en vivo","/api/…json en la web publicada (Vercel o Netlify)"],
+     reglas:["Sin claves en el frontend","Sin lógica agronómica: muestra y explica","Sabe si está en vivo o publicada por meta.modo"]}},
+ {id:"apps",col:"front",y:520,L:"front",st:"later",later:true,k:"Después",t:"Android · iOS",
+  s:"Usarán la misma API en vivo.",
+  d:{hace:"Orden de plataformas acordado (DT-08): web primero, luego Android, luego iOS. Ninguna necesita cambios en el backend: consumen las mismas rutas."}},
+ {id:"pub",col:"front",y:880,L:"store",st:"todo",k:"Archivos · Codigo/public/api/",t:"JSON publicados",
+  s:"Una copia de cada ruta GET para la web sin servidor.",
+  files:[["meta.json"],["parcelas.json"],["parcelas/{id}/…json"]],
+  d:{hace:"Los escribe exportar.py. La web publicada los lee como si fueran la API. Solo se exportan parcelas registradas con datos reales.",
+     reglas:["En la web publicada no existen las rutas POST ni PUT","No se descargan teselas ni se incluyen en la exportación"]}},
+
+ {id:"esquemas",col:"api",y:50,L:"api",st:"todo",k:"Contrato · Pydantic",t:"Esquemas",
+  s:"Forma de cada respuesta y origen de cada valor.",files:[["esquemas.py"]],
+  d:{hace:"Define cada respuesta como un modelo Pydantic. Sobre común: { data, procedencia, avisos, modo, generado }. Cada valor indica si viene de una fuente (con su procedencia) o si lo declaró el usuario. Genera contrato/esquemas/*.json para que el frontend tenga los tipos.",
+     funcs:[["model_json_schema()","genera los esquemas JSON"]],
+     escribe:["contrato/esquemas/*.json"],
+     reglas:["422 datos_invalidos si el JSON no cumple el contrato"]}},
+ {id:"main",col:"api",y:180,L:"api",st:"todo",k:"Rutas · FastAPI",t:"main.py",
+  s:"Declara las rutas y delega. No calcula nada.",
+  files:[["GET /api/meta"],["POST /api/parcelas"],["PUT …/contexto"],["POST …/procesar"],["GET …/procesamiento"],["GET …/indicadores · clima"],["GET …/rotaciones"],["GET · POST …/agente"],["GET …/datos"]],
+  d:{hace:"Crea la app FastAPI, permite el origen http://127.0.0.1:5173 (CORS) y declara las rutas. Cada ruta llama a un módulo. Documentación automática en /docs. Se ejecuta con uvicorn tarpu_api.main:app --reload --port 8000.",
+     reglas:["400 contorno_invalido · 404 parcela_no_existe · 409 parcela_desactualizada · 422 datos_invalidos · 503 fuente_no_disponible (solo dentro de procesamiento)","Errores con la forma { error: { codigo, mensaje, detalle } }"]}},
+ {id:"meta",col:"api",y:520,L:"api",st:"todo",k:"Capa 4 · API",t:"Meta",
+  s:"Versión, modo, fuentes y fecha de los datos.",files:[["meta.py"]],
+  d:{hace:"Responde GET /api/meta: versión, modo (en_vivo o publicado), fuentes usadas y fecha de los datos. Los datos son reales en los dos modos.",lee:["config.py"]}},
+ {id:"procesamiento",col:"api",y:650,L:"api",st:"todo",k:"Solo en vivo",t:"Procesamiento",
+  s:"Prepara los datos de una parcela en segundo plano.",files:[["procesamiento.py"]],
+  d:{hace:"POST …/procesar marca cada fuente como en_proceso y lanza el trabajo con BackgroundTasks, sin bloquear. GET …/procesamiento devuelve el estado de cada fuente. Si una fuente falla, las demás siguen.",
+     funcs:[["iniciar(id)","lanza el trabajo de cada fuente registrada"]],
+     escribe:["almacen/parcelas/{id}/procesamiento.json"],
+     reglas:["Estado final por fuente: listo · parcial · no_disponible, con el motivo literal del proveedor","Fuentes por solicitud (AppEEARS): guarda el id y vuelve a consultar"]}},
+ {id:"exportar",col:"api",y:880,L:"api",st:"todo",k:"Comando",t:"Exportar",
+  s:"Copia cada ruta GET a un JSON estático.",files:[["exportar.py"]],
+  d:{hace:"python -m tarpu_api.exportar llama cada ruta GET con el TestClient de FastAPI y escribe la respuesta en Codigo/public/api/. Así la web publicada funciona sin servidor (DT-13).",
+     escribe:["Codigo/public/api/**.json"],reglas:["Solo exporta parcelas registradas con datos reales"]}},
+
+ {id:"motor",col:"logic",y:50,L:"logic",st:"todo",k:"Paquete · motor/",t:"Motor de comparación",
+  s:"Compara datos reales con rangos citados de FAO EcoCrop. Sin puntaje ni pesos.",stack:true,
+  files:[["__init__.py","comparar()",""],["estrategias.py","candidatas","1"],["evidencia.py","qué hay y qué falta","2"],["comparacion.py","criterio vs. rango","3"],["presentacion.py","orden declarado","4"],["explicacion.py","frases con cita","5"]],
+  d:{hace:"comparar(parcela, contexto, indicadores) devuelve el cultivo actual y todos los del catálogo de otra familia (con papa: haba, cebada y quinua, 4 estrategias; el desafío pide al menos 3). Cada criterio se compara con su rango citado.",
+     funcs:[["estrategias.py","E1 = repetir el cultivo actual declarado; E2… = todos los de otra familia"],["evidencia.py","qué datos reales hay y cuáles faltan, por criterio"],["comparacion.py","temperatura, frío, lluvia, suelo y familia frente al rango citado"],["presentacion.py","ordena según las prioridades declaradas, sin convertirlas en pesos"],["explicacion.py","frases solo con datos y citas; vacíos y conflictos"]],
+     lee:["Contexto declarado (parcelas)","Indicadores reales","Catálogo citado"],escribe:["rotaciones.json (vía almacen)"],
+     reglas:["Resultado por criterio: dentro_optimo · dentro_absoluto · fuera_absoluto · sin_dato · sin_regla","Sin puntaje, sin pesos y sin «apto / no apto»","La altitud no excluye: EcoCrop da 2800 m para la papa y la celda de POWER de Chivay está a 4352 m. Se muestra como conflicto entre fuentes","Beneficios solo con cita; si no, «sin beneficio citado»","No llama a los conectores: solo lee lo calculado"]}},
+ {id:"agente",col:"logic",y:420,L:"logic",st:"todo",k:"Paquete · agente/ · DT-14",t:"Agente guiado",
+  s:"Responde con datos reales y su cita. Sin modelo de IA.",stack:true,
+  files:[["intenciones.py","qué se pregunta","1"],["plantillas.py","arma la respuesta","2"],["banco.py","GET y POST","3"]],
+  d:{hace:"Reconoce ocho intenciones: frío, lluvia, por qué aparece un cultivo, qué falta, qué es el NDVI, fuentes, descargar y pronóstico. Arma la respuesta con una plantilla y los valores reales.",
+     funcs:[["intenciones.py","reconoce la pregunta"],["plantillas.py","rellena con valores reales y su cita; si no hay dato, lo dice"],["banco.py","GET: banco de respuestas por parcela (se exporta) · POST: pregunta libre (solo en vivo)"]],
+     lee:["Indicadores","rotaciones.json","Procedencia"],
+     reglas:["No inventa observaciones ni cambia las reglas","Ante un pronóstico responde que TARPU no pronostica"]}},
+
+ {id:"parcelas",col:"core",y:50,L:"core",st:"todo",k:"Núcleo · declarado",t:"Parcelas y contexto",
+  s:"Contorno, versión y lo que declara el usuario.",files:[["parcelas.py"]],
+  d:{hace:"Guarda el contorno GeoJSON, el nombre y la versión. También el contexto que declara el usuario: cultivo actual y anterior, agua (secano o riego), meses de siembra y cosecha, y prioridades.",
+     funcs:[["crear(...)","asigna id y versión 1"]],escribe:["parcela.json · contexto.json (vía almacen)"],
+     reglas:["Lo declarado se muestra como «declarado por ti»","«No sé» queda como desconocido, nunca como un valor por defecto","No hay parcelas ficticias"]}},
+ {id:"geometria",col:"core",y:185,L:"core",st:"todo",k:"Núcleo · Shapely + pyproj",t:"Geometría",
+  s:"Valida el contorno y mide el área real.",files:[["geometria.py"]],
+  d:{hace:"Valida el dibujo y calcula lo que el satélite puede ver dentro.",
+     funcs:[["validar","al menos 3 puntos, cerrado y sin cruces; explain_validity si falla"],["area_ha","área geodésica con pyproj.Geod sobre WGS84"],["pixeles_30m","cuántos píxeles de 30 m caben (área ÷ 0,09 ha)"],["centroide · recuadro","para las fuentes gruesas y los recortes"]],
+     reglas:["Sin límites de tamaño inventados: se muestran el área y los píxeles tal cual","El aviso «fuera de Arequipa» solo se activa con un límite oficial (IGN o INEI)","Dibujar no acredita propiedad legal"]}},
+ {id:"indicadores",col:"core",y:320,L:"core",st:"todo",k:"Núcleo · pandas",t:"Indicadores",
+  s:"Conteos, promedios y totales de datos reales.",files:[["indicadores.py"]],
+  d:{hace:"Describe los datos reales sin interpretarlos: temperatura media por mes, temperatura mínima registrada, noches con mínima bajo 0 °C por mes, lluvia por mes y por año, y meses sin dato.",
+     funcs:[["actualizar(id)","recalcula con lo disponible y guarda"]],escribe:["indicadores.json (vía almacen)"],
+     ejemplo:true,
+     reglas:["No usa «helada» como diagnóstico sin una definición citada","Cada valor lleva su procedencia y su escala (celda de POWER)"]}},
+ {id:"zonal",col:"core",y:460,L:"core",st:"todo",k:"Núcleo · rasterio + NumPy",t:"Dentro del contorno",
+  s:"Solo fuentes de 30 m: HLS y SRTM.",files:[["zonal.py"]],
+  d:{hace:"Reproyecta el contorno a la grilla de la imagen, cuenta un píxel si su centro cae dentro, aplica la máscara de calidad y devuelve los píxeles dentro, los válidos, la cobertura, la mediana y los cuartiles.",
+     funcs:[["resumir(...)","estadística dentro del contorno"]],
+     reglas:["No declara «representativo» con un umbral inventado: muestra los conteos","Las fuentes gruesas (POWER, SoilGrids, MODIS) no se recortan: se consulta el centroide","Depende de la prueba de AppEEARS del área de datos (pendiente)"]}},
+ {id:"ingesta",col:"core",y:600,L:"core",st:"todo",k:"Núcleo · lee los conectores",t:"Ingesta",
+  s:"Convierte los archivos de la caché en registros.",files:[["ingesta.py"]],
+  d:{hace:"Lee el normalizado y la procedencia que dejan los conectores y los entrega como registros con su unidad.",
+     funcs:[["leer(...)","registros + procedencia"]],
+     reglas:["Una celda vacía pasa a None, nunca a 0","Conserva la unidad de la cabecera","En este diagrama lee la caché a través de almacen, para respetar que almacen es el único que toca el disco"]}},
+ {id:"datosdet",col:"core",y:760,L:"core",st:"todo",k:"Núcleo · DEC-003",t:"Datos detallados",
+  s:"Registros por nivel, sin pasar por el motor.",files:[["datos_detallados.py"]],
+  d:{hace:"Devuelve los registros por nivel con sus metadatos: original del proveedor, normalizado (cambios identificados) y derivado (con su método).",
+     reglas:["No importa el motor (DEC-003)","«Más en crudo» significa más detalle sin la evaluación de TARPU"]}},
+
+ {id:"catalogo",col:"sup",y:50,L:"sup",st:"todo",k:"Apoyo · reglas",t:"Catálogo",
+  s:"Carga las reglas citadas y rechaza las que no tienen fuente.",files:[["catalogo.py"]],
+  d:{hace:"Carga catalogo/ecocrop_2026-11-14.json. Si una regla no trae su fuente, la rechaza: el motor no puede usar un valor sin cita.",lee:["catalogo/ecocrop_2026-11-14.json"]}},
+ {id:"almacen",col:"sup",y:320,L:"sup",st:"todo",k:"Apoyo · disco",t:"Almacén",
+  s:"Único módulo que lee y escribe en disco.",files:[["almacen.py"]],
+  d:{hace:"Guarda y lee los JSON de cada parcela y da acceso a la caché de los conectores. Si después se pasa a PostgreSQL con PostGIS, solo cambia este archivo.",
+     funcs:[["guardar · leer","JSON por parcela y archivos de la caché"]],escribe:["almacen/parcelas/{id}/*.json"],
+     reglas:["En la demo no hay base de datos (DT-13)"]}},
+ {id:"conectores",col:"sup",y:640,L:"sup",st:"todo",k:"Apoyo · unión con datos/",t:"Registro de conectores",
+  s:"Qué función obtiene cada fuente y cómo responde.",files:[["conectores.py"]],
+  d:{hace:"Registra cada fuente: qué función la obtiene, si pide un punto o un contorno, si responde al momento o por solicitud, y su resolución según la documentación del producto. Lo invoca procesamiento.",
+     reglas:["El backend no descarga: invoca los conectores del área de datos","Las credenciales EARTHDATA_* las usan solo los conectores"]}},
+ {id:"config",col:"sup",y:870,L:"sup",st:"todo",k:"Apoyo · lo usan todos",t:"Configuración",
+  s:"Variables de entorno con valores por defecto.",files:[["config.py"],[".env.example"]],
+  d:{hace:"Lee las variables de entorno para que el mismo código funcione en cada computadora y en la exportación. .env.example se sube sin valores secretos.",
+     vars:[["TARPU_MODO","en_vivo o publicado"],["TARPU_DATOS_DIR","../datos"],["TARPU_ALMACEN_DIR","backend/almacen"],["TARPU_CATALOGO","backend/catalogo/ecocrop_2026-11-14.json"],["TARPU_EXPORT_DIR","../Codigo/public/api"],["TARPU_CORS","http://127.0.0.1:5173"]]}},
+
+ {id:"catfile",col:"ext",y:50,L:"store",st:"ok",k:"Archivo · catalogo/ · en git",t:"ecocrop_2026-11-14.json",
+  s:"Rangos de FAO EcoCrop copiados tal cual, con su URL.",files:[["papa"],["haba"],["cebada"],["quinua"]],
+  d:{hace:"Valores copiados de las hojas de FAO EcoCrop el 14/11/2026. Donde EcoCrop no trae un dato hay null y el criterio sale sin_regla. EcoCrop describe la especie, no las variedades andinas.",crops:true}},
+ {id:"store",col:"ext",y:240,L:"store",st:"later",stLabel:"fuera de git",k:"Almacenamiento de la demo · DT-13",t:"Disco · almacen/",
+  s:"Archivos JSON por parcela. No hay base de datos en la demo.",stack:true,
+  files:[["parcelas/{id}/parcela.json"],["…/contexto.json"],["…/procesamiento.json"],["…/indicadores.json"],["…/rotaciones.json"],["cache/{fuente}/{clave}/"]],
+  d:{hace:"Cada parcela tiene su carpeta con cinco JSON. La caché guarda los archivos de los conectores: original, normalizado y procedencia, con clave = fuente + punto o contorno + período. Se genera en cada computadora y no se sube.",
+     files:[["parcela.json","contorno, área, píxeles de 30 m, centroide, versión"],["contexto.json","lo declarado; «no sé» queda como desconocido"],["procesamiento.json","estado por fuente"],["indicadores.json","calculados, con procedencia"],["rotaciones.json","resultado del motor"],["cache/","archivos de los conectores"]]}},
+ {id:"postgis",col:"ext",y:560,L:"store",st:"later",later:true,k:"Después · SUP-015",t:"PostgreSQL + PostGIS",
+  s:"Base de datos para cuando haya cuentas y muchas parcelas.",
+  d:{hace:"Propuesta abierta, no decidida (SUP-015, SUP-023). Guardaría las parcelas con su geometría y sus versiones. Como almacen.py es el único que toca el disco, el cambio se limita a ese archivo."}},
+ {id:"datosExt",col:"ext",y:680,L:"ext",st:"ok",stLabel:"en parte",k:"Área de Damaris · datos/",t:"Conectores",
+  s:"Descargan y escriben original, normalizado y procedencia.",
+  files:[["power/consulta_power.py","existe"],["obtener(…)","propuesta"]],
+  d:{hace:"El backend orquesta; los conectores descargan. consulta_power.py ya escribe los tres archivos y acepta --salida. Falta exponerlo como función obtener(), y eso se acuerda con Damaris: el archivo es suyo.",
+     funcs:[["obtener(lat, lon | contorno, inicio, fin, salida)","devuelve estado listo, en_proceso o sin_datos, las rutas de los archivos, solicitud_id y el motivo"]],
+     reglas:["Faltante = celda vacía en el CSV, nunca 0","Si falla devuelve sin_datos con el motivo real; no corta el programa"]}},
+ {id:"fuentes",col:"ext",y:860,L:"ext",st:"ok",stLabel:"3 probadas",k:"Proveedores externos",t:"Fuentes de datos",
+  s:"Las capas de NASA GIBS van directo al mapa de la web, sin pasar por aquí.",stack:true,
+  files:[["NASA POWER","probada"],["SoilGrids","probada"],["NDVI MODIS · ORNL","probada"],["AppEEARS: HLS · SRTM","pendiente"]],
+  d:{hace:"Fuentes registradas en conectores.py, con la resolución de la documentación de cada producto.",
+     src:[["NASA POWER","punto (centroide)","al momento","0,5° × 0,625° (≈ 55 × 67 km en Arequipa)","consulta real hecha"],["SoilGrids","punto","al momento","250 m","consulta real hecha (Majes)"],["NDVI MODIS (ORNL)","punto","al momento; respondió 502 en varias pruebas","250 m","consulta real hecha (Chivay)"],["HLS NDVI (AppEEARS)","contorno","por solicitud","30 m","pendiente: prueba de Damaris"],["SRTM / NASADEM (AppEEARS)","contorno","por solicitud","30 m","pendiente: prueba de Damaris"]]}}
+];
+
+/* ---------- conexiones: [a, b, tipo a→b, tipo b→a, después] ---------- */
+const E = [
+ ["front","main","req","data"],["apps","main","req","data",1],["exportar","main","req","data"],["exportar","pub","write",null],["pub","front","data",null],
+ ["main","esquemas","req",null],["main","meta","req","data"],["meta","config","req",null],["main","geometria","req","data"],["main","parcelas","req","data"],
+ ["main","procesamiento","req","data"],["main","indicadores","req","data"],["main","motor","req","data"],["main","agente","req","data"],["main","datosdet","req","data"],
+ ["parcelas","almacen","write",null],["parcelas","catalogo","req",null],["procesamiento","conectores","req",null],["procesamiento","ingesta","req",null],["procesamiento","almacen","write","data"],
+ ["conectores","datosExt","ext",null],["datosExt","fuentes","ext","data"],["datosExt","store","write",null],["ingesta","almacen","req","data"],["ingesta","zonal","data",null],
+ ["ingesta","indicadores","data",null],["zonal","indicadores","data",null],["indicadores","almacen","write","data"],["motor","catalogo","req","data"],["motor","indicadores","req","data"],
+ ["motor","parcelas","req","data"],["motor","almacen","write",null],["agente","indicadores","req","data"],["agente","almacen","req","data"],["datosdet","ingesta","req","data"],
+ ["catalogo","catfile","req","data"],["almacen","store","write","data"],["almacen","postgis",null,null,1]
+];
+
+/* ---------- recorridos (backend/DISENO.md §4) ---------- */
+const F = [
+ {id:"f0",n:"0",t:"Inicio",r:"GET /api/meta",sub:"Lo primero que pide la web: en qué modo está y de cuándo son los datos.",steps:[
+  ["front","main","req","La web pide GET /api/meta"],["main","meta","req","main.py delega en meta.py"],["meta","config","req","meta lee el modo en config.py"],
+  ["meta","main","data","Devuelve versión, modo, fuentes y fecha de los datos"],["main","front","data","La pantalla sabe si está en vivo o publicada"]]},
+ {id:"f2",n:"2",t:"Dibujar parcela",r:"POST /api/parcelas",sub:"El usuario dibuja su contorno sobre la imagen. Responde al momento.",steps:[
+  ["front","main","req","Envía el nombre y el contorno GeoJSON"],["main","esquemas","req","esquemas valida la forma del JSON (422 si no cumple)"],
+  ["main","geometria","req","geometria.validar: 3 puntos o más, cerrado, sin cruces (si no, 400 contorno_invalido)"],
+  ["geometria","main","data","area_ha geodésica, pixeles_30m, centroide y recuadro"],["main","parcelas","req","parcelas.crear: id y versión 1"],
+  ["parcelas","almacen","write","almacen.guardar"],["almacen","store","write","Escribe parcelas/{id}/parcela.json"],["main","front","data","201 con id, área, píxeles de 30 m y centroide"]]},
+ {id:"f3",n:"3",t:"Contar mi campo",r:"PUT …/contexto",sub:"El usuario declara su cultivo, su agua, sus meses y sus prioridades.",steps:[
+  ["front","main","req","Envía cultivo actual y anterior, agua, meses y prioridades"],["main","esquemas","req","Valida el JSON"],
+  ["main","parcelas","req","parcelas guarda lo declarado; «no sé» queda como desconocido"],["parcelas","catalogo","req","Comprueba que el cultivo esté en el catálogo"],
+  ["catalogo","catfile","req","Lee ecocrop_2026-11-14.json"],["parcelas","almacen","write","Guarda el contexto"],["almacen","store","write","Escribe contexto.json"],
+  ["main","front","data","Cada valor vuelve rotulado «declarado por ti»"]]},
+ {id:"f4",n:"4",t:"Preparar datos",r:"POST …/procesar",sub:"Trabajo en segundo plano: pedir los datos de esa parcela a cada fuente y calcular.",steps:[
+  ["front","main","req","Pide preparar los datos de la parcela"],["main","procesamiento","req","procesamiento.iniciar lanza BackgroundTasks y responde al momento"],
+  ["procesamiento","almacen","write","Marca cada fuente como en_proceso"],["almacen","store","write","Escribe procesamiento.json"],
+  ["procesamiento","conectores","req","Recorre el registro de fuentes"],["conectores","datosExt","ext","Invoca obtener(punto o contorno, período, salida)"],
+  ["datosExt","fuentes","ext","Consulta POWER, SoilGrids, MODIS; AppEEARS va por solicitud"],["fuentes","datosExt","data","Respuesta del proveedor"],
+  ["datosExt","store","write","Escribe original, normalizado y procedencia en cache/"],["procesamiento","ingesta","req","Al terminar cada fuente: ingesta.leer"],
+  ["ingesta","almacen","req","Pide los archivos de la caché"],["store","almacen","data","Lee el normalizado y la procedencia"],["almacen","ingesta","data","Registros con su unidad; una celda vacía es None"],
+  ["ingesta","zonal","data","Fuentes de 30 m: estadística dentro del contorno"],["zonal","indicadores","data","Píxeles dentro, válidos, cobertura y mediana"],
+  ["ingesta","indicadores","data","Fuentes gruesas como POWER: serie del centroide"],["indicadores","almacen","write","indicadores.actualizar"],
+  ["almacen","store","write","Escribe indicadores.json y el estado final de cada fuente"]]},
+ {id:"f4b",n:"4b",t:"Ver el avance",r:"GET …/procesamiento",sub:"La pantalla «Preparando tus datos» consulta hasta que cada fuente termina.",steps:[
+  ["front","main","req","Consulta el estado"],["main","procesamiento","req","main delega en procesamiento"],["procesamiento","almacen","req","Pide procesamiento.json"],
+  ["store","almacen","data","Lee el archivo"],["almacen","procesamiento","data","Estado de cada fuente"],["procesamiento","main","data","listo · parcial · en_proceso · no_disponible"],
+  ["main","front","data","Cada fuente con su motivo real; si una falla, las demás siguen"]]},
+ {id:"f5",n:"5",t:"Cómo está mi campo",r:"GET …/indicadores",sub:"Solo lee lo ya calculado. Responde al momento.",steps:[
+  ["front","main","req","Pide los indicadores de la parcela"],["main","indicadores","req","indicadores lee lo calculado"],["indicadores","almacen","req","Pide indicadores.json"],
+  ["store","almacen","data","Lee el archivo"],["almacen","indicadores","data","Valores con procedencia"],["indicadores","main","data","Con su escala: celda de POWER, no la parcela"],
+  ["main","front","data","Ejemplo real: Chivay, 29,2 noches bajo 0 °C en julio (promedio 2015–2025)"]]},
+ {id:"f6",n:"6",t:"Qué siembro después",r:"GET …/rotaciones",sub:"El motor compara cada cultivo con rangos citados. Sin puntaje.",steps:[
+  ["front","main","req","Pide la comparación de rotaciones"],["main","motor","req","motor.comparar(parcela, contexto, indicadores)"],
+  ["motor","parcelas","req","Lee el contexto declarado"],["parcelas","motor","data","Cultivo actual, meses, agua y prioridades"],
+  ["motor","indicadores","req","Lee los indicadores reales"],["indicadores","motor","data","Temperatura, noches bajo la letal, lluvia anual"],
+  ["motor","catalogo","req","Pide los rangos citados"],["catfile","catalogo","data","Rangos de FAO EcoCrop con su URL"],["catalogo","motor","data","Solo reglas con fuente"],
+  {internal:"motor",text:"Dentro del motor: estrategias → evidencia → comparación → presentación → explicación"},
+  ["motor","almacen","write","Guarda el resultado"],["almacen","store","write","Escribe rotaciones.json"],
+  ["motor","main","data","Estrategias criterio por criterio, con vacíos, conflictos y citas"],
+  ["main","front","data","dentro_optimo · dentro_absoluto · fuera_absoluto · sin_dato · sin_regla"]]},
+ {id:"f7",n:"7",t:"Pregunta a Tarpu",r:"GET · POST …/agente",sub:"Respuestas armadas con datos reales y su cita. Sin modelo de IA.",steps:[
+  ["front","main","req","GET banco de respuestas, o POST pregunta libre (solo en vivo)"],["main","agente","req","El agente recibe la pregunta"],
+  {internal:"agente",text:"intenciones reconoce la pregunta → plantillas → banco"},
+  ["agente","indicadores","req","Busca el dato real"],["indicadores","agente","data","Valor con su procedencia"],
+  ["agente","almacen","req","Pide rotaciones.json"],["store","almacen","data","Lee el archivo"],["almacen","agente","data","Motivos y vacíos del motor"],
+  ["agente","main","data","Respuesta con el valor y su cita"],["main","front","data","Si no hay dato, lo dice. Pronóstico: «TARPU no pronostica»"]]},
+ {id:"f8",n:"8",t:"Ver y descargar",r:"GET …/datos",sub:"Consulta detallada que no pasa por el motor (DEC-003).",steps:[
+  ["front","main","req","Pide los datos detallados"],["main","datosdet","req","datos_detallados, sin motor"],["datosdet","ingesta","req","Pide los registros"],
+  ["ingesta","almacen","req","Pide los archivos de la caché"],["store","almacen","data","Lee original y normalizado"],["almacen","ingesta","data","Registros"],
+  ["ingesta","datosdet","data","Registros con unidad y procedencia"],["datosdet","main","data","Por nivel: original, normalizado y derivado"],["main","front","data","Listos para ver y descargar"]]},
+ {id:"f9",n:"",t:"Publicar",r:"exportar",sub:"Para la web publicada: cada ruta GET se guarda como JSON estático.",steps:[
+  ["exportar","main","req","Llama cada ruta GET con TestClient"],["main","exportar","data","Recibe cada respuesta"],
+  ["exportar","pub","write","Escribe un JSON por ruta en Codigo/public/api/"],["pub","front","data","La web publicada lee /api/…json sin servidor"]]}
+];
+
+/* ---------- construir el escenario ---------- */
+const stage = document.getElementById("stage"), wires = document.getElementById("wires"),
+      wireG = document.getElementById("wireG"), partG = document.getElementById("partG"),
+      sizer = document.getElementById("sizer"), viewport = document.getElementById("viewport");
+const SVGNS = "http://www.w3.org/2000/svg";
+const byId = {}; N.forEach(n => byId[n.id] = n);
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+const ST_TXT = {ok:"existe",todo:"por crear",later:"después",proto:"prototipo"};
+
+Object.entries(COLS).forEach(([k,c]) => {
+  const b = document.createElement("div"); b.className = "col-band"; b.style.left = (c.x - 14) + "px"; stage.appendChild(b);
+  const l = document.createElement("div"); l.className = "col-label"; l.style.left = c.x + "px"; l.style.color = c.c; l.textContent = c.label; stage.appendChild(l);
+});
+
+N.forEach(n => {
+  const c = COLS[n.col], el = document.createElement("div");
+  el.className = "node L-" + n.L + (n.later ? " later" : "");
+  el.style.left = c.x + "px"; el.style.top = n.y + "px"; el.style.width = c.w + "px";
+  el.tabIndex = 0; el.setAttribute("role","button"); el.setAttribute("aria-label", n.t + ": ver detalle");
+  let files = "";
+  if (n.files) files = '<div class="files' + (n.stack ? " stack" : "") + '">' + n.files.map((f,i) =>
+    '<span class="f" data-i="' + i + '">' + (f[2] !== undefined && f[2] !== "" ? '<span class="n">' + f[2] + '</span>' : (n.stack && f[2] === "" ? '<span class="n">·</span>' : "")) +
+    esc(f[0]) + (f[1] ? " <em>" + esc(f[1]) + "</em>" : "") + "</span>").join("") + "</div>";
+  el.innerHTML = '<span class="st st-' + n.st + '">' + esc(n.stLabel || ST_TXT[n.st]) + '</span><div class="k">' + esc(n.k) + '</div><div class="t">' + esc(n.t) + '</div><div class="s">' + esc(n.s) + "</div>" + files;
+  stage.appendChild(el); n.el = el;
+  el.addEventListener("click", () => select(n.id));
+  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(n.id); } });
+  el.addEventListener("mouseenter", () => hoverNode(n.id, true));
+  el.addEventListener("mouseleave", () => hoverNode(n.id, false));
+});
+
+/* evita solapes dentro de cada columna */
+function settle(){
+  Object.keys(COLS).forEach(k => {
+    const list = N.filter(n => n.col === k).sort((a,b) => a.y - b.y); let bottom = 0;
+    list.forEach(n => { const top = Math.max(n.y, bottom ? bottom + 22 : n.y); n.el.style.top = top + "px"; n.top = top; n.h = n.el.offsetHeight; bottom = top + n.h; });
+  });
+  N.forEach(n => { n.x = COLS[n.col].x; n.w = COLS[n.col].w; n.top = n.el.offsetTop; n.h = n.el.offsetHeight; });
+}
+
+const edges = E.map(([a,b,fw,bw,later]) => ({a,b,fw,bw,later:!!later,id:a+"|"+b}));
+const edgeOf = (x,y) => edges.find(e => (e.a===x&&e.b===y)||(e.a===y&&e.b===x));
+
+function geometry(){
+  settle();
+  const H = Math.max(...N.map(n => n.top + n.h)) + 40;
+  stage.style.width = STAGE_W + "px"; stage.style.height = H + "px";
+  wires.setAttribute("width", STAGE_W); wires.setAttribute("height", H);
+  /* reparte los puertos de cada lado según la altura del otro extremo */
+  const ports = {};
+  const add = (node, side, e, other) => { const k = node.id + side; (ports[k] = ports[k] || []).push({e, other}); };
+  edges.forEach(e => {
+    const A = byId[e.a], B = byId[e.b];
+    if (A.col === B.col) { const side = A.col === "ext" ? "L" : "R"; e.sa = side; e.sb = side; }
+    else if (A.x < B.x) { e.sa = "R"; e.sb = "L"; } else { e.sa = "L"; e.sb = "R"; }
+    add(A, e.sa, e, B); add(B, e.sb, e, A);
+  });
+  Object.entries(ports).forEach(([k, list]) => {
+    const node = byId[k.slice(0,-1)];
+    list.sort((p,q) => (p.other.top + p.other.h/2) - (q.other.top + q.other.h/2));
+    const lo = node.top + 16, hi = node.top + node.h - 16;
+    list.forEach((p,i) => { const y = list.length === 1 ? node.top + Math.min(node.h/2, 40) : lo + (hi - lo) * (i + .5) / list.length;
+      if (p.e.a === node.id && p.e.sa === k.slice(-1) && p.e.ya === undefined) p.e.ya = y; else p.e.yb = y; });
+  });
+  edges.forEach(e => {
+    const A = byId[e.a], B = byId[e.b];
+    const xa = e.sa === "R" ? A.x + A.w : A.x, xb = e.sb === "R" ? B.x + B.w : B.x;
+    let d;
+    if (A.col === B.col) { const s = e.sa === "R" ? 1 : -1, bulge = 26 + Math.min(40, Math.abs(e.yb - e.ya) * .08);
+      d = `M${xa},${e.ya} C${xa + s*bulge},${e.ya} ${xb + s*bulge},${e.yb} ${xb},${e.yb}`; }
+    else { const dx = (xb - xa) * .5; d = `M${xa},${e.ya} C${xa + dx},${e.ya} ${xb - dx},${e.yb} ${xb},${e.yb}`; }
+    if (!e.path) { e.path = document.createElementNS(SVGNS, "path"); wireG.appendChild(e.path); }
+    e.path.setAttribute("d", d); e.path.setAttribute("class", "wire" + (e.later ? " later" : ""));
+    e.len = e.path.getTotalLength();
+    e.ya = undefined; e.yb = undefined;
+  });
+  fit(H);
+}
+
+function fit(H){
+  const avail = viewport.clientWidth - 2;
+  const s = Math.max(.62, Math.min(1, avail / STAGE_W));
+  stage.style.transform = "scale(" + s + ")";
+  sizer.style.width = (STAGE_W * s) + "px"; sizer.style.height = (H * s) + "px";
+}
+
+/* ---------- partículas ---------- */
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const COLOR = {req:"var(--p-req)",data:"var(--p-data)",write:"var(--p-write)",ext:"var(--p-ext)"};
+const parts = [];
+let speed = 1, paused = false, last = performance.now();
+function emit(e, rev, type, n, spacing, dur){
+  if (reduce) return;
+  for (let i = 0; i < n; i++) {
+    const c = document.createElementNS(SVGNS, "circle");
+    c.setAttribute("r", i === 0 ? 4 : 3); c.setAttribute("class", "p"); c.style.fill = COLOR[type]; c.style.opacity = 0;
+    partG.appendChild(c);
+    parts.push({e, rev, c, t: -i * spacing, dur});
+  }
+}
+function tick(now){
+  const dt = Math.min(64, now - last) * speed; last = now;
+  if (!paused) {
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i]; p.t += dt;
+      if (p.t < 0) continue;
+      const k = p.t / p.dur;
+      if (k >= 1) { p.c.remove(); parts.splice(i,1); continue; }
+      const ease = k < .5 ? 2*k*k : 1 - Math.pow(-2*k + 2, 2) / 2;
+      const pt = p.e.path.getPointAtLength((p.rev ? 1 - ease : ease) * p.e.len);
+      p.c.setAttribute("cx", pt.x); p.c.setAttribute("cy", pt.y);
+      p.c.style.opacity = k < .1 ? k * 10 : (k > .9 ? (1 - k) * 10 : 1);
+    }
+    if (mode === "all") ambient(dt);
+  }
+  requestAnimationFrame(tick);
+}
+let ambAcc = 0;
+function ambient(dt){
+  ambAcc += dt;
+  while (ambAcc > 150) {
+    ambAcc -= 150;
+    const pool = hoverId ? edges.filter(e => !e.later && (e.a === hoverId || e.b === hoverId)) : edges.filter(e => !e.later);
+    if (!pool.length) return;
+    const e = pool[Math.floor(Math.random() * pool.length)];
+    const back = e.bw && Math.random() < .45;
+    if (!e.fw && !e.bw) continue;
+    emit(e, back, back ? e.bw : e.fw, 1, 0, 900 + e.len * 1.4);
+  }
+}
+
+/* ---------- modos y recorridos ---------- */
+let mode = "all", flow = null, step = 0, timer = null, hoverId = null;
+const flowsEl = document.getElementById("flows"), stepsEl = document.getElementById("steps");
+const mkBtn = (id, html) => { const b = document.createElement("button"); b.type = "button"; b.className = "flow-btn"; b.dataset.f = id; b.innerHTML = html; b.setAttribute("aria-pressed","false"); flowsEl.appendChild(b); b.addEventListener("click", () => setFlow(id)); return b; };
+mkBtn("all", "Todo el backend");
+F.forEach(f => mkBtn(f.id, (f.n ? "<b>" + f.n + "</b>" : "") + esc(f.t)));
+
+function setFlow(id){
+  clearTimeout(timer); parts.splice(0).forEach(p => p.c.remove());
+  N.forEach(n => n.el.classList.remove("on","active")); edges.forEach(e => e.path.classList.remove("on","hot","t-req","t-data","t-write","t-ext"));
+  document.querySelectorAll(".f.lit").forEach(f => f.classList.remove("lit"));
+  flowsEl.querySelectorAll(".flow-btn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.f === id)));
+  stage.classList.toggle("dimmed", id !== "all");
+  try { localStorage.setItem("tarpu-backend-flow", id); } catch (_) {}
+  if (id === "all") {
+    mode = "all"; flow = null;
+    document.getElementById("flowTitle").textContent = "Todo el backend";
+    document.getElementById("flowSub").textContent = "Tráfico de todas las conexiones a la vez. Pasa el cursor por un recuadro para ver solo sus conexiones, o elige un recorrido arriba.";
+    stepsEl.innerHTML = "";
+    return;
+  }
+  mode = "flow"; flow = F.find(f => f.id === id); step = 0;
+  document.getElementById("flowTitle").textContent = (flow.n ? "Paso " + flow.n + " · " : "") + flow.t + " · " + flow.r;
+  document.getElementById("flowSub").textContent = flow.sub;
+  stepsEl.innerHTML = flow.steps.map((s,i) => {
+    if (!Array.isArray(s)) return '<li tabindex="0" data-i="' + i + '"><span><span class="ty" style="background:var(--logic)"></span>' + esc(s.text) + '<span class="who">dentro de ' + esc(s.internal) + "/</span></span></li>";
+    return '<li tabindex="0" data-i="' + i + '"><span><span class="ty" style="background:' + COLOR[s[2]] + '"></span>' + esc(s[3]) + '<span class="who">' + esc(byId[s[0]].t) + " → " + esc(byId[s[1]].t) + "</span></span></li>";
+  }).join("");
+  stepsEl.querySelectorAll("li").forEach(li => { const go = () => { step = +li.dataset.i; runStep(); };
+    li.addEventListener("click", go); li.addEventListener("keydown", e => { if (e.key === "Enter") go(); }); });
+  flow.steps.forEach(s => { if (Array.isArray(s)) { byId[s[0]].el.classList.add("on"); byId[s[1]].el.classList.add("on"); const e = edgeOf(s[0],s[1]); if (e) e.path.classList.add("on"); } else byId[s.internal].el.classList.add("on"); });
+  runStep();
+}
+
+function runStep(){
+  clearTimeout(timer);
+  if (!flow) return;
+  if (step >= flow.steps.length) { step = 0; }
+  N.forEach(n => n.el.classList.remove("active"));
+  edges.forEach(e => e.path.classList.remove("hot","t-req","t-data","t-write","t-ext"));
+  stepsEl.querySelectorAll("li").forEach((li,i) => li.classList.toggle("cur", i === step));
+  const s = flow.steps[step];
+  let wait;
+  if (!Array.isArray(s)) {
+    const node = byId[s.internal]; node.el.classList.add("active");
+    const chips = [...node.el.querySelectorAll(".f")]; chips.forEach(c => c.classList.remove("lit"));
+    chips.forEach((c,i) => setTimeout(() => { if (!paused) { chips.forEach(x => x.classList.remove("lit")); c.classList.add("lit"); } }, i * 420 / speed));
+    wait = chips.length * 420 + 300;
+  } else {
+    const [x,y,type] = s, e = edgeOf(x,y);
+    byId[x].el.classList.add("active"); byId[y].el.classList.add("active");
+    document.querySelectorAll(".f.lit").forEach(f => f.classList.remove("lit"));
+    if (e) { e.path.classList.add("hot","t-" + type); const dur = 700 + e.len * 1.1; emit(e, e.a !== x, type, 4, 110, dur); wait = dur + 260; }
+    else wait = 600;
+  }
+  if (!paused) timer = setTimeout(() => { step++; if (step >= flow.steps.length) { timer = setTimeout(() => { step = 0; runStep(); }, 1400 / speed); } else runStep(); }, wait / speed);
+}
+
+/* ---------- controles ---------- */
+const playBtn = document.getElementById("play");
+playBtn.addEventListener("click", () => {
+  paused = !paused; playBtn.textContent = paused ? "Reanudar" : "Pausar"; playBtn.setAttribute("aria-pressed", String(paused));
+  if (!paused && mode === "flow") runStep(); else clearTimeout(timer);
+});
+document.getElementById("next").addEventListener("click", () => { if (mode !== "flow") setFlow(F[0].id); else { step = (step + 1) % flow.steps.length; runStep(); } });
+document.getElementById("prev").addEventListener("click", () => { if (mode !== "flow") setFlow(F[0].id); else { step = (step - 1 + flow.steps.length) % flow.steps.length; runStep(); } });
+document.querySelectorAll(".spd").forEach(b => b.addEventListener("click", () => {
+  speed = +b.dataset.s; document.querySelectorAll(".spd").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+}));
+
+function hoverNode(id, on){
+  if (mode !== "all") return;
+  hoverId = on ? id : null;
+  edges.forEach(e => e.path.classList.toggle("hover", on && (e.a === id || e.b === id)));
+}
+
+/* ---------- detalle ---------- */
+const CROPS = [
+  ["Papa","1971","15–25 / 7–30","500–800 / 250–2000","5–6,2 / 4,2–8,5","2800","−1 / 0","90–160","Solanaceae"],
+  ["Haba","2146","18–28 / 5–32","650–1000 / 250–2600","6–7 / 4,5–8,6","2700","sin dato","100–150","Leguminosae"],
+  ["Cebada","1232","15–20 / 2–40","500–1000 / 200–2000","6,5–7,5 / 6–8","4400","−4 / 0","90–240","Gramineae"],
+  ["Quinua","2509","14–18 / 2–35","500–1000 / 250–2600","5,5–8 / 4,5–9,5","4000","−8 / −8","90–240","Chenopodiaceae"]
+];
+const list = a => "<ul>" + a.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>";
+function select(id){
+  const n = byId[id];
+  N.forEach(m => m.el.classList.toggle("sel", m.id === id));
+  const d = n.d || {}; let h = "";
+  h += '<div class="k">' + esc(n.k) + '</div><h3>' + esc(n.t) + ' <span class="st st-' + n.st + '">' + esc(n.stLabel || ST_TXT[n.st]) + "</span></h3>";
+  if (d.hace) h += "<p>" + esc(d.hace) + "</p>";
+  if (d.funcs) h += "<h4>Funciones o archivos</h4><div class='ftable'>" + d.funcs.map(f => "<span class='mono'>" + esc(f[0]) + "</span><span>" + esc(f[1]) + "</span>").join("") + "</div>";
+  if (d.files) h += "<h4>Archivos</h4><div class='ftable'>" + d.files.map(f => "<span class='mono'>" + esc(f[0]) + "</span><span>" + esc(f[1]) + "</span>").join("") + "</div>";
+  if (d.vars) h += "<h4>Variables</h4><div class='ftable'>" + d.vars.map(f => "<span class='mono'>" + esc(f[0]) + "</span><span>" + esc(f[1]) + "</span>").join("") + "</div>";
+  if (d.lee) h += "<h4>Lee</h4>" + list(d.lee);
+  if (d.escribe) h += "<h4>Escribe</h4>" + list(d.escribe);
+  if (d.reglas) h += "<h4>Reglas</h4>" + list(d.reglas);
+  if (d.ejemplo) h += "<h4>Ejemplo real (contrato/ejemplos/indicadores_chivay.json)</h4><p>NASA POWER, punto de Chivay (−15,64; −71,60), 2015–2025, 4018 días sin faltantes. Noches con mínima bajo 0 °C, promedio por mes: junio 28,8 · julio 29,2 · agosto 29,2. Lluvia anual de 176,0 mm (2021) a 405,2 mm (2025). La celda de POWER está a 4351,89 m.</p>";
+  if (d.crops) h += "<h4>Valores (óptimo / absoluto)</h4><div class='tbl-wrap'><table><thead><tr><th>Cultivo</th><th>Ficha</th><th>Temp. °C</th><th>Lluvia mm/año</th><th>pH</th><th>Alt. máx. m</th><th>T letal °C (reposo / temprano)</th><th>Ciclo días</th><th>Familia</th></tr></thead><tbody>" +
+    CROPS.map(r => "<tr>" + r.map((v,i) => "<td>" + (i === 1 ? "<a href='https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=" + v + "' target='_blank' rel='noopener'>id " + v + "</a>" : esc(v)) + "</td>").join("") + "</tr>").join("") +
+    "</tbody></table></div><p class='src'>Fuente: FAO EcoCrop, consultado el 14/11/2026. Altitud: conflicto verificado con la celda de POWER de Chivay (4352 m), por eso no excluye.</p>";
+  if (d.src) h += "<h4>Registro de fuentes</h4><div class='tbl-wrap'><table><thead><tr><th>Fuente</th><th>Pide</th><th>Responde</th><th>Resolución</th><th>Estado</th></tr></thead><tbody>" +
+    d.src.map(r => "<tr>" + r.map(v => "<td>" + esc(v) + "</td>").join("") + "</tr>").join("") + "</tbody></table></div>";
+  const conn = edges.filter(e => e.a === id || e.b === id).map(e => byId[e.a === id ? e.b : e.a].t + (e.later ? " (después)" : ""));
+  if (conn.length) h += "<h4>Conectado con</h4><p>" + conn.map(esc).join(" · ") + "</p>";
+  document.getElementById("detail").innerHTML = h;
+}
+
+/* ---------- arranque ---------- */
+geometry();
+let initial = "all";
+try { const v = localStorage.getItem("tarpu-backend-flow"); if (v && (v === "all" || F.some(f => f.id === v))) initial = v; } catch (_) {}
+setFlow(initial);
+select("motor");
+requestAnimationFrame(t => { last = t; tick(t); });
+let rT; window.addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(geometry, 120); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(geometry);
+})();
+</script>

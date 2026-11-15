@@ -57,7 +57,7 @@ El contenido generado no puede usar, contener ni modificar la marca de NASA (log
 **Esto nos afecta directamente:**
 
 - El prototipo se construyó con asistencia de IA (Codex y Claude Code). Hay que declararlo en el campo de IA, en el README del repositorio y en los archivos.
-- La imagen `Tarpu_ Branding.png` parece generada con IA. Si se muestra, necesita marca de agua. El equipo debe confirmar cómo se hizo.
+- No sabemos cómo se hizo la imagen `Tarpu_ Branding.png`. El equipo debe confirmarlo: si se generó con IA y se muestra en la entrega, necesita marca de agua.
 - El registro para llevarlo al día está en [`entrega/uso-de-ia.md`](../entrega/uso-de-ia.md).
 
 ## Criterios de evaluación

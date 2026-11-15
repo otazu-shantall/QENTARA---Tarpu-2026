@@ -16,7 +16,7 @@ QENTARA - Tarpu 2026/
 ├── Documentación/           Informe maestro formal (.md, .tex y .pdf, versión 0.4).
 ├── Codigo/                  FRONTEND (Shantall). Prototipo visual de guía: React + TypeScript + Vite + Leaflet.
 ├── datos/                   DATOS SATELITALES (Damaris). Consulta real a NASA POWER y fichas de fuentes.
-├── backend/                 BACKEND, CONECTORES Y MOTOR (Erick). Por ahora, guía y contrato.
+├── backend/                 BACKEND, CONECTORES Y MOTOR (Erick). Todo el diseño del área reunido; índice en backend/README.md.
 ├── entrega/                 ENTREGA, PITCH E INVESTIGACIÓN (Derecho). Formulario, guion, referencias, uso de IA.
 ├── tmp/                     Auxiliares de sesiones anteriores (generador del PDF, capturas). No es software de TARPU.
 ├── TARPU_QENTARA_Contexto_Integral.md   Antecedente histórico completo.

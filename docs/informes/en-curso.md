@@ -4,11 +4,11 @@
 > Se actualiza al terminar cada paso, al encontrar un error y antes de cada proceso largo. Al cerrar el trabajo, su contenido pasa a un informe nuevo y esta página se vacía para el siguiente.
 
 **Trabajo:** Hackathon · **fase 1 del [ROADMAP](../../ROADMAP.md)**: cada área planifica su parte y llena su [plantilla de propuesta](../areas/).
-**Último trabajo cerrado:** 05 · Equipo, desafío oficial y base por área (14/11/2026) → [05-equipo-desafio-y-entrega.md](05-equipo-desafio-y-entrega.md).
+**Último trabajo cerrado:** 06 · Análisis del repositorio y base para continuar (14/11/2026) → [06-analisis-repositorio.md](06-analisis-repositorio.md). Revisión sin cambios de código ni de fase organizativa; contiene comprobaciones y pendientes técnicos.
 
 ## Siguiente paso exacto
 
-Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](../areas/propuesta-frontend.md), [backend](../areas/propuesta-backend.md) y [entrega](../areas/propuesta-entrega.md). A las 2 horas de empezar, **reunión de unión** (fase 2 del ROADMAP). Sus decisiones van a [06](../06-decisiones-y-riesgos.md) y la nueva división a esta bitácora.
+Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](../areas/propuesta-frontend.md), [backend](../../backend/PROPUESTA.md) y [entrega](../areas/propuesta-entrega.md). A las 2 horas de empezar, **reunión de unión** (fase 2 del ROADMAP). Sus decisiones van a [06](../06-decisiones-y-riesgos.md) y la nueva división a esta bitácora.
 
 **Datos (Damaris):**
 - La propuesta ya tiene la tabla de variables (sección 7) y «qué dicen y qué no dicen» (sección 4).
@@ -21,7 +21,7 @@ Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](
 
 | # | Paso | Estado |
 |---|---|---|
-| 1 | Fase 1: propuestas de cada área | ⏳ |
+| 1 | Fase 1: propuestas de cada área | ⏳ Backend: propuesta completa y DT-13 a DT-15 tomadas (Erick). Faltan datos, frontend y entrega |
 | 2 | Fase 2: reunión de unión y decisiones | |
 | 3 | Fase 3: nueva división y construcción | |
 | 4 | Envío oficial | |

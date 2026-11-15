@@ -81,6 +81,63 @@ Cada área trabaja en su carpeta. Primero se investiga y se hace la base; luego 
 
 Detalle en [ROADMAP.md](../ROADMAP.md).
 
+### DT-13 · Backend: API FastAPI y exportación a JSON estático
+**Tomada · 14/11/2026 (Erick, responsable del área).** Python 3.13 con FastAPI y Pydantic para desarrollar. Un comando exporta las rutas `GET` a JSON estático con las mismas rutas, para la demo pública. Sin base de datos en la demo. Detalle en [backend/PROPUESTA.md](../backend/PROPUESTA.md). Cierra SUP-015 **solo para el hackathon**; el stack del producto sigue abierto.
+
+### DT-14 · Agente guiado con datos, sin modelo de IA en la demo
+**Tomada · 14/11/2026 (Erick).** Reconoce intenciones y responde con plantillas a partir de los datos y resultados reales, citando la fuente. Un modelo de lenguaje queda como ampliación (SUP-034 sigue abierto para el producto).
+
+### DT-15 · Publicación de la demo en Vercel o Netlify
+**Tomada · 14/11/2026 (Erick).** Sitio estático compilado desde `Codigo/`, con los JSON exportados. La elección entre las dos plataformas queda para la reunión de unión.
+
+### DT-16 · Cero supuestos en la demo
+**Tomada · 14/11/2026 (Erick).** La demo es una demo, pero tiene que funcionar bien y todo lo que muestre tiene que ser cierto.
+
+1. Cada valor viene de una fuente real con su procedencia, o lo declara el usuario y se muestra como «declarado por ti».
+2. Ninguna regla, umbral, rango, límite ni peso se usa sin cita; sin ella, el dato se muestra sin evaluarlo.
+3. Nada sintético en la demo: ni parcelas, ni personajes, ni valores de ejemplo.
+4. Sin interpretaciones sin evidencia.
+5. Lo que no se sabe se lista como tarea de verificación, nunca se rellena.
+6. Lo que no se pueda hacer bien se deja fuera, en vez de simularlo.
+
+**Consecuencias:**
+- El motor de la demo **no tiene puntaje ni pesos** (los de SUP-019 no tienen fuente). Compara cada criterio con los rangos de FAO EcoCrop, copiados con su cita en `backend/catalogo/`.
+- Desaparecen los límites de tamaño y el umbral de representatividad inventados: se muestran los conteos reales de píxeles.
+- Los datos sintéticos del prototipo (`Codigo/src/data/demo.ts`) se sustituyen por datos de la API antes de la entrega.
+
+Detalle en [backend/DISENO.md](../backend/DISENO.md).
+
+### DT-17 · Solo tres fuentes de datos en la demo
+**Tomada · 14/11/2026 (Erick).** La demo usa **solo**:
+
+| Fuente | Qué da | Escala | Acceso |
+|---|---|---|---|
+| **NASA POWER** (API diaria por punto) | Temperatura, lluvia, humedad, radiación | Celda de 0,5° × 0,625° (≈ 55 × 67 km en Arequipa) | Sin cuenta |
+| **NDVI de MODIS** (`MOD13Q1` v061, servicio de ORNL) | Verdor de la zona cada 16 días | Píxel nominal de 250 m | Sin cuenta |
+| **SoilGrids** (ISRIC) | pH y otras propiedades del suelo, predichas | 250 m | Sin cuenta |
+
+**Consecuencias:**
+- Salen de la demo HLS, SRTM y NASADEM (vía AppEEARS), IMERG, SMAP, ECOSTRESS, VIIRS y las capas de NASA GIBS. No hace falta cuenta de Earthdata.
+- Ninguna de las tres fuentes describe el interior de una parcela pequeña: TARPU consulta el **centroide** de la parcela y muestra la escala de cada dato. El módulo `zonal` (estadística dentro del contorno a 30 m) deja de hacer falta.
+- Precisión: POWER y SoilGrids no son imágenes de satélite. POWER combina modelos y satélites, y SoilGrids es una predicción. El único satélite directo es MODIS.
+- **Afecta al área de datos:** Damaris prepara los conectores de MODIS (ORNL) y SoilGrids. Hay que confirmarlo con ella en la reunión de unión.
+
+### DT-18 · Arequipa se analiza por sectores de altitud
+**Tomada · 15/11/2026 (Erick).**
+
+| Sector | Regiones naturales (Pulgar Vidal) | Altitud |
+|---|---|---|
+| **S1 · Costa y valles bajos** | Chala + Yunga marítima | 0–2300 m |
+| **S2 · Valles interandinos** | Quechua | 2300–3500 m |
+| **S3 · Altoandino** | Suni + Puna | 3500–4800 m |
+
+- **Límites:** los de las regiones naturales de Javier Pulgar Vidal. **Pendiente:** verificarlos en la obra original (se consultó una fuente secundaria).
+- **Qué define cada sector:** las variables que se muestran primero, las fuentes lentas que se piden y el orden de los criterios al comparar cultivos (orden, no pesos).
+- **Uso interno:** el usuario ve un mapa normal; los sectores no se muestran como capa.
+- **Ampliación:** la misma lógica servirá después para todo el Perú. Hará falta añadir las regiones de selva de Pulgar Vidal.
+- **Evidencia:** la climatología regional de NASA POWER (2001–2025) muestra 0 días de helada al año por debajo de ≈ 2300 m, y de 22,8 a 319 por encima de ≈ 3500 m. Detalle en [backend/PLAN-SECTORES-AREQUIPA.md](../backend/PLAN-SECTORES-AREQUIPA.md).
+- **Cuenta de Earthdata:** la creó Erick para las fuentes que la necesitan. Las credenciales van en `backend/.env`, que git ignora; nunca en el repositorio ni en el chat.
+
 ## Riesgos
 
 Prioridades cualitativas del informe (SUP-032), sin probabilidad medida.
@@ -94,7 +151,7 @@ Prioridades cualitativas del informe (SUP-032), sin probabilidad medida.
 | Costos superiores al modelo | Alta | La carga o el soporte superan el escenario | Medir, limitar cupos y revisar precio |
 | Exposición de datos | Alta | Acceso cruzado o enlace público involuntario | Suspender acceso, contener y corregir |
 | **Sobrecarga de alcance** | Alta | Fuentes y funciones avanzan sin un recorrido completo | Priorizar la demostración de [05](05-entregables.md) |
-| Prototipo confundido con producto | Alta | Se presentan datos sintéticos como reales | Mantener rótulos «Demo» y «sin conexión activa» |
+| Datos sintéticos en la demo | Alta | La demo muestra un valor que no viene de una fuente real | DT-16: se sustituyen todos por datos de la API; lo que no llegue no se muestra |
 | **Entrega fuera de regla** | Alta | Demo de más de 30 s o 7 diapositivas, textos sin inglés, enlaces privados o IA sin declarar | Listas de [09](09-entrega-oficial.md) y de `entrega/` |
 | **Dato de NASA solo decorativo** | Alta | La app no muestra un dato real de NASA | Llevar POWER a la pantalla: es el criterio Relevance |
 | Adopción limitada | Media | No se repite una tarea útil | Revisar segmento y propuesta |

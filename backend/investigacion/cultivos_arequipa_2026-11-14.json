@@ -1,0 +1,3239 @@
+{
+ "descripcion": "Cultivos de Arequipa: rangos de FAO EcoCrop (copiados tal cual), superficie oficial, aptitud FAO GAEZ en los dos lugares de ejemplo y comparación con el clima de cada sector (NASA POWER, climatología regional 2001-2025). Datos reunidos el 14/11/2026. Sin puntajes.",
+ "fuentes": {
+  "ecocrop": "FAO EcoCrop, dataSheet?id= de cada cultivo (consultado el 14/11/2026)",
+  "superficie": "INEI, Compendio estadístico Arequipa, cuadro 2.4.3.2 «Superficie cosechada, según principales cultivos, 2001-2025» (fuente: Dirección Regional de Agricultura de Arequipa). 2024 es preliminar. Algunos años muestran 0 en arroz y aceituna (2019-2022): se reporta tal cual.",
+  "intencion_siembra": "Gerencia Regional de Agricultura de Arequipa, ENIS 2026-2027, citada por Agraria.pe (16/07/2026): 10 principales cultivos transitorios y superficie por provincia.",
+  "gaez": "FAO GAEZ v4, servicio res05, índice de aptitud 0-10000, 1981-2010, insumos altos, «current cropland in grid cell»; celdas de 0,0833°.",
+  "clima_sector": "NASA POWER, API de climatología regional (2001-2025), rectángulo -17,5/-14,5 lat y -75,5/-70,5 lon; celdas agrupadas por su altitud media (S1 0-2300, S2 2300-3500, S3 3500-4800 m)."
+ },
+ "metodo_evaluacion": {
+  "meses_t_opt": "Meses del año cuya temperatura media (T2M) cae en el rango óptimo de EcoCrop; mínimo y máximo entre las celdas del sector.",
+  "meses_t_abs": "Igual, con el rango absoluto.",
+  "meses_tmin_bajo_letal": "Meses cuya mínima media (T2M_MIN) es igual o menor que la temperatura letal en crecimiento temprano de EcoCrop. Es un indicador mensual promedio, no el conteo de noches.",
+  "lluvia_bajo_min_abs": "Celdas del sector cuya lluvia anual es menor que el mínimo absoluto de EcoCrop.",
+  "celdas_sobre_alt_max": "Celdas cuya altitud media supera la altitud máxima absoluta de EcoCrop (conflicto entre fuentes, no excluye)."
+ },
+ "superficie_cosechada_ha": {
+  "Aceituna": {
+   "2023": 4763,
+   "2024 P/": 4767
+  },
+  "Ajo": {
+   "2023": 5142,
+   "2024 P/": 4754
+  },
+  "Alcachofa": {
+   "2023": 2794,
+   "2024 P/": 2270
+  },
+  "Alfalfa": {
+   "2023": 36141,
+   "2024 P/": 34978
+  },
+  "Arroz cáscara": {
+   "2023": 20683,
+   "2024 P/": 21032
+  },
+  "Arveja grano verde": {
+   "2023": 1871,
+   "2024 P/": 1945
+  },
+  "Camote": {
+   "2023": 107,
+   "2024 P/": 144
+  },
+  "Caña de azúcar (para azúcar)": {
+   "2023": 868,
+   "2024 P/": 849
+  },
+  "Cebolla": {
+   "2023": 7936,
+   "2024 P/": 8190
+  },
+  "Cebolla cabeza amarilla": {
+   "2023": 360,
+   "2024 P/": 335
+  },
+  "Haba grano verde": {
+   "2023": 1343,
+   "2024 P/": 1427
+  },
+  "Maíz amiláceo": {
+   "2023": 2471,
+   "2024 P/": 2430
+  },
+  "Maíz choclo": {
+   "2023": 1911,
+   "2024 P/": 1778
+  },
+  "Papa": {
+   "2023": 9265,
+   "2024 P/": 9827
+  },
+  "Tomate": {
+   "2023": 856,
+   "2024 P/": 1114
+  },
+  "Uva": {
+   "2023": 1680,
+   "2024 P/": 1686
+  },
+  "Zanahoria": {
+   "2023": 1886,
+   "2024 P/": 1695
+  },
+  "Zapallo": {
+   "2023": 1271,
+   "2024 P/": 1588
+  }
+ },
+ "enis_2026_2027_top10_ha": {
+  "arroz cáscara": 20787,
+  "papa": 9986,
+  "cebolla": 7678,
+  "ajo": 6437,
+  "frijol grano seco": 5309,
+  "maíz amiláceo": 2804,
+  "maíz choclo": 2240,
+  "quinua": 2173,
+  "trigo": 2050,
+  "arveja grano verde": 1739
+ },
+ "enis_2026_2027_por_provincia_ha": {
+  "Camaná": 16465,
+  "Caylloma": 14246,
+  "Castilla": 13167,
+  "Islay": 12960,
+  "Arequipa": 7796,
+  "Caravelí": 1932,
+  "La Unión": 1377,
+  "Condesuyos": 735
+ },
+ "cultivos": {
+  "alfalfa": {
+   "ecocrop": {
+    "cientifico": "Medicago sativa",
+    "id": 1428,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1428",
+    "temp_opt": [
+     21.0,
+     27.0
+    ],
+    "temp_abs": [
+     5.0,
+     45.0
+    ],
+    "lluvia_opt": [
+     600.0,
+     1200.0
+    ],
+    "lluvia_abs": [
+     350.0,
+     2700.0
+    ],
+    "ph_opt": [
+     6.5,
+     7.5
+    ],
+    "ph_abs": [
+     4.3,
+     8.7
+    ],
+    "alt_abs_max": 4000.0,
+    "letal_reposo": -25.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     100.0,
+     210.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "medium, light",
+     "medium, light"
+    ],
+    "vida": "perennial",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0",
+    "majes_riego_Irrigation": "5556",
+    "chivay_Irrigation": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      5
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 34978
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 34978
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      1,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 3,
+     "celdas_sobre_alt_max": 18,
+     "area_2024_ha": 34978
+    }
+   }
+  },
+  "arroz": {
+   "ecocrop": {
+    "cientifico": "Oryza sativa",
+    "id": 1574,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1574",
+    "temp_opt": [
+     20.0,
+     30.0
+    ],
+    "temp_abs": [
+     10.0,
+     36.0
+    ],
+    "lluvia_opt": [
+     1500.0,
+     2000.0
+    ],
+    "lluvia_abs": [
+     1000.0,
+     4000.0
+    ],
+    "ph_opt": [
+     5.5,
+     7.0
+    ],
+    "ph_abs": [
+     4.5,
+     9.0
+    ],
+    "alt_abs_max": 2500.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     80.0,
+     180.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "wide",
+     "wide"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "neutral day (12-14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      5
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 21032
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      10,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 5,
+     "area_2024_ha": 21032
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      8
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 21,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 21032
+    }
+   }
+  },
+  "papa": {
+   "ecocrop": {
+    "cientifico": "Solanum tuberosum",
+    "id": 1971,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1971",
+    "temp_opt": [
+     15.0,
+     25.0
+    ],
+    "temp_abs": [
+     7.0,
+     30.0
+    ],
+    "lluvia_opt": [
+     500.0,
+     800.0
+    ],
+    "lluvia_abs": [
+     250.0,
+     2000.0
+    ],
+    "ph_opt": [
+     5.0,
+     6.2
+    ],
+    "ph_abs": [
+     4.2,
+     8.5
+    ],
+    "alt_abs_max": 2800.0,
+    "letal_reposo": -1.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     90.0,
+     160.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0",
+    "majes_riego_Irrigation": "3333",
+    "chivay_Irrigation": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      10,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 9827
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 5,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 4,
+     "area_2024_ha": 9827
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 4,
+     "lluvia_en_opt": 6,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 9827
+    }
+   }
+  },
+  "cebolla": {
+   "ecocrop": {
+    "cientifico": "Allium cepa",
+    "id": 364,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=364",
+    "temp_opt": [
+     12.0,
+     25.0
+    ],
+    "temp_abs": [
+     4.0,
+     30.0
+    ],
+    "lluvia_opt": [
+     350.0,
+     600.0
+    ],
+    "lluvia_abs": [
+     300.0,
+     2800.0
+    ],
+    "ph_opt": [
+     6.0,
+     7.0
+    ],
+    "ph_abs": [
+     4.3,
+     8.3
+    ],
+    "alt_abs_max": 2000.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     85.0,
+     175.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "wide, organic"
+    ],
+    "vida": "biennial",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      12,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 8190
+    },
+    "S2": {
+     "meses_t_opt": [
+      1,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": 8190
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      7,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 10,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 8190
+    }
+   }
+  },
+  "ajo": {
+   "ecocrop": {
+    "cientifico": "Allium sativum",
+    "id": 367,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=367",
+    "temp_opt": [
+     18.0,
+     30.0
+    ],
+    "temp_abs": [
+     7.0,
+     35.0
+    ],
+    "lluvia_opt": [
+     750.0,
+     1600.0
+    ],
+    "lluvia_abs": [
+     500.0,
+     2700.0
+    ],
+    "ph_opt": [
+     6.0,
+     6.6
+    ],
+    "ph_abs": [
+     5.0,
+     8.5
+    ],
+    "alt_abs_max": 2200.0,
+    "letal_reposo": -5.0,
+    "letal_temprano": -5.0,
+    "ciclo": [
+     90.0,
+     120.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, light",
+     "heavy, medium, light"
+    ],
+    "vida": "biennial",
+    "fotoperiodo": "long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 4754
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": 4754
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      12
+     ],
+     "lluvia_bajo_min_abs": 15,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 4754
+    }
+   }
+  },
+  "olivo": {
+   "ecocrop": {
+    "cientifico": "Olea europaea",
+    "id": 1553,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1553",
+    "temp_opt": [
+     20.0,
+     34.0
+    ],
+    "temp_abs": [
+     5.0,
+     40.0
+    ],
+    "lluvia_opt": [
+     400.0,
+     700.0
+    ],
+    "lluvia_abs": [
+     200.0,
+     1200.0
+    ],
+    "ph_opt": [
+     6.0,
+     7.0
+    ],
+    "ph_abs": [
+     5.3,
+     8.5
+    ],
+    "alt_abs_max": 1200.0,
+    "letal_reposo": -10.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     365.0,
+     365.0
+    ],
+    "salinidad": [],
+    "textura": [
+     "medium, light",
+     "wide"
+    ],
+    "vida": "perennial",
+    "fotoperiodo": null
+   },
+   "gaez_puntos": {
+    "majes_riego_Irrigation": "0",
+    "chivay_Irrigation": "0",
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      5
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": 4767
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 5,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": 4767
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      1,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 1,
+     "lluvia_en_opt": 12,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 4767
+    }
+   }
+  },
+  "alcachofa": {
+   "ecocrop": {
+    "cientifico": "Cynara scolymus",
+    "id": 847,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=847",
+    "temp_opt": [
+     15.0,
+     25.0
+    ],
+    "temp_abs": [
+     5.0,
+     30.0
+    ],
+    "lluvia_opt": [
+     900.0,
+     1200.0
+    ],
+    "lluvia_abs": [
+     300.0,
+     1500.0
+    ],
+    "ph_opt": [
+     6.0,
+     6.5
+    ],
+    "ph_abs": [
+     5.5,
+     8.3
+    ],
+    "alt_abs_max": 2000.0,
+    "letal_reposo": 1.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     210.0,
+     270.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, light",
+     "heavy, medium, light"
+    ],
+    "vida": "perennial",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      10,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 2270
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": 2270
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      1,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 2270
+    }
+   }
+  },
+  "maiz": {
+   "ecocrop": {
+    "cientifico": "Zea mays",
+    "id": 2175,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2175",
+    "temp_opt": [
+     18.0,
+     33.0
+    ],
+    "temp_abs": [
+     10.0,
+     47.0
+    ],
+    "lluvia_opt": [
+     600.0,
+     1200.0
+    ],
+    "lluvia_abs": [
+     400.0,
+     1800.0
+    ],
+    "ph_opt": [
+     5.0,
+     7.0
+    ],
+    "ph_abs": [
+     4.5,
+     8.5
+    ],
+    "alt_abs_max": 4000.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     65.0,
+     365.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "Rainfall (annual)",
+     "600"
+    ],
+    "vida": "Plant attributes",
+    "fotoperiodo": null
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 4208
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      10,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 4208
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      8
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 9,
+     "lluvia_en_opt": 3,
+     "celdas_sobre_alt_max": 18,
+     "area_2024_ha": 4208
+    }
+   }
+  },
+  "zanahoria": {
+   "ecocrop": {
+    "cientifico": "Daucus carota",
+    "id": 871,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=871",
+    "temp_opt": [
+     15.0,
+     24.0
+    ],
+    "temp_abs": [
+     3.0,
+     30.0
+    ],
+    "lluvia_opt": [
+     600.0,
+     1200.0
+    ],
+    "lluvia_abs": [
+     400.0,
+     4000.0
+    ],
+    "ph_opt": [
+     5.8,
+     6.8
+    ],
+    "ph_abs": [
+     4.2,
+     8.7
+    ],
+    "alt_abs_max": 2600.0,
+    "letal_reposo": -1.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     40.0,
+     150.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "biennial",
+    "fotoperiodo": "long day (>14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      10,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 1695
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 4,
+     "area_2024_ha": 1695
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      8,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 9,
+     "lluvia_en_opt": 3,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 1695
+    }
+   }
+  },
+  "arveja": {
+   "ecocrop": {
+    "cientifico": "Pisum sativum",
+    "id": 1721,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1721",
+    "temp_opt": [
+     10.0,
+     24.0
+    ],
+    "temp_abs": [
+     4.0,
+     30.0
+    ],
+    "lluvia_opt": [
+     800.0,
+     1200.0
+    ],
+    "lluvia_abs": [
+     350.0,
+     2500.0
+    ],
+    "ph_opt": [
+     5.5,
+     7.0
+    ],
+    "ph_abs": [
+     4.5,
+     8.3
+    ],
+    "alt_abs_max": 2700.0,
+    "letal_reposo": -2.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     60.0,
+     140.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "heavy, medium, light",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      12,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 1945
+    },
+    "S2": {
+     "meses_t_opt": [
+      10,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 4,
+     "area_2024_ha": 1945
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      8
+     ],
+     "meses_t_abs": [
+      7,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 1945
+    }
+   }
+  },
+  "vid": {
+   "ecocrop": {
+    "cientifico": "Vitis vinifera",
+    "id": 2160,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2160",
+    "temp_opt": [
+     18.0,
+     30.0
+    ],
+    "temp_abs": [
+     10.0,
+     38.0
+    ],
+    "lluvia_opt": [
+     700.0,
+     850.0
+    ],
+    "lluvia_abs": [
+     400.0,
+     1200.0
+    ],
+    "ph_opt": [
+     5.5,
+     7.5
+    ],
+    "ph_abs": [
+     4.5,
+     8.5
+    ],
+    "alt_abs_max": 2000.0,
+    "letal_reposo": -20.0,
+    "letal_temprano": -3.0,
+    "ciclo": [
+     160.0,
+     270.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "perennial",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 1686
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      10,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": 1686
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      8
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      12
+     ],
+     "lluvia_bajo_min_abs": 9,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 1686
+    }
+   }
+  },
+  "haba": {
+   "ecocrop": {
+    "cientifico": "Vicia faba",
+    "id": 2146,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2146",
+    "temp_opt": [
+     18.0,
+     28.0
+    ],
+    "temp_abs": [
+     5.0,
+     32.0
+    ],
+    "lluvia_opt": [
+     650.0,
+     1000.0
+    ],
+    "lluvia_abs": [
+     250.0,
+     2600.0
+    ],
+    "ph_opt": [
+     6.0,
+     7.0
+    ],
+    "ph_abs": [
+     4.5,
+     8.6
+    ],
+    "alt_abs_max": 2700.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     100.0,
+     150.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 1427
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 5,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 4,
+     "area_2024_ha": 1427
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      1,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 4,
+     "lluvia_en_opt": 3,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 1427
+    }
+   }
+  },
+  "zapallo": {
+   "ecocrop": {
+    "cientifico": "Cucurbita maxima",
+    "id": 819,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=819",
+    "temp_opt": [
+     20.0,
+     30.0
+    ],
+    "temp_abs": [
+     9.0,
+     38.0
+    ],
+    "lluvia_opt": [
+     600.0,
+     1000.0
+    ],
+    "lluvia_abs": [
+     450.0,
+     2700.0
+    ],
+    "ph_opt": [
+     5.5,
+     7.5
+    ],
+    "ph_abs": [
+     5.0,
+     8.5
+    ],
+    "alt_abs_max": 2000.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     80.0,
+     140.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "heavy, medium, light, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      5
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 1588
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": 1588
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      11
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 13,
+     "lluvia_en_opt": 3,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 1588
+    }
+   }
+  },
+  "cana_de_azucar": {
+   "ecocrop": {
+    "cientifico": "Saccharum officinarum",
+    "id": 1884,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1884",
+    "temp_opt": [
+     24.0,
+     37.0
+    ],
+    "temp_abs": [
+     15.0,
+     41.0
+    ],
+    "lluvia_opt": [
+     1500.0,
+     2000.0
+    ],
+    "lluvia_abs": [
+     1000.0,
+     5000.0
+    ],
+    "ph_opt": [
+     5.0,
+     8.0
+    ],
+    "ph_abs": [
+     4.5,
+     9.0
+    ],
+    "alt_abs_max": 1600.0,
+    "letal_reposo": -2.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     210.0,
+     365.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "Rainfall (annual)",
+     "1500"
+    ],
+    "vida": "Plant attributes",
+    "fotoperiodo": null
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0",
+    "majes_riego_Irrigation": "0",
+    "chivay_Irrigation": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      10,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 5,
+     "area_2024_ha": 849
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      10
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": 849
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      0
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 21,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 849
+    }
+   }
+  },
+  "tomate": {
+   "ecocrop": {
+    "cientifico": "Lycopersicon esculentum",
+    "id": 1379,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1379",
+    "temp_opt": [
+     20.0,
+     27.0
+    ],
+    "temp_abs": [
+     7.0,
+     35.0
+    ],
+    "lluvia_opt": [
+     600.0,
+     1300.0
+    ],
+    "lluvia_abs": [
+     400.0,
+     1800.0
+    ],
+    "ph_opt": [
+     5.5,
+     6.8
+    ],
+    "ph_abs": [
+     5.0,
+     7.5
+    ],
+    "alt_abs_max": 2400.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     70.0,
+     150.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      5
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 1114
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 5,
+     "area_2024_ha": 1114
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 9,
+     "lluvia_en_opt": 3,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 1114
+    }
+   }
+  },
+  "camote": {
+   "ecocrop": {
+    "cientifico": "Ipomoea batatas",
+    "id": 1265,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1265",
+    "temp_opt": [
+     18.0,
+     28.0
+    ],
+    "temp_abs": [
+     10.0,
+     38.0
+    ],
+    "lluvia_opt": [
+     750.0,
+     2000.0
+    ],
+    "lluvia_abs": [
+     350.0,
+     5000.0
+    ],
+    "ph_opt": [
+     5.0,
+     7.0
+    ],
+    "ph_abs": [
+     4.0,
+     8.7
+    ],
+    "alt_abs_max": 2800.0,
+    "letal_reposo": 1.0,
+    "letal_temprano": 5.0,
+    "ciclo": [
+     80.0,
+     170.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "Rainfall (annual)",
+     "750"
+    ],
+    "vida": "Plant attributes",
+    "fotoperiodo": null
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0",
+    "majes_riego_Irrigation": "0",
+    "chivay_Irrigation": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": 144
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      10,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      12
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 4,
+     "area_2024_ha": 144
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      8
+     ],
+     "meses_tmin_bajo_letal": [
+      12,
+      12
+     ],
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": 144
+    }
+   }
+  },
+  "frijol": {
+   "ecocrop": {
+    "cientifico": "Phaseolus vulgaris",
+    "id": 1668,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1668",
+    "temp_opt": [
+     16.0,
+     25.0
+    ],
+    "temp_abs": [
+     7.0,
+     32.0
+    ],
+    "lluvia_opt": [
+     500.0,
+     2000.0
+    ],
+    "lluvia_abs": [
+     300.0,
+     4300.0
+    ],
+    "ph_opt": [
+     5.5,
+     7.5
+    ],
+    "ph_abs": [
+     4.0,
+     9.0
+    ],
+    "alt_abs_max": 3000.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     50.0,
+     270.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      7,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      3
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 3,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 6,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "quinua": {
+   "ecocrop": {
+    "cientifico": "Chenopodium quinoa",
+    "id": 2509,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2509",
+    "temp_opt": [
+     14.0,
+     18.0
+    ],
+    "temp_abs": [
+     2.0,
+     35.0
+    ],
+    "lluvia_opt": [
+     500.0,
+     1000.0
+    ],
+    "lluvia_abs": [
+     250.0,
+     2600.0
+    ],
+    "ph_opt": [
+     5.5,
+     8.0
+    ],
+    "ph_abs": [
+     4.5,
+     9.5
+    ],
+    "alt_abs_max": 4000.0,
+    "letal_reposo": -8.0,
+    "letal_temprano": -8.0,
+    "ciclo": [
+     90.0,
+     240.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "heavy, medium, light",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      2,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 5,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      11,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      3
+     ],
+     "lluvia_bajo_min_abs": 4,
+     "lluvia_en_opt": 6,
+     "celdas_sobre_alt_max": 18,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "trigo": {
+   "ecocrop": {
+    "cientifico": "Triticum aestivum",
+    "id": 2114,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2114",
+    "temp_opt": [
+     15.0,
+     23.0
+    ],
+    "temp_abs": [
+     5.0,
+     27.0
+    ],
+    "lluvia_opt": [
+     750.0,
+     900.0
+    ],
+    "lluvia_abs": [
+     300.0,
+     1600.0
+    ],
+    "ph_opt": [
+     6.0,
+     7.0
+    ],
+    "ph_abs": [
+     5.5,
+     8.5
+    ],
+    "alt_abs_max": 4500.0,
+    "letal_reposo": -20.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     90.0,
+     250.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "heavy, medium"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Irrigation": "5556",
+    "chivay_Irrigation": "0",
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      10,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      1,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 4,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "cebada": {
+   "ecocrop": {
+    "cientifico": "Hordeum vulgare",
+    "id": 1232,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1232",
+    "temp_opt": [
+     15.0,
+     20.0
+    ],
+    "temp_abs": [
+     2.0,
+     40.0
+    ],
+    "lluvia_opt": [
+     500.0,
+     1000.0
+    ],
+    "lluvia_abs": [
+     200.0,
+     2000.0
+    ],
+    "ph_opt": [
+     6.5,
+     7.5
+    ],
+    "ph_abs": [
+     6.0,
+     8.0
+    ],
+    "alt_abs_max": 4400.0,
+    "letal_reposo": -4.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     90.0,
+     240.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "high (>10 dS/m))"
+    ],
+    "textura": [
+     "medium",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": {
+    "majes_riego_Rainfed": "0",
+    "chivay_Rainfed": "0",
+    "majes_riego_Irrigation": "5556",
+    "chivay_Irrigation": "0"
+   },
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      7,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 5,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      11,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 1,
+     "lluvia_en_opt": 6,
+     "celdas_sobre_alt_max": 5,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "algodon": {
+   "ecocrop": {
+    "cientifico": "Gossypium hirsutum",
+    "id": 1160,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1160",
+    "temp_opt": [
+     22.0,
+     36.0
+    ],
+    "temp_abs": [
+     15.0,
+     42.0
+    ],
+    "lluvia_opt": [
+     750.0,
+     1200.0
+    ],
+    "lluvia_abs": [
+     450.0,
+     1500.0
+    ],
+    "ph_opt": [
+     6.0,
+     7.5
+    ],
+    "ph_abs": [
+     5.0,
+     9.5
+    ],
+    "alt_abs_max": 1250.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     150.0,
+     200.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "heavy, medium",
+     "heavy, medium, light, organic"
+    ],
+    "vida": "annual, perennial",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      3
+     ],
+     "meses_t_abs": [
+      10,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      10
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 6,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      0
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 13,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "paprika": {
+   "ecocrop": {
+    "cientifico": "Capsicum annuum",
+    "id": 618,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=618",
+    "temp_opt": [
+     17.0,
+     30.0
+    ],
+    "temp_abs": [
+     8.0,
+     35.0
+    ],
+    "lluvia_opt": [
+     600.0,
+     1250.0
+    ],
+    "lluvia_abs": [
+     500.0,
+     1700.0
+    ],
+    "ph_opt": [
+     5.5,
+     6.8
+    ],
+    "ph_abs": [
+     4.5,
+     7.0
+    ],
+    "alt_abs_max": 3000.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     60.0,
+     180.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "medium, organic",
+     "medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      3,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 3,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 15,
+     "lluvia_en_opt": 3,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "palta": {
+   "ecocrop": {
+    "cientifico": "Persea americana",
+    "id": 1659,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1659",
+    "temp_opt": [
+     14.0,
+     40.0
+    ],
+    "temp_abs": [
+     10.0,
+     45.0
+    ],
+    "lluvia_opt": [
+     500.0,
+     2000.0
+    ],
+    "lluvia_abs": [
+     300.0,
+     2500.0
+    ],
+    "ph_opt": [
+     5.0,
+     5.8
+    ],
+    "ph_abs": [
+     4.5,
+     7.0
+    ],
+    "alt_abs_max": 2800.0,
+    "letal_reposo": -4.0,
+    "letal_temprano": -1.0,
+    "ciclo": [
+     0.0,
+     0.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium",
+     "medium"
+    ],
+    "vida": "perennial",
+    "fotoperiodo": null
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      12,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      12
+     ],
+     "meses_t_abs": [
+      10,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      2
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 4,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      8
+     ],
+     "meses_tmin_bajo_letal": [
+      7,
+      12
+     ],
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 6,
+     "celdas_sobre_alt_max": 21,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "tuna": {
+   "ecocrop": {
+    "cientifico": "Opuntia ficus-indica",
+    "id": 8094,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=8094",
+    "temp_opt": [
+     18.0,
+     26.0
+    ],
+    "temp_abs": [
+     10.0,
+     30.0
+    ],
+    "lluvia_opt": [
+     700.0,
+     1300.0
+    ],
+    "lluvia_abs": [
+     300.0,
+     1700.0
+    ],
+    "ph_opt": [
+     7.0,
+     7.5
+    ],
+    "ph_abs": [
+     6.5,
+     8.2
+    ],
+    "alt_abs_max": null,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     140.0,
+     270.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, light",
+     "medium, light"
+    ],
+    "vida": "perennial",
+    "fotoperiodo": "short day (<12 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      10
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      10,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      8
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "oregano": {
+   "ecocrop": {
+    "cientifico": "Origanum vulgare",
+    "id": 2369,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2369",
+    "temp_opt": [
+     17.0,
+     28.0
+    ],
+    "temp_abs": [
+     4.0,
+     32.0
+    ],
+    "lluvia_opt": [
+     700.0,
+     1300.0
+    ],
+    "lluvia_abs": [
+     400.0,
+     2700.0
+    ],
+    "ph_opt": [
+     5.5,
+     7.0
+    ],
+    "ph_abs": [
+     4.5,
+     8.7
+    ],
+    "alt_abs_max": null,
+    "letal_reposo": -5.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     180.0,
+     300.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "light",
+     "medium, light"
+    ],
+    "vida": "perennial",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      3,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      7,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 9,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "oca": {
+   "ecocrop": {
+    "cientifico": "Oxalis tuberosa",
+    "id": 2371,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2371",
+    "temp_opt": [
+     12.0,
+     24.0
+    ],
+    "temp_abs": [
+     5.0,
+     28.0
+    ],
+    "lluvia_opt": [
+     800.0,
+     1300.0
+    ],
+    "lluvia_abs": [
+     570.0,
+     2150.0
+    ],
+    "ph_opt": [
+     6.0,
+     7.0
+    ],
+    "ph_abs": [
+     5.3,
+     7.8
+    ],
+    "alt_abs_max": 4000.0,
+    "letal_reposo": null,
+    "letal_temprano": null,
+    "ciclo": [
+     180.0,
+     270.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium, light",
+     "heavy, medium, light"
+    ],
+    "vida": "annual, perennial",
+    "fotoperiodo": "short day (<12 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      12,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      1,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      1,
+      12
+     ],
+     "meses_tmin_bajo_letal": null,
+     "lluvia_bajo_min_abs": 17,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 18,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "olluco": {
+   "ecocrop": {
+    "cientifico": "Ullucus tuberosus",
+    "id": 2120,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2120",
+    "temp_opt": [
+     12.0,
+     20.0
+    ],
+    "temp_abs": [
+     5.0,
+     28.0
+    ],
+    "lluvia_opt": [
+     1100.0,
+     1400.0
+    ],
+    "lluvia_abs": [
+     800.0,
+     1800.0
+    ],
+    "ph_opt": [
+     5.5,
+     6.5
+    ],
+    "ph_abs": [
+     5.0,
+     7.0
+    ],
+    "alt_abs_max": 4000.0,
+    "letal_reposo": -4.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     120.0,
+     270.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "medium",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      7,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      1,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      1,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 21,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 18,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "mashua": {
+   "ecocrop": {
+    "cientifico": "Tropaeolum tuberosum",
+    "id": 2447,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2447",
+    "temp_opt": [
+     12.0,
+     20.0
+    ],
+    "temp_abs": [
+     4.0,
+     24.0
+    ],
+    "lluvia_opt": [
+     1000.0,
+     1200.0
+    ],
+    "lluvia_abs": [
+     700.0,
+     1600.0
+    ],
+    "ph_opt": [
+     6.0,
+     7.0
+    ],
+    "ph_abs": [
+     5.3,
+     7.5
+    ],
+    "alt_abs_max": 4300.0,
+    "letal_reposo": -2.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     180.0,
+     240.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "low (<4 dS/m)"
+    ],
+    "textura": [
+     "heavy, medium, light, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      7,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      1,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      7,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 21,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 10,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "kiwicha": {
+   "ecocrop": {
+    "cientifico": "Amaranthus caudatus",
+    "id": 2187,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2187",
+    "temp_opt": [
+     21.0,
+     28.0
+    ],
+    "temp_abs": [
+     7.0,
+     40.0
+    ],
+    "lluvia_opt": [
+     800.0,
+     2300.0
+    ],
+    "lluvia_abs": [
+     250.0,
+     4200.0
+    ],
+    "ph_opt": [
+     5.5,
+     7.5
+    ],
+    "ph_abs": [
+     4.3,
+     8.5
+    ],
+    "alt_abs_max": 3600.0,
+    "letal_reposo": 4.0,
+    "letal_temprano": 0.0,
+    "ciclo": [
+     30.0,
+     300.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "light, organic",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      5
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      6
+     ],
+     "lluvia_bajo_min_abs": 5,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      0
+     ],
+     "meses_t_abs": [
+      0,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      11,
+      12
+     ],
+     "lluvia_bajo_min_abs": 4,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 20,
+     "area_2024_ha": null
+    }
+   }
+  },
+  "canihua": {
+   "ecocrop": {
+    "cientifico": "Chenopodium pallidicaule",
+    "id": 4494,
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=4494",
+    "temp_opt": [
+     10.0,
+     16.0
+    ],
+    "temp_abs": [
+     5.0,
+     28.0
+    ],
+    "lluvia_opt": [
+     500.0,
+     800.0
+    ],
+    "lluvia_abs": [
+     300.0,
+     1100.0
+    ],
+    "ph_opt": [
+     6.0,
+     7.5
+    ],
+    "ph_abs": [
+     4.8,
+     8.5
+    ],
+    "alt_abs_max": 4400.0,
+    "letal_reposo": -10.0,
+    "letal_temprano": -3.0,
+    "ciclo": [
+     90.0,
+     150.0
+    ],
+    "salinidad": [
+     "low (<4 dS/m)",
+     "medium (4-10 dS/m)"
+    ],
+    "textura": [
+     "medium, light",
+     "heavy, medium, light"
+    ],
+    "vida": "annual",
+    "fotoperiodo": "short day (<12 hours), neutral day (12-14 hours), long day (>14 hours)"
+   },
+   "gaez_puntos": null,
+   "por_sector": {
+    "S1": {
+     "meses_t_opt": [
+      0,
+      6
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 22,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S2": {
+     "meses_t_opt": [
+      9,
+      12
+     ],
+     "meses_t_abs": [
+      12,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      0
+     ],
+     "lluvia_bajo_min_abs": 6,
+     "lluvia_en_opt": 0,
+     "celdas_sobre_alt_max": 0,
+     "area_2024_ha": null
+    },
+    "S3": {
+     "meses_t_opt": [
+      0,
+      8
+     ],
+     "meses_t_abs": [
+      1,
+      12
+     ],
+     "meses_tmin_bajo_letal": [
+      0,
+      12
+     ],
+     "lluvia_bajo_min_abs": 8,
+     "lluvia_en_opt": 6,
+     "celdas_sobre_alt_max": 5,
+     "area_2024_ha": null
+    }
+   }
+  }
+ },
+ "celdas_por_sector": {
+  "S1": 22,
+  "S2": 6,
+  "S3": 21
+ },
+ "horas_de_luz": {
+  "metodo": "FAO-56 (Allen et al., 1998), ecuaciones de declinación solar, ángulo horario de puesta y N = 24/π·ωs",
+  "lat_-14.5": [
+   11.14,
+   12.86
+  ],
+  "lat_-16.4": [
+   11.02,
+   12.98
+  ],
+  "lat_-17.5": [
+   10.95,
+   13.05
+  ]
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "additionalProperties": false,
+ "description": "Todo lo declara el usuario. null = «no sé»; nunca se rellena con un valor por defecto.",
+ "properties": {
+  "cultivo_actual": {
+   "anyOf": [
+    {
+     "type": "string"
+    },
+    {
+     "type": "null"
+    }
+   ],
+   "default": null,
+   "title": "Cultivo Actual"
+  },
+  "cultivo_anterior": {
+   "anyOf": [
+    {
+     "type": "string"
+    },
+    {
+     "type": "null"
+    }
+   ],
+   "default": null,
+   "title": "Cultivo Anterior"
+  },
+  "agua": {
+   "anyOf": [
+    {
+     "enum": [
+      "secano",
+      "riego"
+     ],
+     "type": "string"
+    },
+    {
+     "type": "null"
+    }
+   ],
+   "default": null,
+   "title": "Agua"
+  },
+  "meses_campana": {
+   "anyOf": [
+    {
+     "items": {
+      "maximum": 12,
+      "minimum": 1,
+      "type": "integer"
+     },
+     "type": "array"
+    },
+    {
+     "type": "null"
+    }
+   ],
+   "default": null,
+   "description": "Meses en que el cultivo está en el campo (1 = enero)",
+   "title": "Meses Campana"
+  },
+  "prioridades": {
+   "description": "Orden en que el usuario quiere ver los criterios. No son pesos.",
+   "items": {
+    "enum": [
+     "temperatura",
+     "frio",
+     "lluvia",
+     "suelo",
+     "familia",
+     "altitud"
+    ],
+    "type": "string"
+   },
+   "title": "Prioridades",
+   "type": "array"
+  }
+ },
+ "title": "ContextoEntrada",
+ "type": "object"
+}

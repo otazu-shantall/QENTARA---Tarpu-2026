@@ -20,17 +20,20 @@
 
 ## 2. Arequipa no es un solo caso: costa y sierra
 
-Esto define qué datos importan. La geografía general es conocida; **la distribución de cultivos hay que verificarla** con MIDAGRI.
+Datos reales de NASA POWER para los dos puntos de referencia (celda regional de ≈ 55 × 67 km). **Solo datos; sin interpretaciones.**
 
-| | **Costa** (Majes, La Joya, Camaná) | **Sierra** (Caylloma, Colca y altiplano) |
+| | **Costa: Majes** (−16,35; −72,19) | **Sierra: Chivay** (−15,64; −71,60) |
 |---|---|---|
-| Agua | Desierto con **riego** por canales: la lluvia casi no cuenta | Agricultura **de secano** en buena parte: depende de la lluvia |
-| Riesgo climático principal | Calor y demanda de agua del cultivo | **Heladas**, sequía y lluvias irregulares |
-| Datos más útiles | Temperatura, evapotranspiración (ECOSTRESS), NDVI a 30 m para ver parcelas | Temperatura mínima (heladas), lluvia (IMERG), humedad del suelo (SMAP), pendiente (SRTM) |
-| Cultivos candidatos de TARPU | Por verificar | Papa, quinua, haba y cebada son cultivos andinos: probablemente encajan más aquí |
-| Problema óptico | Neblina costera en invierno (por verificar) | Nubes en temporada de lluvias |
+| Período consultado | 2025 (365 días) | 2015–2025 (4018 días) |
+| Elevación de la celda (POWER) | 835 m | 4352 m |
+| Noches con mínima bajo 0 °C | 0 en 2025 | ≈ 29 por mes en julio y agosto (promedio 2015–2025) |
+| Lluvia total | 169,6 mm en 2025 | Entre 176 mm (2021) y 405 mm (2025) por año |
+| Cultivos que se siembran | Pendiente: verificar con estadísticas de MIDAGRI | Pendiente: verificar con estadísticas de MIDAGRI |
+| Disponibilidad de imágenes sin nubes | Pendiente: medir con las fechas válidas reales | Pendiente: medir con las fechas válidas reales |
 
-**Señal ya observada (verificado):** el NDVI de MODIS en Chivay se mantuvo en **0,10 a 0,16** entre agosto y octubre de 2026. Puede indicar campos sin cultivo en temporada seca, uno de los patrones que menciona el desafío. Hay que confirmarlo con una serie más larga antes de afirmarlo.
+La lluvia de POWER en Majes es un valor de **celda regional**. Si representa o no al valle irrigado solo se sabrá comparándola con otra fuente (estación de SENAMHI o IMERG); hasta entonces se muestra como dato de la zona.
+
+**Dato observado (verificado):** el NDVI de MODIS (píxel de 250 m) en el punto de Chivay fue **0,113 · 0,097 · 0,157 · 0,136 · 0,099** entre el 13/08 y el 16/10/2026. Es un dato de la zona. **No se interpreta** (por ejemplo, como «campo sin cultivo») sin un umbral citado y sin una serie más larga.
 
 ## 3. Qué hay realmente sobre Arequipa (verificado en CMR, 14/11/2026)
 

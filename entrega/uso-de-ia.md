@@ -29,6 +29,10 @@ La IA no debe usarse para idear la solución. La idea, el alcance y los límites
 | 14/11/2026 | Damaris | Claude Code | Ficha de la fuente ISRIC SoilGrids | `datos/soilgrids/README.md` | ✅ en el encabezado |
 | 14/11/2026 | Damaris | Claude Code | Ficha de la fuente NDVI MOD13Q1 | `datos/ndvi/README.md` | ✅ en el encabezado |
 | 14/11/2026 | Damaris | Claude Code | Filas del área de datos en el registro de IA y en las referencias; propuesta de datos y estado | `entrega/uso-de-ia.md`, `entrega/referencias.md`, `docs/areas/propuesta-datos.md`, `docs/` | — |
+| 14/11/2026 | Erick | Claude Code | Diseño del backend, catálogo citado, diagramas (mapa, archivos e interactivo) y guías de Derecho | `backend/` (incluye `backend/diagramas/`), `entrega/*.pdf` | ✅ en el diagrama interactivo y en los generadores de diagramas; ❌ falta en los PDF |
+| 14/11/2026 | Erick | Claude Code | Código del backend (API, motor, agente, exportación) y sus pruebas | `backend/tarpu_api/`, `backend/tests/` | ✅ en el encabezado de cada archivo |
+| 15/11/2026 | Erick | Claude Code | Investigación de fuentes, sectores y cultivos (datos reunidos de EcoCrop, INEI, GAEZ y POWER) y script de prueba de Earthdata | `backend/investigacion/`, `backend/herramientas/prueba_earthdata.py`, `prueba_earthdata_area.py` y `redatam_cenagro.py`, `docs/tareas/T01-paquete-extraccion.md`, `backend/PLAN-*.md` | ✅ en el encabezado del script y en la descripción del JSON |
+| | | | | | |
 
 ## Pendientes
 

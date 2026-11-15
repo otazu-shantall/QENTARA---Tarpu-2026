@@ -1,0 +1,181 @@
+{
+ "ruta": "GET /api/parcelas/{id}/indicadores",
+ "archivo_publicado": "/api/parcelas/{id}/indicadores.json",
+ "que_es_este_ejemplo": "Forma del contrato calculada con una consulta real a NASA POWER (2015-2025) para el punto de referencia de Chivay (-15,64; -71,60). Una parcela registrada dentro de esa celda de POWER recibiría estos mismos valores de clima.",
+ "modo": "en_vivo",
+ "data": {
+  "punto_consultado": {
+   "lat": -15.64,
+   "lon": -71.6
+  },
+  "periodo": {
+   "inicio": "2015-01-01",
+   "fin": "2025-12-31",
+   "anios": 11,
+   "dias": 4018
+  },
+  "clima_mensual": [
+   {
+    "mes": 1,
+    "nombre": "ene",
+    "temperatura_media_c": 7.2,
+    "temperatura_minima_registrada_c": -3.5,
+    "noches_minima_bajo_0c_promedio": 4.6,
+    "lluvia_promedio_mm": 44.4
+   },
+   {
+    "mes": 2,
+    "nombre": "feb",
+    "temperatura_media_c": 7.0,
+    "temperatura_minima_registrada_c": -3.4,
+    "noches_minima_bajo_0c_promedio": 3.9,
+    "lluvia_promedio_mm": 66.5
+   },
+   {
+    "mes": 3,
+    "nombre": "mar",
+    "temperatura_media_c": 6.9,
+    "temperatura_minima_registrada_c": -4.6,
+    "noches_minima_bajo_0c_promedio": 3.5,
+    "lluvia_promedio_mm": 46.8
+   },
+   {
+    "mes": 4,
+    "nombre": "abr",
+    "temperatura_media_c": 6.5,
+    "temperatura_minima_registrada_c": -4.4,
+    "noches_minima_bajo_0c_promedio": 11.2,
+    "lluvia_promedio_mm": 14.3
+   },
+   {
+    "mes": 5,
+    "nombre": "may",
+    "temperatura_media_c": 5.3,
+    "temperatura_minima_registrada_c": -4.9,
+    "noches_minima_bajo_0c_promedio": 22.5,
+    "lluvia_promedio_mm": 3.8
+   },
+   {
+    "mes": 6,
+    "nombre": "jun",
+    "temperatura_media_c": 4.5,
+    "temperatura_minima_registrada_c": -5.8,
+    "noches_minima_bajo_0c_promedio": 28.8,
+    "lluvia_promedio_mm": 10.7
+   },
+   {
+    "mes": 7,
+    "nombre": "jul",
+    "temperatura_media_c": 4.7,
+    "temperatura_minima_registrada_c": -5.3,
+    "noches_minima_bajo_0c_promedio": 29.2,
+    "lluvia_promedio_mm": 5.2
+   },
+   {
+    "mes": 8,
+    "nombre": "ago",
+    "temperatura_media_c": 5.1,
+    "temperatura_minima_registrada_c": -5.0,
+    "noches_minima_bajo_0c_promedio": 29.2,
+    "lluvia_promedio_mm": 1.7
+   },
+   {
+    "mes": 9,
+    "nombre": "sep",
+    "temperatura_media_c": 6.4,
+    "temperatura_minima_registrada_c": -5.3,
+    "noches_minima_bajo_0c_promedio": 18.1,
+    "lluvia_promedio_mm": 4.7
+   },
+   {
+    "mes": 10,
+    "nombre": "oct",
+    "temperatura_media_c": 7.0,
+    "temperatura_minima_registrada_c": -4.5,
+    "noches_minima_bajo_0c_promedio": 14.2,
+    "lluvia_promedio_mm": 17.0
+   },
+   {
+    "mes": 11,
+    "nombre": "nov",
+    "temperatura_media_c": 7.7,
+    "temperatura_minima_registrada_c": -5.7,
+    "noches_minima_bajo_0c_promedio": 9.5,
+    "lluvia_promedio_mm": 14.8
+   },
+   {
+    "mes": 12,
+    "nombre": "dic",
+    "temperatura_media_c": 7.6,
+    "temperatura_minima_registrada_c": -4.8,
+    "noches_minima_bajo_0c_promedio": 5.4,
+    "lluvia_promedio_mm": 30.9
+   }
+  ],
+  "lluvia_anual_mm": {
+   "2015": 267.7,
+   "2016": 213.5,
+   "2017": 339.1,
+   "2018": 249.2,
+   "2019": 243.0,
+   "2020": 333.4,
+   "2021": 176.0,
+   "2022": 250.7,
+   "2023": 204.5,
+   "2024": 186.8,
+   "2025": 405.2
+  },
+  "resumen": {
+   "nota": "Resúmenes sin umbrales: se informan conteos y promedios. «Bajo 0 °C» es la temperatura mínima del aire a 2 m, no un diagnóstico de helada sobre el cultivo.",
+   "meses_con_mas_noches_bajo_0c": {
+    "valor": 29.2,
+    "meses": [
+     "jul",
+     "ago"
+    ]
+   },
+   "meses_mas_lluviosos": {
+    "valor": 66.5,
+    "meses": [
+     "feb"
+    ]
+   }
+  }
+ },
+ "procedencia": [
+  {
+   "origen": "fuente",
+   "source_id": "NASA POWER",
+   "product_id": "Daily Point API, community AG",
+   "product_version": "v2.10.3",
+   "nivel": "derivado",
+   "metodo": "promedios mensuales, mínimos, totales y conteo de noches con T2M_MIN < 0 °C sobre la serie diaria",
+   "observed_start": "2015-01-01",
+   "observed_end": "2025-12-31",
+   "unit": {
+    "T2M": "C",
+    "T2M_MAX": "C",
+    "T2M_MIN": "C",
+    "PRECTOTCORR": "mm/day",
+    "RH2M": "%",
+    "ALLSKY_SFC_SW_DWN": "MJ/m^2/day"
+   },
+   "resolucion": "0,5° x 0,625° (meteorología de POWER), ≈ 55 x 67 km en esta latitud",
+   "elevacion_informada_por_power_m": 4351.89,
+   "missing_days": {
+    "T2M": 0,
+    "T2M_MAX": 0,
+    "T2M_MIN": 0,
+    "PRECTOTCORR": 0,
+    "RH2M": 0,
+    "ALLSKY_SFC_SW_DWN": 0
+   },
+   "request_url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M%2CT2M_MAX%2CT2M_MIN%2CPRECTOTCORR%2CRH2M%2CALLSKY_SFC_SW_DWN&community=AG&latitude=-15.64&longitude=-71.6&start=20150101&end=20251231&format=JSON",
+   "requested_at": "2026-11-14T15:38:52+00:00"
+  }
+ ],
+ "avisos": [
+  "Dato de la zona (celda de POWER), no medición dentro de la parcela.",
+  "Registro del pasado, no pronóstico."
+ ]
+}

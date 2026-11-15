@@ -1,0 +1,16 @@
+{
+ "additionalProperties": false,
+ "properties": {
+  "contorno": {
+   "additionalProperties": true,
+   "description": "GeoJSON Polygon redibujado",
+   "title": "Contorno",
+   "type": "object"
+  }
+ },
+ "required": [
+  "contorno"
+ ],
+ "title": "ContornoNuevo",
+ "type": "object"
+}

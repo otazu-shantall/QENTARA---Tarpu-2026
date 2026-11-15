@@ -1,10 +1,12 @@
 # Estado actual
 
-> Última actualización: **14 de noviembre de 2026**. Desafío: **Field Shift: Adapting Farms with NASA Data** ([08](08-desafio-oficial.md)); el envío oficial cierra el **domingo 15/11/2026 a las 11:59 p. m.**, hora del evento local ([09](09-entrega-oficial.md)). El equipo se dividió en cuatro áreas ([07](07-equipo-y-areas.md)). TARPU está en **planificación y definición de producto**, con un **prototipo visual** local (landing y dashboard de siete vistas). El informe maestro está en la versión **0.4** (23/10/2026). No hay backend, datos agronómicos reales, cálculo NDVI, modelo de IA ni autenticación conectados.
+> Última actualización: **14 de noviembre de 2026**. Desafío: **Field Shift: Adapting Farms with NASA Data** ([08](08-desafio-oficial.md)); el envío oficial cierra el **domingo 15/11/2026 a las 11:59 p. m.**, hora del evento local ([09](09-entrega-oficial.md)). El equipo se dividió en cuatro áreas ([07](07-equipo-y-areas.md)). TARPU está en **planificación y definición de producto**, con un **prototipo visual** local (landing y dashboard de siete vistas). El informe maestro está en la versión **0.4** (23/10/2026). El backend ya funciona con datos reales de NASA POWER, pero todavía no está conectado a las pantallas. No hay cálculo NDVI, modelo de IA ni autenticación.
 >
 > **Informes de cada trabajo:** [informes/](informes/README.md). **Si algo quedó a medias**, la bitácora para retomar está en [informes/en-curso.md](informes/en-curso.md).
 
 ## Resumen
+
+- **Revisión del repositorio (14/11/2026):** compilación, 8 pruebas de frontend, 15 de backend y suite de interfaz aprobadas. Se identificaron pendientes de vigencia de resultados en agente/datos detallados y se reprodujeron fallos ante meses parciales y resúmenes ausentes. El backend sigue sin integrarse con las pantallas y parte de sus archivos permanece sin seguimiento en Git. Alcance, evidencias y orden propuesto en [informe 06](informes/06-analisis-repositorio.md).
 
 - **Producto definido:** identidad, problema, misión, visión, valores, objetivos, territorio (todo Arequipa), agricultor autónomo, agente integrado, datos detallados y exportación están **confirmados** (DEC-001 a DEC-008). Ver [01](01-vision-y-alcance.md) y [06](06-decisiones-y-riesgos.md).
 - **Abierto:** stack del producto, fuentes exactas, reglas agronómicas, precios, identidad visual y lema. Son los 37 supuestos (SUP) del anexo D del informe.
@@ -31,17 +33,18 @@
 | Agente | 🟡 guiado | `Codigo/src/lib/domain.ts` (`answerQuestion`) | Respuestas locales fijas; no hay modelo de IA. |
 | Exportación CSV/JSON y PDF | 🟡 con sintéticos | `Codigo/src/lib/download.ts`, `features/reports/` | La exportación funciona; los datos no son reales. |
 | Pruebas | ✅ | `Codigo/tests/` | 8 de lógica y la suite Playwright completa, que pasan (09/11/2026). |
-| **Consulta real a NASA POWER** | ✅ | `datos/power/consulta_power.py`, `datos/muestras/` | 365 días de 2025 para Majes y Chivay, 0 faltantes. Todavía no llega a la app. |
+| **Consulta real a NASA POWER** | ✅ | `datos/power/consulta_power.py`, `datos/muestras/` | 365 días de 2025 para Majes y Chivay, 0 faltantes. El backend ya la usa (serie 2015–2025, en vivo). |
 | Análisis de los recursos oficiales | ✅ | `datos/analisis-recursos.md` | Verificado en el catálogo de NASA para Majes y Chivay: qué sirve, qué se usa sin cuenta y qué solo cubre EE. UU. |
 | Otras fuentes (GIBS, HLS, IMERG, SMAP…) | 🟡 | `datos/` | Accesos probados; falta convertirlos en scripts como el de POWER (Damaris). MODIS y SoilGrids ya tienen script (filas siguientes). |
 | **Consulta real a SoilGrids** | ✅ | `datos/soilgrids/consulta_soilgrids.py`, `datos/muestras/` | pH, arcilla, arena y carbono a 0–5 y 5–15 cm para Majes riego, Majes urbano y Chivay; 0 faltantes. No es un dato de NASA. |
 | **Consulta real a NDVI MOD13Q1** | ✅ | `datos/ndvi/consulta_ndvi.py`, `datos/muestras/` | 272 fechas (2015–2026) para Majes riego, Majes urbano y Chivay; 0 faltantes. Servicio de ORNL inestable; el script guarda caché y retoma. |
 | Lanzador de muestras | ✅ | `datos/obtener_muestras.py` | Lanza las tres consultas para Majes riego y Chivay. |
 | Fichas de las fuentes | ✅ | `datos/power/`, `datos/soilgrids/`, `datos/ndvi/` (`README.md`) | Las 7 preguntas de `datos/README.md`, con citas verificadas y límites. |
+| Recorrido del usuario y escala posible | ✅ plan | `docs/10-recorrido-y-escala.md` | Recorrido de 9 pasos, dibujo del contorno, consulta en el centroide, píxeles de MODIS por parcela, territorio y fechas verificados |
 | Guías de las cuatro áreas | ✅ | `datos/`, `backend/`, `entrega/`, `docs/areas/frontend.md` | Base para que cada uno arranque. |
 | Borradores de la entrega | 🟡 | `entrega/` | Formulario en inglés, guion, referencias y registro de IA, por completar. |
-| Backend, base de datos, autenticación | ❌ | — | Solo propuestos (SUP-015, SUP-026). |
-| Motor agronómico | ❌ | — | Reglas y pesos solo propuestos (SUP-018, SUP-019). |
+| **Backend (API, motor y agente)** | ✅ construido | `backend/tarpu_api/` (índice en `backend/README.md`) | FastAPI con datos reales de NASA POWER, probado en vivo de punta a punta (14/11/2026); 15 pruebas que pasan. Motor sin puntaje ni pesos (DT-16) con rangos citados de FAO EcoCrop; agente guiado sin modelo de IA. MODIS y SoilGrids aparecen «no disponible» en el backend hasta conectar los scripts de `datos/` (tarea T01). Falta conectarlo a las pantallas. |
+| Base de datos, autenticación | ❌ | — | Demo sin base de datos (DT-13); PostGIS y cuentas siguen propuestos (SUP-015, SUP-026). |
 | Repositorio git | ✅ | [https://github.com/otazu-shantall/QENTARA---Tarpu-2026](https://github.com/otazu-shantall/QENTARA---Tarpu-2026) | Publicado el 14/11/2026, rama `main`. Falta confirmar que sea público y elegir la licencia. |
 
 ## Para retomar
@@ -69,7 +72,7 @@ Abre http://127.0.0.1:5173/ (landing) o http://127.0.0.1:5173/#/overview (dashbo
 Cada área arranca con su guía ([07](07-equipo-y-areas.md)). Lo más urgente, por orden de dependencia:
 
 1. **Entrega:** confirmar el registro de los cinco en el mismo evento local y hacer las preguntas al líder local ([entrega/pendientes-legales.md](../entrega/pendientes-legales.md)).
-2. **Todos:** inicializar git y publicar el repositorio.
+2. **Cada área:** revisar y versionar los cambios locales pendientes; Git ya está inicializado y la publicación está registrada. Confirmar el acceso público y que el código necesario esté incluido.
 3. **Datos y backend:** llevar el dato real de POWER a una pantalla.
 4. **Frontend y backend:** acordar el recorrido mínimo y el contrato de datos.
 5. **Entrega:** demo y formulario en inglés.

@@ -18,11 +18,14 @@ Orden de lectura recomendado:
 | 07 | [Equipo y áreas](07-equipo-y-areas.md) | Quién hace qué, plataformas, etapas de trabajo y cómo compartir el repositorio. |
 | 08 | [Desafío oficial](08-desafio-oficial.md) | Qué pide «Field Shift» y los recursos oficiales, con lo que sirve para Arequipa. |
 | 09 | [Entrega oficial](09-entrega-oficial.md) | Formulario, demo, reglas de IA, licencia y criterios de evaluación. |
+| 10 | [Recorrido y escala](10-recorrido-y-escala.md) | Lo que ve el usuario paso a paso, cómo se dibuja la parcela, cómo se calcula solo su espacio, cómo se muestran los datos y en qué rango de tamaño, territorio y fechas es posible. |
 | — | [areas/frontend.md](areas/frontend.md) | Guía del área de frontend y experiencia de usuario. |
-| — | [areas/propuesta-*.md](areas/) | Plantillas de propuesta de cada área para la reunión de unión: [datos](areas/propuesta-datos.md), [frontend](areas/propuesta-frontend.md), [backend](areas/propuesta-backend.md), [entrega](areas/propuesta-entrega.md). |
+| — | [tareas/](tareas/README.md) | Tareas autocontenidas para repartir: qué hacer, recursos y cómo comprobarlo. |
+| — | [areas/propuesta-*.md](areas/) | Plantillas de propuesta de cada área para la reunión de unión: [datos](areas/propuesta-datos.md), [frontend](areas/propuesta-frontend.md), [backend](../backend/PROPUESTA.md) (vive en `backend/`, con todo lo del área), [entrega](areas/propuesta-entrega.md). |
 | — | [Desarrollo](desarrollo.md) | Cómo levantar el código, probarlo y dónde está cada cosa. |
 | — | [diseno/](diseno/README.md) | Referencias visuales, sistema visual y capturas del diseño actual. |
 | — | [informes/](informes/README.md) | Un informe por cada trabajo terminado y la bitácora para retomar lo que esté a medias. |
+| — | [backend/diagramas/](../backend/diagramas/) | Diagramas del backend: mapa de módulos, archivos e interactivo. Todo lo del backend está reunido en [backend/](../backend/README.md). |
 | — | [historial/](historial/README.md) | Material de sesiones anteriores. Solo lectura. |
 
 ## Carpetas de cada área

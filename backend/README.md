@@ -1,81 +1,110 @@
 # Backend, conectores y motor
 
-> Área de **Erick**. Objetivo: decidir y construir **cómo se conecta todo**: los conectores a las fuentes, la API que alimenta las pantallas, el motor de TARPU y el agente. Contexto: [docs/02-arquitectura.md](../docs/02-arquitectura.md) y [docs/03-datos-y-fuentes.md](../docs/03-datos-y-fuentes.md).
+> Área de **Erick**. Aquí está **todo lo del backend en un solo lugar**: código, diseño, módulos, propuesta, diagramas, catálogo citado y contrato. Objetivo del área: **cómo se conecta todo**, es decir, la API que alimenta las pantallas, la orquestación de los conectores del área de datos, el motor que compara cultivos y el agente.
 
-**Estado:** esta carpeta solo tiene esta guía. No hay código de backend todavía, y el stack **no está decidido** (SUP-015).
+**Estado (14/11/2026):** **construido y probado.** La API funciona en vivo con datos reales de NASA POWER (probado de punta a punta con el servidor). Hay 15 pruebas automáticas y todas pasan. Falta lo que depende de otras áreas: los conectores de MODIS y SoilGrids (Damaris) y conectar las pantallas (Shantall).
 
-## Decisiones que tomar primero
+## Arrancar en 3 comandos
 
-| Decisión | Opciones | Qué considerar |
-|---|---|---|
-| Lenguaje y framework | Python + FastAPI (propuesta del informe) · Node | El script de datos ya está en Python; las bibliotecas geoespaciales también |
-| ¿Base de datos para la demo? | Ninguna (archivos y caché) · SQLite · PostgreSQL/PostGIS | Lo más simple que permita el recorrido |
-| ¿Dónde se aloja? | Solo local · un servicio gratuito | El enlace al proyecto final debe ser público |
-| Proveedor del agente | Por decidir (SUP-034) | La clave **nunca** va en el frontend. La IA debe declararse en la entrega |
-| ¿Cómo llegan los datos? | En vivo en cada petición · guardados de antemano | POWER responde rápido; guardar evita depender de la red durante la demo |
+Desde `backend/`, con Python 3.13:
 
-Cuando se decida, se registra en [docs/06-decisiones-y-riesgos.md](../docs/06-decisiones-y-riesgos.md).
-
-## Piezas del área
-
-| Pieza | Qué hace | Punto de partida |
-|---|---|---|
-| **Conectores** | Piden el dato a cada fuente y lo dejan normalizado, con su procedencia | `datos/power/consulta_power.py` ya lo hace para POWER |
-| **API** | Entrega a las pantallas los datos con la forma acordada | El contrato de abajo |
-| **Motor de TARPU** | Compara estrategias de rotación con reglas explícitas y se abstiene si falta evidencia | [docs/03](../docs/03-datos-y-fuentes.md#motor-de-reglas-propuesto) |
-| **Agente** | Responde preguntas apoyándose solo en la evidencia disponible | Hoy son respuestas fijas en `Codigo/src/lib/domain.ts` |
-
-## Contrato con el frontend (borrador para discutir)
-
-El frontend ya usa estos tipos (`Codigo/src/types/index.ts`). Conviene partir de ellos y ampliarlos juntos en la etapa 2.
-
-```ts
-interface Parcel {
-  id: string; name: string; location: string; crop: string; area: number
-  ndvi: number; temperature: number; moisture: number; precipitation: number
-}
-
-interface Observation {
-  id: string
-  date: string                  // AAAA-MM-DD
-  parcelId: string
-  variable: 'ndvi' | 'temperature' | 'precipitation' | 'moisture'
-  value: number | null          // null = faltante, nunca 0
-  unit: string
-  reference: string             // fuente
-  level: 'Normalizado' | 'Derivado'
-}
+```bash
+py -3.13 -m venv .venv
 ```
 
-Rutas propuestas, tomadas del informe maestro y sin implementar:
+```bash
+.venv/Scripts/python -m pip install -r requirements.txt
+```
 
-| Ruta | Devuelve |
+```bash
+.venv/Scripts/uvicorn tarpu_api.main:app --reload --port 8000
+```
+
+Abre http://127.0.0.1:8000/docs: ahí se prueban todas las rutas desde el navegador. Para las pruebas: `.venv/Scripts/python -m pytest`. Más comandos en [DISENO.md §12](DISENO.md#12-cómo-se-ejecuta).
+
+## Por dónde empezar
+
+| Si quieres… | Abre |
 |---|---|
-| `GET /parcelas` | Lista de parcelas |
-| `GET /parcelas/{id}/clima?inicio=&fin=` | Serie climática con fuente, unidad, período y faltantes |
-| `GET /parcelas/{id}/datos` | Registros detallados y metadatos, **sin** evaluación del motor |
-| `POST /parcelas/{id}/comparar` | Estrategias de rotación con motivos, evidencia, vacíos y riesgos |
-| `POST /agente` | Respuesta a una pregunta, con la evidencia en que se apoya |
+| Entenderlo en un minuto | [diagramas/tarpu-backend-interactivo.html](diagramas/tarpu-backend-interactivo.html) (doble clic; se abre en el navegador) |
+| Saber cómo se conecta todo | [DISENO.md](DISENO.md) |
+| Saber qué hace cada módulo | [MODULOS.md](MODULOS.md) |
+| Preparar la reunión de unión | [PROPUESTA.md](PROPUESTA.md) |
+| Llevar los datos de Damaris a TARPU y acelerar su extracción (propuesta) | [PLAN-DATOS-SATELITALES.md](PLAN-DATOS-SATELITALES.md) |
+| Analizar Arequipa por sectores (propuesta) | [PLAN-SECTORES-AREQUIPA.md](PLAN-SECTORES-AREQUIPA.md) |
+| Ver lo que ve el usuario y en qué rango funciona | [docs/10-recorrido-y-escala.md](../docs/10-recorrido-y-escala.md) (compartido con frontend) |
+| Trabajar con un asistente de IA | [AGENTS.md](AGENTS.md) (Claude Code lo lee por [CLAUDE.md](CLAUDE.md)) |
 
-**Lo que toda respuesta con datos debe traer:** fuente, producto, fecha de observación, unidad, escala espacial y faltantes. Sin eso, la pantalla no puede mostrar la procedencia.
+## Qué hay en esta carpeta
 
-## Lo que el desafío espera del motor
+```text
+backend/
+  README.md · AGENTS.md · CLAUDE.md · DISENO.md · MODULOS.md · PROPUESTA.md
+  requirements.txt · .env.example · pytest.ini
+  tarpu_api/        el código: 4 capas (API → lógica → núcleo → apoyo)
+  tests/            15 pruebas; usan una consulta real de POWER guardada, sin red
+  diagramas/        interactivo (HTML), mapa y archivos (PDF y PNG), y sus generadores
+  catalogo/         ecocrop_2026-11-14.json: rangos de FAO EcoCrop con su URL
+  contrato/         esquemas/ (JSON Schema de las entradas y del sobre) · ejemplos/ (Chivay, con POWER real)
+  almacen/ · .venv/ se crean en cada computadora; no se suben a git
+```
 
-Del [desafío oficial](../docs/08-desafio-oficial.md): comparar **al menos tres estrategias de rotación, incluida la actual**. Para cada una:
+**Lo que vive fuera de esta carpeta, a propósito:**
 
-- por qué se sugiere;
-- qué evidencia la respalda;
-- qué beneficios puede ofrecer;
-- **dónde hay vacíos de información**;
-- qué riesgos necesitan revisión local.
+| Qué | Dónde | Por qué ahí |
+|---|---|---|
+| Decisiones DT-13 a DT-17 | [docs/06](../docs/06-decisiones-y-riesgos.md) | Todas las decisiones del equipo se registran en un solo archivo |
+| Recorrido del usuario y escala | [docs/10](../docs/10-recorrido-y-escala.md) | Lo comparten backend y frontend |
+| Conectores a las fuentes | [datos/](../datos/README.md) | Son del área de Damaris; el backend solo los invoca |
+| Pantallas | [Codigo/](../Codigo/README.md) | Área de Shantall |
 
-Encaja con lo ya definido para TARPU: reglas visibles, puntaje sin calcular si falta un criterio y resultado «no evaluable» cuando no hay evidencia.
+## Cómo funciona, en pocas líneas
+
+1. El usuario **dibuja su parcela**; `geometria` la valida y mide su área real y cuántos píxeles de MODIS (250 m) caben.
+2. El usuario **declara** su cultivo, su agua, sus meses y sus prioridades; se rotula «declarado por ti».
+3. `procesamiento` pide en segundo plano los datos del **centroide** de la parcela a los conectores del área de datos. `ingesta` e `indicadores` los convierten en conteos, promedios y totales con su procedencia.
+4. El **motor** compara cada cultivo del catálogo con rangos **citados** de FAO EcoCrop, criterio por criterio, sin puntaje ni pesos.
+5. El **agente** responde preguntas con esos datos y sus citas, sin modelo de IA.
+6. Todo sale por una **API FastAPI**; `exportar` copia las rutas GET a JSON para la web publicada.
+
+En la demo **no hay base de datos**: `almacen.py` guarda JSON en disco y es el único que lo toca, para que pasar después a PostGIS cambie un solo archivo.
+
+## Fuentes de datos (DT-17)
+
+| Fuente | Escala | Estado |
+|---|---|---|
+| NASA POWER | Celda ≈ 55 × 67 km | ✅ conectada y probada en vivo |
+| NDVI de MODIS (ORNL) | Píxel nominal de 250 m | ⏳ falta el conector en `datos/`; mientras tanto aparece «no disponible» con su motivo |
+| SoilGrids | 250 m | ⏳ falta el conector en `datos/`; el criterio de suelo sale `sin_dato` |
+
+## Decisiones
+
+| ID | Decisión |
+|---|---|
+| DT-13 | FastAPI para trabajar en vivo y exportación a JSON para la web publicada; sin base de datos en la demo |
+| DT-14 | Agente guiado con plantillas y datos reales, sin modelo de IA |
+| DT-15 | Publicación en Vercel o Netlify |
+| **DT-16** | **Cero supuestos:** todo valor viene de una fuente real o lo declara el usuario; ninguna regla sin cita; nada sintético en la demo |
+| **DT-17** | **Solo tres fuentes:** NASA POWER, NDVI de MODIS y SoilGrids, consultadas en el centroide |
+
+## Lo que el desafío espera y cómo se responde
+
+El [desafío](../docs/08-desafio-oficial.md) sugiere comparar al menos tres estrategias de rotación, incluida la actual, con el porqué, la evidencia, los beneficios, los vacíos y los riesgos.
+
+| Lo que pide | Cómo lo responde TARPU |
+|---|---|
+| Al menos tres estrategias, incluida la actual | El cultivo actual y todos los del catálogo de otra familia (con papa, 4) |
+| Por qué aparece cada una | Dato: cambia o no de familia respecto del cultivo actual |
+| Evidencia | Cada criterio comparado con un rango citado de EcoCrop, usando datos reales |
+| Beneficios | Solo con cita. Sin ella: «sin beneficio citado» |
+| Vacíos de información | Datos o reglas que faltan, listados |
+| Riesgos | Hechos medidos (por ejemplo, noches bajo la temperatura letal citada) y conflictos entre fuentes |
 
 ## Reglas
 
+- **Sin puntaje y sin pesos:** no hay una fuente que los respalde (DT-16).
 - La consulta de datos detallados **no ejecuta** el motor.
 - El agente no inventa observaciones ni cambia las reglas.
-- Un puntaje es un orden relativo, no una probabilidad.
-- Sin claves en el repositorio.
-- Pensar en que la misma API servirá después a las apps de Android e iOS.
+- **Sin claves** en el repositorio ni en el frontend.
+- La misma API servirá después a las apps de Android e iOS.
 - Declarar el uso de IA en los archivos y en [entrega/uso-de-ia.md](../entrega/uso-de-ia.md).

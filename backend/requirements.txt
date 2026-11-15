@@ -1,0 +1,11 @@
+# Backend de TARPU · Python 3.13 · versiones instaladas y probadas el 14/11/2026 (Windows, ruedas binarias)
+fastapi==0.163.0
+starlette==1.10.0
+uvicorn==0.54.0
+pydantic==2.14.3
+shapely==2.2.0
+pyproj==3.8.0
+# Pruebas
+pytest==9.2.0
+httpx==0.28.1
+# Se añadirán con zonal.py, cuando haya recortes de 30 m de AppEEARS: rasterio, numpy

@@ -91,7 +91,7 @@ El contrato de datos se acuerda con Erick: [backend/README.md](../../backend/REA
 
 ## Reglas
 
-- No quitar los rótulos de demostración mientras el dato no sea real.
+- **DT-16, cero supuestos:** la entrega final no muestra ningún dato sintético; los fixtures de `Codigo/src/data/demo.ts` se sustituyen por datos de la API. Mientras existan, conservan sus rótulos. Cada dato indica su fuente y su resolución, o «declarado por ti».
 - No pintar colores de «salud» sobre parcelas sin un dato que lo respalde.
 - El logo vigente es el de blanco y negro (`Codigo/public/brand/`).
 - **Todo lo que se vea en la entrega debe estar en inglés** o tener versión en inglés. Hay que decidirlo pronto: ver [09](../09-entrega-oficial.md).

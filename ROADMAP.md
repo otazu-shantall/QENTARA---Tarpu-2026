@@ -45,7 +45,7 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 
 **Preguntas que debes responder:**
 
-1. ¿Qué **3 a 5 fuentes** entran en la demo? La propuesta base es POWER, el NDVI de MODIS/VIIRS y SoilGrids, más una con cuenta Earthdata (HLS o IMERG).
+1. ¿Qué fuentes entran en la demo? **Decidido (DT-17):** solo NASA POWER, el NDVI de MODIS y SoilGrids.
 2. Para cada una: ¿cómo se pide?, ¿qué devuelve?, ¿en qué unidades?, ¿con qué resolución?, ¿cómo vienen los faltantes?
 3. ¿Qué nos dice cada dato sobre **las rotaciones**? Por ejemplo, épocas sin cultivo, heladas, falta de agua o pendiente.
 4. ¿Hay diferencia entre la **costa** (Majes) y la **sierra** (Chivay)? ¿Cuál usamos en la demo?
@@ -55,7 +55,6 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 - [ ] [Propuesta de datos](docs/areas/propuesta-datos.md) llena.
 - [ ] Al menos **una muestra nueva** en `datos/muestras/` (por ejemplo, el NDVI de un punto).
 - [ ] Una tabla con las variables que puede usar el backend (nombre, unidad, fuente).
-- [ ] Crear la cuenta gratuita de [NASA Earthdata](https://urs.earthdata.nasa.gov/) si vamos a usar HLS, IMERG o SMAP.
 
 ### Shantall · Frontend y experiencia de usuario
 
@@ -101,7 +100,7 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 
 **Lo que traes a la reunión:**
 
-- [ ] [Propuesta de backend](docs/areas/propuesta-backend.md) llena.
+- [ ] [Propuesta de backend](backend/PROPUESTA.md) llena.
 - [ ] Un **esquema** de cómo se conectan las piezas.
 - [ ] El **contrato v0**: rutas y ejemplos de JSON.
 - [ ] Las **reglas del motor v0**, aunque sean simples.
@@ -160,7 +159,7 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 ### Decisiones que deben salir de la reunión
 
 - [ ] Recorrido y pantallas de la demo.
-- [ ] Zona y punto de la demo (por ejemplo, una parcela de prueba en la sierra o en la costa).
+- [ ] Zona de la demo y quién declara el contexto de la parcela: un agricultor real (con permiso) o el presentador en vivo, rotulado como «declarado por el usuario».
 - [ ] Fuentes de datos de la demo.
 - [ ] Stack del backend y forma de publicar el proyecto.
 - [ ] Contrato v1 entre backend y frontend.
@@ -183,7 +182,7 @@ Datos ──▶ Backend ──▶ Frontend ──▶ Integración ──▶ Grab
                                             formulario, guion, referencias, legal
 ```
 
-| Bloque | Responsable probable | Hecho cuando… |
+| Bloque | Responsable propuesto (se confirma en la reunión) | Hecho cuando… |
 |---|---|---|
 | Scripts de datos de la demo | Damaris | Cada fuente elegida deja original, normalizado y procedencia en `datos/muestras/` |
 | API con el contrato v1 | Erick | Cada pantalla puede pedir su dato real |
@@ -198,7 +197,7 @@ Datos ──▶ Backend ──▶ Frontend ──▶ Integración ──▶ Grab
 
 - [ ] La app muestra **un dato real de NASA** (criterio *Relevance*).
 - [ ] Se comparan **tres estrategias de rotación**, incluida la actual.
-- [ ] Lo sintético está rotulado como tal.
+- [ ] **No hay datos sintéticos en la demo** (DT-16): todo valor tiene procedencia real o está rotulado como «declarado por el usuario».
 - [ ] El repositorio es público, con licencia y con la sección de uso de IA en inglés.
 - [ ] La demo cumple el límite y su enlace abre en una ventana privada.
 - [ ] El formulario está en inglés y completo.

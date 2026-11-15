@@ -12,7 +12,7 @@ Un recorrido completo que el agricultor pueda seguir de principio a fin, con al 
 
 | # | Entregable | Cuenta como hecho cuando… | Estado |
 |---|---|---|---|
-| 1.1 | Parcela de prueba | Se abre una parcela identificada como sintética o autorizada, con su ubicación y su contexto (cultivo anterior, agua) | 🟡 parcelas sintéticas sin geometría ni contexto |
+| 1.1 | Parcela | Una parcela dibujada sobre un campo real de la imagen, con su contexto declarado por un agricultor real (con permiso) o por el presentador en vivo, rotulado como «declarado por el usuario» | ❌ el prototipo solo tiene parcelas sintéticas, que se retiran (DT-16) |
 | 1.2 | Dato climático real | Una serie de POWER (u otra fuente verificada) con fuente, período, unidad y faltantes visibles **en la app** | 🟡 consulta real hecha en `datos/`; falta mostrarla en la app |
 | 1.3 | Procedencia | Desde el indicador se llega a la fuente, el producto, la fecha y el método | 🟡 rótulos de referencia, sin fuente real |
 | 1.4 | Pregunta al agente | El agente responde sobre ese dato, muestra en qué se apoya y reconoce lo que falta | 🟡 respuestas guiadas, sin modelo |
@@ -66,5 +66,5 @@ Lo que exige el formulario de Space Apps. Todo **en inglés**. Borradores en [`e
 
 - Cada afirmación de la presentación corresponde a una evidencia o se identifica como hipótesis o función futura.
 - No se afirma ahorro de agua, aumento de rendimiento, alianza con NASA ni IA entrenada sin evidencia propia.
-- Lo sintético se rotula como sintético, en pantalla y al presentarlo.
+- **Nada sintético en la demo (DT-16):** todo valor tiene procedencia real o está rotulado como «declarado por el usuario». Lo que no llegue con datos reales no se muestra.
 - La demostración se separa de la evolución del producto: no se promete implementar toda la visión.

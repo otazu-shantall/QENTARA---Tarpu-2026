@@ -1,0 +1,21 @@
+{
+ "additionalProperties": false,
+ "properties": {
+  "parcela_id": {
+   "title": "Parcela Id",
+   "type": "string"
+  },
+  "pregunta": {
+   "maxLength": 300,
+   "minLength": 1,
+   "title": "Pregunta",
+   "type": "string"
+  }
+ },
+ "required": [
+  "parcela_id",
+  "pregunta"
+ ],
+ "title": "PreguntaEntrada",
+ "type": "object"
+}

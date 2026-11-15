@@ -1,0 +1,41 @@
+{
+ "properties": {
+  "data": {
+   "title": "Data"
+  },
+  "procedencia": {
+   "items": {
+    "additionalProperties": true,
+    "type": "object"
+   },
+   "title": "Procedencia",
+   "type": "array"
+  },
+  "avisos": {
+   "items": {
+    "type": "string"
+   },
+   "title": "Avisos",
+   "type": "array"
+  },
+  "modo": {
+   "enum": [
+    "en_vivo",
+    "publicado"
+   ],
+   "title": "Modo",
+   "type": "string"
+  },
+  "generado": {
+   "title": "Generado",
+   "type": "string"
+  }
+ },
+ "required": [
+  "data",
+  "modo",
+  "generado"
+ ],
+ "title": "Sobre",
+ "type": "object"
+}

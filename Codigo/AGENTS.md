@@ -21,7 +21,7 @@ Complementa el `AGENTS.md` de la raíz; si hay contradicción, manda el de la ra
   - un icono siempre acompañado de su palabra;
   - una pregunta por pantalla;
   - lenguaje sencillo, con el término técnico como opción.
-- **Datos de demostración:** no quites los rótulos «Demo» o «sintético» mientras el dato no sea real. No pintes colores de «salud» sobre parcelas sin un dato que lo respalde.
+- **Datos (DT-16, cero supuestos):** la entrega final **no muestra ningún dato sintético**; los fixtures de `src/data/demo.ts` se sustituyen por datos de la API. Mientras existan, conservan sus rótulos «Demo» o «sintético». Cada dato en pantalla indica su fuente y su resolución, o «declarado por ti». No pintes colores sobre parcelas sin un dato real que lo respalde.
 - **Logo:** el vigente es el de blanco y negro (`public/brand/tarpu-logo-*`, `tarpu-mark-*`).
 - **Sin claves en el frontend.** Los datos llegan del backend, con el contrato acordado con Erick ([../backend/README.md](../backend/README.md)).
 - **Sin lógica agronómica en la interfaz.** Las reglas viven en el backend; la interfaz muestra y explica.

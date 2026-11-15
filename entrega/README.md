@@ -4,6 +4,15 @@
 
 **Cierre oficial del envío: domingo 15/11/2026, 11:59 p. m., hora del evento local.** Todo lo que se envía va **en inglés**.
 
+## Guías en PDF (empiecen por aquí)
+
+| Para | Guía |
+|---|---|
+| Derecho A · Entrega y legal | [Guia_Derecho_A_Entrega_y_Legal.pdf](Guia_Derecho_A_Entrega_y_Legal.pdf) |
+| Derecho B · Pitch e investigación | [Guia_Derecho_B_Pitch_e_Investigacion.pdf](Guia_Derecho_B_Pitch_e_Investigacion.pdf) |
+
+Cada guía explica TARPU, las reglas oficiales, las tareas paso a paso (con por qué importan y cuándo están hechas), qué llevar a la reunión de unión y la lista final antes del envío.
+
 ## Archivos de esta carpeta
 
 | Archivo | Para qué | Estado |

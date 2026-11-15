@@ -12,8 +12,9 @@ El equipo está **en pleno hackathon** (NASA Space Apps, 14 y 15/11/2026), sigui
 
 - **Real:** el mapa base y las imágenes satelitales (Esri y OpenStreetMap).
 - **De demostración:** parcelas, indicadores, series, registros y respuestas del agente.
-- **Datos reales ya obtenidos:** una consulta a NASA POWER (`datos/`), que todavía no llega a la app.
-- **Sin conectar:** backend, otras fuentes de datos, cálculo NDVI, modelo de IA, autenticación y evaluación agronómica.
+- **Datos reales ya obtenidos:** consultas a NASA POWER (`datos/`), que el backend ya usa.
+- **Construido sin conectar a las pantallas:** el backend (`backend/`: API, motor sin puntaje y agente guiado), con datos reales de NASA POWER y pruebas que pasan.
+- **Sin conectar:** los conectores de MODIS y SoilGrids (DT-17), cálculo NDVI, modelo de IA, autenticación y evaluación agronómica revisada por especialistas.
 
 No confundas el prototipo ni la extensión del informe con un producto validado. El detalle está en [docs/00-estado-actual.md](docs/00-estado-actual.md).
 
@@ -53,6 +54,10 @@ Quien te habla **integra QENTARA**. Trabaja con esa persona como integrante del 
   - Si generas o modificas código o datos, añade la nota en el encabezado del archivo y una fila en [entrega/uso-de-ia.md](entrega/uso-de-ia.md).
   - Las imágenes o videos generados con IA llevan marca de agua visible.
   - No uses ni modifiques la marca de NASA.
+
+### Cero supuestos (DT-16)
+
+**Regla del equipo para toda la demo:** cada valor viene de una fuente real con su procedencia, o lo declara el usuario y se rotula así. Ninguna regla, umbral, rango, límite ni peso se usa sin cita. Nada sintético: ni parcelas, ni personajes, ni valores de ejemplo. Sin interpretaciones sin evidencia («parece», «puede indicar»). Lo que no se sabe se lista como tarea de verificación; nunca se rellena. Si no puedes verificar algo, dilo en vez de suponerlo.
 
 ## 2. Qué leer y cómo resolver diferencias
 
@@ -119,7 +124,7 @@ Los especialistas agronómicos revisan métodos y reglas. No son el intermediari
 Son antecedentes y propuestas, no acuerdos:
 
 - **Stack del producto:** MapLibre, Plotly, Python/FastAPI, PostgreSQL/PostGIS, colas, Redis y hosting (SUP-015). El prototipo usa React, TypeScript, Vite, Lucide, Leaflet 1.9.4 y CSS propio, y eso no aprueba el stack del producto.
-- **Datos:** ver [datos/analisis-recursos.md](datos/analisis-recursos.md), verificado el 14/11/2026. Núcleo sin cuenta: POWER (ya consultado), NDVI MODIS/VIIRS (servicio de ORNL), SoilGrids y capas de NASA GIBS. Con cuenta Earthdata: HLS (30 m), IMERG, SMAP, SRTM/NASADEM y ECOSTRESS. Para vegetación se priorizan productos de NASA sobre Sentinel-2. Los recursos de USDA, USGS, PRISM y OpenET solo cubren Estados Unidos.
+- **Datos:** **la demo usa solo NASA POWER, el NDVI de MODIS (servicio de ORNL) y SoilGrids (DT-17)**, consultados en el centroide de la parcela. No propongas otras fuentes para la demo sin una decisión nueva. El análisis completo, con las fuentes que quedan para después, está en [datos/analisis-recursos.md](datos/analisis-recursos.md). Los recursos de USDA, USGS, PRISM y OpenET solo cubren Estados Unidos.
 - **Catálogo:** papa, quinua, haba y cebada son candidatos por revisar.
 - **Motor:** reglas transparentes y comparación explicable antes que modelos entrenados. Fórmulas, pesos y mínimos son experimentales.
 - **Negocio:** freemium, planes, precios, mercado, costos y proyecciones por contrastar. Las cifras de ejemplo son sintéticas.
@@ -193,7 +198,7 @@ No des por sincronizados los formatos porque sus nombres coincidan.
 Ver [Codigo/README.md](Codigo/README.md) y [docs/desarrollo.md](docs/desarrollo.md). El historial de cambios está en [docs/informes/](docs/informes/README.md).
 
 - No añadas documentos maestros ni archivos de procesamiento de informes a `Codigo/`.
-- Mantén los fixtures identificados y no quites la señalización de demostración mientras no haya datos reales comprobados.
+- Mantén los fixtures identificados mientras existan; la entrega final no los muestra (DT-16): se sustituyen por datos de la API.
 - Las zonas de La Joya, Majes y Camaná son centros aproximados de navegación, **no coordenadas ni límites de parcelas**.
 - No descargues regiones de teselas ni las incluyas en exportaciones.
 - No pongas claves de proveedores en el frontend.

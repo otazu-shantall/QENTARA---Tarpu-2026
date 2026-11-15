@@ -1,0 +1,94 @@
+{
+ "descripcion": "Relieve, erosión y rotación: resultados verificados el 15/11/2026.",
+ "relieve_zonas_piloto": {
+  "fuente": "NASADEM_NC.001 (30 m) vía AppEEARS, tarea por área ejecutada por Erick; 325 x 325 píxeles (≈ 10 x 10 km) por zona; 3,1 min",
+  "metodo_pendiente": "Horn (1981), diferencias finitas 3x3; tamaño de píxel en metros según la latitud",
+  "clases": "FAO, Guidelines for soil description (2006), cuadro 7",
+  "majes_riego": {
+   "altitud_m": [
+    1110,
+    1550
+   ],
+   "punto": {
+    "altitud_m": 1390,
+    "pendiente_pct": 2.4,
+    "clase": "suave"
+   },
+   "pendiente_mediana_pct": 3.7,
+   "p90_pct": 14.2,
+   "clases_pct": {
+    "plano": 0.8,
+    "casi nivelado": 4.5,
+    "muy suave": 14.4,
+    "suave": 48.6,
+    "inclinado": 18.8,
+    "fuertemente inclinado": 3.3,
+    "moderadamente empinado": 4.7,
+    "empinado": 4.1,
+    "muy empinado": 0.9
+   },
+   "regiones_pulgar_vidal_pct": {
+    "Yunga marítima": 100.0
+   }
+  },
+  "chivay": {
+   "altitud_m": [
+    3377,
+    4909
+   ],
+   "punto": {
+    "altitud_m": 3643,
+    "pendiente_pct": 5.4,
+    "clase": "inclinado"
+   },
+   "pendiente_mediana_pct": 33.0,
+   "p90_pct": 64.9,
+   "clases_pct": {
+    "casi nivelado": 0.2,
+    "muy suave": 0.7,
+    "suave": 4.1,
+    "inclinado": 9.0,
+    "fuertemente inclinado": 8.2,
+    "moderadamente empinado": 22.8,
+    "empinado": 41.1,
+    "muy empinado": 13.8
+   },
+   "regiones_pulgar_vidal_pct": {
+    "Quechua": 2.8,
+    "Suni": 48.5,
+    "Puna": 48.2,
+    "Janca": 0.5
+   }
+  }
+ },
+ "erodabilidad_K": {
+  "fuente": "Sharpley y Williams (1990), EPIC—Erosion/Productivity Impact Calculator, 1. Model Documentation, USDA-ARS Technical Bulletin 1768, ecuación 2.96 (verificada en el PDF; la constante es 0,0256; la documentación de SWAT+ muestra 0,256, errata)",
+  "formula": "K = [0,2 + 0,3·exp(−0,0256·SAN·(1 − SIL/100))] · (SIL/(CLA+SIL))^0,3 · [1 − 0,25·C/(C + exp(3,72 − 2,95·C))] · [1 − 0,7·SN1/(SN1 + exp(−5,51 + 22,9·SN1))]; SN1 = 1 − SAN/100; porcentajes; unidades de EE. UU.; × 0,1317 para t·ha·h/(ha·MJ·mm)",
+  "nota_limo": "SoilGrids da limo; en estas muestras se usó 100 − arena − arcilla porque la muestra de Damaris no lo incluye",
+  "majes_riego": {
+   "0-5cm": 0.193,
+   "5-15cm": 0.21
+  },
+  "chivay": {
+   "0-5cm": 0.198,
+   "5-15cm": 0.211
+  }
+ },
+ "factor_LS": {
+  "forma_verificada": "LS = (m+1)·(U/22,1)^m·(sin β/0,09)^n (Moore y Burch, 1986; tutorial NCSU de Mitasova)",
+  "exponentes": "m 0,2–0,6 y n 1,0–1,3 (bajos para flujo laminar, altos para surcos): hay que elegirlos con cita",
+  "estado": "pendiente: requiere acumulación de flujo sobre el DEM"
+ },
+ "rotacion": {
+  "fuente": "SENASA (MIDAGRI), Guía para la implementación de Buenas Prácticas Agrícolas para el cultivo de haba, sección 3.5",
+  "texto": "El Ministerio de Agricultura recomienda: opción 1: papa – cebada grano – forrajes – haba; opción 2: papa – quinua – cebada grano – haba. No es recomendable sembrar haba en el mismo campo por más de dos a tres campañas seguidas.",
+  "url": "https://www.senasa.gob.pe/senasa/wp-content/uploads/2020/07/Guia-BPA-HABA-1.pdf",
+  "zona_variedades": "Blanca Gigante: sierra sur, 2900–3800 msnm"
+ },
+ "cenagro_2012": {
+  "fuente": "INEI, IV Censo Nacional Agropecuario 2012, Plataforma Nacional de Datos Abiertos",
+  "data_completa": "https://www.inei.gob.pe/media/DATOS_ABIERTOS/CENAGRO/DATA_NEW/2012.zip (762 514 301 bytes)",
+  "registro_01": "una fila por unidad agropecuaria, con WALTITUD (altitud), WPISO (piso), WREGION, LONG_DECI y LAT_DECI",
+  "estado": "descarga pendiente de permiso"
+ }
+}

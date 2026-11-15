@@ -21,3 +21,10 @@ datos/ndvi/cache/
 .env
 .env.*
 *.local.txt
+
+# Backend: datos generados en cada computadora (DT-13)
+backend/almacen/
+!.env.example
+
+# Descargas de prueba de Earthdata (pueden pesar)
+backend/herramientas/salida/

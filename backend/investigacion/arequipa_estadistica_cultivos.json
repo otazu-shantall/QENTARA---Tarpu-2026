@@ -1,0 +1,233 @@
+{
+ "midagri_2017": {
+  "fuente": "MINAGRI, Plan Nacional de Cultivos 2018-2019, cuadro 14 «Arequipa: superficie cosechada, producción, rendimiento y precio en chacra de los cultivos monitoreados», 2017 (SIEA-DGESEP); https://www.agroarequipa.gob.pe/images/AGRICOLA/PLAN%20NACIONAL%20DE%20CULTIVOS%202018-2019%20APROBACION.compressed.pdf",
+  "superficie_cosechada_ha": {
+   "transitorios": {
+    "Arroz cáscara": 20225,
+    "Cebolla cabeza": 10410,
+    "Papa": 9708,
+    "Ajo": 5164,
+    "Frijol grano seco": 2911,
+    "Maíz amiláceo": 2186,
+    "Maíz choclo": 1918,
+    "Zanahoria": 1597,
+    "Arveja verde": 1352,
+    "Trigo": 1328,
+    "Haba verde": 1012,
+    "Quinua": 966,
+    "Tomate": 921,
+    "Zapallo": 853,
+    "Páprika": 799,
+    "Ají": 503,
+    "Vainita": 376,
+    "Maíz morado": 371,
+    "Cebada grano": 320,
+    "Algodón sin desmotar": 270,
+    "Haba grano seco": 226,
+    "Apio": 211,
+    "Col": 171,
+    "Betarraga": 162,
+    "Maíz amarillo duro": 156,
+    "Lechuga": 155,
+    "Pallar grano seco": 152,
+    "Poro": 143,
+    "Brócoli": 137,
+    "Coliflor": 129,
+    "Kiwicha": 128,
+    "Camote": 126,
+    "Nabo": 118,
+    "Acelga": 102,
+    "Sandía": 99,
+    "Rabanito": 68,
+    "Pepinillo": 59,
+    "Sorgo grano": 44,
+    "Olluco": 43,
+    "Fresa": 38,
+    "Perejil": 29,
+    "Cebolla china": 29,
+    "Yuca": 29,
+    "Oca": 27,
+    "Espinaca": 25,
+    "Albahaca": 24,
+    "Calabaza": 20,
+    "Mashua": 7,
+    "Arveja grano seco": 7,
+    "Cañihua": 5
+   },
+   "permanentes": {
+    "Alfalfa": 37310,
+    "Olivo-Aceituna": 3790,
+    "Alcachofa": 3035,
+    "Tuna": 1853,
+    "Vid/Uva": 1336,
+    "Palta": 883,
+    "Oregano": 631,
+    "Caña para azúcar": 568,
+    "Manzana": 149,
+    "Higo": 102,
+    "Melocotón": 101,
+    "Lucuma": 96,
+    "Granada": 77,
+    "Pera": 67,
+    "Mandarina": 60,
+    "Melón": 34,
+    "Pacae": 28,
+    "Naranja": 27,
+    "Membrillo": 20,
+    "Limón": 13,
+    "Mango": 12,
+    "Guayaba": 10,
+    "Aguaymanto": 8,
+    "Chirimoya": 6,
+    "Cirolero": 4,
+    "Papaya": 4,
+    "Banano y platano": 2,
+    "Damasco": 2,
+    "Nispero": 1,
+    "Arandanos": 1
+   }
+  }
+ },
+ "censo_1994": {
+  "fuente": "INEI, III Censo Nacional Agropecuario 1994, Arequipa, cuadro 4.4 (cultivos transitorios por provincia) y 4.8 (permanentes); http://proyectos.inei.gob.pe/web/biblioineipub/bancopub/Est/Lib0228/AREQ4-2.htm y AREQ4-3.htm",
+  "nota": "Datos de 1994: describen la distribución geográfica de entonces, no la actual. Superficie cultivada (ha) y % de la superficie con cultivos transitorios de cada provincia.",
+  "transitorios_por_provincia": {
+   "Arequipa": {
+    "maiz_amilaceo": [
+     861.18,
+     8.0
+    ],
+    "papa": [
+     946.25,
+     8.8
+    ],
+    "cebolla": [
+     3498.11,
+     32.6
+    ],
+    "maiz_amarillo_duro": [
+     207.12,
+     1.9
+    ],
+    "maiz_chala": [
+     1181.62,
+     11.0
+    ]
+   },
+   "Camaná": {
+    "arroz": [
+     6425.99,
+     83.8
+    ],
+    "maiz_amarillo_duro": [
+     120.89,
+     1.6
+    ],
+    "papa": [
+     37.96,
+     0.5
+    ]
+   },
+   "Caravelí": {
+    "algodon": [
+     1697.12,
+     62.7
+    ],
+    "maiz_amarillo_duro": [
+     234.3,
+     8.7
+    ],
+    "papa": [
+     224.01,
+     8.3
+    ],
+    "maiz_amilaceo": [
+     97.57,
+     3.6
+    ]
+   },
+   "Castilla": {
+    "arroz": [
+     2866.8,
+     39.5
+    ],
+    "maiz_amilaceo": [
+     877.94,
+     12.1
+    ],
+    "papa": [
+     786.38,
+     10.8
+    ],
+    "cebolla": [
+     219.46,
+     3.0
+    ]
+   },
+   "Caylloma": {
+    "maiz_amilaceo": [
+     1740.9,
+     25.7
+    ],
+    "papa": [
+     1845.79,
+     27.3
+    ],
+    "maiz_amarillo_duro": [
+     257.84,
+     3.8
+    ],
+    "maiz_chala": [
+     277.43,
+     4.1
+    ],
+    "cebolla": [
+     148.16,
+     2.2
+    ]
+   },
+   "Condesuyos": {
+    "maiz_amilaceo": [
+     507.94,
+     44.8
+    ],
+    "papa": [
+     252.52,
+     22.3
+    ]
+   },
+   "Islay": {
+    "arroz": [
+     845.84,
+     13.7
+    ],
+    "papa": [
+     981.6,
+     15.8
+    ],
+    "cebolla": [
+     448.84,
+     7.2
+    ],
+    "maiz_amarillo_duro": [
+     1180.56,
+     19.1
+    ]
+   },
+   "La Unión": {
+    "maiz_amilaceo": [
+     1556.33,
+     62.2
+    ],
+    "papa": [
+     273.48,
+     10.9
+    ]
+   }
+  },
+  "por_region_natural": {
+   "costa": "arroz: 40,3 % de la superficie con transitorios; cebolla 8,1 %; algodón 7,3 %. Permanentes: olivo 82,9 %.",
+   "sierra": "maíz amiláceo: 25,4 % de la superficie con transitorios (51,6 % de las unidades agropecuarias); papa. Permanentes: vid 19,3 %, palto 8,3 %."
+  }
+ }
+}

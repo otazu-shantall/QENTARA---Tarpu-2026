@@ -1,0 +1,215 @@
+{
+ "descripcion": "Valores copiados tal cual de las hojas de datos de FAO EcoCrop. null = la hoja no trae el dato ('no input'). No se completó ningún valor por cuenta propia.",
+ "advertencias": [
+  "EcoCrop describe la especie en general, no las variedades andinas locales.",
+  "Conflicto verificado: EcoCrop da altitud máxima absoluta de 2800 m para papa y 2700 m para haba; la celda de NASA POWER consultada para Chivay está a 4352 m y en la sierra de Arequipa se cultivan ambas. Por eso la altitud NO se usa para excluir cultivos: se muestra como conflicto de fuente.",
+  "Las reglas locales (INIA u otras) aún no están incorporadas; cuando se añadan, cada una llevará su cita.",
+  "Familias tal como las nombra EcoCrop (sistema clásico): Leguminosae, Gramineae, Chenopodiaceae. El motor compara familias con estos nombres."
+ ],
+ "cultivos": [
+  {
+   "cultivo": "papa",
+   "nombre_cientifico": "Solanum tuberosum",
+   "familia": "Solanaceae",
+   "fuente": {
+    "nombre": "FAO EcoCrop",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1971",
+    "consultado": "2026-11-14",
+    "nivel": "especie (no distingue variedades)"
+   },
+   "temperatura_c": {
+    "optimo": [
+     15,
+     25
+    ],
+    "absoluto": [
+     7,
+     30
+    ]
+   },
+   "lluvia_anual_mm": {
+    "optimo": [
+     500,
+     800
+    ],
+    "absoluto": [
+     250,
+     2000
+    ]
+   },
+   "ph_suelo": {
+    "optimo": [
+     5,
+     6.2
+    ],
+    "absoluto": [
+     4.2,
+     8.5
+    ]
+   },
+   "altitud_max_absoluta_m": 2800,
+   "temperatura_letal_c": {
+    "en_reposo": -1,
+    "crecimiento_temprano": 0
+   },
+   "ciclo_dias": [
+    90,
+    160
+   ],
+   "familia_ecocrop": "Magnoliopsida:Asteridae:Solanales:Solanaceae"
+  },
+  {
+   "cultivo": "haba",
+   "nombre_cientifico": "Vicia faba",
+   "familia": "Leguminosae",
+   "fuente": {
+    "nombre": "FAO EcoCrop",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2146",
+    "consultado": "2026-11-14",
+    "nivel": "especie (no distingue variedades)"
+   },
+   "temperatura_c": {
+    "optimo": [
+     18,
+     28
+    ],
+    "absoluto": [
+     5,
+     32
+    ]
+   },
+   "lluvia_anual_mm": {
+    "optimo": [
+     650,
+     1000
+    ],
+    "absoluto": [
+     250,
+     2600
+    ]
+   },
+   "ph_suelo": {
+    "optimo": [
+     6,
+     7
+    ],
+    "absoluto": [
+     4.5,
+     8.6
+    ]
+   },
+   "altitud_max_absoluta_m": 2700,
+   "temperatura_letal_c": {
+    "en_reposo": null,
+    "crecimiento_temprano": null
+   },
+   "ciclo_dias": [
+    100,
+    150
+   ],
+   "familia_ecocrop": "Magnoliopsida:Rosidae:Fabales:Leguminosae"
+  },
+  {
+   "cultivo": "cebada",
+   "nombre_cientifico": "Hordeum vulgare",
+   "familia": "Gramineae",
+   "fuente": {
+    "nombre": "FAO EcoCrop",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=1232",
+    "consultado": "2026-11-14",
+    "nivel": "especie (no distingue variedades)"
+   },
+   "temperatura_c": {
+    "optimo": [
+     15,
+     20
+    ],
+    "absoluto": [
+     2,
+     40
+    ]
+   },
+   "lluvia_anual_mm": {
+    "optimo": [
+     500,
+     1000
+    ],
+    "absoluto": [
+     200,
+     2000
+    ]
+   },
+   "ph_suelo": {
+    "optimo": [
+     6.5,
+     7.5
+    ],
+    "absoluto": [
+     6,
+     8
+    ]
+   },
+   "altitud_max_absoluta_m": 4400,
+   "temperatura_letal_c": {
+    "en_reposo": -4,
+    "crecimiento_temprano": 0
+   },
+   "ciclo_dias": [
+    90,
+    240
+   ],
+   "familia_ecocrop": "Liliopsida:Commelinidae:Cyperales:Gramineae"
+  },
+  {
+   "cultivo": "quinua",
+   "nombre_cientifico": "Chenopodium quinoa",
+   "familia": "Chenopodiaceae",
+   "fuente": {
+    "nombre": "FAO EcoCrop",
+    "url": "https://ecocrop.apps.fao.org/ecocrop/srv/en/dataSheet?id=2509",
+    "consultado": "2026-11-14",
+    "nivel": "especie (no distingue variedades)"
+   },
+   "temperatura_c": {
+    "optimo": [
+     14,
+     18
+    ],
+    "absoluto": [
+     2,
+     35
+    ]
+   },
+   "lluvia_anual_mm": {
+    "optimo": [
+     500,
+     1000
+    ],
+    "absoluto": [
+     250,
+     2600
+    ]
+   },
+   "ph_suelo": {
+    "optimo": [
+     5.5,
+     8
+    ],
+    "absoluto": [
+     4.5,
+     9.5
+    ]
+   },
+   "altitud_max_absoluta_m": 4000,
+   "temperatura_letal_c": {
+    "en_reposo": -8,
+    "crecimiento_temprano": -8
+   },
+   "ciclo_dias": [
+    90,
+    240
+   ],
+   "familia_ecocrop": "Magnoliopsida:Caryophyllidae:Caryophyllales:Chenopodiaceae"
+  }
+ ]
+}

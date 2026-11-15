@@ -1,22 +1,22 @@
 # Datos y fuentes
 
-> Resumen del apartado 05 del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#05-fundamento-científico-y-datos). La selección de fuentes es una propuesta (SUP-016, SUP-038). **No hay conectores de TARPU ejecutados.** Antes de implementar una fuente, se comprueba su documentación oficial: versión, acceso, unidad, resolución, latencia, calidad, condiciones y formato.
+> Resumen del apartado 05 del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#05-fundamento-científico-y-datos). **Fuentes de la demo, decididas (DT-17):** solo NASA POWER, el NDVI de MODIS y SoilGrids, consultadas en el centroide de la parcela. El conector de POWER funciona y el backend ya lo usa; los de MODIS y SoilGrids están pendientes en `datos/`. Para el producto, la selección sigue siendo una propuesta (SUP-016, SUP-038). Antes de implementar una fuente, se comprueba su documentación oficial: versión, acceso, unidad, resolución, latencia, calidad, condiciones y formato.
 
 ## Fuentes candidatas
 
-> Actualizado el 14/11/2026 con el análisis verificado de [datos/analisis-recursos.md](../datos/analisis-recursos.md). **Cambio:** para la vegetación se priorizan productos de NASA (MODIS/VIIRS y HLS) sobre Sentinel-2, porque cuentan como dato de NASA en la evaluación.
+> Actualizado el 14/11/2026 con el análisis verificado de [datos/analisis-recursos.md](../datos/analisis-recursos.md). **La demo usa solo las filas 1, 2 y 3 (DT-17).** Las demás quedan como candidatas para después de la demo, si el equipo toma una decisión nueva.
 
 | Prioridad | Fuente | Variable | Acceso | Límite que hay que respetar |
 |---|---|---|---|---|
-| 1 · clima | **NASA POWER** (Daily Point, AG) ✅ consultado | Temperatura media, mínima y máxima; lluvia; humedad; radiación | Sin cuenta | Celda regional; no confirma una helada en una planta |
-| 2 · vegetación (zona) | **MODIS `MOD13Q1` / VIIRS `VNP13A1`** | NDVI y EVI cada 16 días desde 2000 | Sin cuenta (servicio de ORNL, inestable) | 250 a 500 m: mezcla parcelas |
-| 3 · suelo | **ISRIC SoilGrids 2.0** | pH, textura y carbono por profundidad | Sin cuenta (API responde a 14/11/2026) | Predicción a 250 m; no sustituye un análisis de suelo |
-| 4 · mapa | **NASA GIBS** | Capas visuales de NDVI, SMAP, lluvia y relieve | Sin cuenta | Son imágenes; para calcular se usan los productos numéricos |
-| 5 · vegetación (parcela) | **HLS** (Landsat + Sentinel-2, 30 m) | Reflectancia para NDVI | Cuenta Earthdata | Nubes; píxeles mezclados en el borde |
-| Complemento (sierra) | **GPM IMERG V07** | Lluvia diaria | Cuenta Earthdata | 0,1°; la Final llega hasta el 30/09/2025, la Late hasta ayer |
-| Complemento (sierra) | **SMAP** L3 y L4 | Humedad del suelo | Cuenta Earthdata | 9 km; en la costa irrigada no describe una parcela |
-| Complemento | **SRTM / NASADEM** | Elevación y pendiente | Cuenta Earthdata | Estático (2000) |
-| Complemento (costa) | **ECOSTRESS** | Temperatura de superficie y evapotranspiración, 70 m | Cuenta Earthdata | Pasadas irregulares |
+| 1 · clima · **demo** | **NASA POWER** (Daily Point, AG) ✅ conectado al backend | Temperatura media, mínima y máxima; lluvia; humedad; radiación | Sin cuenta | Celda regional; no confirma una helada en una planta |
+| 2 · vegetación (zona) · **demo** | **MODIS `MOD13Q1` v061** (servicio de ORNL) | NDVI cada 16 días desde 2000 | Sin cuenta (inestable: 502 en varias pruebas) | Píxel nominal de 250 m: mezcla parcelas |
+| 3 · suelo · **demo** | **ISRIC SoilGrids 2.0** | pH, textura y carbono por profundidad | Sin cuenta (API responde a 14/11/2026) | Predicción a 250 m; no sustituye un análisis de suelo |
+| Fuera de la demo | **NASA GIBS** | Capas visuales de NDVI, SMAP, lluvia y relieve | Sin cuenta | Son imágenes; para calcular se usan los productos numéricos |
+| Fuera de la demo | **HLS** (Landsat + Sentinel-2, 30 m) | Reflectancia para NDVI | Cuenta Earthdata | Nubes; píxeles mezclados en el borde |
+| Fuera de la demo | **GPM IMERG V07** | Lluvia diaria | Cuenta Earthdata | 0,1°; la Final llega hasta el 30/09/2025, la Late hasta ayer |
+| Fuera de la demo | **SMAP** L3 y L4 | Humedad del suelo | Cuenta Earthdata | 9 km; en la costa irrigada no describe una parcela |
+| Fuera de la demo | **SRTM / NASADEM** | Elevación y pendiente | Cuenta Earthdata | Estático (2000) |
+| Fuera de la demo | **ECOSTRESS** | Temperatura de superficie y evapotranspiración, 70 m | Cuenta Earthdata | Pasadas irregulares |
 | Posterior | FAO GAEZ, ERA5, GLDAS, Sentinel-2 a 10 m, GRACE | Aptitud de cultivos, reanálisis, tendencias de agua | Varias | Ver el análisis |
 | Propio | Formulario del productor | Historial de campañas, riego, cultivo anterior | — | «Desconocido» nunca se convierte en cero |
 | Propio | Catálogo agronómico | Papa, quinua, haba y cebada como candidatos | — | Construcción manual versionada y revisada (SUP-002) |
@@ -63,7 +63,9 @@ Son umbrales por probar, no garantías.
 3. Calcular los criterios: agua, clima, suelo e historial y rotación.
 4. Redactar una explicación estructurada.
 
-**Pesos experimentales (SUP-019):** agua 0,30 · clima 0,25 · suelo 0,25 · historial 0,20.
+> **La demo no usa nada de esta sección que no tenga cita (DT-16):** ni estos pesos, ni el puntaje, ni los mínimos de 90 % y 80 %. El motor de la demo compara cada criterio con rangos citados de FAO EcoCrop, sin puntaje ([backend/MODULOS.md](../backend/MODULOS.md#4-motor-motor--inicio)). Lo que sigue resume la propuesta del informe maestro.
+
+**Pesos experimentales del informe (SUP-019, sin fuente):** agua 0,30 · clima 0,25 · suelo 0,25 · historial 0,20.
 
 - El puntaje es un orden relativo, **no una probabilidad**.
 - Si falta un criterio con peso, el puntaje queda sin calcular (`null`); no se renormaliza en silencio.

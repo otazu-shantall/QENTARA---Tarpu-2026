@@ -1,0 +1,906 @@
+{
+ "descripcion": "IV CENAGRO 2012 (INEI), Arequipa: superficie sembrada por código de cultivo (REC02, P024_03 y P025), cruzada con la altitud del sector de enumeración (REC01, WALTITUD) por NPRIN. 45 códigos con más superficie. Regiones de Pulgar Vidal por la altitud.",
+ "fuente": "https://www.inei.gob.pe/media/DATOS_ABIERTOS/CENAGRO/DATA_NEW/2012.zip (Plataforma Nacional de Datos Abiertos)",
+ "advertencias": [
+  "FALTA la «Tabla de Cultivos» del INEI: los códigos NO tienen nombre. No se usan en el producto hasta obtenerla.",
+  "WALTITUD se repite dentro de un mismo sector de enumeración: es la altitud del sector, no la de cada chacra.",
+  "Unidades agropecuarias de Arequipa en el registro 01: 58 392."
+ ],
+ "por_codigo": {
+  "1401": {
+   "ha": 34258.8,
+   "ua": 25629,
+   "alt_p10": 1193.0,
+   "alt_mediana": 2448.0,
+   "alt_p90": 3490.0,
+   "pct_riego": 99.8,
+   "regiones_pct": {
+    "Quechua": 44.4,
+    "Yunga": 40.1,
+    "Suni": 8.5,
+    "Chala": 5.7,
+    "Puna": 1.3,
+    "Janca": 0.0
+   },
+   "provincias_ha": {
+    "05": 11094.7,
+    "01": 8620.2,
+    "04": 6666.5,
+    "06": 2791.1
+   }
+  },
+  "2101": {
+   "ha": 8984.5,
+   "ua": 3634,
+   "alt_p10": 5.0,
+   "alt_mediana": 33.0,
+   "alt_p90": 510.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 89.7,
+    "Yunga": 10.3
+   },
+   "provincias_ha": {
+    "02": 5548.7,
+    "04": 3076.6,
+    "07": 359.2
+   }
+  },
+  "2706": {
+   "ha": 6641.8,
+   "ua": 3920,
+   "alt_p10": 25.0,
+   "alt_mediana": 1279.0,
+   "alt_p90": 1575.0,
+   "pct_riego": 99.9,
+   "regiones_pct": {
+    "Yunga": 79.3,
+    "Chala": 17.3,
+    "Quechua": 3.4,
+    "Suni": 0.0
+   },
+   "provincias_ha": {
+    "05": 2840.5,
+    "01": 2160.4,
+    "07": 1032.9,
+    "04": 401.1
+   }
+  },
+  "1228": {
+   "ha": 5832.9,
+   "ua": 1890,
+   "alt_p10": 1258.0,
+   "alt_mediana": 1308.0,
+   "alt_p90": 1596.0,
+   "pct_riego": 99.6,
+   "regiones_pct": {
+    "Yunga": 96.5,
+    "Quechua": 3.3,
+    "Suni": 0.1
+   },
+   "provincias_ha": {
+    "01": 4796.3,
+    "05": 755.7,
+    "04": 228.0,
+    "06": 38.2
+   }
+  },
+  "2612": {
+   "ha": 5235.2,
+   "ua": 6592,
+   "alt_p10": 64.0,
+   "alt_mediana": 2463.0,
+   "alt_p90": 4112.0,
+   "pct_riego": 99.6,
+   "regiones_pct": {
+    "Quechua": 36.1,
+    "Yunga": 27.1,
+    "Chala": 20.0,
+    "Puna": 10.2,
+    "Suni": 6.6,
+    "Janca": 0.0
+   },
+   "provincias_ha": {
+    "05": 1726.5,
+    "04": 1115.9,
+    "01": 1074.3,
+    "07": 905.2
+   }
+  },
+  "1218": {
+   "ha": 4916.4,
+   "ua": 1901,
+   "alt_p10": 26.0,
+   "alt_mediana": 180.0,
+   "alt_p90": 302.0,
+   "pct_riego": 99.7,
+   "regiones_pct": {
+    "Chala": 95.9,
+    "Yunga": 4.1,
+    "Quechua": 0.0
+   },
+   "provincias_ha": {
+    "03": 4395.6,
+    "07": 407.4,
+    "02": 112.5,
+    "04": 0.5
+   }
+  },
+  "2315": {
+   "ha": 4413.2,
+   "ua": 3045,
+   "alt_p10": 28.0,
+   "alt_mediana": 1553.0,
+   "alt_p90": 2304.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 71.7,
+    "Chala": 16.6,
+    "Quechua": 11.6,
+    "Suni": 0.0,
+    "Puna": 0.0,
+    "Janca": 0.0
+   },
+   "provincias_ha": {
+    "01": 2821.7,
+    "05": 711.0,
+    "07": 551.9,
+    "02": 183.4
+   }
+  },
+  "2303": {
+   "ha": 2608.1,
+   "ua": 2514,
+   "alt_p10": 10.0,
+   "alt_mediana": 44.0,
+   "alt_p90": 2381.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 56.8,
+    "Yunga": 30.8,
+    "Quechua": 12.4,
+    "Suni": 0.0
+   },
+   "provincias_ha": {
+    "07": 1442.2,
+    "01": 846.1,
+    "05": 253.6,
+    "02": 39.8
+   }
+  },
+  "2108": {
+   "ha": 2587.3,
+   "ua": 6725,
+   "alt_p10": 2470.0,
+   "alt_mediana": 3175.0,
+   "alt_p90": 3659.0,
+   "pct_riego": 99.9,
+   "regiones_pct": {
+    "Quechua": 75.2,
+    "Suni": 18.5,
+    "Yunga": 2.9,
+    "Puna": 2.0,
+    "Chala": 1.4,
+    "Janca": 0.1
+   },
+   "provincias_ha": {
+    "05": 1127.1,
+    "08": 759.1,
+    "01": 528.8,
+    "06": 71.0
+   }
+  },
+  "2113": {
+   "ha": 2209.7,
+   "ua": 1114,
+   "alt_p10": 10.0,
+   "alt_mediana": 180.0,
+   "alt_p90": 575.0,
+   "pct_riego": 99.8,
+   "regiones_pct": {
+    "Chala": 81.6,
+    "Yunga": 12.7,
+    "Quechua": 4.8,
+    "Suni": 0.8,
+    "Puna": 0.0
+   },
+   "provincias_ha": {
+    "07": 951.2,
+    "02": 636.5,
+    "04": 485.9,
+    "08": 71.0
+   }
+  },
+  "1162": {
+   "ha": 1474.8,
+   "ua": 815,
+   "alt_p10": 1261.0,
+   "alt_mediana": 1639.0,
+   "alt_p90": 1821.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 96.0,
+    "Quechua": 3.2,
+    "Chala": 0.8,
+    "Suni": 0.1
+   },
+   "provincias_ha": {
+    "03": 932.8,
+    "05": 266.3,
+    "01": 228.5,
+    "04": 17.5
+   }
+  },
+  "2406": {
+   "ha": 1287.8,
+   "ua": 4463,
+   "alt_p10": 2891.0,
+   "alt_mediana": 3496.0,
+   "alt_p90": 3820.0,
+   "pct_riego": 99.9,
+   "regiones_pct": {
+    "Quechua": 45.5,
+    "Suni": 45.5,
+    "Puna": 4.0,
+    "Yunga": 3.9,
+    "Chala": 1.1,
+    "Janca": 0.1
+   },
+   "provincias_ha": {
+    "05": 788.2,
+    "08": 185.4,
+    "01": 182.4,
+    "04": 94.5
+   }
+  },
+  "2109": {
+   "ha": 1279.6,
+   "ua": 3972,
+   "alt_p10": 346.0,
+   "alt_mediana": 2927.0,
+   "alt_p90": 3536.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Quechua": 56.5,
+    "Yunga": 20.8,
+    "Suni": 11.4,
+    "Chala": 11.2,
+    "Puna": 0.0
+   },
+   "provincias_ha": {
+    "04": 387.4,
+    "05": 273.1,
+    "01": 218.1,
+    "06": 172.1
+   }
+  },
+  "2401": {
+   "ha": 1150.2,
+   "ua": 1339,
+   "alt_p10": 2214.0,
+   "alt_mediana": 2470.0,
+   "alt_p90": 3419.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Quechua": 73.5,
+    "Yunga": 19.8,
+    "Suni": 6.7,
+    "Chala": 0.0
+   },
+   "provincias_ha": {
+    "01": 952.3,
+    "05": 195.9,
+    "07": 1.2,
+    "08": 0.5
+   }
+  },
+  "2104": {
+   "ha": 1140.9,
+   "ua": 1729,
+   "alt_p10": 2971.0,
+   "alt_mediana": 3659.0,
+   "alt_p90": 4270.0,
+   "pct_riego": 94.3,
+   "regiones_pct": {
+    "Puna": 44.6,
+    "Quechua": 33.6,
+    "Suni": 19.3,
+    "Yunga": 2.3,
+    "Chala": 0.1,
+    "Janca": 0.0
+   },
+   "provincias_ha": {
+    "04": 573.3,
+    "05": 358.0,
+    "08": 98.4,
+    "01": 69.1
+   }
+  },
+  "2345": {
+   "ha": 1097.0,
+   "ua": 860,
+   "alt_p10": 9.0,
+   "alt_mediana": 1316.0,
+   "alt_p90": 2513.0,
+   "pct_riego": 99.6,
+   "regiones_pct": {
+    "Yunga": 53.6,
+    "Chala": 29.9,
+    "Quechua": 16.5
+   },
+   "provincias_ha": {
+    "05": 567.5,
+    "07": 189.8,
+    "02": 125.4,
+    "06": 64.3
+   }
+  },
+  "2344": {
+   "ha": 1075.0,
+   "ua": 1321,
+   "alt_p10": 1239.0,
+   "alt_mediana": 2218.0,
+   "alt_p90": 2825.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 55.4,
+    "Quechua": 43.9,
+    "Chala": 0.7,
+    "Janca": 0.0,
+    "Suni": 0.0
+   },
+   "provincias_ha": {
+    "01": 954.7,
+    "07": 101.1,
+    "05": 11.1,
+    "02": 5.9
+   }
+  },
+  "2305": {
+   "ha": 991.9,
+   "ua": 222,
+   "alt_p10": 9.0,
+   "alt_mediana": 1258.0,
+   "alt_p90": 1419.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 61.9,
+    "Chala": 38.1,
+    "Quechua": 0.0
+   },
+   "provincias_ha": {
+    "05": 432.7,
+    "02": 267.2,
+    "01": 181.3,
+    "07": 110.7
+   }
+  },
+  "1192": {
+   "ha": 981.4,
+   "ua": 833,
+   "alt_p10": 657.0,
+   "alt_mediana": 1279.0,
+   "alt_p90": 2531.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 79.2,
+    "Quechua": 10.8,
+    "Chala": 7.7,
+    "Suni": 2.3
+   },
+   "provincias_ha": {
+    "05": 337.0,
+    "01": 174.3,
+    "08": 138.5,
+    "04": 120.5
+   }
+  },
+  "2808": {
+   "ha": 960.8,
+   "ua": 7,
+   "alt_p10": 80.0,
+   "alt_mediana": 80.0,
+   "alt_p90": 80.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 99.9,
+    "Quechua": 0.1,
+    "Yunga": 0.1
+   },
+   "provincias_ha": {
+    "07": 959.7,
+    "08": 0.7,
+    "04": 0.5
+   }
+  },
+  "2110": {
+   "ha": 816.7,
+   "ua": 906,
+   "alt_p10": 76.0,
+   "alt_mediana": 1308.0,
+   "alt_p90": 2597.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 50.0,
+    "Chala": 25.3,
+    "Quechua": 24.7
+   },
+   "provincias_ha": {
+    "01": 329.4,
+    "04": 260.0,
+    "07": 68.5,
+    "08": 51.0
+   }
+  },
+  "1191": {
+   "ha": 756.4,
+   "ua": 1557,
+   "alt_p10": 376.0,
+   "alt_mediana": 1312.0,
+   "alt_p90": 2587.0,
+   "pct_riego": 99.3,
+   "regiones_pct": {
+    "Yunga": 70.8,
+    "Quechua": 14.0,
+    "Chala": 12.7,
+    "Suni": 2.4,
+    "Puna": 0.1,
+    "Janca": 0.0
+   },
+   "provincias_ha": {
+    "03": 325.6,
+    "01": 160.5,
+    "04": 90.2,
+    "05": 78.1
+   }
+  },
+  "2824": {
+   "ha": 756.0,
+   "ua": 266,
+   "alt_p10": 1193.0,
+   "alt_mediana": 1261.0,
+   "alt_p90": 1527.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 95.2,
+    "Chala": 4.8
+   },
+   "provincias_ha": {
+    "05": 578.2,
+    "01": 102.3,
+    "07": 75.5
+   }
+  },
+  "2107": {
+   "ha": 712.9,
+   "ua": 1150,
+   "alt_p10": 119.0,
+   "alt_mediana": 345.0,
+   "alt_p90": 3009.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 58.8,
+    "Quechua": 24.1,
+    "Yunga": 15.5,
+    "Suni": 1.7,
+    "Janca": 0.0
+   },
+   "provincias_ha": {
+    "03": 324.4,
+    "05": 102.6,
+    "08": 68.8,
+    "01": 64.1
+   }
+  },
+  "5742": {
+   "ha": 689.4,
+   "ua": 233,
+   "alt_p10": 3767.0,
+   "alt_mediana": 4270.0,
+   "alt_p90": 4270.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Puna": 58.8,
+    "Suni": 40.8,
+    "Janca": 0.2,
+    "Quechua": 0.2
+   },
+   "provincias_ha": {
+    "04": 674.9,
+    "05": 14.3,
+    "06": 0.2
+   }
+  },
+  "1219": {
+   "ha": 670.0,
+   "ua": 667,
+   "alt_p10": 2304.0,
+   "alt_mediana": 2975.0,
+   "alt_p90": 3402.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Quechua": 90.1,
+    "Yunga": 8.7,
+    "Suni": 1.3
+   },
+   "provincias_ha": {
+    "01": 416.3,
+    "05": 253.3,
+    "06": 0.4
+   }
+  },
+  "1186": {
+   "ha": 594.2,
+   "ua": 998,
+   "alt_p10": 742.0,
+   "alt_mediana": 2414.0,
+   "alt_p90": 3398.0,
+   "pct_riego": 85.9,
+   "regiones_pct": {
+    "Quechua": 48.2,
+    "Yunga": 35.6,
+    "Chala": 8.2,
+    "Suni": 7.9,
+    "Janca": 0.1
+   },
+   "provincias_ha": {
+    "05": 168.1,
+    "01": 156.0,
+    "04": 141.5,
+    "03": 32.3
+   }
+  },
+  "2403": {
+   "ha": 588.1,
+   "ua": 370,
+   "alt_p10": 31.0,
+   "alt_mediana": 128.0,
+   "alt_p90": 1435.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 77.0,
+    "Yunga": 22.0,
+    "Quechua": 1.0,
+    "Suni": 0.0
+   },
+   "provincias_ha": {
+    "02": 397.7,
+    "05": 90.4,
+    "03": 50.9,
+    "04": 24.8
+   }
+  },
+  "2611": {
+   "ha": 517.2,
+   "ua": 197,
+   "alt_p10": 2470.0,
+   "alt_mediana": 2470.0,
+   "alt_p90": 2470.0,
+   "pct_riego": 99.9,
+   "regiones_pct": {
+    "Quechua": 93.0,
+    "Chala": 3.8,
+    "Suni": 1.6,
+    "Yunga": 1.1,
+    "Puna": 0.4
+   },
+   "provincias_ha": {
+    "01": 458.4,
+    "07": 19.1,
+    "05": 18.4,
+    "04": 12.8
+   }
+  },
+  "2701": {
+   "ha": 415.0,
+   "ua": 513,
+   "alt_p10": 1548.0,
+   "alt_mediana": 2999.0,
+   "alt_p90": 3966.0,
+   "pct_riego": 91.7,
+   "regiones_pct": {
+    "Quechua": 38.5,
+    "Suni": 35.7,
+    "Yunga": 18.9,
+    "Puna": 6.8
+   },
+   "provincias_ha": {
+    "01": 191.5,
+    "04": 124.0,
+    "05": 59.7,
+    "06": 29.6
+   }
+  },
+  "2342": {
+   "ha": 406.6,
+   "ua": 267,
+   "alt_p10": 4.0,
+   "alt_mediana": 173.0,
+   "alt_p90": 1529.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 50.5,
+    "Yunga": 49.5,
+    "Quechua": 0.0
+   },
+   "provincias_ha": {
+    "05": 160.4,
+    "02": 148.7,
+    "07": 54.3,
+    "04": 24.0
+   }
+  },
+  "1476": {
+   "ha": 384.1,
+   "ua": 255,
+   "alt_p10": 2289.0,
+   "alt_mediana": 3966.0,
+   "alt_p90": 4089.0,
+   "pct_riego": 99.6,
+   "regiones_pct": {
+    "Suni": 46.1,
+    "Puna": 35.3,
+    "Yunga": 15.0,
+    "Quechua": 2.9,
+    "Janca": 0.6
+   },
+   "provincias_ha": {
+    "06": 165.1,
+    "05": 137.1,
+    "01": 59.6,
+    "04": 22.3
+   }
+  },
+  "2302": {
+   "ha": 266.6,
+   "ua": 217,
+   "alt_p10": 9.0,
+   "alt_mediana": 14.0,
+   "alt_p90": 1302.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 79.2,
+    "Yunga": 20.6,
+    "Quechua": 0.2
+   },
+   "provincias_ha": {
+    "07": 206.5,
+    "05": 34.1,
+    "02": 13.4,
+    "01": 12.6
+   }
+  },
+  "2615": {
+   "ha": 258.7,
+   "ua": 354,
+   "alt_p10": 3490.0,
+   "alt_mediana": 4270.0,
+   "alt_p90": 4270.0,
+   "pct_riego": 98.0,
+   "regiones_pct": {
+    "Puna": 78.2,
+    "Suni": 11.0,
+    "Quechua": 10.8
+   },
+   "provincias_ha": {
+    "04": 201.5,
+    "08": 51.9,
+    "05": 3.9,
+    "06": 1.4
+   }
+  },
+  "2111": {
+   "ha": 244.3,
+   "ua": 267,
+   "alt_p10": 1261.0,
+   "alt_mediana": 1529.0,
+   "alt_p90": 3448.0,
+   "pct_riego": 99.9,
+   "regiones_pct": {
+    "Yunga": 57.8,
+    "Quechua": 34.2,
+    "Suni": 7.5,
+    "Puna": 0.5
+   },
+   "provincias_ha": {
+    "05": 134.0,
+    "01": 49.0,
+    "08": 30.0,
+    "04": 25.3
+   }
+  },
+  "1225": {
+   "ha": 238.3,
+   "ua": 60,
+   "alt_p10": 4.0,
+   "alt_mediana": 180.0,
+   "alt_p90": 1527.0,
+   "pct_riego": 99.4,
+   "regiones_pct": {
+    "Chala": 66.7,
+    "Yunga": 31.0,
+    "Quechua": 2.4
+   },
+   "provincias_ha": {
+    "03": 83.3,
+    "02": 75.7,
+    "01": 68.9,
+    "04": 6.5
+   }
+  },
+  "2803": {
+   "ha": 225.1,
+   "ua": 92,
+   "alt_p10": 166.0,
+   "alt_mediana": 173.0,
+   "alt_p90": 1068.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 79.8,
+    "Yunga": 20.1,
+    "Quechua": 0.1
+   },
+   "provincias_ha": {
+    "03": 175.8,
+    "01": 37.8,
+    "06": 7.7,
+    "07": 3.0
+   }
+  },
+  "2402": {
+   "ha": 216.6,
+   "ua": 484,
+   "alt_p10": 2214.0,
+   "alt_mediana": 3077.0,
+   "alt_p90": 3575.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Quechua": 61.6,
+    "Suni": 23.0,
+    "Yunga": 14.4,
+    "Chala": 0.9,
+    "Puna": 0.1
+   },
+   "provincias_ha": {
+    "05": 108.2,
+    "01": 105.4,
+    "03": 1.5,
+    "07": 1.0
+   }
+  },
+  "2832": {
+   "ha": 172.4,
+   "ua": 15,
+   "alt_p10": 1264.0,
+   "alt_mediana": 1264.0,
+   "alt_p90": 1264.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 97.8,
+    "Quechua": 2.2
+   },
+   "provincias_ha": {
+    "01": 163.2,
+    "05": 4.4,
+    "08": 3.9,
+    "04": 1.0
+   }
+  },
+  "2603": {
+   "ha": 163.5,
+   "ua": 449,
+   "alt_p10": 9.0,
+   "alt_mediana": 20.0,
+   "alt_p90": 945.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 83.4,
+    "Yunga": 14.0,
+    "Quechua": 2.6
+   },
+   "provincias_ha": {
+    "07": 66.0,
+    "02": 54.4,
+    "03": 20.6,
+    "06": 12.6
+   }
+  },
+  "1434": {
+   "ha": 161.2,
+   "ua": 212,
+   "alt_p10": 14.0,
+   "alt_mediana": 2765.0,
+   "alt_p90": 3157.0,
+   "pct_riego": 99.9,
+   "regiones_pct": {
+    "Quechua": 74.4,
+    "Chala": 19.6,
+    "Yunga": 5.7,
+    "Suni": 0.3
+   },
+   "provincias_ha": {
+    "06": 123.1,
+    "07": 31.6,
+    "04": 6.5
+   }
+  },
+  "2343": {
+   "ha": 160.6,
+   "ua": 764,
+   "alt_p10": 245.0,
+   "alt_mediana": 2276.0,
+   "alt_p90": 2843.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 51.5,
+    "Quechua": 32.2,
+    "Chala": 12.6,
+    "Suni": 3.8
+   },
+   "provincias_ha": {
+    "01": 82.3,
+    "08": 19.5,
+    "05": 14.5,
+    "06": 13.5
+   }
+  },
+  "2412": {
+   "ha": 160.3,
+   "ua": 240,
+   "alt_p10": 657.0,
+   "alt_mediana": 1261.0,
+   "alt_p90": 2452.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Yunga": 80.4,
+    "Quechua": 19.1,
+    "Chala": 0.5
+   },
+   "provincias_ha": {
+    "04": 76.4,
+    "01": 47.3,
+    "05": 36.4,
+    "02": 0.2
+   }
+  },
+  "5039": {
+   "ha": 144.7,
+   "ua": 701,
+   "alt_p10": 2859.0,
+   "alt_mediana": 3304.0,
+   "alt_p90": 3589.0,
+   "pct_riego": 99.9,
+   "regiones_pct": {
+    "Quechua": 78.0,
+    "Suni": 19.7,
+    "Yunga": 1.0,
+    "Chala": 0.9,
+    "Puna": 0.5
+   },
+   "provincias_ha": {
+    "08": 89.5,
+    "05": 44.1,
+    "06": 6.6,
+    "04": 2.3
+   }
+  },
+  "2209": {
+   "ha": 133.6,
+   "ua": 151,
+   "alt_p10": 9.0,
+   "alt_mediana": 182.0,
+   "alt_p90": 1419.0,
+   "pct_riego": 100.0,
+   "regiones_pct": {
+    "Chala": 59.3,
+    "Yunga": 40.7
+   },
+   "provincias_ha": {
+    "02": 51.7,
+    "01": 27.2,
+    "07": 24.7,
+    "05": 24.5
+   }
+  }
+ }
+}

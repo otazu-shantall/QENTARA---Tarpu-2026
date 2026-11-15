@@ -12,8 +12,8 @@ Se puede hablar en español **si lleva subtítulos en inglés**. Estructura que 
 
 | Segundo | Qué pide la guía | Borrador (por pulir) |
 |---|---|---|
-| 0:00 | Presentarse: nombre y equipo | «Somos QENTARA, de Arequipa, Perú.» |
-| 0:02 | Qué desafío y qué los inspiró | «Elegir qué sembrar después es cada vez más difícil: el clima cambia y los datos están dispersos.» |
+| 0:00 | Presentarse: nombre y equipo | «Somos el equipo QENTARA.» (añadir nombres y procedencia reales) |
+| 0:02 | Qué desafío y qué los inspiró | «La información para decidir qué sembrar está dispersa y en lenguaje técnico.» (problema aprobado, DEC-006; sin afirmar tendencias del clima sin datos) |
 | 0:05 | Nombre del proyecto y lema | «TARPU: [lema].» |
 | 0:10 | Cómo funciona, con el prototipo en pantalla y los datos de NASA | «Con datos abiertos de NASA, TARPU muestra cómo ha sido el clima de tu campo y compara opciones de rotación. Te dice qué significa cada dato y qué no.» |
 | 0:20 a 0:30 | Mirada al futuro | «Para que cada agricultor decida con información que entiende.» |
