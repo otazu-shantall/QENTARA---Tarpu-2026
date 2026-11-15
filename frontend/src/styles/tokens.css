@@ -1,0 +1,36 @@
+/* Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Instrument+Serif:ital@0;1&display=swap');
+:root {
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
+  color-scheme: light;
+  --bg: #f7f8f5;
+  --surface: #fff;
+  --surface-soft: #f1f4ed;
+  --ink: #213a31;
+  --muted: #65736c;
+  --line: #e4e9e1;
+  --green: #315c41;
+  --green-deep: #17382c;
+  --lime: #d5e9a6;
+  --lime-ink: #28422c;
+  --sidebar: #1c3a2e;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --radius: 16px;
+  --shadow: 0 12px 46px #17382c0b;
+  --sidebar-width: 236px;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #12261f;
+  --surface: #1b3127;
+  --surface-soft: #243c31;
+  --ink: #edf1e6;
+  --muted: #b4c3b5;
+  --line: #354a3d;
+  --green: #b9d599;
+  --green-deep: #142f24;
+  --lime: #d5e9a6;
+  --lime-ink: #28422c;
+  --sidebar: #10251c;
+  --shadow: 0 12px 46px #0002;
+}

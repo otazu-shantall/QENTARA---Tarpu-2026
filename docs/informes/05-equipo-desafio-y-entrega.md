@@ -1,8 +1,8 @@
 # 05 · Equipo, desafío y base por área
 
-> 14 de noviembre de 2026. Hecho con Claude Code. Decisiones: DT-08 a DT-11.
+> 14 de noviembre de 2026. Decisiones: DT-08 a DT-11.
 
-## Qué pidió Erick
+## Alcance del trabajo
 
 - Registrar las plataformas: web, luego Android, luego iOS.
 - Dividir el trabajo entre los cinco integrantes y segmentar el repositorio para que cada uno trabaje por su parte.

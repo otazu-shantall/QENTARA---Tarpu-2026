@@ -4,13 +4,13 @@
 > Se actualiza al terminar cada paso, al encontrar un error y antes de cada proceso largo. Al cerrar el trabajo, su contenido pasa a un informe nuevo y esta página se vacía para el siguiente.
 
 **Trabajo:** Hackathon · **fase 1 del [ROADMAP](../../ROADMAP.md)**: cada área planifica su parte y llena su [plantilla de propuesta](../areas/).
-**Último trabajo cerrado:** 06 · Análisis del repositorio y base para continuar (14/11/2026) → [06-analisis-repositorio.md](06-analisis-repositorio.md). Revisión sin cambios de código ni de fase organizativa; contiene comprobaciones y pendientes técnicos.
+**Último trabajo cerrado:** 16 · Integración del frontend en el repositorio compartido (15/11/2026) → [16-integracion-repositorio-frontend.md](16-integracion-repositorio-frontend.md). Se conservan los avances de las otras áreas y la fase organizativa.
 
 ## Pendiente de la demo (no olvidar)
 
-### Frontend nuevo cerrado · 15/11/2026
+### Frontend vigente · 15/11/2026
 
-Petición del usuario de este chat. Implementación independiente en `Codigo/src/nuevo/`, con portada agrícola fotográfica, mapa protagonista y panel de datos apilados. Compilación y recorrido nuevo de navegador aprobados. Resultado, procedencia y conexiones pendientes en [informe 07](07-frontend-nuevo.md). La revisión del diseño por el usuario y la futura integración de servicios continúan como próximos trabajos.
+`frontend/` incorpora el trabajo de escritorio de Shantall; `Codigo/` se retira con respaldo e historial Git. El backend, datos, Supabase y T03 mantienen sus archivos remotos. Documentación conciliada, build, once pruebas y recorrido Chrome correctos. Integración preparada en `codex/integrar-frontend`, sobre el estado remoto `e08ea68`. Registro: [informe 16](16-integracion-repositorio-frontend.md).
 
 Datos completos de los lugares de ejemplo (capa 3 de DT-22), para que el jurado pruebe TARPU. Se dejaron para después el 15/11/2026 (Erick):
 

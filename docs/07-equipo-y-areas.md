@@ -1,13 +1,13 @@
 # Equipo y áreas
 
-> División de trabajo indicada por Erick el **14/11/2026** (DT-09). Somos cinco: tres de código y dos de Derecho. Cada área tiene su carpeta en el repositorio y su guía.
+> Organización del equipo al **14/11/2026** (DT-09): cinco integrantes distribuidos en datos, frontend, backend y entrega. Cada área tiene su carpeta y guía.
 
 ## Quién hace qué
 
 | Área | Responsable | Carpeta | Se encarga de | Guía |
 |---|---|---|---|---|
 | **Datos satelitales** | Damaris | [`datos/`](../datos/README.md) | Cómo extraer los datos de los satélites: qué fuente, cómo se pide, qué devuelve y con qué límites | [datos/README.md](../datos/README.md) |
-| **Frontend y experiencia de usuario** | Shantall | [`Codigo/`](../Codigo/README.md) | Pantallas, diseño y experiencia: claro, conciso y fácil de usar para personas mayores | [areas/frontend.md](areas/frontend.md) |
+| **Frontend y experiencia de usuario** | Shantall | [`frontend/`](../frontend/README.md) (prototipo de escritorio) | Web para computadora, pantallas y experiencia clara para personas mayores; asistente por chat y voz | [areas/frontend.md](areas/frontend.md) |
 | **Backend, conectores y motor** | Erick | [`backend/`](../backend/README.md) | Cómo se conecta todo: API, conectores, el motor de TARPU y el agente | [backend/README.md](../backend/README.md) |
 | **Entrega, pitch e investigación** | Los dos integrantes de Derecho | [`entrega/`](../entrega/README.md) | Formulario oficial, demo, pitch, referencias, licencia, cifras del problema y lo que haga falta buscar | [entrega/README.md](../entrega/README.md) |
 
@@ -21,7 +21,7 @@ Los nombres de los dos integrantes de Derecho faltan por anotar aquí.
 | 2 | **App Android** | Se construye después de la web |
 | 3 | **App iOS** | Se deja implementada, pero quizá sin lanzar todavía |
 
-Consecuencia para hoy: la web debe pensarse para pantallas de teléfono desde el principio, y la lógica (datos, reglas, agente) debe vivir en el backend, para que las apps reutilicen lo mismo.
+El nuevo frontend (DT-25) se diseña para **computadora**, con sidebar izquierda, ratón y teclado. El diseño se organiza alrededor de pantallas de escritorio. La lógica (datos, reglas y agente) sigue en el backend para su reutilización; el orden de plataformas web → Android → iOS conserva su carácter de orientación futura.
 
 ## Cómo trabajamos
 
@@ -33,7 +33,7 @@ El trabajo va en tres etapas. No tienen duración fijada: se pasa a la siguiente
 | **2. Unir** | Se junta todo en el repositorio y se definen juntos las pantallas y el recorrido | Las pantallas y el recorrido están definidos y acordados |
 | **3. Volver a segmentar** | Cada uno desarrolla su parte con la idea clara y las pantallas definidas | Está lo que hay que entregar ([05](05-entregables.md), [09](09-entrega-oficial.md)) |
 
-**Sobre el frontend actual:** lo que hay en `Codigo/` es **solo una guía**, no el diseño final. Sirve de base y de ejemplo; las pantallas definitivas se deciden en la etapa 2.
+**Sobre el frontend actual:** lo que hay en `frontend/` es **solo una guía**, no el diseño final. Sirve de base y de ejemplo; las pantallas definitivas se deciden en la etapa 2.
 
 ## Qué necesita cada área de las demás
 
@@ -53,7 +53,7 @@ Cada área trabaja **solo en su carpeta**. Así nadie pisa el trabajo de otro.
 | Carpeta | Dueño | Los demás… |
 |---|---|---|
 | `datos/` | Damaris | leen |
-| `Codigo/` | Shantall | leen |
+| `frontend/` | Shantall; nuevo desarrollo | leen |
 | `backend/` | Erick | leen |
 | `entrega/` | Derecho | leen y aportan su parte de uso de IA |
 | `docs/` | Todos | actualizan lo de su área |

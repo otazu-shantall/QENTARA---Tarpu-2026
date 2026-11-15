@@ -1,8 +1,8 @@
 # 02 · Mapa real, logo y glasmorfismo
 
-> 27 de octubre de 2026. Hecho con Codex. Reconstruido a partir de lo registrado en `AGENTS.md` y `Codigo/README.md`.
+> 27 de octubre de 2026. Reconstruido a partir de lo registrado en `AGENTS.md` y `Codigo/README.md`.
 
-## Qué pidió el usuario
+## Alcance del trabajo
 
 - Reducir el logo.
 - Usar más glasmorfismo.
