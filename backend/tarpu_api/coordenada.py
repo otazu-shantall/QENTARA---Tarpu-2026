@@ -18,6 +18,14 @@ def iniciar(lat: float, lon: float, nombre: str | None) -> dict:
     return trabajos.iniciar(lat, lon, nombre)
 
 
+def listar() -> list[dict]:
+    return trabajos.listar()
+
+
+def de_punto(lat: float, lon: float) -> dict | None:
+    return trabajos.de_punto(lat, lon)
+
+
 def estado(clave: str) -> dict:
     t = trabajos.estado(clave)
     if t is None:

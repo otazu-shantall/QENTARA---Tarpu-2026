@@ -1,201 +1,366 @@
 <!doctype html>
-<!-- Pantalla de PRUEBA de la integración del backend (capa 1, capa 2 y actualización, DT-22). No es el diseño de TARPU.
+<!-- Pantalla de PRUEBA de la integración del backend (capa 1, capa 2 y actualización, DT-22). No es el diseño final de TARPU.
      La sirve la propia API en /prueba/. Escrito con asistencia de IA (Claude Code). Declarado en entrega/uso-de-ia.md. -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TARPU · prueba de integración</title>
+<link rel="icon" href="marca/tarpu-mark-black.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-  :root { --ink:#141714; --ink2:#4b504c; --line:#d9dbd5; --bg:#f6f6f3; --card:#fff; --verde:#2e7d4f; --rojo:#a12622; --ambar:#8a5a0b; }
-  * { box-sizing: border-box; }
-  body { margin:0; font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--ink); background:var(--bg); }
-  header { padding:10px 16px; border-bottom:1px solid var(--line); background:var(--card); display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
-  header h1 { font-size:16px; margin:0; }
-  header .nota { color:var(--ink2); font-size:12px; }
-  main { display:grid; grid-template-columns: minmax(0,1fr) 520px; height: calc(100vh - 54px); }
-  #mapa { height:100%; }
-  aside { overflow:auto; border-left:1px solid var(--line); background:var(--card); padding:14px 16px 40px; }
-  h2 { font-size:15px; margin:18px 0 6px; }
-  h3 { font-size:13px; margin:12px 0 4px; color:var(--ink2); text-transform:uppercase; letter-spacing:.04em; }
-  .fila { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-  button { font:inherit; padding:7px 12px; border:1px solid var(--ink); background:var(--ink); color:#fff; border-radius:6px; cursor:pointer; }
-  button.sec { background:#fff; color:var(--ink); }
-  button:disabled { opacity:.5; cursor:default; }
+  :root {
+    --bg:#f2f2ef; --surface:#fff; --surface-2:#f7f7f4; --surface-3:#eeeee9;
+    --ink:#111311; --ink-2:#4b504c; --ink-3:#868b85; --line:#e6e6e0; --line-2:#d8d9d2;
+    --green:#2e7d4f; --green-soft:#e6f2e9; --sun:#f4b23e; --sun-soft:#fdf1da; --sun-ink:#7a4f08;
+    --sky:#3d78ad; --sky-soft:#e5eef7; --danger:#b4382f; --danger-soft:#fbe9e7;
+    --radius:16px; --radius-sm:12px; --radius-xs:9px;
+    --shadow:0 1px 2px rgb(16 24 16 / 4%), 0 8px 28px rgb(16 24 16 / 6%);
+    --shadow-float:0 2px 6px rgb(10 20 12 / 8%), 0 18px 48px rgb(10 20 12 / 18%);
+    --font:'Geist','Segoe UI',system-ui,-apple-system,sans-serif; --mono:'Geist Mono',ui-monospace,Consolas,monospace;
+  }
+  * { box-sizing:border-box; }
+  html, body { height:100%; }
+  body { margin:0; font:14px/1.5 var(--font); color:var(--ink); background:var(--bg); display:flex; flex-direction:column; }
+  /* Barra superior */
+  .barra { display:flex; align-items:center; gap:18px; padding:10px 18px; background:var(--surface); border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  .marca { display:flex; align-items:center; gap:12px; }
+  .marca img { height:30px; display:block; }
+  .marca .sep { width:1px; height:26px; background:var(--line-2); }
+  .marca .sub { font-size:12.5px; color:var(--ink-2); line-height:1.25; }
+  .marca .sub b { color:var(--ink); font-weight:600; display:block; font-size:13.5px; }
+  .ir { display:flex; gap:6px; flex-wrap:wrap; margin-left:auto; }
+  .pildora { font:500 13px var(--font); padding:7px 13px; border-radius:999px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); cursor:pointer; transition:.15s; }
+  .pildora:hover { border-color:var(--ink); }
+  /* Cuerpo */
+  .cuerpo { flex:1; display:grid; grid-template-columns:minmax(0,1fr) 500px; min-height:0; }
+  #mapa { height:100%; background:#dfe3dc; }
+  .lateral { display:flex; flex-direction:column; min-height:0; background:var(--surface-2); border-left:1px solid var(--line); }
+  .pestanas { display:flex; gap:4px; padding:10px 12px 0; background:var(--surface); border-bottom:1px solid var(--line); }
+  .pestana { font:500 13.5px var(--font); padding:9px 14px; border:0; background:none; color:var(--ink-2); cursor:pointer; border-bottom:2px solid transparent; }
+  .pestana.activa { color:var(--ink); border-bottom-color:var(--ink); }
+  .pestana .n { display:inline-block; min-width:20px; padding:0 6px; margin-left:4px; border-radius:999px; background:var(--surface-3); font-size:12px; }
+  .contenido { overflow:auto; padding:16px; flex:1; }
+  .vista { display:none; } .vista.activa { display:block; }
+  .tarjeta { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .tarjeta h3 { margin:0 0 10px; font-size:13px; font-weight:600; letter-spacing:.02em; color:var(--ink-2); text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+  .tarjeta h3 .fuente { margin-left:auto; text-transform:none; letter-spacing:0; font-weight:400; color:var(--ink-3); font-size:12px; }
+  .titulo-punto { font-size:20px; font-weight:600; margin:0; }
+  .coord { font-family:var(--mono); font-size:12.5px; color:var(--ink-2); }
+  .metricas { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0 4px; }
+  .metrica { background:var(--surface-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:9px 10px; }
+  .metrica .et { font-size:11.5px; color:var(--ink-3); }
+  .metrica .va { font-size:17px; font-weight:600; }
+  .metrica .va small { font-size:12px; font-weight:400; color:var(--ink-2); }
   table { border-collapse:collapse; width:100%; font-size:13px; }
-  td, th { border-bottom:1px solid var(--line); padding:4px 6px; text-align:left; vertical-align:top; }
-  th { background:var(--bg); }
-  pre { background:#111; color:#e6e6e6; padding:10px; border-radius:6px; overflow:auto; max-height:420px; font-size:12px; }
-  details { margin:6px 0; }
-  summary { cursor:pointer; color:var(--verde); font-weight:600; }
-  .estado { display:inline-block; padding:1px 8px; border-radius:10px; font-size:12px; background:var(--bg); border:1px solid var(--line); }
-  .listo, .listo_con_vacios { color:var(--verde); } .parcial, .en_proceso, .pendiente { color:var(--ambar); } .error, .sin_dato, .no_disponible, .sin_datos { color:var(--rojo); }
-  .aviso { background:#fdf1da; border-left:3px solid var(--ambar); padding:6px 10px; margin:6px 0; font-size:13px; }
-  .leyenda { background:#fff; padding:8px 10px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.2); font-size:12px; }
-  .leyenda i { display:inline-block; width:12px; height:12px; margin-right:6px; vertical-align:-2px; border-radius:2px; }
-  .vacio { color:var(--ink2); }
-  @media (max-width: 900px) { main { grid-template-columns: 1fr; height:auto; } #mapa { height:60vh; } aside { border-left:0; } }
+  td, th { border-bottom:1px solid var(--line); padding:6px 4px; text-align:left; vertical-align:top; }
+  th { color:var(--ink-2); font-weight:500; }
+  tr:last-child td, tr:last-child th { border-bottom:0; }
+  .num { font-family:var(--mono); font-size:12.5px; }
+  .chip { display:inline-block; padding:1px 9px; border-radius:999px; font-size:12px; font-weight:500; border:1px solid transparent; }
+  .chip.listo, .chip.listo_con_vacios { background:var(--green-soft); color:var(--green); }
+  .chip.parcial, .chip.en_proceso, .chip.pendiente, .chip.por_enviar { background:var(--sun-soft); color:var(--sun-ink); }
+  .chip.error, .chip.sin_dato, .chip.sin_datos { background:var(--danger-soft); color:var(--danger); }
+  .chip.no_disponible { background:var(--surface-3); color:var(--ink-2); }
+  .cultivos { display:flex; flex-wrap:wrap; gap:6px; }
+  .cultivo { padding:3px 10px; border-radius:999px; background:var(--green-soft); color:var(--green); font-size:12.5px; }
+  .cultivo.mas { background:var(--surface-3); color:var(--ink-2); }
+  .aviso { background:var(--sun-soft); color:var(--sun-ink); border-radius:var(--radius-xs); padding:8px 11px; margin:8px 0; font-size:13px; }
+  .error-caja { background:var(--danger-soft); color:var(--danger); border-radius:var(--radius-xs); padding:8px 11px; margin:6px 0; font-size:13px; }
+  .nota { color:var(--ink-3); font-size:12.5px; }
+  .boton { font:600 14px var(--font); padding:10px 16px; border-radius:var(--radius-sm); border:0; background:var(--ink); color:#fff; cursor:pointer; }
+  .boton:disabled { opacity:.45; cursor:default; }
+  .mini { font:500 12px var(--font); padding:4px 9px; border-radius:var(--radius-xs); border:1px solid var(--line-2); background:var(--surface); cursor:pointer; margin:3px 4px 0 0; }
+  .mini:hover { border-color:var(--ink); }
+  .campo { font:14px var(--font); padding:9px 11px; border-radius:var(--radius-sm); border:1px solid var(--line-2); flex:1; min-width:140px; }
+  .fila { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  details { margin-top:6px; } summary { cursor:pointer; font-weight:500; color:var(--green); font-size:13px; }
+  pre { background:#141714; color:#e4e7e2; padding:12px; border-radius:var(--radius-sm); overflow:auto; max-height:440px; font:12px/1.45 var(--mono); margin:8px 0 0; }
+  .fuente-fila { padding:9px 0; border-bottom:1px solid var(--line); }
+  .fuente-fila:last-child { border-bottom:0; }
+  .fuente-fila .cab { display:flex; align-items:center; gap:8px; font-weight:600; }
+  .prod { margin:6px 0 0 12px; }
+  .lista-punto { display:flex; gap:10px; align-items:center; padding:11px 12px; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--surface); margin-bottom:8px; cursor:pointer; transition:.15s; }
+  .lista-punto:hover { border-color:var(--ink); }
+  .lista-punto .pin { width:12px; height:12px; border-radius:50%; background:var(--green); flex:none; box-shadow:0 0 0 3px var(--green-soft); }
+  .lista-punto .pin.en_proceso, .lista-punto .pin.pendiente, .lista-punto .pin.parcial { background:var(--sun); box-shadow:0 0 0 3px var(--sun-soft); }
+  .lista-punto .datos { flex:1; min-width:0; }
+  .lista-punto .nom { font-weight:600; }
+  .vacio { text-align:center; color:var(--ink-3); padding:40px 10px; }
+  .vacio img { width:46px; opacity:.85; margin-bottom:8px; }
+  /* Controles del mapa */
+  .leaflet-control-zoom, .leaflet-control-layers, .leaflet-bar { border:0 !important; box-shadow:var(--shadow-float) !important; border-radius:var(--radius-sm) !important; overflow:hidden; }
+  .leyenda, .panel-mapa { background:var(--surface); padding:10px 12px; border-radius:var(--radius-sm); box-shadow:var(--shadow-float); font:12.5px/1.5 var(--font); max-width:260px; }
+  .leyenda b { display:block; margin-bottom:4px; }
+  .leyenda i { display:inline-block; width:12px; height:12px; margin-right:7px; vertical-align:-2px; border-radius:3px; }
+  .panel-mapa label { display:flex; align-items:center; gap:8px; }
+  .panel-mapa input[type=range] { width:110px; accent-color:var(--ink); }
+  .zoom-info { font-family:var(--mono); font-size:12px; color:var(--ink-2); margin-top:4px; }
+  .punto-extraido { width:14px; height:14px; border-radius:50%; background:var(--green); border:2px solid #fff; box-shadow:0 0 0 2px var(--green), 0 2px 6px rgb(0 0 0 / 35%); }
+  .punto-extraido.en_proceso, .punto-extraido.pendiente, .punto-extraido.parcial { background:var(--sun); box-shadow:0 0 0 2px var(--sun), 0 2px 6px rgb(0 0 0 / 35%); }
+  @media (max-width: 980px) { .cuerpo { grid-template-columns:1fr; } #mapa { height:58vh; } .lateral { border-left:0; } .metricas { grid-template-columns:repeat(2,1fr); } }
 </style>
 </head>
 <body>
-<header>
-  <h1>TARPU · prueba de integración del backend</h1>
-  <span class="nota">Haz clic en el mapa: a la derecha salen los datos de la base de Arequipa en ese punto, en crudo. Luego puedes extraer los datos pesados de ese punto.</span>
-  <div class="fila">
-    <button class="sec" data-ir="-16.367023,-72.185771">Majes riego</button>
-    <button class="sec" data-ir="-15.64,-71.60">Chivay</button>
-    <button class="sec" data-ir="-15.612386,-71.984857">Cabanaconde (censo)</button>
-    <label class="nota">Opacidad de sectores <input id="opacidad" type="range" min="0" max="1" step="0.05" value="0.65"></label>
+<header class="barra">
+  <div class="marca">
+    <img src="marca/tarpu-logo-black.png" alt="TARPU">
+    <span class="sep"></span>
+    <span class="sub"><b>Prueba de integración del backend</b>Base de Arequipa · extracción por coordenada · datos en crudo</span>
+  </div>
+  <div class="ir">
+    <button class="pildora" data-ir="-16.367023,-72.185771">Majes riego</button>
+    <button class="pildora" data-ir="-15.64,-71.60">Chivay</button>
+    <button class="pildora" data-ir="-15.612386,-71.984857">Cabanaconde (censo)</button>
   </div>
 </header>
-<main>
+<div class="cuerpo">
   <div id="mapa"></div>
-  <aside id="panel"><p class="vacio">Selecciona un punto en el mapa.</p></aside>
-</main>
+  <aside class="lateral">
+    <nav class="pestanas">
+      <button class="pestana activa" data-vista="punto">Punto seleccionado</button>
+      <button class="pestana" data-vista="extraidos">Puntos extraídos <span class="n" id="n-extraidos">0</span></button>
+    </nav>
+    <div class="contenido">
+      <section class="vista activa" id="vista-punto">
+        <div class="vacio"><img src="marca/tarpu-mark-black.png" alt=""><br>Haz clic en el mapa para ver los datos base de ese punto.<br>Acércate todo lo que necesites para ubicar tu parcela.</div>
+      </section>
+      <section class="vista" id="vista-extraidos"></section>
+    </div>
+  </aside>
+</div>
 <script>
-const API = '';  // misma API que sirve esta página
-const panel = document.getElementById('panel');
-const mapa = L.map('mapa', { zoomControl: true }).setView([-16.0, -72.6], 7);
-const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-  { maxZoom: 18, attribution: 'Imágenes: Esri, Maxar, Earthstar Geographics' }).addTo(mapa);
-const calles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' });
-let capaSectores = null, marcador = null, sondeo = null;
-
-const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-const json = o => `<pre>${esc(JSON.stringify(o, null, 1))}</pre>`;
-const chip = e => `<span class="estado ${esc(e)}">${esc(e)}</span>`;
-async function pedir(ruta, opciones) {
-  const r = await fetch(API + ruta, opciones);
-  const cuerpo = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(`${r.status} ${JSON.stringify(cuerpo)}`);
-  return cuerpo;
+const API = '';
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const crudo = o => `<pre>${esc(JSON.stringify(o, null, 1))}</pre>`;
+const chip = e => `<span class="chip ${esc(e)}">${esc(String(e ?? '').replace(/_/g, ' '))}</span>`;
+async function pedir(ruta, op) {
+  const r = await fetch(API + ruta, op);
+  const c = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(`${r.status} · ${JSON.stringify(c)}`);
+  return c;
 }
 
+/* ---------------- mapa ---------------- */
+// Esri tiene imagen real hasta el zoom 17 en el campo de Arequipa (≈ 1 m por píxel; medido el 15/11/2026: desde el 18
+// devuelve «Map data not yet available»). Por eso se amplía la imagen del 17 hasta el zoom 21, sin recuadros vacíos.
+// La ciudad de Arequipa tiene imagen real hasta el 19: capa aparte.
+const mapa = L.map('mapa', { maxZoom: 21, zoomControl: false }).setView([-16.0, -72.6], 7);
+L.control.zoom({ position: 'topleft' }).addTo(mapa);
+L.control.scale({ imperial: false, position: 'bottomright' }).addTo(mapa);
+const esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+const credito = 'Imágenes: Esri, Maxar, Earthstar Geographics';
+const satCampo = L.tileLayer(esri, { maxNativeZoom: 17, maxZoom: 21, attribution: credito }).addTo(mapa);
+const satCiudad = L.tileLayer(esri, { maxNativeZoom: 19, maxZoom: 21, attribution: credito });
+const calles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxNativeZoom: 19, maxZoom: 21, attribution: '© OpenStreetMap' });
+const capaExtraidos = L.layerGroup().addTo(mapa);
+let capaSectores = null, marcador = null, sondeo = null, puntoActual = null;
+
 async function cargarSectores() {
-  const s = await pedir('/api/base/sectores');
-  const m = s.data;
-  capaSectores = L.imageOverlay(API + '/api/base/sectores.png', m.limites_mapa, { opacity: 0.65, interactive: false }).addTo(mapa);
-  L.rectangle(m.limites_mapa, { color: '#111', weight: 1, fill: false, dashArray: '4 4' }).addTo(mapa);
-  L.control.layers({ 'Satélite (Esri)': satelite, 'Calles (OSM)': calles }, { 'Sectores S1 · S2 · S3': capaSectores }).addTo(mapa);
+  const m = (await pedir('/api/base/sectores')).data;
+  capaSectores = L.imageOverlay('/api/base/sectores.png', m.limites_mapa, { opacity: .85, interactive: false }).addTo(mapa);
+  const caja = L.rectangle(m.limites_mapa, { color: '#111311', weight: 1, fill: false, dashArray: '4 5', interactive: false }).addTo(mapa);
+  L.control.layers(
+    { 'Satélite · campo (ampliado desde el zoom 17)': satCampo, 'Satélite · ciudad (real hasta el zoom 19)': satCiudad, 'Calles (OpenStreetMap)': calles },
+    { 'Sectores S1 · S2 · S3': capaSectores, 'Caja de la base': caja, 'Puntos extraídos': capaExtraidos },
+    { position: 'topright', collapsed: true }).addTo(mapa);
   const leyenda = L.control({ position: 'bottomleft' });
   leyenda.onAdd = () => {
     const d = L.DomUtil.create('div', 'leyenda');
-    const fila = (k, v) => `<div><i style="background:rgba(${v.color_rgba.slice(0, 3).join(',')},1)"></i>${k} · ${v.altitud_m ? v.altitud_m.join('–') + ' m' : esc(v.descripcion)}</div>`;
-    d.innerHTML = '<b>Sectores (DT-18, desde NASADEM)</b>' + Object.entries(m.sectores).map(([k, v]) => fila(k, v)).join('')
-      + fila('fuera', m.fuera) + `<div class="nota" style="max-width:240px">${esc(m.aviso)}</div>`;
+    const fila = (k, v, txt) => `<div><i style="background:rgb(${v.color_rgba.slice(0, 3).join(',')})"></i>${k} · ${txt}</div>`;
+    d.innerHTML = '<b>Sectores (desde NASADEM)</b>'
+      + Object.entries(m.sectores).map(([k, v]) => fila(k, v, v.altitud_m.join('–') + ' m')).join('')
+      + fila('Sobre 4800 m', m.fuera, 'fuera de los sectores')
+      + `<div class="nota" style="margin-top:6px">${esc(m.aviso)}</div>`;
     return d;
   };
   leyenda.addTo(mapa);
+  const panel = L.control({ position: 'topright' });
+  panel.onAdd = () => {
+    const d = L.DomUtil.create('div', 'panel-mapa');
+    d.innerHTML = `<label>Sectores <input type="range" id="opacidad" min="0" max="1" step="0.05" value="0.85"></label><div class="zoom-info" id="zoom-info"></div>`;
+    L.DomEvent.disableClickPropagation(d);
+    return d;
+  };
+  panel.addTo(mapa);
+  $('opacidad').addEventListener('input', e => capaSectores.setOpacity(+e.target.value));
+  mostrarZoom();
 }
-document.getElementById('opacidad').addEventListener('input', e => capaSectores && capaSectores.setOpacity(+e.target.value));
-document.querySelectorAll('[data-ir]').forEach(b => b.addEventListener('click', () => {
-  const [lat, lon] = b.dataset.ir.split(',').map(Number);
-  mapa.setView([lat, lon], 12); seleccionar(lat, lon);
-}));
+function mostrarZoom() {
+  const z = mapa.getZoom();
+  const mpp = 156543.03 * Math.cos(mapa.getCenter().lat * Math.PI / 180) / 2 ** z;
+  const nota = z > 17 && mapa.hasLayer(satCampo) ? ' · ampliado' : '';
+  if ($('zoom-info')) $('zoom-info').textContent = `zoom ${z} · ${mpp < 1 ? mpp.toFixed(2) : mpp.toFixed(0)} m por píxel${nota}`;
+}
+mapa.on('zoomend moveend baselayerchange', mostrarZoom);
 mapa.on('click', e => seleccionar(+e.latlng.lat.toFixed(6), +e.latlng.lng.toFixed(6)));
+document.querySelectorAll('[data-ir]').forEach(b => b.onclick = () => {
+  const [lat, lon] = b.dataset.ir.split(',').map(Number);
+  mapa.setView([lat, lon], 15); seleccionar(lat, lon);
+});
 
+/* ---------------- pestañas ---------------- */
+function abrirVista(v) {
+  document.querySelectorAll('.pestana').forEach(p => p.classList.toggle('activa', p.dataset.vista === v));
+  document.querySelectorAll('.vista').forEach(s => s.classList.toggle('activa', s.id === 'vista-' + v));
+}
+document.querySelectorAll('.pestana').forEach(p => p.onclick = () => abrirVista(p.dataset.vista));
+
+/* ---------------- punto seleccionado ---------------- */
 async function seleccionar(lat, lon) {
   if (sondeo) { clearInterval(sondeo); sondeo = null; }
+  puntoActual = { lat, lon };
   if (marcador) marcador.remove();
   marcador = L.marker([lat, lon]).addTo(mapa);
-  panel.innerHTML = `<h2>Punto ${lat}, ${lon}</h2><p class="vacio">Leyendo la base de Arequipa…</p>`;
+  abrirVista('punto');
+  const vista = $('vista-punto');
+  vista.innerHTML = `<div class="tarjeta"><p class="titulo-punto">Punto seleccionado</p><div class="coord">${lat}, ${lon}</div><p class="nota">Leyendo la base de Arequipa…</p></div>`;
   const t0 = performance.now();
   let s;
   try { s = await pedir(`/api/base?lat=${lat}&lon=${lon}`); }
-  catch (e) { panel.innerHTML += `<div class="aviso">${esc(e.message)}</div>`; return; }
-  const ms = Math.round(performance.now() - t0);
-  const d = s.data;
-  if (d.estado !== 'listo') { panel.innerHTML = `<h2>Punto ${lat}, ${lon}</h2>${chip(d.estado)}<div class="aviso">${esc(d.motivo)}</div>${json(s)}`; return; }
-  const r = d.relieve, sec = d.sector, cl = d.clima, suelo = d.suelo.capas;
-  const sueloFilas = Object.values(suelo).filter(c => c.estadistico === 'mean')
-    .map(c => `<tr><td>${esc(c.propiedad)}</td><td>${esc(c.profundidad)}</td><td>${esc(c.valor)} ${esc(c.unidad)}</td><td>${esc(c.crudo)}</td></tr>`).join('');
-  const gaez = d.aptitud.capas.filter(c => c.indice).map(c => `<tr><td>${esc(c.cultivo)}</td><td>${esc(c.agua)}</td><td>${esc(c.indice)}</td></tr>`).join('');
-  panel.innerHTML = `
-    <h2>Punto ${lat}, ${lon}</h2>
-    <div class="nota">Capa 1 · base de Arequipa · respondió en ${ms} ms</div>
-    ${(s.avisos || []).map(a => `<div class="aviso">${esc(a)}</div>`).join('')}
-    <h3>Relieve (NASADEM)</h3>
-    <table><tr><th>Altitud</th><td>${esc(r.altitud_m)} m</td></tr><tr><th>Pendiente</th><td>${esc(r.pendiente_pct)} % · ${esc(r.clase_pendiente)}</td></tr></table>
-    <h3>Sector</h3>
-    <table><tr><th>${esc(sec.sector ?? sec.estado)}</th><td>${esc(sec.nombre ?? sec.motivo)}</td></tr>
-      <tr><th>Cultivos (DT-20)</th><td>${esc((sec.cultivos_principales || []).join(', '))}</td></tr>
-      <tr><th>Ver más</th><td>${esc((sec.cultivos_ver_mas || []).join(', '))}</td></tr></table>
-    <h3>Clima · celda de NASA POWER</h3>
-    <table><tr><th>Celda</th><td>${esc(cl.celda)} · elevación ${esc(cl.elevacion_celda_m)} m</td></tr>
-      <tr><th>Período</th><td>${esc(cl.desde)} a ${esc(cl.hasta)}</td></tr>
-      <tr><th>Días vacíos</th><td>${esc(JSON.stringify(cl.dias_faltantes_por_variable || {}))}</td></tr></table>
-    ${cl.archivos ? botonesArchivos(cl.archivos) : ''}
-    <h3>Suelo (SoilGrids, medias)</h3>
-    <table><tr><th>Propiedad</th><th>Prof.</th><th>Valor</th><th>Crudo</th></tr>${sueloFilas}</table>
-    <h3>Aptitud (GAEZ, índice 0–10 000, solo distintos de 0)</h3>
-    ${gaez ? `<table><tr><th>Cultivo</th><th>Agua</th><th>Índice</th></tr>${gaez}</table>` : '<p class="vacio">Todas las capas valen 0 en este punto.</p>'}
-    <details><summary>Respuesta completa de /api/base (en crudo)</summary>${json(s)}</details>
-    <h2>Capa 2 · datos pesados de este punto</h2>
-    <p class="nota">POWER hasta ayer y MODIS (NDVI, ET y PET, temperatura de superficie, cobertura) por ORNL. HLS y SMAP: pendientes de Earth Engine. La primera vez tarda minutos; si el punto ya se pidió, se reutiliza.</p>
-    <div class="fila"><input id="nombre" placeholder="nombre (opcional, sin espacios)" style="padding:6px;border:1px solid var(--line);border-radius:6px">
-      <button id="extraer">Extraer datos pesados</button></div>
-    <div id="trabajo"></div>
+  catch (e) { vista.innerHTML += `<div class="error-caja">${esc(e.message)}</div>`; return; }
+  const ms = Math.round(performance.now() - t0), d = s.data;
+  if (d.estado !== 'listo') {
+    vista.innerHTML = `<div class="tarjeta"><p class="titulo-punto">Punto seleccionado</p><div class="coord">${lat}, ${lon}</div>${chip(d.estado)}<div class="aviso">${esc(d.motivo)}</div><details><summary>Respuesta en crudo</summary>${crudo(s)}</details></div>`;
+    return;
+  }
+  const r = d.relieve, sec = d.sector, cl = d.clima, capas = d.suelo.capas;
+  const v = k => capas[k] ? `${capas[k].valor} <small>${esc(capas[k].unidad)}</small>` : '—';
+  const props = [...new Set(Object.values(capas).map(c => c.propiedad))];
+  const prof = ['0-5cm', '5-15cm', '15-30cm'];
+  const sueloFilas = props.map(p => `<tr><th>${esc(p)}</th>${prof.map(z => {
+    const c = capas[`${p}_${z}_mean`]; return `<td class="num">${c ? esc(c.valor) : '—'}</td>`;
+  }).join('')}<td class="nota">${esc(capas[`${p}_0-5cm_mean`]?.unidad)}</td></tr>`).join('');
+  const gaez = d.aptitud.capas.filter(c => c.indice).sort((a, b) => b.indice - a.indice)
+    .map(c => `<tr><td>${esc(c.cultivo)}</td><td>${esc(c.agua)}</td><td class="num">${esc(c.indice)}</td></tr>`).join('');
+  vista.innerHTML = `
+    <div class="tarjeta">
+      <div class="fila" style="justify-content:space-between"><p class="titulo-punto">Punto seleccionado</p>${chip(sec.sector ? sec.sector + ' · ' + sec.nombre : sec.estado)}</div>
+      <div class="coord">${lat}, ${lon} · capa 1 en ${ms} ms</div>
+      <div class="metricas">
+        <div class="metrica"><div class="et">Altitud</div><div class="va">${esc(r.altitud_m)} <small>m</small></div></div>
+        <div class="metrica"><div class="et">Pendiente</div><div class="va">${esc(r.pendiente_pct)} <small>%</small></div><div class="et">${esc(r.clase_pendiente)}</div></div>
+        <div class="metrica"><div class="et">pH 0–5 cm</div><div class="va">${v('phh2o_0-5cm_mean')}</div></div>
+        <div class="metrica"><div class="et">Arcilla 0–5 cm</div><div class="va">${v('clay_0-5cm_mean')}</div></div>
+      </div>
+      ${(s.avisos || []).map(a => `<div class="aviso">${esc(a)}</div>`).join('')}
+    </div>
+    <div class="tarjeta"><h3>Cultivos del sector <span class="fuente">censo agropecuario 2012 + FAO EcoCrop</span></h3>
+      <div class="cultivos">${(sec.cultivos_principales || []).map(c => `<span class="cultivo">${esc(c)}</span>`).join('')}</div>
+      ${(sec.cultivos_ver_mas || []).length ? `<details><summary>Ver más (${sec.cultivos_ver_mas.length})</summary><div class="cultivos" style="margin-top:8px">${sec.cultivos_ver_mas.map(c => `<span class="cultivo mas">${esc(c)}</span>`).join('')}</div></details>` : ''}
+    </div>
+    <div class="tarjeta"><h3>Clima <span class="fuente">celda de NASA POWER</span></h3>
+      <table><tr><th>Celda</th><td class="num">${esc(cl.celda)}</td></tr>
+        <tr><th>Elevación de la celda</th><td>${esc(cl.elevacion_celda_m)} m</td></tr>
+        <tr><th>Período</th><td>${esc(cl.desde)} a ${esc(cl.hasta)}</td></tr>
+        <tr><th>Días sin publicar</th><td class="num">${esc(Object.entries(cl.dias_faltantes_por_variable || {}).map(([k, n]) => `${k}: ${n}`).join(' · ') || 'ninguno')}</td></tr></table>
+      ${botones(cl.archivos)}
+    </div>
+    <div class="tarjeta"><h3>Suelo <span class="fuente">SoilGrids · media por profundidad</span></h3>
+      <table><tr><th></th><th>0–5 cm</th><th>5–15 cm</th><th>15–30 cm</th><th>unidad</th></tr>${sueloFilas}</table>
+    </div>
+    <div class="tarjeta"><h3>Aptitud <span class="fuente">FAO GAEZ v4 · índice 0–10 000</span></h3>
+      ${gaez ? `<table><tr><th>Cultivo</th><th>Agua</th><th>Índice</th></tr>${gaez}</table>` : '<p class="nota">Las 100 capas valen 0 en este punto.</p>'}
+    </div>
+    <div class="tarjeta"><h3>Respuesta completa</h3><details><summary>Ver /api/base en crudo</summary>${crudo(s)}</details></div>
+    <div class="tarjeta"><h3>Datos pesados de este punto <span class="fuente">capa 2</span></h3>
+      <p class="nota">POWER hasta ayer y MODIS (NDVI, ET y PET, temperatura de superficie, cobertura). HLS y SMAP esperan a Earth Engine. Un punto nuevo tarda minutos; uno ya extraído se reutiliza.</p>
+      <div class="fila"><input class="campo" id="nombre" placeholder="Nombre del punto (opcional, sin espacios)"><button class="boton" id="extraer">Extraer datos pesados</button></div>
+      <div id="trabajo"></div>
+    </div>
     <div id="visor"></div>`;
-  enlazarArchivos();
-  document.getElementById('extraer').onclick = () => extraer(lat, lon);
+  enlazarBotones();
+  $('extraer').onclick = () => extraer(lat, lon);
+  try {  // si el punto ya tiene un trabajo, se muestra al instante
+    const previo = (await pedir(`/api/trabajos/punto?lat=${lat}&lon=${lon}`)).data;
+    if (previo) { mostrarTrabajo(previo); if (['pendiente', 'en_proceso'].includes(previo.estado)) seguir(previo.clave); }
+  } catch (e) { /* sin trabajo previo */ }
 }
 
-function botonesArchivos(archivos) {
-  return '<div class="fila">' + Object.entries(archivos || {}).map(([k, ruta]) =>
-    `<button class="sec" data-archivo="${esc(ruta)}">ver ${esc(k)}</button>`).join('') + '</div>';
+function botones(archivos) {
+  return Object.keys(archivos || {}).length ? '<div>' + Object.entries(archivos).map(([k, ruta]) =>
+    `<button class="mini" data-archivo="${esc(ruta)}">${esc(k)}</button>`).join('') + '</div>' : '';
 }
-function enlazarArchivos() {
+function enlazarBotones() {
   document.querySelectorAll('[data-archivo]').forEach(b => b.onclick = async () => {
-    const visor = document.getElementById('visor');
-    visor.innerHTML = '<p class="vacio">Cargando archivo…</p>';
+    const visor = $('visor');
+    visor.innerHTML = '<div class="tarjeta"><p class="nota">Cargando archivo…</p></div>';
     try {
-      const s = await pedir('/api/archivo?ruta=' + encodeURIComponent(b.dataset.archivo));
-      visor.innerHTML = `<h3>${esc(s.data.ruta)} · ${s.data.bytes} bytes${s.data.recortado ? ' (recortado)' : ''}</h3><pre>${esc(s.data.contenido)}</pre>`;
+      const a = (await pedir('/api/archivo?ruta=' + encodeURIComponent(b.dataset.archivo))).data;
+      visor.innerHTML = `<div class="tarjeta"><h3>Archivo en crudo <span class="fuente">${a.bytes} bytes${a.recortado ? ' · recortado' : ''}</span></h3><div class="coord">${esc(a.ruta)}</div><pre>${esc(a.contenido)}</pre></div>`;
       visor.scrollIntoView({ behavior: 'smooth' });
-    } catch (e) { visor.innerHTML = `<div class="aviso">${esc(e.message)}</div>`; }
+    } catch (e) { visor.innerHTML = `<div class="error-caja">${esc(e.message)}</div>`; }
   });
 }
 
 async function extraer(lat, lon) {
-  const boton = document.getElementById('extraer');
-  boton.disabled = true;
-  const nombre = document.getElementById('nombre').value.trim() || undefined;
+  $('extraer').disabled = true;
+  const nombre = $('nombre').value.trim() || undefined;
   try {
-    const s = await pedir('/api/trabajos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lat, lon, nombre }) });
-    mostrarTrabajo(s.data);
-    const clave = s.data.clave;
-    sondeo = setInterval(async () => {
-      try {
-        const e = await pedir('/api/trabajos/' + clave);
-        mostrarTrabajo(e.data);
-        if (!['pendiente', 'en_proceso'].includes(e.data.estado)) { clearInterval(sondeo); sondeo = null; boton.disabled = false; }
-      } catch (err) { document.getElementById('trabajo').innerHTML += `<div class="aviso">${esc(err.message)}</div>`; }
-    }, 4000);
-  } catch (e) { boton.disabled = false; document.getElementById('trabajo').innerHTML = `<div class="aviso">${esc(e.message)}</div>`; }
+    const t = (await pedir('/api/trabajos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lat, lon, nombre }) })).data;
+    mostrarTrabajo(t); seguir(t.clave); cargarExtraidos();
+  } catch (e) { $('extraer').disabled = false; $('trabajo').innerHTML = `<div class="error-caja">${esc(e.message)}</div>`; }
 }
-
-function detalleVacios(x) {
-  const v = (x.vacios_del_proveedor || []).map(s => `<div class="nota">vacío del proveedor: ${esc(s)}</div>`).join('');
-  const f = (x.fallos_de_descarga || []).map(s => `<div class="aviso">falló la descarga: ${esc(s)}</div>`).join('');
-  return v + f;
+function seguir(clave) {
+  if (sondeo) clearInterval(sondeo);
+  if ($('extraer')) $('extraer').disabled = true;
+  sondeo = setInterval(async () => {
+    try {
+      const t = (await pedir('/api/trabajos/' + clave)).data;
+      mostrarTrabajo(t);
+      if (!['pendiente', 'en_proceso'].includes(t.estado)) { clearInterval(sondeo); sondeo = null; if ($('extraer')) $('extraer').disabled = false; cargarExtraidos(); }
+    } catch (e) { /* se reintenta en la próxima vuelta */ }
+  }, 4000);
+}
+function vacios(x) {
+  return (x.vacios_del_proveedor || []).map(s => `<div class="nota">· vacío en la fuente: ${esc(s)}</div>`).join('')
+    + (x.fallos_de_descarga || []).map(s => `<div class="error-caja">falló la descarga: ${esc(s)}</div>`).join('');
 }
 function mostrarTrabajo(t) {
-  const filas = Object.entries(t.fuentes).map(([f, v]) => {
-    const productos = v.productos ? Object.entries(v.productos).map(([p, x]) =>
-      `<div>${esc(p)} ${chip(x.estado)} ${detalleVacios(x)} ${botonesArchivos(x.archivos)}</div>`).join('') : '';
-    return `<tr><td><b>${esc(f)}</b></td><td>${chip(v.estado)} ${esc(v.motivo || '')}${detalleVacios(v)}${v.archivos ? botonesArchivos(v.archivos) : ''}${productos}</td></tr>`;
-  }).join('');
-  document.getElementById('trabajo').innerHTML = `
-    <h3>Trabajo ${esc(t.clave)} · ${chip(t.estado)}</h3>
-    <p class="nota"><b>listo_con_vacios</b> = todo se descargó; los vacíos los trae la propia fuente (no hay dato ese día). <b>parcial</b> = algo no se pudo descargar. <b>no_disponible</b> = fuente aún sin conectar.</p>
-    <table>${filas}<tr><td>aviso</td><td>${chip(t.aviso.estado)} ${esc(t.aviso.nota || '')}</td></tr></table>
-    <details><summary>Estado del trabajo (en crudo)</summary>${json(t)}</details>`;
-  enlazarArchivos();
+  if (!$('trabajo')) return;
+  const filas = Object.entries(t.fuentes).map(([f, v]) => `
+    <div class="fuente-fila"><div class="cab">${esc(f)} ${chip(v.estado)}</div>
+      ${v.motivo ? `<div class="nota">${esc(v.motivo)}</div>` : ''}${vacios(v)}${botones(v.archivos)}
+      ${Object.entries(v.productos || {}).map(([p, x]) => `<div class="prod"><div class="cab">${esc(p)} ${chip(x.estado)}</div>${vacios(x)}${botones(x.archivos)}</div>`).join('')}
+    </div>`).join('');
+  $('trabajo').innerHTML = `
+    <div class="fila" style="margin-top:12px"><b>Trabajo</b><span class="coord">${esc(t.clave)}</span>${chip(t.estado)}</div>
+    <p class="nota"><b>listo con vacíos</b>: todo se descargó y los huecos los trae la propia fuente. <b>parcial</b>: algo no se pudo descargar. <b>no disponible</b>: fuente aún sin conectar.</p>
+    ${filas}
+    <div class="fuente-fila"><div class="cab">aviso ${chip(t.aviso?.estado)}</div><div class="nota">${esc(t.aviso?.nota || '')}</div></div>
+    <details><summary>Estado del trabajo en crudo</summary>${crudo(t)}</details>`;
+  enlazarBotones();
 }
 
-cargarSectores().catch(e => panel.innerHTML = `<div class="aviso">No se pudo cargar el mapa de sectores: ${esc(e.message)}</div>`);
+/* ---------------- puntos extraídos ---------------- */
+async function cargarExtraidos() {
+  let lista = [];
+  try { lista = (await pedir('/api/trabajos')).data || []; } catch (e) { $('vista-extraidos').innerHTML = `<div class="error-caja">${esc(e.message)}</div>`; return; }
+  $('n-extraidos').textContent = lista.length;
+  capaExtraidos.clearLayers();
+  lista.forEach(t => {
+    const icono = L.divIcon({ className: '', html: `<div class="punto-extraido ${esc(t.estado)}"></div>`, iconSize: [14, 14], iconAnchor: [7, 7] });
+    L.marker([t.punto.lat, t.punto.lon], { icon: icono, title: t.nombre }).on('click', () => irA(t)).addTo(capaExtraidos);
+  });
+  $('vista-extraidos').innerHTML = lista.length ? `<p class="nota" style="margin-top:0">Puntos con datos pesados extraídos o en curso. También salen en el mapa como círculos verdes (amarillos si siguen en curso).</p>`
+    + lista.map((t, i) => `
+      <div class="lista-punto" data-i="${i}">
+        <span class="pin ${esc(t.estado)}"></span>
+        <div class="datos"><div class="nom">${esc(t.nombre)}</div><div class="coord">${t.punto.lat}, ${t.punto.lon}</div>
+          <div class="nota">${t.terminado ? 'terminado ' + esc(t.terminado.replace('T', ' ').slice(0, 16)) + ' UTC' : 'creado ' + esc((t.creado || '').replace('T', ' ').slice(0, 16)) + ' UTC'}</div></div>
+        ${chip(t.estado)}
+      </div>`).join('')
+    : `<div class="vacio"><img src="marca/tarpu-mark-black.png" alt=""><br>Todavía no hay puntos extraídos.</div>`;
+  document.querySelectorAll('.lista-punto').forEach(el => el.onclick = () => irA(lista[+el.dataset.i]));
+}
+function irA(t) { mapa.setView([t.punto.lat, t.punto.lon], Math.max(mapa.getZoom(), 14)); seleccionar(t.punto.lat, t.punto.lon); }
+
+cargarSectores().catch(e => $('vista-punto').innerHTML = `<div class="error-caja">No se pudo cargar el mapa de sectores: ${esc(e.message)}</div>`);
+cargarExtraidos();
 </script>
 </body>
 </html>

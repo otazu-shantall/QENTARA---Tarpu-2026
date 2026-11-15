@@ -78,6 +78,18 @@ def post_trabajo(entrada: TrabajoEntrada):
     return sobre(coordenada.iniciar(entrada.lat, entrada.lon, entrada.nombre))
 
 
+@app.get("/api/trabajos", response_model=Sobre, tags=["capa 2 por coordenada"])
+def get_trabajos():
+    """Puntos extraídos: todos los trabajos de datos pesados, del más reciente al más antiguo."""
+    return sobre(coordenada.listar())
+
+
+@app.get("/api/trabajos/punto", response_model=Sobre, tags=["capa 2 por coordenada"])
+def get_trabajo_de_punto(lat: float, lon: float):
+    """El trabajo de un punto, si ya se pidió (null si no)."""
+    return sobre(coordenada.de_punto(lat, lon))
+
+
 @app.get("/api/trabajos/{clave}", response_model=Sobre, tags=["capa 2 por coordenada"])
 def get_trabajo(clave: str):
     return sobre(coordenada.estado(clave))

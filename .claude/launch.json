@@ -27,6 +27,21 @@
       ],
       "port": 8000,
       "url": "http://127.0.0.1:8000"
+    },
+    {
+      "name": "tarpu-api-8001",
+      "runtimeExecutable": "backend/.venv/Scripts/python.exe",
+      "runtimeArgs": [
+        "-m",
+        "uvicorn",
+        "tarpu_api.main:app",
+        "--app-dir",
+        "backend",
+        "--port",
+        "8001"
+      ],
+      "port": 8001,
+      "url": "http://127.0.0.1:8001"
     }
   ]
 }

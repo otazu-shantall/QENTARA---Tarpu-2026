@@ -58,6 +58,13 @@ Probado el 15/11/2026:
 - El NDVI de Chivay se ve en crudo (272 fechas).
 - Sin errores en el servidor ni en la consola.
 
+**Versión 2 de la pantalla (15/11/2026):**
+
+- logo de TARPU en negro y pestañas «Punto seleccionado» y «Puntos extraídos» (`GET /api/trabajos` y `GET /api/trabajos/punto`);
+- zoom hasta 21 con escala métrica.
+
+Medido ese día: Esri tiene imagen real hasta el zoom 17 en el campo (Majes, Chivay, Camaná, La Joya; ≈ 1 m por píxel). Desde el 18 devuelve «Map data not yet available». Solo la ciudad de Arequipa llega al 19. Por eso el mapa amplía la imagen del zoom 17 y lo indica con «ampliado». Hay una capa aparte con la imagen real de la ciudad hasta el 19.
+
 ## 3. Plataformas (propuesta, a confirmar)
 
 Un solo proveedor, **Google Cloud**, porque la capa 2 ya se decidió allí (DT-22) y así todo queda en un proyecto.

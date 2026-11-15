@@ -71,6 +71,23 @@ def _guardar(t: dict) -> None:
     escribir_atomico(_ruta(t['clave']), json.dumps(t, ensure_ascii=False, indent=1))
 
 
+def listar() -> list[dict]:
+    """Todos los puntos con datos pesados extraídos o en curso, del más reciente al más antiguo."""
+    salida = []
+    for ruta in TRABAJOS.glob('*.json'):
+        try:
+            t = json.loads(ruta.read_text(encoding='utf-8'))
+        except (json.JSONDecodeError, OSError):
+            continue
+        salida.append({k: t.get(k) for k in ('clave', 'nombre', 'punto', 'estado', 'creado', 'iniciado', 'terminado', 'actualizado')}
+                      | {'fuentes': {f: v.get('estado') for f, v in t.get('fuentes', {}).items()}})
+    return sorted(salida, key=lambda x: x.get('actualizado') or '', reverse=True)
+
+
+def de_punto(lat: float, lon: float) -> dict | None:
+    return estado(clave_punto(lat, lon))
+
+
 def crear(lat: float, lon: float, nombre: str | None = None) -> dict:
     """Crea (o devuelve) el trabajo del punto. No lo ejecuta; para eso, iniciar()."""
     clave = clave_punto(lat, lon)
