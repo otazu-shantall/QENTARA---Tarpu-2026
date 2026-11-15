@@ -1,0 +1,6 @@
+https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/NASADEM_NC.001/NASADEM_NC_s16w072/NASADEM_NC_s16w072.nc
+https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/NASADEM_NC.001/NASADEM_NC_s16w073/NASADEM_NC_s16w073.nc
+https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/NASADEM_NC.001/NASADEM_NC_s17w073/NASADEM_NC_s17w073.nc
+https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/NASADEM_NUMNC.001/NASADEM_NUMNC_s16w072/NASADEM_NUMNC_s16w072.nc
+https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/NASADEM_NUMNC.001/NASADEM_NUMNC_s16w073/NASADEM_NUMNC_s16w073.nc
+https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/NASADEM_NUMNC.001/NASADEM_NUMNC_s17w073/NASADEM_NUMNC_s17w073.nc
