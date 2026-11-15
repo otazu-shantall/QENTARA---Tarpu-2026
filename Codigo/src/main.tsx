@@ -1,13 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { App } from './app/App'
-import './styles/tokens.css'
+// Nueva interfaz escrita con asistencia de OpenAI Codex. Registro en entrega/uso-de-ia.md.
+import { App } from './nuevo/App'
 import 'leaflet/dist/leaflet.css'
-import './styles/base.css'
-import './styles/landing.css'
-import './styles/app.css'
-import './features/monitor/map.css'
-import './styles/print.css'
+import './nuevo/styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><App /></React.StrictMode>,

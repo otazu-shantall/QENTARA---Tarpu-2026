@@ -81,6 +81,15 @@ Medido ese día: Esri tiene imagen real hasta el zoom 17 en el campo (Majes, Chi
   - Detener solo funciona en el mismo proceso de la API que lanzó el trabajo.
   - Si la API se reinicia a mitad de una extracción, el trabajo queda «en proceso». Se detiene y se vuelve a pedir, y continúa con lo ya bajado.
 
+**Error corregido (15/11/2026): extracciones que no arrancaban.**
+
+- **Qué pasaba:** en Windows, `os.replace` falla con «Acceso denegado» si otro hilo está leyendo el archivo en ese instante. La pantalla consulta el trabajo cada 4 s, así que el hilo de la extracción se caía al anotar su primer avance. El trabajo quedaba para siempre «en proceso», con las fuentes en «pendiente».
+- **Medido:** 2766 escrituras rechazadas en 5 s de lecturas simultáneas; 0 después del arreglo.
+- **Arreglo:**
+  - `escribir_atomico` reintenta el reemplazo;
+  - un trabajo que falla queda en «error» con su motivo;
+  - un trabajo «en curso» cuyo hilo ya no existe pasa a «interrumpido» y se puede retomar con lo ya bajado.
+
 ## 3. Plataformas (propuesta, a confirmar)
 
 Un solo proveedor, **Google Cloud**, porque la capa 2 ya se decidió allí (DT-22) y así todo queda en un proyecto.

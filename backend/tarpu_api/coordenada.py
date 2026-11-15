@@ -36,6 +36,7 @@ def cancelar(claves: list[str]) -> list[dict]:
 
 
 def listar() -> list[dict]:
+    trabajos.marcar_interrumpidos()
     return trabajos.listar()
 
 
@@ -44,6 +45,7 @@ def de_punto(lat: float, lon: float) -> dict | None:
 
 
 def estado(clave: str) -> dict:
+    trabajos.marcar_interrumpidos()
     t = trabajos.estado(clave)
     if t is None:
         raise errores.datos_no_listos(f"No hay un trabajo con la clave {clave}.")

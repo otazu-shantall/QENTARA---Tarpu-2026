@@ -63,7 +63,7 @@
   .num { font-family:var(--mono); font-size:12.5px; }
   .chip { display:inline-block; padding:1px 9px; border-radius:999px; font-size:12px; font-weight:500; white-space:nowrap; }
   .chip.listo, .chip.listo_con_vacios { background:var(--green-soft); color:var(--green); }
-  .chip.parcial, .chip.en_proceso, .chip.pendiente, .chip.por_enviar { background:var(--sun-soft); color:var(--sun-ink); }
+  .chip.parcial, .chip.en_proceso, .chip.pendiente, .chip.por_enviar, .chip.interrumpido { background:var(--sun-soft); color:var(--sun-ink); }
   .chip.error, .chip.sin_dato, .chip.sin_datos { background:var(--danger-soft); color:var(--danger); }
   .chip.no_disponible, .chip.cancelado { background:var(--surface-3); color:var(--ink-2); }
   .cultivos { display:flex; flex-wrap:wrap; gap:6px; }
@@ -90,7 +90,8 @@
   .lista-punto:hover { border-color:var(--ink); }
   .lista-punto input { width:18px; height:18px; accent-color:var(--ink); flex:none; }
   .lista-punto .pin { width:12px; height:12px; border-radius:50%; background:var(--green); flex:none; box-shadow:0 0 0 3px var(--green-soft); }
-  .lista-punto .pin.en_proceso, .lista-punto .pin.pendiente, .lista-punto .pin.parcial { background:var(--sun); box-shadow:0 0 0 3px var(--sun-soft); }
+  .lista-punto .pin.en_proceso, .lista-punto .pin.pendiente, .lista-punto .pin.parcial, .lista-punto .pin.interrumpido { background:var(--sun); box-shadow:0 0 0 3px var(--sun-soft); }
+  .lista-punto .pin.error { background:var(--danger); box-shadow:0 0 0 3px var(--danger-soft); }
   .lista-punto .pin.cancelado { background:var(--ink-3); box-shadow:0 0 0 3px var(--surface-3); }
   .lista-punto .datos { flex:1; min-width:0; cursor:pointer; }
   .lista-punto .nom { font-weight:600; }
@@ -420,6 +421,7 @@ function mostrarTrabajo(t) {
   $('trabajo').innerHTML = `
     <div class="fila" style="margin-top:12px"><b>Trabajo</b><span class="coord">${esc(t.clave)}</span>${chip(t.estado)}
       ${enCurso ? `<button class="boton peligro" id="b-detener" style="margin-left:auto;padding:7px 12px;font-size:13px">Detener extracción</button>` : ''}</div>
+    ${t.motivo && ['interrumpido', 'error'].includes(t.estado) ? `<div class="${t.estado === 'error' ? 'error-caja' : 'aviso'}">${esc(t.motivo)}</div>` : ''}
     ${t.estado === 'cancelado' ? '<div class="aviso">Extracción detenida. Lo descargado queda guardado: pulsa «Extraer datos pesados» para continuar desde ahí.</div>' : ''}
     <p class="nota"><b>listo con vacíos</b>: todo se descargó y los huecos los trae la propia fuente. <b>parcial</b>: algo no se pudo descargar. <b>no disponible</b>: fuente aún sin conectar.</p>
     ${filas}

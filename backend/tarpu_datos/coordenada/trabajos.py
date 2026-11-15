@@ -24,6 +24,8 @@ import argparse
 import json
 import sys
 import threading
+import time
+import traceback
 from pathlib import Path
 
 from .. import actualizacion
@@ -61,10 +63,35 @@ def _ruta(clave: str) -> Path:
 
 
 def estado(clave: str) -> dict | None:
-    try:
-        return json.loads(_ruta(clave).read_text(encoding='utf-8'))
-    except FileNotFoundError:
-        return None
+    for intento in range(20):  # en Windows la lectura puede chocar con un reemplazo en curso
+        try:
+            return json.loads(_ruta(clave).read_text(encoding='utf-8'))
+        except FileNotFoundError:
+            return None
+        except (PermissionError, json.JSONDecodeError):
+            time.sleep(0.05)
+    return None
+
+
+def vivo(clave: str) -> bool:
+    hilo = _HILOS.get(clave)
+    return bool(hilo and hilo.is_alive())
+
+
+def marcar_interrumpidos() -> int:
+    """Trabajos «en curso» cuyo hilo ya no existe en este proceso (la API se reinició o el hilo se cayó).
+
+    Pasan a «interrumpido» para que se puedan volver a pedir; lo ya descargado sigue en caché.
+    Ojo: un trabajo lanzado desde OTRO proceso (la línea de comandos) también se vería así."""
+    n = 0
+    for ruta in TRABAJOS.glob('*.json'):
+        t = estado(ruta.stem)
+        if t and t.get('estado') in ('pendiente', 'en_proceso') and t.get('iniciado') and not vivo(t['clave']):
+            t['estado'], t['terminado'] = 'interrumpido', ahora_iso()
+            t['motivo'] = 'La extracción se cortó (reinicio de la API o error). Pulsa «Extraer» para continuar desde lo ya descargado.'
+            _guardar(t)
+            n += 1
+    return n
 
 
 def _guardar(t: dict) -> None:
@@ -127,11 +154,30 @@ def crear(lat: float, lon: float, nombre: str | None = None, parcela: dict | Non
 
 
 def ejecutar(clave: str) -> dict:
+    """Ejecuta el trabajo. Si algo falla, queda en «error» con su motivo (nunca se cae en silencio)."""
+    try:
+        return _ejecutar(clave)
+    except Exception as e:  # noqa: BLE001
+        log(f'trabajo {clave}: error {type(e).__name__}: {e}')
+        t = estado(clave) or {'clave': clave, 'fuentes': {}, 'aviso': {}}
+        t['estado'], t['terminado'] = 'error', ahora_iso()
+        t['motivo'] = f'{type(e).__name__}: {e}'
+        t['traza'] = traceback.format_exc(limit=4)
+        try:
+            _guardar(t)
+        except Exception:  # noqa: BLE001
+            pass
+        return t
+
+
+def _ejecutar(clave: str) -> dict:
     t = estado(clave)
     lat, lon, nombre = t['punto']['lat'], t['punto']['lon'], t['nombre']
     parar = _CANCELAR.setdefault(clave, threading.Event())
     parar.clear()
     t.pop('cancelacion', None)
+    t.pop('motivo', None)
+    t.pop('traza', None)
     salida, cache = str(BACKEND / 'almacen' / 'fuentes' / nombre), str(BACKEND / 'almacen' / 'cache')
     t['estado'], t['iniciado'] = 'en_proceso', ahora_iso()
     _guardar(t)

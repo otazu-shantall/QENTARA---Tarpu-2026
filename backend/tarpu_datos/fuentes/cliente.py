@@ -124,7 +124,18 @@ def escribir_atomico(ruta: Path, contenido: str | bytes) -> None:
         temporal.write_bytes(contenido)
     else:
         temporal.write_text(contenido, encoding='utf-8')
-    os.replace(temporal, ruta)
+    # En Windows, os.replace falla con «Acceso denegado» si otro proceso o hilo está leyendo el archivo en ese
+    # instante (p. ej., la pantalla que consulta un trabajo cada pocos segundos). Medido el 15/11/2026: miles de
+    # fallos en 5 s de lecturas simultáneas. Se reintenta unos instantes antes de rendirse.
+    for intento in range(60):
+        try:
+            os.replace(temporal, ruta)
+            return
+        except PermissionError:
+            if intento == 59:
+                temporal.unlink(missing_ok=True)
+                raise
+            time.sleep(0.02 + 0.01 * intento)
 
 
 def _reciente(cuando: str | None, max_edad_dias: float) -> bool:
