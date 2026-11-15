@@ -61,3 +61,25 @@ def test_base_en_una_parcela_de_majes():
     assert r["relieve"]["pendiente_pct"]["mediana"] == 2.4     # igual a la medida por AppEEARS en el mismo lugar
     assert r["suelo"]["pixeles"] == 2
     assert 9.8 in r["suelo"]["capas"]["clay_0-5cm_mean"]["valores_por_pixel"]  # incluye el valor nativo del punto
+
+
+def test_clave_de_pixel_modis_igual_a_ornl():
+    """La clave calculada coincide con la esquina que devolvió ORNL (respuesta real del 15/11/2026)."""
+    from tarpu_datos import celdas
+    c = celdas.modis("MOD13Q1", -15.314403, -71.790161)          # ORNL redondea: se acepta menos de 0,5 m
+    assert abs(c["xllcorner"] + 7699330.73) < 0.5 and abs(c["yllcorner"] + 1702905.85) < 0.5
+    c = celdas.modis("MOD11A2", -15.314403, -71.790161)
+    assert abs(c["xllcorner"] + 7699330.71) < 0.5 and abs(c["yllcorner"] + 1703137.58) < 0.5
+    # dos puntos a ≈ 30 m caen en el mismo píxel de 250 m; a ≈ 1,4 km, en otro
+    assert celdas.modis("MOD13Q1", -15.64, -71.60)["clave"] == celdas.modis("MOD13Q1", -15.64, -71.5997)["clave"]
+    assert celdas.modis("MOD13Q1", -16.35875, -72.176429)["clave"] != celdas.modis("MOD13Q1", -16.367025, -72.18575)["clave"]
+
+
+def test_power_se_lee_de_la_celda_de_la_base():
+    import pytest
+    from tarpu_datos.coordenada import trabajos
+    if not trabajos.BASE_POWER.exists():
+        pytest.skip("la base de Arequipa no está extraída en esta computadora")
+    r = trabajos._power_de_la_base(-15.64, -71.60)
+    assert r["reutilizado"]["celda"] == "POWER:-15.500,-71.875"
+    assert r["reutilizado"]["elevacion_celda_m"] == 4351.89

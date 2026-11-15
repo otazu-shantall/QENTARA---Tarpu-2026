@@ -77,6 +77,12 @@ for producto in ('MOD13Q1', 'MOD16A2GF', 'MOD11A2', 'MCD12Q1'):
         variables.append((f'{producto}:{banda}', producto, m.get('description') or banda, m.get('units'), factor, None,
                           {k: m.get(k) for k in ('valid_range', 'fill_value', 'add_offset')}))
 
+# Hueco de T03: lo que Damaris complete en catalogo/variables.json pasa a la base (que_no_dice y el resto en meta).
+t03 = json.loads((BACKEND / 'catalogo' / 'variables.json').read_text(encoding='utf-8')).get('variables', {})
+variables = [(i, prod, nom, uni, fac, (t03.get(i) or {}).get('que_no_dice') or qnd,
+              {**meta, **{k: v for k, v in (t03.get(i) or {}).items() if k != 'que_no_dice' and v is not None}})
+             for i, prod, nom, uni, fac, qnd, meta in variables]
+
 sql = ['-- Catálogo de TARPU generado por backend/herramientas/generar_seed.py (no editar a mano).',
        '-- Escrito con asistencia de IA (Claude Code). Declarado en entrega/uso-de-ia.md.', '']
 sql.append('insert into public.fuentes (id, nombre, proveedor, url, cita) values\n  '

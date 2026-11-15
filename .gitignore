@@ -36,3 +36,6 @@ trabajo/**/*.part
 # T02 base de Arequipa: datos grandes, se cargan a la base de datos (no a git); el manifiesto sí se sube
 trabajo/T02-base-arequipa/salida/
 trabajo/T02-base-arequipa/cache/
+
+# Variables de Docker Compose (claves locales)
+infra/.env

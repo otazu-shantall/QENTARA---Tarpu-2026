@@ -1,0 +1,43 @@
+{
+ "descripcion": "Registro de indicadores por pantalla: hueco para la tarea T03 (Damaris), §3.3. Cada indicador dice de qué variables sale, con qué método y con qué cita. Hoy solo están los que ya calcula backend/tarpu_api/indicadores.py; los nuevos se añaden aquí y luego se programan. Ningún umbral sin cita (DT-16). Escrito con asistencia de IA (Claude Code).",
+ "indicadores": [
+  {
+   "id": "noches_tmin_bajo_0c_por_mes",
+   "pantalla": "Cómo está mi campo",
+   "variables": [
+    "POWER_DIARIO_AG:T2M_MIN"
+   ],
+   "metodo": "conteo de días con T2M_MIN < 0 °C por mes, promedio por año del período",
+   "umbral": {
+    "valor": 0,
+    "unidad": "°C",
+    "cita": "límite físico de congelación del agua; no es un diagnóstico de helada sobre el cultivo"
+   },
+   "implementado_en": "tarpu_api/indicadores.py",
+   "estado": "implementado"
+  },
+  {
+   "id": "lluvia_promedio_por_mes",
+   "pantalla": "Cómo está mi campo",
+   "variables": [
+    "POWER_DIARIO_AG:PRECTOTCORR"
+   ],
+   "metodo": "suma mensual de la lluvia diaria, promedio por año del período",
+   "umbral": null,
+   "implementado_en": "tarpu_api/indicadores.py",
+   "estado": "implementado"
+  },
+  {
+   "id": "ndvi_serie",
+   "pantalla": "Cómo está mi campo",
+   "variables": [
+    "MOD13Q1:250m_16_days_NDVI",
+    "MOD13Q1:250m_16_days_pixel_reliability"
+   ],
+   "metodo": null,
+   "umbral": null,
+   "implementado_en": null,
+   "estado": "por definir (T03): cómo tratar las fechas marginales y con nubes"
+  }
+ ]
+}

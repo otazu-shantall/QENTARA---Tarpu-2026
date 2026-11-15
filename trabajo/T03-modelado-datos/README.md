@@ -177,6 +177,21 @@ Están en [backend/PLAN-PLATAFORMAS-Y-COORDENADA.md](../../backend/PLAN-PLATAFOR
 
 **No crees ninguna base de datos ni ningún recurso en la nube:** es un diseño.
 
+## 3 bis. Dónde se coloca tu trabajo (ya está preparado)
+
+El backend ya tiene una base de datos real (Supabase local, DT-23) y huecos esperando tu modelo. No tienes que esperar a nadie ni tocar código para que entre:
+
+| Tu entregable | Dónde se coloca | Qué pasa al colocarlo |
+|---|---|---|
+| Diccionario de variables (§3.2) | `backend/catalogo/variables.json`: las 26 variables ya están, con `que_no_dice`, escala, frecuencia, latencia, pantalla y cita en `null` | `backend/herramientas/generar_seed.py` lo pasa a la tabla `variables` |
+| Agregaciones (§3.3) | `backend/catalogo/indicadores.json`: hay 2 implementados y el NDVI por definir | Erick programa cada indicador nuevo a partir de su ficha |
+| Contrato por pantalla (§3.4) | `contrato-pantallas.md` en esta carpeta | Se vuelve vistas `vista_*` en la base y respuestas en `tarpu_api/` |
+| Modelo físico (§3.5) | Migraciones nuevas en `supabase/migrations/` sobre el esquema v0 (`20261115000100_esquema_v0.sql`) | `npm run db:reset` las aplica |
+
+**El esquema v0 ya resuelve tu pregunta central (§3.1) con una propuesta:** las series se guardan **por celda o píxel** de cada producto (tablas `celdas`, `extracciones`, `observaciones` y `parcela_celdas`). Revísala: si propones otra cosa, se cambia con una migración nueva.
+
+Para mirar las tablas: `npm run db:start` en la raíz y Studio en http://127.0.0.1:55323. Más detalle en [docs/12](../../docs/12-carpetas-docker-y-despliegue.md).
+
 ## 4. Reglas
 
 - **Trabaja en esta carpeta.** No modifiques `backend/`, `Codigo/` ni la carpeta de otra área. Lo que propongas para el código se lo pasas a Erick.

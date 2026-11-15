@@ -161,6 +161,37 @@ Propuesta:
 
 Cada paso deja algo que se puede probar. Hasta el paso 5, el backend sigue funcionando como hoy (`TARPU_ALMACEN=archivos`), así que la pantalla de prueba no se rompe mientras tanto.
 
+## 6 bis. Estado (15/11/2026): pasos 0 a 6 hechos y probados en local
+
+| Paso | Estado | Prueba real |
+|---|---|---|
+| 0 · Docker y CLI de Supabase | ✅ | Docker 29.9.2; CLI de Supabase 3.0.0 en `package.json` de la raíz |
+| 1 · `supabase/` | ✅ | `npm run db:start` levanta Supabase en los puertos 553xx (API 55321, base 55322, Studio 55323). Migraciones v0 y `trabajos_meta`. `seed.sql` generado desde las procedencias: 6 fuentes, 8 productos, 26 variables |
+| 2 · `tarpu_datos/repositorio/` | ✅ | `TARPU_ALMACEN=archivos` (por defecto) o `supabase`, con la misma interfaz |
+| 3 · Base en Storage | ✅ | `tarpu_datos.base.sincronizar subir`: 348 archivos, 404 MB en 8 s; `bajar` los trae idénticos en 5 s. 220 mapas registrados en `capas_base` |
+| 4 · Reutilización por celda | ✅ | `celdas.py` coincide con las 1621 respuestas de ORNL. Un punto a 30 m de Chivay: los 4 productos MODIS «reutilizado» y POWER desde la celda de la base, en 0,5 s. POWER de una celda en la base: 82 346 observaciones |
+| 5 · Docker Compose | ✅ | `infra/docker-compose.yml`: `api` (puerto 8010) y `trabajador` contra Supabase local. Parcela mandada por HTTP → encolada → tomada por el contenedor trabajador → «listo con vacíos» en 12 s; la vecina, todo reutilizado, en 4,4 s |
+| 6 · Huecos de T03 | ✅ | `catalogo/variables.json` (26 variables con sus campos vacíos para T03, que `generar_seed.py` pasa a la base) y `catalogo/indicadores.json` (2 implementados, NDVI por definir) |
+| 7 · Despliegue | ⏳ | Falta crear los proyectos de Supabase y Google Cloud |
+
+**Cómo levantarlo todo en local** (Docker Desktop encendido), desde la raíz:
+
+```powershell
+npm install
+npm run db:start
+copy infra\.env.example infra\.env
+docker compose -f infra/docker-compose.yml up --build -d api trabajador
+```
+
+- En `infra/.env` va la `SERVICE_ROLE_KEY` local, que da `npm run db:status`.
+- La pantalla de prueba queda en http://127.0.0.1:8010/ y Studio, para ver las tablas, en http://127.0.0.1:55323.
+- La base de Arequipa se monta desde `backend/almacen/`. Si una máquina no la tiene, se baja del bucket con `python -m tarpu_datos.base.sincronizar bajar`.
+
+**Lo que todavía no pasa por la base** (siguiente paso de código):
+
+- las rutas antiguas de parcela (`/api/parcelas/...`, indicadores y motor), que siguen leyendo archivos;
+- el actualizador, que en modo Supabase todavía actualiza puntos y no celdas.
+
 ## 7. Qué hace falta de Erick
 
 - **Encender Docker Desktop** cuando empiece el paso 1.

@@ -1,0 +1,221 @@
+{
+ "descripcion": "Diccionario de variables de TARPU: hueco para la tarea T03 (Damaris). Lo lee backend/herramientas/generar_seed.py y lo pasa a la tabla public.variables. Cada campo vacío (null) se completa con su fuente; nada se rellena sin cita (DT-16). Escrito con asistencia de IA (Claude Code).",
+ "campos": {
+  "que_no_dice": "lo que el dato no permite concluir",
+  "escala_espacial": "p. ej. celda de 0,5° x 0,625°",
+  "frecuencia": "diaria, 8 días…",
+  "latencia_observada": "p. ej. PAR y nubosidad de POWER: hasta el 30/08/2026 al pedir el 14/11/2026",
+  "pantalla": "en qué pantalla aparece",
+  "cita": "fuente del texto"
+ },
+ "variables": {
+  "POWER_DIARIO_AG:T2M": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:T2M_MAX": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:T2M_MIN": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:T2M_RANGE": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:PRECTOTCORR": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:RH2M": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:T2MDEW": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:FROST_DAYS": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:ALLSKY_SFC_SW_DWN": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:ALLSKY_SFC_PAR_TOT": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:CLOUD_AMT": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:WS2M": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:GWETTOP": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:GWETROOT": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:GWETPROF": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:TSOIL1": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:TSOIL2": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:TS_MIN": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "POWER_DIARIO_AG:EVLAND": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "MOD13Q1:250m_16_days_NDVI": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "MOD13Q1:250m_16_days_pixel_reliability": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "MOD16A2GF:ET_500m": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "MOD16A2GF:PET_500m": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "MOD11A2:LST_Day_1km": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "MOD11A2:LST_Night_1km": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  },
+  "MCD12Q1:LC_Type1": {
+   "que_no_dice": null,
+   "escala_espacial": null,
+   "frecuencia": null,
+   "latencia_observada": null,
+   "pantalla": null,
+   "cita": null
+  }
+ }
+}
