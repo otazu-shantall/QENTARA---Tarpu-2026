@@ -18,6 +18,7 @@ Orden de lectura recomendado:
 | 07 | [Equipo y áreas](07-equipo-y-areas.md) | Quién hace qué, plataformas, etapas de trabajo y cómo compartir el repositorio. |
 | 08 | [Desafío oficial](08-desafio-oficial.md) | Qué pide «Field Shift» y los recursos oficiales, con lo que sirve para Arequipa. |
 | 09 | [Entrega oficial](09-entrega-oficial.md) | Formulario, demo, reglas de IA, licencia y criterios de evaluación. |
+| 12 | [Carpetas, Docker y despliegue](12-carpetas-docker-y-despliegue.md) | **Plan del backend completo:** carpetas oficiales, Supabase simulado con Docker, una sola imagen para Cloud Run, reutilización por celda y huecos para T03. |
 | 11 | [Esquema mixto](11-esquema-mixto.md) | **Enfoque vigente del motor (DT-22):** base de Arequipa guardada, extracción por coordenada en Google Cloud con aviso al usuario y lugares de ejemplo completos para el jurado. |
 | 10 | [Recorrido y escala](10-recorrido-y-escala.md) | Lo que ve el usuario paso a paso, cómo se dibuja la parcela, cómo se calcula solo su espacio, cómo se muestran los datos y en qué rango de tamaño, territorio y fechas es posible. |
 | — | [areas/frontend.md](areas/frontend.md) | Guía del área de frontend y experiencia de usuario. |
