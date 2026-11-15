@@ -9,7 +9,7 @@
 
 Base modular de escritorio en `frontend/`, independiente del prototipo de referencia de `Codigo/`. El recorrido incluye inicio, acceso de demostración, sidebar izquierda, mapa y editor de parcelas, historial, datos avanzados, opciones de cultivo ilustrativas, resúmenes y asistente. Los temas claro y oscuro se pueden alternar para comparar; ninguno representa una identidad visual aprobada.
 
-React, TypeScript y Vite componen la SPA. React Router administra las rutas; TanStack Query la evidencia; Zod la validación. Leaflet se encapsula en el componente del mapa; la geometría, los resúmenes y las descargas se separan de la presentación. Los contratos `EvidenceRepository` y `AssistantService` aíslan los adaptadores locales para una integración posterior. Arquitectura y comandos: [frontend/README.md](../../frontend/README.md).
+React, TypeScript y Vite componen la SPA. React Router administra las rutas; TanStack Query la evidencia; Zod la validación. Leaflet se encapsula en el componente del mapa; la geometría, los resúmenes y las descargas se separan de la presentación. Los contratos `EvidenceRepository` y `AssistantService` aíslan los adaptadores locales para una integración posterior. Arquitectura y comandos: [frontend/README.md](../../plataforma/frontend/README.md).
 
 ## Datos y funcionamiento
 

@@ -39,9 +39,9 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 
 | Lo que tienes | Dónde |
 |---|---|
-| Guía del área | [datos/README.md](datos/README.md) |
-| Análisis verificado de los recursos oficiales | [datos/analisis-recursos.md](datos/analisis-recursos.md) |
-| Ejemplo que funciona: consulta real a NASA POWER | [datos/power/consulta_power.py](datos/power/consulta_power.py) |
+| Guía del área | [datos/README.md](plataforma/datos/README.md) |
+| Análisis verificado de los recursos oficiales | [datos/analisis-recursos.md](plataforma/datos/analisis-recursos.md) |
+| Ejemplo que funciona: consulta real a NASA POWER | [datos/power/consulta_power.py](plataforma/datos/power/consulta_power.py) |
 
 **Preguntas que debes responder:**
 
@@ -87,7 +87,7 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 
 | Lo que tienes | Dónde |
 |---|---|
-| Guía del área y borrador de contrato | [backend/README.md](backend/README.md) |
+| Guía del área y borrador de contrato | [backend/README.md](plataforma/backend/README.md) |
 | Arquitectura propuesta | [docs/02-arquitectura.md](docs/02-arquitectura.md) |
 | Motor de reglas propuesto | [docs/03-datos-y-fuentes.md](docs/03-datos-y-fuentes.md#motor-de-reglas-propuesto) |
 
@@ -101,7 +101,7 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 
 **Lo que traes a la reunión:**
 
-- [ ] [Propuesta de backend](backend/PROPUESTA.md) llena.
+- [ ] [Propuesta de backend](plataforma/backend/PROPUESTA.md) llena.
 - [ ] Un **esquema** de cómo se conectan las piezas.
 - [ ] El **contrato v0**: rutas y ejemplos de JSON.
 - [ ] Las **reglas del motor v0**, aunque sean simples.
@@ -128,7 +128,7 @@ El objetivo **no es construir todo**, sino llegar a la reunión con una propuest
 1. Buscar **3 a 5 cifras** del problema con fuente, año y tabla: agricultores de Arequipa, cultivos, edad, acceso a internet (MIDAGRI e INEI).
 2. Proponer el **formato de la demo**: video de 30 s o 7 diapositivas.
 3. Escribir el **primer guion** y la historia: ¿qué agricultor?, ¿qué problema?, ¿qué hace TARPU por él?
-4. Buscar los **equivalentes peruanos** de los datos que solo existen en EE. UU. ([análisis, sección 7](datos/analisis-recursos.md#7-equivalentes-peruanos-de-lo-que-solo-existe-en-estados-unidos)).
+4. Buscar los **equivalentes peruanos** de los datos que solo existen en EE. UU. ([análisis, sección 7](plataforma/datos/analisis-recursos.md#7-equivalentes-peruanos-de-lo-que-solo-existe-en-estados-unidos)).
 
 **Lo que traen a la reunión:**
 

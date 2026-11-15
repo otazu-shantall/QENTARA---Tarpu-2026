@@ -1,6 +1,6 @@
 # Propuesta del área de frontend y experiencia de usuario
 
-> Responsable: **Shantall**. Borrador del **14/11/2026**. Alcance (DT-25): web para computadora, chat y voz iniciales, burbujas de estado y avatar posterior. Propuesta de fase 1 para la reunión de unión; las pantallas y el contrato no están acordados por el equipo. Base: [frontend.md](frontend.md) y [guía de diseño y arquitectura](../diseno/guia-frontend.md). `frontend/` contiene el primer prototipo interactivo del área ([arquitectura](../../frontend/README.md)); `Codigo/` es la referencia anterior conservada en Git. Esto no cierra el contrato con el equipo.
+> Responsable: **Shantall**. Borrador del **14/11/2026**. Alcance (DT-25): web para computadora, chat y voz iniciales, burbujas de estado y avatar posterior. Propuesta de fase 1 para la reunión de unión; las pantallas y el contrato no están acordados por el equipo. Base: [frontend.md](frontend.md) y [guía de diseño y arquitectura](../diseno/guia-frontend.md). `frontend/` contiene el primer prototipo interactivo del área ([arquitectura](../../plataforma/frontend/README.md)); `Codigo/` es la referencia anterior conservada en Git. Esto no cierra el contrato con el equipo.
 
 ## 1. Para quién diseño
 

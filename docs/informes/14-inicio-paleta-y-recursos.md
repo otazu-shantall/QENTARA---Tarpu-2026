@@ -8,7 +8,7 @@ El inicio utiliza los tokens de color del dashboard en fondos, texto, tarjetas, 
 
 Una galería incorpora dos fotografías de referencia agrícola, con créditos y enlaces a los autores. Las imágenes son locales y se cargan bajo demanda. El hero conserva la imagen satelital de Majes y su atribución. Las fotografías adicionales no se identifican como parcelas de Arequipa ni como resultados de análisis.
 
-El panel del equipo incorpora una adaptación del logo QENTARA sobre verde profundo, sin el fondo azul de la referencia. La versión original permanece intacta en `frontend/assets/reference/`. La adaptación se realizó con IA y conserva su identificación visible. Procedencia, licencias y prompt final: [recursos del frontend](../../frontend/ASSETS.md).
+El panel del equipo incorpora una adaptación del logo QENTARA sobre verde profundo, sin el fondo azul de la referencia. La versión original permanece intacta en `frontend/assets/reference/`. La adaptación se realizó con IA y conserva su identificación visible. Procedencia, licencias y prompt final: [recursos del frontend](../../plataforma/frontend/ASSETS.md).
 
 El pie reduce su relleno vertical de 55 a 18 px, con logo más compacto, manteniendo los datos legibles. El funcionamiento del dashboard, sus datos, acceso y asistente no cambia.
 

@@ -33,6 +33,8 @@
 
 ## 2. Carpetas oficiales del repositorio
 
+> **15/11/2026 (DT-27):** todas estas carpetas pasaron a `plataforma/` (y `Documentación/` a `plataforma/documentacion/informe-maestro/`). El árbol de abajo es el plan original; las rutas vigentes están en [plataforma/README.md](../plataforma/README.md). Todo se enciende con `npm start` desde `plataforma/`.
+
 ```text
 QENTARA - Tarpu 2026/
 ├── Codigo/                    FRONTEND (Shantall). No se toca desde backend.

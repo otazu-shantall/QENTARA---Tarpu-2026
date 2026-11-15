@@ -24,27 +24,27 @@ Orden de lectura recomendado:
 | — | [Guía de diseño del frontend](diseno/guia-frontend.md) | Diseño, arquitectura y referencias del área; estado vigente en frontend/README.md. |
 | — | [areas/frontend.md](areas/frontend.md) | Guía del área de frontend y experiencia de usuario. |
 | — | [tareas/](tareas/README.md) | Tareas autocontenidas para repartir: qué hacer, recursos y cómo comprobarlo. |
-| — | [areas/propuesta-*.md](areas/) | Plantillas de propuesta de cada área para la reunión de unión: [datos](areas/propuesta-datos.md), [frontend](areas/propuesta-frontend.md), [backend](../backend/PROPUESTA.md) (vive en `backend/`, con todo lo del área), [entrega](areas/propuesta-entrega.md). |
+| — | [areas/propuesta-*.md](areas/) | Plantillas de propuesta de cada área para la reunión de unión: [datos](areas/propuesta-datos.md), [frontend](areas/propuesta-frontend.md), [backend](../plataforma/backend/PROPUESTA.md) (vive en `backend/`, con todo lo del área), [entrega](areas/propuesta-entrega.md). |
 | — | [Desarrollo](desarrollo.md) | Cómo levantar el código, probarlo y dónde está cada cosa. |
 | — | [diseno/](diseno/README.md) | Referencias visuales, sistema visual y capturas del diseño actual. |
 | — | [informes/](informes/README.md) | Un informe por cada trabajo terminado y la bitácora para retomar lo que esté a medias. |
-| — | [backend/diagramas/](../backend/diagramas/) | Diagramas del backend: mapa de módulos, archivos e interactivo. Todo lo del backend está reunido en [backend/](../backend/README.md). |
+| — | [backend/diagramas/](../plataforma/backend/diagramas/) | Diagramas del backend: mapa de módulos, archivos e interactivo. Todo lo del backend está reunido en [backend/](../plataforma/backend/README.md). |
 | — | [historial/](historial/README.md) | Material de sesiones anteriores. Solo lectura. |
 
 ## Carpetas de cada área
 
 | Área | Carpeta | Guía |
 |---|---|---|
-| Datos satelitales | `datos/` | [datos/README.md](../datos/README.md) |
+| Datos satelitales | `datos/` | [datos/README.md](../plataforma/datos/README.md) |
 | Frontend | `frontend/` | [areas/frontend.md](areas/frontend.md) |
-| Backend, conectores y motor | `backend/` | [backend/README.md](../backend/README.md) |
+| Backend, conectores y motor | `backend/` | [backend/README.md](../plataforma/backend/README.md) |
 | Entrega, pitch e investigación | `entrega/` | [entrega/README.md](../entrega/README.md) |
 
 ## El informe maestro
 
 El documento formal del proyecto sigue siendo la **documentación maestra**, en tres formatos con el mismo contenido:
 
-- [TARPU_Documentacion_Maestra.md](../Documentación/TARPU_Documentacion_Maestra.md): texto editable principal.
+- [TARPU_Documentacion_Maestra.md](../plataforma/documentacion/informe-maestro/TARPU_Documentacion_Maestra.md): texto editable principal.
 - `TARPU_Documentacion_Maestra.tex`: fuente de maquetación.
 - `TARPU_Documentacion_Maestra.pdf`: versión de lectura.
 

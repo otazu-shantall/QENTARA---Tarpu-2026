@@ -1,10 +1,10 @@
 # Datos y fuentes
 
-> Resumen del apartado 05 del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#05-fundamento-científico-y-datos). **Fuentes de la demo, decididas (DT-17):** solo NASA POWER, el NDVI de MODIS y SoilGrids, consultadas en el centroide de la parcela. El conector de POWER funciona y el backend ya lo usa; los de MODIS y SoilGrids están pendientes en `datos/`. Para el producto, la selección sigue siendo una propuesta (SUP-016, SUP-038). Antes de implementar una fuente, se comprueba su documentación oficial: versión, acceso, unidad, resolución, latencia, calidad, condiciones y formato.
+> Resumen del apartado 05 del [informe maestro](../plataforma/documentacion/informe-maestro/TARPU_Documentacion_Maestra.md#05-fundamento-científico-y-datos). **Fuentes de la demo, decididas (DT-17):** solo NASA POWER, el NDVI de MODIS y SoilGrids, consultadas en el centroide de la parcela. El conector de POWER funciona y el backend ya lo usa; los de MODIS y SoilGrids están pendientes en `datos/`. Para el producto, la selección sigue siendo una propuesta (SUP-016, SUP-038). Antes de implementar una fuente, se comprueba su documentación oficial: versión, acceso, unidad, resolución, latencia, calidad, condiciones y formato.
 
 ## Fuentes candidatas
 
-> Actualizado el 14/11/2026 con el análisis verificado de [datos/analisis-recursos.md](../datos/analisis-recursos.md). **La demo usa solo las filas 1, 2 y 3 (DT-17).** Las demás quedan como candidatas para después de la demo, si el equipo toma una decisión nueva.
+> Actualizado el 14/11/2026 con el análisis verificado de [datos/analisis-recursos.md](../plataforma/datos/analisis-recursos.md). **La demo usa solo las filas 1, 2 y 3 (DT-17).** Las demás quedan como candidatas para después de la demo, si el equipo toma una decisión nueva.
 
 | Prioridad | Fuente | Variable | Acceso | Límite que hay que respetar |
 |---|---|---|---|---|
@@ -63,7 +63,7 @@ Son umbrales por probar, no garantías.
 3. Calcular los criterios: agua, clima, suelo e historial y rotación.
 4. Redactar una explicación estructurada.
 
-> **La demo no usa nada de esta sección que no tenga cita (DT-16):** ni estos pesos, ni el puntaje, ni los mínimos de 90 % y 80 %. El motor de la demo compara cada criterio con rangos citados de FAO EcoCrop, sin puntaje ([backend/MODULOS.md](../backend/MODULOS.md#4-motor-motor--inicio)). Lo que sigue resume la propuesta del informe maestro.
+> **La demo no usa nada de esta sección que no tenga cita (DT-16):** ni estos pesos, ni el puntaje, ni los mínimos de 90 % y 80 %. El motor de la demo compara cada criterio con rangos citados de FAO EcoCrop, sin puntaje ([backend/MODULOS.md](../plataforma/backend/MODULOS.md#4-motor-motor--inicio)). Lo que sigue resume la propuesta del informe maestro.
 
 **Pesos experimentales del informe (SUP-019, sin fuente):** agua 0,30 · clima 0,25 · suelo 0,25 · historial 0,20.
 

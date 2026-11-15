@@ -33,7 +33,7 @@ La [guía](../diseno/guia-frontend.md) y la [propuesta](../areas/propuesta-front
 - Muestra histórica real de POWER para Majes empaquetada desde `datos/`, sin cambios a los originales. Las parcelas nuevas quedan sin indicadores asociados.
 - Chat guiado y voz del navegador con burbujas. Acceso local de demostración; autenticación, modelo, capas científicas y avatar pendientes.
 
-Registro técnico: [informe 09](../informes/09-arquitectura-y-prototipo-frontend.md) y [frontend/README.md](../../frontend/README.md). DT-02 conserva su alcance sobre el prototipo anterior; SUP-015 y SUP-013 siguen abiertos. La reunión de unión del equipo no se da por celebrada.
+Registro técnico: [informe 09](../informes/09-arquitectura-y-prototipo-frontend.md) y [frontend/README.md](../../plataforma/frontend/README.md). DT-02 conserva su alcance sobre el prototipo anterior; SUP-015 y SUP-013 siguen abiertos. La reunión de unión del equipo no se da por celebrada.
 
 ### DT-16 · Estudio técnico y conversación en el frontend de escritorio
 **Definida en frontend · 14/11/2026 · Área: frontend (Shantall).**

@@ -8,7 +8,7 @@
 > 2. ¿Cómo se marca la parcela y qué se calcula de ella?
 > 3. ¿En qué rango de tamaño, territorio y fechas es posible?
 >
-> Se apoya en [backend/DISENO.md](../backend/DISENO.md) y [backend/MODULOS.md](../backend/MODULOS.md). **Verificado** = comprobado con una consulta real. Lo que no está verificado aparece como **pendiente**, con cómo verificarlo. Las pantallas finales las define el área de frontend.
+> Se apoya en [backend/DISENO.md](../plataforma/backend/DISENO.md) y [backend/MODULOS.md](../plataforma/backend/MODULOS.md). **Verificado** = comprobado con una consulta real. Lo que no está verificado aparece como **pendiente**, con cómo verificarlo. Las pantallas finales las define el área de frontend.
 
 ## 1. La idea en una línea
 
@@ -208,7 +208,7 @@ La web publicada es un sitio de **JSON estático** (DT-13): no tiene servidor.
 | `geometria.py` | Núcleo de datos | Valida el contorno; área y perímetro geodésicos; píxeles de MODIS; centroide y recuadro |
 | `procesamiento.py` | API | Estado de cada fuente por parcela, con el motivo real |
 
-Ya están construidos y descritos en [backend/MODULOS.md](../backend/MODULOS.md) y en los [diagramas del backend](../backend/diagramas/).
+Ya están construidos y descritos en [backend/MODULOS.md](../plataforma/backend/MODULOS.md) y en los [diagramas del backend](../plataforma/backend/diagramas/).
 
 ## 9. Qué necesita cada área de este plan
 

@@ -31,6 +31,7 @@ Las fechas son las de cuando ocurrió el trabajo; no son plazos.
 | F-15 | Tema público y nuevo logo QENTARA | 15/11/2026 | [15-tema-publico-y-logo-qentara.md](15-tema-publico-y-logo-qentara.md) |
 | 16 | Integración del frontend y actualización del repositorio | 15/11/2026 | [16-integracion-repositorio-frontend.md](16-integracion-repositorio-frontend.md) |
 | 17 | Frontend unido: portada de Codex, panel de Shantall y datos reales de la API | 15/11/2026 | [17-frontend-unido.md](17-frontend-unido.md) |
+| 18 | Carpeta única `plataforma/` y arranque con `npm start` | 15/11/2026 | [18-carpeta-plataforma.md](18-carpeta-plataforma.md) |
 | **En curso** | — | — | [en-curso.md](en-curso.md) (bitácora para retomar si algo se corta) |
 
 Antes del 24/10/2026 el trabajo fue solo documental: las versiones 0.1 a 0.4 del informe maestro. Su historial está en el anexo G del informe.

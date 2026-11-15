@@ -2,7 +2,7 @@
 
 > **Frontend · 14/11/2026.** Guía de diseño y arquitectura basada en referencias visuales y revisión estática del código. Alcance vigente (DT-25): computadora, chat y voz iniciales, y avatar posterior. Documento de la fase 1 del [ROADMAP](../../ROADMAP.md); complementa la [guía del área](../areas/frontend.md) y concreta la [propuesta de frontend](../areas/propuesta-frontend.md). Distingue diseño deseado y recomendaciones. El primer prototipo ya está implementado en `frontend/` ([informe 09](../informes/09-arquitectura-y-prototipo-frontend.md)); no acredita validación con agricultores.
 
-> **Revisión implementada vigente:** [informe 10](../informes/10-estudio-tecnico-y-conversacion.md) y [frontend/README.md](../../frontend/README.md): Estudio técnico, conversación visual con reescucha por turnos, múltiples parcelas de ejemplo y formularios. Las descripciones de integración siguen siendo propuestas; no hay autenticación o proveedor de IA conectado.
+> **Revisión implementada vigente:** [informe 10](../informes/10-estudio-tecnico-y-conversacion.md) y [frontend/README.md](../../plataforma/frontend/README.md): Estudio técnico, conversación visual con reescucha por turnos, múltiples parcelas de ejemplo y formularios. Las descripciones de integración siguen siendo propuestas; no hay autenticación o proveedor de IA conectado.
 
 ## 1. Qué queda definido y qué sigue abierto
 
@@ -159,7 +159,7 @@ El mapa base ubica el campo; la capa científica requiere datos georreferenciado
 
 La primera muestra es POWER para Majes en 2025, todavía fuera de la app. Su API diaria entrega series meteorológicas y solares ([NASA POWER](https://power.larc.nasa.gov/docs/services/api/temporal/daily/)); la resolución depende de la variable ([tutorial](https://power.larc.nasa.gov/docs/tutorials/service-data-request/api/)). Un año no basta para inventar una climatología extensa.
 
-MODIS/VIIRS, HLS, GIBS, SoilGrids, IMERG, SMAP y ECOSTRESS son candidatos según el [análisis interno](../../datos/analisis-recursos.md); no quedan seleccionados por esta guía ni se ha repetido aquí su prueba de acceso. Una imagen GIBS sirve para visualizar; el cálculo necesita el producto numérico apropiado.
+MODIS/VIIRS, HLS, GIBS, SoilGrids, IMERG, SMAP y ECOSTRESS son candidatos según el [análisis interno](../../plataforma/datos/analisis-recursos.md); no quedan seleccionados por esta guía ni se ha repetido aquí su prueba de acceso. Una imagen GIBS sirve para visualizar; el cálculo necesita el producto numérico apropiado.
 
 **Historial:** explicación del período antes de la serie. Resumen, gráfico, tabla, agente y descarga usan la misma consulta. Lagunas visibles, sin rellenar cero o dibujar continuidad falsa; avisar si las capas tienen fechas distintas.
 
@@ -268,7 +268,7 @@ frontend/src/
   styles/               tokens, base, temas y composición
 ```
 
-La estructura muestra la separación objetivo. La implementación actual, más compacta, está descrita en [frontend/README.md](../../frontend/README.md): contratos y adaptadores en `services/`, mapa/editor encapsulado y voz en un hook. No se han creado directorios vacíos para funciones futuras. Flujo: pantalla → hook de funcionalidad → servicio/contrato → API. Componentes comunes no importan fixtures o reglas agronómicas. Editor, voz y avatar quedan detrás de adaptadores, sin propagar objetos de sus SDK por toda la app.
+La estructura muestra la separación objetivo. La implementación actual, más compacta, está descrita en [frontend/README.md](../../plataforma/frontend/README.md): contratos y adaptadores en `services/`, mapa/editor encapsulado y voz en un hook. No se han creado directorios vacíos para funciones futuras. Flujo: pantalla → hook de funcionalidad → servicio/contrato → API. Componentes comunes no importan fixtures o reglas agronómicas. Editor, voz y avatar quedan detrás de adaptadores, sin propagar objetos de sus SDK por toda la app.
 
 Separar `Parcel` (identidad/versiones), `ParcelGeometry`, `FarmContext`, `Observation`, `EvidenceSummary` y `Evaluation`. Indicadores ausentes usan `null` y motivo; una parcela nueva no recibe valores ficticios por defecto. Procedencia distingue sintético, proveedor y declaración del productor, además del nivel original/normalizado/derivado.
 
@@ -278,7 +278,7 @@ Cargar mapa y audiovisual bajo demanda; no abrir video al entrar a la app. Conse
 
 ## 11. Matriz para acordar con Erick y Damaris
 
-Contrato de datos pendiente de coordinación entre frontend, backend y datos. Cruzar con [borrador del backend](../../backend/README.md).
+Contrato de datos pendiente de coordinación entre frontend, backend y datos. Cruzar con [borrador del backend](../../plataforma/backend/README.md).
 
 | Pantalla | Datos mínimos | Estados |
 |---|---|---|

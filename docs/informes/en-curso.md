@@ -21,7 +21,7 @@ Datos completos de los lugares de ejemplo (capa 3 de DT-22), para que el jurado 
 
 ## Siguiente paso exacto
 
-Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](../areas/propuesta-frontend.md), [backend](../../backend/PROPUESTA.md) y [entrega](../areas/propuesta-entrega.md). A las 2 horas de empezar, **reunión de unión** (fase 2 del ROADMAP). Sus decisiones van a [06](../06-decisiones-y-riesgos.md) y la nueva división a esta bitácora.
+Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](../areas/propuesta-frontend.md), [backend](../../plataforma/backend/PROPUESTA.md) y [entrega](../areas/propuesta-entrega.md). A las 2 horas de empezar, **reunión de unión** (fase 2 del ROADMAP). Sus decisiones van a [06](../06-decisiones-y-riesgos.md) y la nueva división a esta bitácora.
 
 **Datos (Damaris):**
 - La propuesta ya tiene la tabla de variables (sección 7) y «qué dicen y qué no dicen» (sección 4).

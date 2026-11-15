@@ -1,0 +1,21 @@
+{
+  "name": "tarpu-plataforma",
+  "private": true,
+  "description": "TARPU completo para probar y desplegar: frontend, backend (API, extracción y motor), Supabase e infraestructura. Escrito con asistencia de IA; registro en ../entrega/uso-de-ia.md.",
+  "scripts": {
+    "start": "node scripts/iniciar.mjs",
+    "start:sin-docker": "node scripts/iniciar.mjs --sin-docker",
+    "detener": "node scripts/detener.mjs",
+    "estado": "supabase status && docker compose -f infra/docker-compose.yml --env-file infra/.env ps",
+    "pruebas": "npm --prefix frontend test && cd backend && .venv\\Scripts\\python -m pytest -q",
+    "pruebas:navegador": "npm --prefix frontend run test:ui",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:status": "supabase status",
+    "db:reset": "supabase db reset",
+    "db:test": "supabase test db"
+  },
+  "devDependencies": {
+    "supabase": "3.0.0"
+  }
+}

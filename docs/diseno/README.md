@@ -4,7 +4,7 @@
 
 **Capturas del diseño actual:** [capturas/](capturas/)
 
-**Diseño del frontend · 14/11/2026 (DT-25):** [guía de diseño y arquitectura del frontend](guia-frontend.md). Web para computadora en `frontend/`: inicio/acceso, sidebar, delimitación, históricos y datos avanzados. Chat y voz son iniciales, con burbujas de estado; el avatar humano va después. Las variantes clara y oscura ya se pueden recorrer en el nuevo prototipo; la elección sigue abierta. Arquitectura y ejecución: [frontend/README.md](../../frontend/README.md). La guía reúne seis capturas y las cinco referencias guardadas que se revisaron visualmente. Los valores y capturas de esta página describen el prototipo existente, no el diseño final.
+**Diseño del frontend · 14/11/2026 (DT-25):** [guía de diseño y arquitectura del frontend](guia-frontend.md). Web para computadora en `frontend/`: inicio/acceso, sidebar, delimitación, históricos y datos avanzados. Chat y voz son iniciales, con burbujas de estado; el avatar humano va después. Las variantes clara y oscura ya se pueden recorrer en el nuevo prototipo; la elección sigue abierta. Arquitectura y ejecución: [frontend/README.md](../../plataforma/frontend/README.md). La guía reúne seis capturas y las cinco referencias guardadas que se revisaron visualmente. Los valores y capturas de esta página describen el prototipo existente, no el diseño final.
 
 - [landing en escritorio](capturas/landing-escritorio.png) y [en móvil](capturas/landing-movil.png);
 - [vista general en escritorio](capturas/vista-general-escritorio.png) y [en móvil](capturas/vista-general-movil.png);

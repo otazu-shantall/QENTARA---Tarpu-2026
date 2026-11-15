@@ -6,9 +6,9 @@
 
 | Área | Responsable | Carpeta | Se encarga de | Guía |
 |---|---|---|---|---|
-| **Datos satelitales** | Damaris | [`datos/`](../datos/README.md) | Cómo extraer los datos de los satélites: qué fuente, cómo se pide, qué devuelve y con qué límites | [datos/README.md](../datos/README.md) |
-| **Frontend y experiencia de usuario** | Shantall | [`frontend/`](../frontend/README.md) (prototipo de escritorio) | Web para computadora, pantallas y experiencia clara para personas mayores; asistente por chat y voz | [areas/frontend.md](areas/frontend.md) |
-| **Backend, conectores y motor** | Erick | [`backend/`](../backend/README.md) | Cómo se conecta todo: API, conectores, el motor de TARPU y el agente | [backend/README.md](../backend/README.md) |
+| **Datos satelitales** | Damaris | [`datos/`](../plataforma/datos/README.md) | Cómo extraer los datos de los satélites: qué fuente, cómo se pide, qué devuelve y con qué límites | [datos/README.md](../plataforma/datos/README.md) |
+| **Frontend y experiencia de usuario** | Shantall | [`frontend/`](../plataforma/frontend/README.md) (prototipo de escritorio) | Web para computadora, pantallas y experiencia clara para personas mayores; asistente por chat y voz | [areas/frontend.md](areas/frontend.md) |
+| **Backend, conectores y motor** | Erick | [`backend/`](../plataforma/backend/README.md) | Cómo se conecta todo: API, conectores, el motor de TARPU y el agente | [backend/README.md](../plataforma/backend/README.md) |
 | **Entrega, pitch e investigación** | Los dos integrantes de Derecho | [`entrega/`](../entrega/README.md) | Formulario oficial, demo, pitch, referencias, licencia, cifras del problema y lo que haga falta buscar | [entrega/README.md](../entrega/README.md) |
 
 Los nombres de los dos integrantes de Derecho faltan por anotar aquí.
@@ -41,7 +41,7 @@ El trabajo va en tres etapas. No tienen duración fijada: se pasa a la siguiente
 |---|---|---|
 | Datos | Backend | Para cada fuente: cómo pedirla, formato de respuesta, unidades, faltantes, escala y un archivo de muestra |
 | Datos | Entrega | La lista exacta de datos de NASA usados, para el campo *NASA Data* |
-| Backend | Frontend | El contrato: qué datos llegan a cada pantalla y con qué forma (ver [backend/README.md](../backend/README.md)) |
+| Backend | Frontend | El contrato: qué datos llegan a cada pantalla y con qué forma (ver [backend/README.md](../plataforma/backend/README.md)) |
 | Frontend | Entrega | Capturas y un recorrido que se pueda grabar para la demo |
 | Entrega | Todos | Qué exige el formulario, qué evalúan los jueces, la licencia y las cifras del problema |
 | Todos | Entrega | Qué herramientas de IA usó cada uno y para qué ([entrega/uso-de-ia.md](../entrega/uso-de-ia.md)) |

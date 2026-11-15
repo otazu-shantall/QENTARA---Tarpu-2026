@@ -39,7 +39,7 @@ Todo lo que el desafío propone lleva «may» (es opcional), pero es lo que los 
 
 ## Recursos oficiales del desafío
 
-De la pestaña *Resources*. La columna «¿Sirve para Arequipa?» es la primera valoración. **El análisis detallado y verificado está en [datos/analisis-recursos.md](../datos/analisis-recursos.md):** comprueba en el catálogo de NASA qué productos tienen datos sobre Majes y Chivay, cuáles se usan sin cuenta, y añade HLS, GIBS y SoilGrids.
+De la pestaña *Resources*. La columna «¿Sirve para Arequipa?» es la primera valoración. **El análisis detallado y verificado está en [datos/analisis-recursos.md](../plataforma/datos/analisis-recursos.md):** comprueba en el catálogo de NASA qué productos tienen datos sobre Majes y Chivay, cuáles se usan sin cuenta, y añade HLS, GIBS y SoilGrids.
 
 ### Datos de NASA
 

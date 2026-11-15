@@ -35,4 +35,4 @@ Se corrigió un error de Leaflet al desmontar el mapa durante cambios de parcela
 
 Siguen pendientes micrófono/altavoz reales, autenticación, voz de IA remota, acceso autorizado a proveedores, consultas por parcela, capas científicas, evaluación agronómica, PDF y pruebas con agricultores. No se modificaron backend, scripts de datos ni el prototipo de `Codigo/`.
 
-Arquitectura, fuentes y límites detallados: [frontend/README.md](../../frontend/README.md). Capturas locales: `frontend/test-results/`.
+Arquitectura, fuentes y límites detallados: [frontend/README.md](../../plataforma/frontend/README.md). Capturas locales: `frontend/test-results/`.

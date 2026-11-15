@@ -15,7 +15,7 @@ tmp/
 *.rar
 *.zip
 .claude/settings.local.json
-datos/ndvi/cache/
+plataforma/datos/ndvi/cache/
 
 # Claves y configuración privada: nunca al repositorio
 .env
@@ -23,11 +23,11 @@ datos/ndvi/cache/
 *.local.txt
 
 # Backend: datos generados en cada computadora (DT-13)
-backend/almacen/
+plataforma/backend/almacen/
 !.env.example
 
 # Descargas de prueba de Earthdata (pueden pesar)
-backend/herramientas/salida/
+plataforma/backend/herramientas/salida/
 
 # Tareas de extracción: la caché es local; las salidas SÍ se suben (son la base de datos de la demo)
 trabajo/T01-paquete-extraccion/cache/
@@ -38,4 +38,4 @@ trabajo/T02-base-arequipa/salida/
 trabajo/T02-base-arequipa/cache/
 
 # Variables de Docker Compose (claves locales)
-infra/.env
+plataforma/infra/.env

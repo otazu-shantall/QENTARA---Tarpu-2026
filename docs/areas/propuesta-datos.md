@@ -1,6 +1,6 @@
 # Propuesta del área de datos
 
-> Responsable: **Damaris**. Se llena en la fase 1 del [ROADMAP](../../ROADMAP.md) y se presenta en la reunión de unión. Base: [datos/analisis-recursos.md](../../datos/analisis-recursos.md).
+> Responsable: **Damaris**. Se llena en la fase 1 del [ROADMAP](../../ROADMAP.md) y se presenta en la reunión de unión. Base: [datos/analisis-recursos.md](../../plataforma/datos/analisis-recursos.md).
 
 ## 1. Fuentes que propongo para la demo
 
@@ -44,7 +44,7 @@
 
 ## 7. Variables para el backend
 
-Verificadas el 14/11/2026 en las fichas ([POWER](../../datos/power/README.md), [SoilGrids](../../datos/soilgrids/README.md), [NDVI](../../datos/ndvi/README.md)) y en las procedencias de `datos/muestras/`. Cada CSV normalizado lleva la unidad en la cabecera; un faltante queda vacío y nunca es cero.
+Verificadas el 14/11/2026 en las fichas ([POWER](../../plataforma/datos/power/README.md), [SoilGrids](../../plataforma/datos/soilgrids/README.md), [NDVI](../../plataforma/datos/ndvi/README.md)) y en las procedencias de `datos/muestras/`. Cada CSV normalizado lleva la unidad en la cabecera; un faltante queda vacío y nunca es cero.
 
 | Variable | Nombre en el CSV | Unidad | Fuente | Resolución | Advertencia |
 |---|---|---|---|---|---|

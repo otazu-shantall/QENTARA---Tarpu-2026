@@ -1,6 +1,6 @@
 # Arquitectura
 
-> Dos partes: lo que **existe** (el prototipo de escritorio de `frontend/`) y lo que se **propone** para el producto. Lo propuesto está en el apartado 06 del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#06-ingeniería-y-desarrollo-dev) y es SUP-015: no está aprobado por el hecho de que exista el prototipo.
+> Dos partes: lo que **existe** (el prototipo de escritorio de `frontend/`) y lo que se **propone** para el producto. Lo propuesto está en el apartado 06 del [informe maestro](../plataforma/documentacion/informe-maestro/TARPU_Documentacion_Maestra.md#06-ingeniería-y-desarrollo-dev) y es SUP-015: no está aprobado por el hecho de que exista el prototipo.
 
 ## 0. Enfoque de datos vigente (DT-22)
 
@@ -8,7 +8,7 @@ Esquema mixto: base de Arequipa guardada, extracción por coordenada en Google C
 
 ## 1. Frontend vigente de escritorio
 
-`frontend/` es la aplicación actual (DT-25). Arquitectura y límites completos en [frontend/README.md](../frontend/README.md).
+`frontend/` es la aplicación actual (DT-25). Arquitectura y límites completos en [frontend/README.md](../plataforma/frontend/README.md).
 
 | Capa | Implementación |
 |---|---|

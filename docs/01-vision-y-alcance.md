@@ -1,6 +1,6 @@
 # Visión y alcance
 
-> Resumen del apartado 01 del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#01-identidad-visión-y-fundamentos). Los textos marcados como **confirmados** fueron aceptados por el usuario (DEC-001 a DEC-008) y se copian sin cambios. Para cambiarlos hace falta una decisión nueva.
+> Resumen del apartado 01 del [informe maestro](../plataforma/documentacion/informe-maestro/TARPU_Documentacion_Maestra.md#01-identidad-visión-y-fundamentos). Los textos marcados como **confirmados** fueron aceptados por el usuario (DEC-001 a DEC-008) y se copian sin cambios. Para cambiarlos hace falta una decisión nueva.
 
 ## Qué es
 

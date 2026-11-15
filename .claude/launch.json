@@ -6,7 +6,7 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "--prefix",
-        "frontend",
+        "plataforma/frontend",
         "run",
         "dev"
       ],
@@ -15,13 +15,13 @@
     },
     {
       "name": "tarpu-api",
-      "runtimeExecutable": "backend/.venv/Scripts/python.exe",
+      "runtimeExecutable": "plataforma/backend/.venv/Scripts/python.exe",
       "runtimeArgs": [
         "-m",
         "uvicorn",
         "tarpu_api.main:app",
         "--app-dir",
-        "backend",
+        "plataforma/backend",
         "--port",
         "8000"
       ],
@@ -30,13 +30,13 @@
     },
     {
       "name": "tarpu-api-8001",
-      "runtimeExecutable": "backend/.venv/Scripts/python.exe",
+      "runtimeExecutable": "plataforma/backend/.venv/Scripts/python.exe",
       "runtimeArgs": [
         "-m",
         "uvicorn",
         "tarpu_api.main:app",
         "--app-dir",
-        "backend",
+        "plataforma/backend",
         "--port",
         "8001"
       ],

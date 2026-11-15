@@ -25,7 +25,7 @@ npm --prefix frontend test
 npm --prefix frontend run test:ui
 ```
 
-La suite de navegador requiere `dev` encendido y Google Chrome. Arquitectura, rutas, límites y puntos de integración: [frontend/README.md](../../frontend/README.md). La conexión anterior con la API está documentada en el [informe 08](../informes/08-frontend-conectado-api.md); todavía no se trasladó al frontend vigente.
+La suite de navegador requiere `dev` encendido y Google Chrome. Arquitectura, rutas, límites y puntos de integración: [frontend/README.md](../../plataforma/frontend/README.md). La conexión anterior con la API está documentada en el [informe 08](../informes/08-frontend-conectado-api.md); todavía no se trasladó al frontend vigente.
 
 ## Qué funciona
 
@@ -79,6 +79,6 @@ Referencias: [guía de diseño](../diseno/guia-frontend.md), [propuesta del áre
 
 ## Integración con el trabajo del equipo
 
-Los contratos actuales están en [T03](../../trabajo/T03-modelado-datos/contrato-pantallas.md), el backend en [su índice](../../backend/README.md) y el esquema mixto en [docs/11](../11-esquema-mixto.md). La conexión previa de `Codigo/src/nuevo/` permanece en el historial Git anterior a DT-25. El prototipo de `frontend/` no hereda automáticamente esa conexión.
+Los contratos actuales están en [T03](../../plataforma/documentacion/modelo-de-datos/contrato-pantallas.md), el backend en [su índice](../../plataforma/backend/README.md) y el esquema mixto en [docs/11](../11-esquema-mixto.md). La conexión previa de `Codigo/src/nuevo/` permanece en el historial Git anterior a DT-25. El prototipo de `frontend/` no hereda automáticamente esa conexión.
 
 DT-16 sigue rigiendo para la entrega: los ejemplos sintéticos del prototipo local no constituyen la demo final. La sustitución por evidencia real y la validación del contrato siguen pendientes.

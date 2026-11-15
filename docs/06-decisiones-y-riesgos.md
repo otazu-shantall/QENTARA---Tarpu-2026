@@ -2,7 +2,7 @@
 
 Estados: **Tomada** · **Propuesta** (pendiente de confirmar) · **Reemplazada**.
 
-Las decisiones de producto (DEC) se registran en el anexo G del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#anexo-g-control-de-cambios-y-decisiones), que manda. Las decisiones de trabajo del prototipo y de organización (DT) solo están aquí hasta que el informe las recoja. Ninguna aprobación conceptual valida fórmulas, cobertura, resultados de campo ni rentabilidad.
+Las decisiones de producto (DEC) se registran en el anexo G del [informe maestro](../plataforma/documentacion/informe-maestro/TARPU_Documentacion_Maestra.md#anexo-g-control-de-cambios-y-decisiones), que manda. Las decisiones de trabajo del prototipo y de organización (DT) solo están aquí hasta que el informe las recoja. Ninguna aprobación conceptual valida fórmulas, cobertura, resultados de campo ni rentabilidad.
 
 ## Decisiones de producto
 
@@ -82,7 +82,7 @@ Cada área trabaja en su carpeta. Primero se investiga y se hace la base; luego 
 Detalle en [ROADMAP.md](../ROADMAP.md).
 
 ### DT-13 · Backend: API FastAPI y exportación a JSON estático
-**Tomada · 14/11/2026 (Erick, responsable del área).** Python 3.13 con FastAPI y Pydantic para desarrollar. Un comando exporta las rutas `GET` a JSON estático con las mismas rutas, para la demo pública. Sin base de datos en la demo. Detalle en [backend/PROPUESTA.md](../backend/PROPUESTA.md). Cierra SUP-015 **solo para el hackathon**; el stack del producto sigue abierto.
+**Tomada · 14/11/2026 (Erick, responsable del área).** Python 3.13 con FastAPI y Pydantic para desarrollar. Un comando exporta las rutas `GET` a JSON estático con las mismas rutas, para la demo pública. Sin base de datos en la demo. Detalle en [backend/PROPUESTA.md](../plataforma/backend/PROPUESTA.md). Cierra SUP-015 **solo para el hackathon**; el stack del producto sigue abierto.
 
 ### DT-14 · Agente guiado con datos, sin modelo de IA en la demo
 **Tomada · 14/11/2026 (Erick).** Reconoce intenciones y responde con plantillas a partir de los datos y resultados reales, citando la fuente. Un modelo de lenguaje queda como ampliación (SUP-034 sigue abierto para el producto).
@@ -105,7 +105,7 @@ Detalle en [ROADMAP.md](../ROADMAP.md).
 - Desaparecen los límites de tamaño y el umbral de representatividad inventados: se muestran los conteos reales de píxeles.
 - Los datos sintéticos del prototipo (`Codigo/src/data/demo.ts`) se sustituyen por datos de la API antes de la entrega.
 
-Detalle en [backend/DISENO.md](../backend/DISENO.md).
+Detalle en [backend/DISENO.md](../plataforma/backend/DISENO.md).
 
 ### DT-17 · Solo tres fuentes de datos en la demo
 **Reemplazada por DT-19 el 15/11/2026.** Tomada el 14/11/2026 (Erick). La demo usa **solo**:
@@ -135,11 +135,11 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 - **Qué define cada sector:** las variables que se muestran primero, las fuentes lentas que se piden y el orden de los criterios al comparar cultivos (orden, no pesos).
 - **Uso interno:** el usuario ve un mapa normal; los sectores no se muestran como capa.
 - **Ampliación:** la misma lógica servirá después para todo el Perú. Hará falta añadir las regiones de selva de Pulgar Vidal.
-- **Evidencia:** la climatología regional de NASA POWER (2001–2025) muestra 0 días de helada al año por debajo de ≈ 2300 m, y de 22,8 a 319 por encima de ≈ 3500 m. Detalle en [backend/PLAN-SECTORES-AREQUIPA.md](../backend/PLAN-SECTORES-AREQUIPA.md).
+- **Evidencia:** la climatología regional de NASA POWER (2001–2025) muestra 0 días de helada al año por debajo de ≈ 2300 m, y de 22,8 a 319 por encima de ≈ 3500 m. Detalle en [backend/PLAN-SECTORES-AREQUIPA.md](../plataforma/backend/PLAN-SECTORES-AREQUIPA.md).
 - **Cuenta de Earthdata:** la creó Erick para las fuentes que la necesitan. Las credenciales van en `backend/.env`, que git ignora; nunca en el repositorio ni en el chat.
 
 ### DT-19 · Fuentes y variables de la demo (reemplaza DT-17)
-**Tomada · 15/11/2026 (Erick).** DT-17 se quedaba corta. La demo usa estas fuentes, todas medidas con peticiones reales en Majes riego y Chivay (detalle en [backend/PLAN-DATOS-SATELITALES.md](../backend/PLAN-DATOS-SATELITALES.md)):
+**Tomada · 15/11/2026 (Erick).** DT-17 se quedaba corta. La demo usa estas fuentes, todas medidas con peticiones reales en Majes riego y Chivay (detalle en [backend/PLAN-DATOS-SATELITALES.md](../plataforma/backend/PLAN-DATOS-SATELITALES.md)):
 
 | Fuente | Variables | Escala | Acceso | Quién la baja |
 |---|---|---|---|---|
@@ -225,6 +225,16 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 - **Datos:** reales, de la API (esquema mixto, DT-22), siguiendo el contrato de T03: Majes, Cabanaconde y Chivay como puntos de consulta, y el contorno dibujado con su base de Arequipa y su extracción satelital (con «Detener»). **Se retiran del selector las parcelas de ejemplo** (DT-16).
 - **Mapa:** el de la pantalla de prueba (imagen nítida, zoom 21, dibujo por esquinas, campos ya analizados en el servidor). **El usuario no ve los sectores**: solo el mapa, su parcela y sus datos.
 - Lo que falta pulir se acuerda después; ver [informe 17](informes/17-frontend-unido.md).
+
+### DT-27 · Una sola carpeta para el producto: `plataforma/`
+
+**Indicada por Erick · 15/11/2026.** Reemplaza la sección 2 de [docs/12](12-carpetas-docker-y-despliegue.md) en cuanto a la ubicación de las carpetas (el resto del plan sigue).
+
+- `plataforma/` reúne todo TARPU: `frontend/`, `backend/` (con `investigacion/` y `catalogo/`), `supabase/`, `infra/`, `datos/` y `documentacion/` (informe maestro y modelo de datos de T03). Es lo que se prueba en local y lo que se sube a cada plataforma al desplegar.
+- `npm start` en `plataforma/` enciende Docker, Supabase, la API y el trabajador, y la web. `npm run detener` lo apaga.
+- Fuera quedan la organización del equipo (`docs/`, `ROADMAP.md`, `AGENTS.md`), la entrega (`entrega/`) y las tareas en curso (`trabajo/`).
+- Se dejó el repositorio de siempre (`otazu-shantall/QENTARA---Tarpu-2026`); el intento de mudarlo a otro repositorio se descartó.
+- Detalle en [informe 18](informes/18-carpeta-plataforma.md).
 
 ## Riesgos
 

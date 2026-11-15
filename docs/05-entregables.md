@@ -1,6 +1,6 @@
 # Entregables
 
-> **Qué hay que entregar**, qué cuenta como hecho y en qué estado está cada cosa. Sin plazos ni calendarios: solo lo que debe existir al final. Sale del apartado 04 (recorrido mínimo) y del apartado 08 (paquete para NASA Space Apps) del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#entrega-nasa-space-apps).
+> **Qué hay que entregar**, qué cuenta como hecho y en qué estado está cada cosa. Sin plazos ni calendarios: solo lo que debe existir al final. Sale del apartado 04 (recorrido mínimo) y del apartado 08 (paquete para NASA Space Apps) del [informe maestro](../plataforma/documentacion/informe-maestro/TARPU_Documentacion_Maestra.md#entrega-nasa-space-apps).
 >
 > Los requisitos oficiales ya están leídos del sitio de Space Apps: ver [09-entrega-oficial.md](09-entrega-oficial.md). El envío cierra el **domingo 15/11/2026 a las 11:59 p. m.**, hora del evento local. Esa fecha es del evento, no un plazo nuestro.
 

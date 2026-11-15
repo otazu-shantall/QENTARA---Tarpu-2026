@@ -2,7 +2,7 @@
 
 Fecha de actualización: **15 de noviembre de 2026**. Idioma de trabajo: **español** (documentación, textos de interfaz y mensajes). El código (identificadores, tipos) va en inglés.
 
-Este archivo contiene **las reglas**. El estado, el historial del código y la organización viven en [`docs/`](docs/README.md). `CLAUDE.md` importa este archivo para que Codex y Claude Code lean lo mismo. Cada carpeta de área (`datos/`, `frontend/`, `backend/`, `entrega/`) tiene además su propio `AGENTS.md` con las reglas de esa área. Codex los combina con este al trabajar dentro de la carpeta.
+Este archivo contiene **las reglas**. El estado, el historial del código y la organización viven en [`docs/`](docs/README.md). `CLAUDE.md` importa este archivo para que Codex y Claude Code lean lo mismo. Todo el producto vive en [`plataforma/`](plataforma/README.md) (DT-27), que es lo que se prueba y se despliega. Cada carpeta de área (`plataforma/datos/`, `plataforma/frontend/`, `plataforma/backend/`, `entrega/`) tiene además su propio `AGENTS.md` con las reglas de esa área. Codex los combina con este al trabajar dentro de la carpeta.
 
 ## 1. Situación
 
@@ -12,8 +12,8 @@ El equipo está **en pleno hackathon** (NASA Space Apps, 14 y 15/11/2026), sigui
 
 - **Real:** el mapa base y las imágenes satelitales (Esri y OpenStreetMap).
 - **De demostración:** parcelas, indicadores, series, registros y respuestas del agente.
-- **Datos reales ya obtenidos:** consultas a NASA POWER (`datos/`), que el backend ya usa.
-- **Construido:** el backend (`backend/`: API, motor sin puntaje, agente guiado y extracción) y Supabase local. Su conexión con el frontend vigente está pendiente; la integración anterior se documenta en el informe 08.
+- **Datos reales ya obtenidos:** NASA POWER, SoilGrids, GAEZ, NASADEM, MODIS de ORNL, AppEEARS y el censo 2012 (`plataforma/datos/`, `plataforma/backend/`).
+- **Construido y conectado:** el backend (`plataforma/backend/`: API, motor sin puntaje, agente guiado y extracción), Supabase local y el frontend unido (DT-26), que ya lee datos reales de la API. `npm start` en `plataforma/` enciende todo.
 - **Sin conectar:** los conectores de MODIS, SoilGrids y GAEZ (tarea T01) y los datos de AppEEARS (DT-19), cálculo NDVI, modelo de IA, autenticación y evaluación agronómica revisada por especialistas.
 
 No confundas el prototipo ni la extensión del informe con un producto validado. El detalle está en [docs/00-estado-actual.md](docs/00-estado-actual.md).
@@ -37,9 +37,9 @@ Quien te habla **integra QENTARA**. Trabaja con esa persona como integrante del 
 
 - **Desafío:** *Field Shift: Adapting Farms with NASA Data*, NASA Space Apps 2026 (14 y 15 de noviembre de 2026). Ver [docs/08](docs/08-desafio-oficial.md).
 - **Equipo de cinco** (DT-09). Ver [docs/07](docs/07-equipo-y-areas.md). **Cada área trabaja solo en su carpeta:**
-  - Damaris: datos satelitales (`datos/`);
-  - Shantall: frontend y experiencia de usuario (`frontend/`);
-  - Erick: backend, conectores y motor (`backend/`);
+  - Damaris: datos satelitales (`plataforma/datos/`);
+  - Shantall: frontend y experiencia de usuario (`plataforma/frontend/`);
+  - Erick: backend, conectores y motor (`plataforma/backend/`);
   - dos integrantes de Derecho: entrega, pitch e investigación (`entrega/`).
 - **Roadmap del hackathon** (DT-12): [ROADMAP.md](ROADMAP.md). Tres fases: planificar cada área, reunión de unión a las 2 horas y construir con una nueva división.
 - **Plataformas** (DT-08): web primero, luego Android, luego iOS.
@@ -67,8 +67,8 @@ Web para computadora con sidebar izquierda, inicio y acceso, temas claro/oscuro,
 
 1. Este `AGENTS.md`.
 2. [docs/README.md](docs/README.md) y [docs/00-estado-actual.md](docs/00-estado-actual.md). Si hay un trabajo a medias, lee antes [docs/informes/en-curso.md](docs/informes/en-curso.md) y sigue desde «Siguiente paso exacto».
-3. El [informe maestro](Documentación/TARPU_Documentacion_Maestra.md), **versión 0.4** (23/10/2026). En especial la guía, el apartado 01, el anexo D (supuestos) y el anexo G (decisiones). Si hay una versión posterior, revisa su historial.
-4. Para el frontend: [frontend/README.md](frontend/README.md), [frontend/AGENTS.md](frontend/AGENTS.md), [docs/areas/frontend.md](docs/areas/frontend.md) y los archivos actuales, antes de cambiar arquitectura o dependencias.
+3. El [informe maestro](plataforma/documentacion/informe-maestro/TARPU_Documentacion_Maestra.md), **versión 0.4** (23/10/2026). En especial la guía, el apartado 01, el anexo D (supuestos) y el anexo G (decisiones). Si hay una versión posterior, revisa su historial.
+4. Para el frontend: [frontend/README.md](plataforma/frontend/README.md), [frontend/AGENTS.md](plataforma/frontend/AGENTS.md), [docs/areas/frontend.md](docs/areas/frontend.md) y los archivos actuales, antes de cambiar arquitectura o dependencias.
 5. Como antecedente: [TARPU_QENTARA_Contexto_Integral.md](TARPU_QENTARA_Contexto_Integral.md) (ver [docs/historial/](docs/historial/README.md)).
 
 Cómo resolver diferencias:
@@ -128,7 +128,7 @@ Los especialistas agronómicos revisan métodos y reglas. No son el intermediari
 Son antecedentes y propuestas, no acuerdos:
 
 - **Stack del producto:** MapLibre, Plotly, Python/FastAPI, PostgreSQL/PostGIS, colas, Redis y hosting (SUP-015). El prototipo usa React, TypeScript, Vite, Lucide, Leaflet 1.9.4 y CSS propio, y eso no aprueba el stack del producto.
-- **Datos:** **las fuentes y variables de la demo son las de DT-19** (POWER, SoilGrids, GAEZ, MODIS de ORNL, NASADEM, HLS, SMAP y el censo agropecuario 2012), consultadas en el centroide o bajadas una vez para los lugares de ejemplo. Los cultivos por sector siguen DT-20. **El motor trabaja con el esquema mixto (DT-22, [docs/11](docs/11-esquema-mixto.md)):** base de Arequipa guardada, extracción por coordenada en Google Cloud con aviso al usuario, API interna en uso (sin API pública para terceros) y lugares de ejemplo completos para el jurado. No propongas otras fuentes para la demo sin una decisión nueva. El análisis completo, con las fuentes que quedan para después, está en [datos/analisis-recursos.md](datos/analisis-recursos.md). Los recursos de USDA, USGS, PRISM y OpenET solo cubren Estados Unidos.
+- **Datos:** **las fuentes y variables de la demo son las de DT-19** (POWER, SoilGrids, GAEZ, MODIS de ORNL, NASADEM, HLS, SMAP y el censo agropecuario 2012), consultadas en el centroide o bajadas una vez para los lugares de ejemplo. Los cultivos por sector siguen DT-20. **El motor trabaja con el esquema mixto (DT-22, [docs/11](docs/11-esquema-mixto.md)):** base de Arequipa guardada, extracción por coordenada en Google Cloud con aviso al usuario, API interna en uso (sin API pública para terceros) y lugares de ejemplo completos para el jurado. No propongas otras fuentes para la demo sin una decisión nueva. El análisis completo, con las fuentes que quedan para después, está en [datos/analisis-recursos.md](plataforma/datos/analisis-recursos.md). Los recursos de USDA, USGS, PRISM y OpenET solo cubren Estados Unidos.
 - **Catálogo:** papa, quinua, haba y cebada son candidatos por revisar.
 - **Motor:** reglas transparentes y comparación explicable antes que modelos entrenados. Fórmulas, pesos y mínimos son experimentales.
 - **Negocio:** freemium, planes, precios, mercado, costos y proyecciones por contrastar. Las cifras de ejemplo son sintéticas.
@@ -171,7 +171,7 @@ Organizada al estilo del proyecto Pulse del usuario (DT-07). Reglas completas en
 - Las decisiones nuevas van a `docs/06` con fecha, quién decidió y estado. Las anteriores se marcan como reemplazadas, no se borran.
 - Sin plazos de desarrollo (sección 3).
 
-### Informe maestro (`Documentación/`)
+### Informe maestro (`plataforma/documentacion/informe-maestro/`)
 
 Los tres formatos deben conservar el mismo contenido sustantivo:
 
@@ -197,17 +197,17 @@ No des por sincronizados los formatos porque sus nombres coincidan.
 - **No ejecutes `editar_v03.py` ni `editar_v04.py`**: aplican transformaciones de revisiones concretas.
 - `tmp/` no es software de TARPU ni tiene prioridad sobre la documentación actual.
 
-### Código de frontend (`frontend/`)
+### Código de frontend (`plataforma/frontend/`)
 
-Ver [frontend/README.md](frontend/README.md) y [docs/desarrollo.md](docs/desarrollo.md). El historial de cambios está en [docs/informes/](docs/informes/README.md).
+Ver [frontend/README.md](plataforma/frontend/README.md) y [docs/desarrollo.md](docs/desarrollo.md). El historial de cambios está en [docs/informes/](docs/informes/README.md).
 
-- No añadas documentos maestros ni archivos de procesamiento de informes a `frontend/`.
+- No añadas documentos maestros ni archivos de procesamiento de informes a `plataforma/frontend/`.
 - Mantén los fixtures identificados mientras existan; la entrega final no los muestra (DT-16): se sustituyen por datos de la API.
 - Las zonas de La Joya, Majes y Camaná son centros aproximados de navegación, **no coordenadas ni límites de parcelas**.
 - No descargues regiones de teselas ni las incluyas en exportaciones.
 - No pongas claves de proveedores en el frontend.
-- El logo vigente es el de blanco y negro de `frontend/public/brand/` (`tarpu-logo-*`, `tarpu-mark-*`); el original a color se conserva.
-- Después de un cambio, desde la raíz: `npm --prefix frontend run build` y `npm --prefix frontend test`. Si hay un navegador disponible, también `npm --prefix frontend run test:ui`, con `dev` encendido.
+- El logo vigente es el de blanco y negro de `plataforma/frontend/public/brand/` (`tarpu-logo-*`, `tarpu-mark-*`); el original a color se conserva.
+- Después de un cambio, desde `plataforma/`: `npm --prefix frontend run build` y `npm run pruebas`. Si hay un navegador disponible, también `npm run pruebas:navegador`, con `npm start` encendido.
 
 Este `AGENTS.md` se actualiza cuando cambian las reglas o se cierra una decisión importante. El estado del día a día va en `docs/00-estado-actual.md`.
 
