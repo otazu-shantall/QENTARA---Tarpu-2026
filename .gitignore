@@ -32,3 +32,7 @@ backend/herramientas/salida/
 # Tareas de extracción: la caché es local; las salidas SÍ se suben (son la base de datos de la demo)
 trabajo/T01-paquete-extraccion/cache/
 trabajo/**/*.part
+
+# T02 base de Arequipa: datos grandes, se cargan a la base de datos (no a git); el manifiesto sí se sube
+trabajo/T02-base-arequipa/salida/
+trabajo/T02-base-arequipa/cache/

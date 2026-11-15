@@ -6,6 +6,15 @@
 **Trabajo:** Hackathon · **fase 1 del [ROADMAP](../../ROADMAP.md)**: cada área planifica su parte y llena su [plantilla de propuesta](../areas/).
 **Último trabajo cerrado:** 06 · Análisis del repositorio y base para continuar (14/11/2026) → [06-analisis-repositorio.md](06-analisis-repositorio.md). Revisión sin cambios de código ni de fase organizativa; contiene comprobaciones y pendientes técnicos.
 
+## Pendiente de la demo (no olvidar)
+
+Datos completos de los lugares de ejemplo (capa 3 de DT-22), para que el jurado pruebe TARPU. Se dejaron para después el 15/11/2026 (Erick):
+
+- [ ] **Majes riego:** NASA POWER y horas de luz 2015–2025 con T01 (Damaris). Comando en [trabajo/README.md](../../trabajo/README.md).
+- [ ] **AppEEARS** (NASADEM, HLS, SMAP e imágenes de Chivay) con `trabajo/extraccion_pesada/pesados.py`, y subir `salida/` y `tareas.json`.
+- [ ] **S2, Cabanaconde** (opcional): T01 completo.
+- [ ] Incertidumbre de SoilGrids: verificar su factor en la documentación de ISRIC (T01 §9.4).
+
 ## Siguiente paso exacto
 
 Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](../areas/propuesta-frontend.md), [backend](../../backend/PROPUESTA.md) y [entrega](../areas/propuesta-entrega.md). A las 2 horas de empezar, **reunión de unión** (fase 2 del ROADMAP). Sus decisiones van a [06](../06-decisiones-y-riesgos.md) y la nueva división a esta bitácora.

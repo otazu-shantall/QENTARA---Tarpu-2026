@@ -73,7 +73,7 @@ Mientras un trabajo no termina, cada fuente muestra su estado real, con los que 
 | Extracción por punto de capa 2 por ORNL (T01) y AppEEARS (`pesados.py`) | ✅ escrita; T01 ya corrió en Majes riego y Chivay |
 | Cultivos por sector, métodos citados | ✅ `backend/catalogo/`, `backend/investigacion/` |
 | Lugares de ejemplo completos (capa 3) | 🟡 T01 hecho en dos lugares; falta subir sus salidas y la parte de AppEEARS |
-| Base de Arequipa (capa 1) | ❌ por extraer (propuesta: tarea T02) |
+| Base de Arequipa (capa 1) | 🟡 **T02 extraída el 15/11/2026** (`trabajo/T02-base-arequipa/`): SoilGrids 99 mapas, GAEZ 100 mapas, POWER 63 celdas y CENAGRO de Arequipa. Falta NASADEM (cuenta Earthdata) y cargarla a la base de datos |
 | Trabajos en Google Cloud (capa 2) | ❌ falta el proyecto de Google Cloud con Earth Engine y el código del trabajo |
 | Aviso al usuario | ❌ falta elegir el canal |
 | Servidor para la API interna | ❌ falta elegir dónde corre (propuesta: Google Cloud) |
