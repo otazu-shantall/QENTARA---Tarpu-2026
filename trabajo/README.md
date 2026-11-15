@@ -8,6 +8,7 @@ Aquí se bajan **completos** los datos de los lugares de ejemplo y se suben al r
 |---|---|---|---|
 | [T01-paquete-extraccion/](T01-paquete-extraccion/README.md) | NASA POWER (19 variables), SoilGrids, FAO GAEZ, horas de luz y MODIS de ORNL (NDVI, ET, temperatura de superficie y cobertura) | No hace falta | Damaris |
 | [T02-base-arequipa/](T02-base-arequipa/README.md) | **Base de Arequipa** (capa 1). **Movida al backend:** `backend/tarpu_datos/` | Solo NASADEM | Erick |
+| [T03-modelado-datos/](T03-modelado-datos/README.md) | **Modelado de los datos** del esquema mixto: entidades, diccionario de variables, agregaciones, contrato por pantalla y modelo físico (diseño, sin código) | No | Damaris |
 | [extraccion_pesada/](extraccion_pesada/README.md) | NASADEM (relieve), HLS (NDVI de 30 m), SMAP (humedad del suelo) e imágenes de Chivay, por AppEEARS | Earthdata | Un compañero |
 
 ## Los tres lugares
