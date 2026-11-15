@@ -35,7 +35,7 @@ Todo lo del backend está en esta carpeta; [README.md](README.md) es el índice.
   - sin interpretaciones sin evidencia;
   - lo que no se sabe se devuelve como `sin_dato` o `sin_regla` con su motivo, nunca se rellena.
 - **El plan manda:** sigue [DISENO.md](DISENO.md) y [MODULOS.md](MODULOS.md).
-- **Extracción dentro del backend (DT-22, 15/11/2026):** `tarpu_datos/` (copia corregida del paquete T01 de Damaris) extrae y actualiza los datos: la base de Arequipa (`base_regional.py`) y los puntos registrados (`actualizar.py`). Siempre deja original, normalizado y procedencia. `tarpu_api` los lee; los módulos de lógica no descargan.
+- **Extracción dentro del backend (DT-22, 15/11/2026):** `tarpu_datos/` (copia corregida del paquete T01 de Damaris) extrae y actualiza los datos: la base de Arequipa (`base/extraer.py` y `base/leer.py`), los trabajos por coordenada (`coordenada/trabajos.py`) y la actualización (`actualizacion.py`). Plan de plataformas: [PLAN-PLATAFORMAS-Y-COORDENADA.md](PLAN-PLATAFORMAS-Y-COORDENADA.md). Siempre deja original, normalizado y procedencia. `tarpu_api` los lee; los módulos de lógica no descargan.
 - **Catálogo:** `catalogo/ecocrop_2026-11-14.json` (FAO EcoCrop, copiado tal cual con su URL). No se le añade ningún valor sin cita; donde EcoCrop no trae el dato, es `null` y el criterio sale `sin_regla`.
 - **Lo que devuelve el motor:** el cultivo actual y todos los del catálogo de otra familia (al menos tres estrategias, incluida la actual). Cada criterio se compara con su rango citado (`dentro_optimo`, `dentro_absoluto`, `fuera_absoluto`, `sin_dato`, `sin_regla`), con vacíos y conflictos entre fuentes.
   - **Sin puntaje, sin pesos y sin «apto / no apto».**

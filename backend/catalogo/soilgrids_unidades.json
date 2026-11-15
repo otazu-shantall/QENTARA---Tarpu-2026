@@ -1,0 +1,117 @@
+{
+ "descripcion": "Unidades y factor de conversión (d_factor) de cada propiedad de SoilGrids 2.0: valor = entero mapeado / d_factor. Copiado de la procedencia de T01 (Damaris, 15/11/2026), que los leyó de la API REST de ISRIC (campo unit_measure). Escrito con asistencia de IA (Claude Code).",
+ "fuente": "ISRIC SoilGrids 2.0, https://rest.isric.org/soilgrids/v2.0/ (unit_measure)",
+ "propiedades": {
+  "phh2o": {
+   "mapped_units": "pH*10",
+   "target_units": "-",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "procedencia REST guardada",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-71.6&lat=-15.64&property=phh2o&property=clay&property=sand&property=soc&depth=0-5cm&depth=5-15cm&value=mean&value=Q0.05&value=Q0.5&value=Q0.95&value=uncertainty",
+    "requested_at": "2026-11-14T17:27:25+00:00"
+   }
+  },
+  "clay": {
+   "mapped_units": "g/kg",
+   "target_units": "%",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "procedencia REST guardada",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-71.6&lat=-15.64&property=phh2o&property=clay&property=sand&property=soc&depth=0-5cm&depth=5-15cm&value=mean&value=Q0.05&value=Q0.5&value=Q0.95&value=uncertainty",
+    "requested_at": "2026-11-14T17:27:25+00:00"
+   }
+  },
+  "sand": {
+   "mapped_units": "g/kg",
+   "target_units": "%",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "procedencia REST guardada",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-71.6&lat=-15.64&property=phh2o&property=clay&property=sand&property=soc&depth=0-5cm&depth=5-15cm&value=mean&value=Q0.05&value=Q0.5&value=Q0.95&value=uncertainty",
+    "requested_at": "2026-11-14T17:27:25+00:00"
+   }
+  },
+  "silt": {
+   "mapped_units": "g/kg",
+   "target_units": "%",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "consulta REST",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-72.185771&lat=-16.367023&property=silt&property=nitrogen&property=cec&property=bdod&property=cfvo&property=wv0033&property=wv1500&depth=0-5cm&value=mean",
+    "requested_at": "2026-11-15T06:25:27+00:00"
+   }
+  },
+  "soc": {
+   "mapped_units": "dg/kg",
+   "target_units": "g/kg",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "procedencia REST guardada",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-71.6&lat=-15.64&property=phh2o&property=clay&property=sand&property=soc&depth=0-5cm&depth=5-15cm&value=mean&value=Q0.05&value=Q0.5&value=Q0.95&value=uncertainty",
+    "requested_at": "2026-11-14T17:27:25+00:00"
+   }
+  },
+  "nitrogen": {
+   "mapped_units": "cg/kg",
+   "target_units": "g/kg",
+   "d_factor": 100,
+   "origen": {
+    "tipo": "consulta REST",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-72.185771&lat=-16.367023&property=silt&property=nitrogen&property=cec&property=bdod&property=cfvo&property=wv0033&property=wv1500&depth=0-5cm&value=mean",
+    "requested_at": "2026-11-15T06:25:27+00:00"
+   }
+  },
+  "cec": {
+   "mapped_units": "mmol(c)/kg",
+   "target_units": "cmol(c)/kg",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "consulta REST",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-72.185771&lat=-16.367023&property=silt&property=nitrogen&property=cec&property=bdod&property=cfvo&property=wv0033&property=wv1500&depth=0-5cm&value=mean",
+    "requested_at": "2026-11-15T06:25:27+00:00"
+   }
+  },
+  "bdod": {
+   "mapped_units": "cg/cm³",
+   "target_units": "kg/dm³",
+   "d_factor": 100,
+   "origen": {
+    "tipo": "consulta REST",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-72.185771&lat=-16.367023&property=silt&property=nitrogen&property=cec&property=bdod&property=cfvo&property=wv0033&property=wv1500&depth=0-5cm&value=mean",
+    "requested_at": "2026-11-15T06:25:27+00:00"
+   }
+  },
+  "cfvo": {
+   "mapped_units": "cm³/dm³",
+   "target_units": "cm³/100cm³",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "consulta REST",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-72.185771&lat=-16.367023&property=silt&property=nitrogen&property=cec&property=bdod&property=cfvo&property=wv0033&property=wv1500&depth=0-5cm&value=mean",
+    "requested_at": "2026-11-15T06:25:27+00:00"
+   }
+  },
+  "wv0033": {
+   "mapped_units": "(10-2 cm³/cm³)*10",
+   "target_units": "10-2 cm³/cm³",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "consulta REST",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-72.185771&lat=-16.367023&property=silt&property=nitrogen&property=cec&property=bdod&property=cfvo&property=wv0033&property=wv1500&depth=0-5cm&value=mean",
+    "requested_at": "2026-11-15T06:25:27+00:00"
+   }
+  },
+  "wv1500": {
+   "mapped_units": "(10-2 cm³/cm³)*10",
+   "target_units": "10-2 cm³/cm³",
+   "d_factor": 10,
+   "origen": {
+    "tipo": "consulta REST",
+    "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-72.185771&lat=-16.367023&property=silt&property=nitrogen&property=cec&property=bdod&property=cfvo&property=wv0033&property=wv1500&depth=0-5cm&value=mean",
+    "requested_at": "2026-11-15T06:25:27+00:00"
+   }
+  }
+ },
+ "incertidumbre": "Mapped integer kept in original and in .largo.csv; conversion factor and unit not verified against ISRIC documentation, so the normalized column is empty (pending)."
+}

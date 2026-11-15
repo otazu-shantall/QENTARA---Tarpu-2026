@@ -17,8 +17,8 @@ import sys
 import time
 from pathlib import Path
 
-from . import gaez, luz, ornl, power, soilgrids
-from .cliente import log
+from .fuentes import gaez, luz, ornl, power, soilgrids
+from .fuentes.cliente import log
 
 CARPETA = Path(__file__).resolve().parent.parent / 'almacen'  # backend/almacen (git lo ignora)
 FUENTES = ['power', 'soilgrids', 'gaez', 'luz', 'ornl']

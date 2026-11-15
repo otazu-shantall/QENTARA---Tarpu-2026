@@ -14,17 +14,17 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from . import __version__, agente, almacen, catalogo, config, datos_detallados, errores, indicadores, meta, motor, parcelas, procesamiento
+from . import __version__, agente, almacen, base, catalogo, config, datos_detallados, errores, indicadores, meta, motor, parcelas, procesamiento
 from .esquemas import ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, Sobre, sobre
 
 @asynccontextmanager
 async def _ciclo(_: FastAPI):
-    """Con TARPU_ACTUALIZAR_CADA_HORAS, actualiza los datos en segundo plano (tarpu_datos.actualizar, DT-22)."""
+    """Con TARPU_ACTUALIZAR_CADA_HORAS, actualiza los datos en segundo plano (tarpu_datos.actualizacion, DT-22)."""
     parar = None
     cada = os.environ.get("TARPU_ACTUALIZAR_CADA_HORAS")
     if cada:
-        from tarpu_datos import actualizar  # solo si se activa: la API no depende de él para arrancar
-        _, parar = actualizar.iniciar_en_segundo_plano(float(cada))
+        from tarpu_datos import actualizacion  # solo si se activa: la API no depende de él para arrancar
+        _, parar = actualizacion.iniciar_en_segundo_plano(float(cada))
     yield
     if parar:
         parar.set()
@@ -55,6 +55,13 @@ def _solo_en_vivo() -> None:
 @app.get("/api/meta", response_model=Sobre, tags=["meta"])
 def get_meta():
     return sobre(meta.obtener())
+
+
+@app.get("/api/base", response_model=Sobre, tags=["base de Arequipa"])
+def get_base(lat: float, lon: float):
+    """Capa 1 del esquema mixto (DT-22): relieve, sector y cultivos, suelo, aptitud y celda de clima en un punto."""
+    r = base.en_punto(lat, lon)
+    return sobre(r, procedencia=base.procedencia(r), avisos=r.get("avisos", []) + ([r["motivo"]] if r.get("motivo") else []))
 
 
 @app.get("/api/catalogo", response_model=Sobre, tags=["meta"])

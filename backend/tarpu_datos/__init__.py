@@ -7,7 +7,8 @@ Origen: el paquete de la tarea T01 de Damaris (trabajo/T01-paquete-extraccion/ta
   las fechas nuevas; la lista de fechas se refresca cada 8 días;
 - POWER: sin fecha de fin, pide hasta ayer y recorta los últimos días que POWER aún no publica; nombre fijo
   opcional (archivo_base) para que la actualización reemplace el mismo archivo;
-- base_regional (capa 1, toda Arequipa) y actualizar (actualización periódica), nuevos.
+- nuevos: base/ (capa 1, toda Arequipa: extraer y leer), coordenada/trabajos.py (capa 2) y actualizacion.py.
+Organización: fuentes/ (una fuente por módulo), base/, coordenada/ y actualizacion.py.
 
 Cada módulo de fuente (power, soilgrids, gaez, luz, ornl) expone obtener(*, lat, lon, salida, cache,
 inicio=None, fin=None, progreso=None, ...) y deja original, normalizado y procedencia.

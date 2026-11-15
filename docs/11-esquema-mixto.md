@@ -73,8 +73,10 @@ Mientras un trabajo no termina, cada fuente muestra su estado real, con los que 
 | Extracción por punto de capa 2 por ORNL (T01) y AppEEARS (`pesados.py`) | ✅ escrita; T01 ya corrió en Majes riego y Chivay |
 | Cultivos por sector, métodos citados | ✅ `backend/catalogo/`, `backend/investigacion/` |
 | Lugares de ejemplo completos (capa 3) | 🟡 T01 hecho en dos lugares; falta subir sus salidas y la parte de AppEEARS |
-| Base de Arequipa (capa 1) | ✅ **extraída el 15/11/2026** (`backend/tarpu_datos/base_regional.py`): SoilGrids 99 mapas, GAEZ 100, POWER 63 celdas, NASADEM 20 teselas y CENAGRO de Arequipa. Falta cargarla a la base de datos |
-| Actualización periódica | ✅ `backend/tarpu_datos/actualizar.py`: POWER cada 7 días, MODIS cada 8 y cobertura cada 30, solo lo nuevo; dentro de la API con `TARPU_ACTUALIZAR_CADA_HORAS` |
+| Base de Arequipa (capa 1) | ✅ **extraída el 15/11/2026** (`backend/tarpu_datos/base/extraer.py`): SoilGrids 99 mapas, GAEZ 100, POWER 63 celdas, NASADEM 20 teselas y CENAGRO de Arequipa. Falta cargarla a la base de datos |
+| Lectura de la base en un punto | ✅ `backend/tarpu_datos/base/leer.py` y `GET /api/base` (0,2–0,5 s) |
+| Trabajos por coordenada | 🟡 `backend/tarpu_datos/coordenada/trabajos.py` con POWER y MODIS (ORNL); falta Earth Engine e integrarlo en `procesamiento.py`. Plan: [backend/PLAN-PLATAFORMAS-Y-COORDENADA.md](../backend/PLAN-PLATAFORMAS-Y-COORDENADA.md) |
+| Actualización periódica | ✅ `backend/tarpu_datos/actualizacion.py`: POWER cada 7 días, MODIS cada 8 y cobertura cada 30, solo lo nuevo; dentro de la API con `TARPU_ACTUALIZAR_CADA_HORAS` |
 | Trabajos en Google Cloud (capa 2) | ❌ falta el proyecto de Google Cloud con Earth Engine y el código del trabajo |
 | Aviso al usuario | ❌ falta elegir el canal |
 | Servidor para la API interna | ❌ falta elegir dónde corre (propuesta: Google Cloud) |

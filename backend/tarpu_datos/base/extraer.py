@@ -11,9 +11,9 @@ Caja: lon -75.5 a -70.5, lat -17.5 a -14.5 (rectángulo que contiene Arequipa; e
 carga a la base de datos, cuando se tenga ese límite). Todo es reanudable: lo que ya está completo no se vuelve a pedir.
 
 Uso (desde backend/):
-    python -m tarpu_datos.base_regional soilgrids | gaez | power | nasadem | estado
-    python -m tarpu_datos.base_regional cenagro --zip RUTA/2012.zip
-    python -m tarpu_datos.base_regional power --actualizar     (vuelve a pedir hasta ayer; lo usa actualizar.py)
+    python -m tarpu_datos.base.extraer soilgrids | gaez | power | nasadem | estado
+    python -m tarpu_datos.base.extraer cenagro --zip RUTA/2012.zip
+    python -m tarpu_datos.base.extraer power --actualizar     (vuelve a pedir hasta ayer; lo usa actualizar.py)
 Datos en backend/almacen/base_arequipa/ (git lo ignora); manifiesto en backend/catalogo/base_arequipa.json (sí se sube).
 Origen: trabajo/T02-base-arequipa (15/11/2026). Solo biblioteca estándar.
 Escrito con asistencia de IA (Claude Code). Declarado en entrega/uso-de-ia.md.
@@ -33,11 +33,11 @@ import zipfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from . import gaez as t01_gaez
-from . import power as t01_power
-from .cliente import Cache, PeticionFallida, Servicio, ahora_iso, escribir_atomico, log
+from ..fuentes import gaez as t01_gaez
+from ..fuentes import power as t01_power
+from ..fuentes.cliente import Cache, PeticionFallida, Servicio, ahora_iso, escribir_atomico, log
 
-BACKEND = Path(__file__).resolve().parent.parent
+BACKEND = Path(__file__).resolve().parent.parent.parent
 RAIZ = BACKEND.parent
 SALIDA = BACKEND / 'almacen' / 'base_arequipa'
 CACHE = BACKEND / 'almacen' / 'cache' / 'base_arequipa'

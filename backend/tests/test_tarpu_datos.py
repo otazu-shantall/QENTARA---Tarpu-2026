@@ -6,7 +6,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timedelta, timezone
 
-from tarpu_datos import cliente, ornl
+from tarpu_datos.fuentes import cliente, ornl
 
 
 def test_tramos_anclados_no_cambian_al_ampliar_el_periodo():
@@ -31,3 +31,17 @@ def test_cache_con_antiguedad_vuelve_a_pedir(tmp_path):
     assert caja.obtener_json("x.json", Falso(), "u")["response"] == {"v": 1}           # sin límite: caché
     assert caja.obtener_json("x.json", Falso(), "u", max_edad_dias=8)["response"] == {"v": 2}  # vieja: se pide
     assert json.loads((tmp_path / "x.json").read_text(encoding="utf-8"))["response"] == {"v": 2}
+
+
+def test_base_de_arequipa_en_majes(tmp_path):
+    """Lee la capa 1 en Majes riego si la base está extraída en esta computadora (almacen/ no va a git)."""
+    import pytest
+    from tarpu_datos.base import leer
+    if not (leer.BASE / "nasadem").exists():
+        pytest.skip("la base de Arequipa no está extraída en esta computadora")
+    r = leer.leer(-16.367023, -72.185771)
+    assert r["relieve"]["altitud_m"] == 1391            # NASADEM; AppEEARS dio 1390 en el mismo punto
+    assert r["sector"]["sector"] == "S1"
+    assert r["suelo"]["capas"]["phh2o_0-5cm_mean"]["valor"] == 8.2
+    assert r["clima"]["elevacion_celda_m"] == 1940.88   # igual a la consulta por punto a POWER
+    assert leer.leer(0, 0)["estado"] == "sin_dato"      # fuera de la caja: no se rellena

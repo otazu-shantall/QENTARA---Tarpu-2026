@@ -1,5 +1,7 @@
 # Extracción pesada (AppEEARS) para los lugares de ejemplo
 
+> **15/11/2026:** la versión oficial de este script está ahora en `backend/tarpu_datos/fuentes/appeears.py` (se usa desde `backend/` con `python -m tarpu_datos.fuentes.appeears ...`). Esta copia queda como antecedente.
+
 > Escrito con asistencia de IA (Claude Code), 15/11/2026. Declarado en [entrega/uso-de-ia.md](../../entrega/uso-de-ia.md).
 
 Esta carpeta es para que **un compañero vaya bajando los datos lentos** mientras el resto trabaja. No toca `datos/`, `backend/` ni T01. Los datos livianos (POWER, SoilGrids, GAEZ, MODIS de ORNL por punto, horas de luz) los hace la tarea T01; aquí van solo los que pasan por **AppEEARS** (NASA, cuenta Earthdata).

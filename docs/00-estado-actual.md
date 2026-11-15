@@ -57,6 +57,7 @@
 | Extracción pesada (AppEEARS) | 🟡 scripts listos | `trabajo/extraccion_pesada/` | NASADEM, HLS, SMAP e imágenes de Chivay para los tres lugares de ejemplo; los ejecuta un compañero con la cuenta de Earthdata. |
 | Cultivos por sector y métodos citados | ✅ | `backend/catalogo/sectores.json`, `backend/investigacion/` | DT-20; Kc, LS, K, horas de luz, rotación de sierra. |
 | Base de Arequipa (capa 1, DT-22) | ✅ extraída (15/11/2026) | `backend/tarpu_datos/`, datos en `backend/almacen/base_arequipa/` | SoilGrids (99 mapas), GAEZ (100), POWER (63 celdas), NASADEM (20 teselas) y CENAGRO. ≈ 620 MB fuera de git; manifiesto en `backend/catalogo/base_arequipa.json`. Falta la carga a la base de datos. |
+| Lectura de la base y trabajos por coordenada | ✅ / 🟡 | `backend/tarpu_datos/base/leer.py`, `coordenada/trabajos.py`, `GET /api/base` | Capa 1 en un punto en menos de 0,5 s; trabajos con POWER y MODIS (ORNL). Plan de plataformas (propuesta Google Cloud) en `backend/PLAN-PLATAFORMAS-Y-COORDENADA.md`. 18 pruebas. |
 | Extracción y actualización en el backend | ✅ | `backend/tarpu_datos/` | Paquete T01 corregido (MODIS solo pide lo nuevo; POWER hasta ayer) y `actualizar.py` con períodos por fuente, también dentro de la API. 17 pruebas que pasan. |
 | Trabajos por coordenada en Google Cloud (capa 2) | ❌ | — | Falta el proyecto de Google Cloud con Earth Engine, el servidor de la API interna y el canal del aviso. |
 | Base de datos, autenticación | ❌ | — | Demo sin base de datos (DT-13); PostGIS y cuentas siguen propuestos (SUP-015, SUP-026). |

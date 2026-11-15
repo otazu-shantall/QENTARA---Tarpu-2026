@@ -53,7 +53,8 @@ backend/
 
 | Qué | Dónde | Por qué ahí |
 |---|---|---|
-| Extracción y actualización de datos | [tarpu_datos/README.md](tarpu_datos/README.md) | Base de Arequipa, puntos registrados y actualización periódica (DT-22) |
+| Extracción y actualización de datos | [tarpu_datos/README.md](tarpu_datos/README.md) | Carpeta oficial: fuentes, base de Arequipa (extraer y leer), trabajos por coordenada y actualización periódica (DT-22) |
+| Plataformas y extracción por coordenada | [PLAN-PLATAFORMAS-Y-COORDENADA.md](PLAN-PLATAFORMAS-Y-COORDENADA.md) | Dónde se sube la base (propuesta: Google Cloud) y la lógica de la capa 2 |
 | Decisiones DT-13 a DT-22 | [docs/06](../docs/06-decisiones-y-riesgos.md) | Todas las decisiones del equipo se registran en un solo archivo |
 | Recorrido del usuario y escala | [docs/10](../docs/10-recorrido-y-escala.md) | Lo comparten backend y frontend |
 | Conectores a las fuentes | [datos/](../datos/README.md) | Son del área de Damaris; el backend solo los invoca |

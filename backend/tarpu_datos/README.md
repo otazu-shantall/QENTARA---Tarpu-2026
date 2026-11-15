@@ -6,12 +6,16 @@
 
 ## Qué hay
 
-| Módulo | Qué hace |
+Es la **carpeta oficial** de extracción. El plan de plataformas y de la capa 2 está en [../PLAN-PLATAFORMAS-Y-COORDENADA.md](../PLAN-PLATAFORMAS-Y-COORDENADA.md).
+
+| Carpeta o módulo | Qué hace |
 |---|---|
-| `power.py`, `soilgrids.py`, `gaez.py`, `luz.py`, `ornl.py` | Una fuente por módulo, en un punto. Cada uno deja original, normalizado y procedencia (de T01) |
-| `cliente.py` | Peticiones con tope, reintentos, caché y escritura atómica (de T01) |
-| `base_regional.py` | **Capa 1:** toda Arequipa (SoilGrids y GAEZ por área, POWER por celdas, NASADEM, CENAGRO) |
-| `actualizar.py` | **Actualización periódica** de la base y de cada punto registrado |
+| `fuentes/` | Una fuente por módulo: `power`, `soilgrids`, `gaez`, `luz`, `ornl` (MODIS) y `appeears` (NASADEM, HLS, SMAP). Cada una deja original, normalizado y procedencia |
+| `fuentes/cliente.py` | Peticiones con tope, reintentos, caché con antigüedad y escritura atómica |
+| `base/extraer.py` | **Capa 1:** baja toda Arequipa (SoilGrids y GAEZ por área, POWER por celdas, NASADEM, CENAGRO) |
+| `base/leer.py` | **Capa 1 en un punto**, sin descargar (0,2–0,5 s). Lo usa la API en `GET /api/base` |
+| `coordenada/trabajos.py` | **Capa 2:** un trabajo por punto en segundo plano (POWER y MODIS hoy; HLS y SMAP con Earth Engine) |
+| `actualizacion.py` | **Actualización periódica** de la base y de cada punto registrado |
 
 ## Qué se corrigió de T01 y por qué
 
@@ -51,19 +55,23 @@
 ## Comandos (desde `backend/`)
 
 ```bash
-.venv/Scripts/python -m tarpu_datos.actualizar estado
+.venv/Scripts/python -m tarpu_datos.actualizacion estado
 ```
 
 ```bash
-.venv/Scripts/python -m tarpu_datos.actualizar agregar NOMBRE LAT LON
+.venv/Scripts/python -m tarpu_datos.actualizacion agregar NOMBRE LAT LON
 ```
 
 ```bash
-.venv/Scripts/python -m tarpu_datos.actualizar una-vez
+.venv/Scripts/python -m tarpu_datos.actualizacion una-vez
 ```
 
 ```bash
-.venv/Scripts/python -m tarpu_datos.base_regional estado
+.venv/Scripts/python -m tarpu_datos.base.extraer estado
+```
+
+```bash
+.venv/Scripts/python -m tarpu_datos.coordenada.trabajos pedir -15.612386 -71.984857 --nombre valle_s2 --esperar
 ```
 
 ```bash
