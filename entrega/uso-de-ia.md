@@ -46,6 +46,7 @@ La IA no debe usarse para idear la solución. La idea, el alcance y los límites
 | 15/11/2026 | Erick | Claude Code | Fichas EcoCrop de forrajes, regla de cultivos por sector (generador y catálogo), métodos citados (Kc, LS, textura, rotación, beneficios) y decisiones DT-19 a DT-21 | `backend/investigacion/`, `backend/catalogo/sectores.json`, `backend/herramientas/generar_sectores.py`, `docs/06` | ✅ en el encabezado del script y en la descripción de los JSON |
 | 15/11/2026 | Damaris | Claude Code | T03, modelo lógico de los datos del esquema mixto: entidades, identificación de celdas, vacíos, procedencia y diagrama | `trabajo/T03-modelado-datos/modelo-logico.md` | ✅ en el encabezado |
 | 15/11/2026 | Damaris | Claude Code | T03, agregaciones de la pantalla 5: método citado, celdas, período y vacíos de cada indicador | `trabajo/T03-modelado-datos/agregaciones.md` | ✅ en el encabezado |
+| 15/11/2026 | Damaris | Claude Code | T03, diccionario de variables (POWER, MODIS, HLS, SMAP, NASADEM, SoilGrids, GAEZ, luz y CENAGRO) y filas de HLS y SMAP L4 con la descarga | `trabajo/T03-modelado-datos/diccionario-variables.md`, `agregaciones.md`, `modelo-logico.md` | ✅ en el encabezado |
 | | | | | | |
 
 ## Pendientes

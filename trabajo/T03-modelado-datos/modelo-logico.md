@@ -72,7 +72,8 @@ Parte de la lista del README (§3.1) corregida. Las marcadas **nueva** no estaba
 | GAEZ v4, GeoTIFF de la base | 0,0833° | (archivo de la capa, fila, columna) de la cabecera del GeoTIFF, como `_pixeles_raster` | antes de pedir (según el código; no verificado con datos) |
 | NASADEM | 1″ (≈ 30 m) | (tesela, fila, columna) | antes de pedir |
 | SMAP L3E (AppEEARS) | 9 km, EASE-Grid (metadatos de `smap_l3_puntos`) | (`Line_Y`, `Sample_X`) del CSV de AppEEARS (Majes riego: 1040, 1154) | después de la respuesta |
-| SMAP L4, HLS | Pendientes | Pendiente de verificar con la descarga | — |
+| SMAP L4 (AppEEARS) | 9 km, EASE-Grid (`smap_l4_puntos/…-metadata.xml`) | (`SPL4SMGP_008_Line_Y_9.00805km`, `SPL4SMGP_008_Sample_X_9.00805km`), la **misma celda que L3E** en los tres lugares (Majes riego 1040, 1154; Chivay 1030, 1161; S2 1030, 1156) | después de la respuesta |
+| HLS L30 y S30 (AppEEARS) | 30 m (`hls_*_puntos/…-metadata.xml`) | (`HLS_Tile`, píxel). El CSV por punto da la tesela pero no la fila ni la columna, así que el píxel queda **pendiente** (V-B04 de `agregaciones.md`). En Majes riego y Chivay el punto cae en **dos teselas** a la vez | la tesela, después de la respuesta; el píxel, pendiente |
 | Horas de luz (FAO-56) | Sin rejilla: depende solo de la latitud | la latitud del punto | antes (se calcula) |
 
 ## 4. Valores vacíos: un faltante nunca es 0
@@ -85,9 +86,9 @@ Cada observación sin valor lleva **un motivo** de esta lista. Los ejemplos est�
 |---|---|---|
 | `relleno_del_proveedor` | El proveedor entregó su valor de relleno | MOD11A2 en S2: el crudo vale 0, que es su `fill_value`, en 3 fechas de día y 31 de noche (`missing_values_by_band`; ej. 18/02/2016, crudo 0 en las dos bandas). SMAP L3E: −9999 el 01/01/2025 en Majes riego. POWER: relleno −999 (`fill_value` de la procedencia; 0 días en S2) |
 | `fuera_de_rango_valido` | El valor está fuera de `valid_range` | Regla del normalizado de ORNL: «fill or out of valid_range ⇒ empty». Ej. de rango: MOD11A2, 7500 a 65535 |
-| `calidad_no_valida` | Hay valor, pero su bandera de calidad lo descarta | Pendiente: qué códigos de `pixel_reliability` (S2: 235 «bueno», 37 «marginal») y de `retrieval_qual_flag` cortan la línea se decide con cita en `agregaciones.md` |
+| `calidad_no_valida` | Hay valor, pero su bandera de calidad lo descarta | SMAP L3E: los valores sin «recommended quality» (`agregaciones.md` I16). MOD13Q1: **no se usa por ahora**; la propuesta es marcar los códigos 2 y 3 con la etiqueta del proveedor sin cortar la línea, y lo decide Erick (`agregaciones.md` I07, V-A03) |
 | `sin_verificar` | **No es un vacío:** el proveedor entrega el valor y se guarda el **entero sin convertir**. TARPU no lo convierte porque su factor y su unidad no están verificados. No es un relleno del proveedor ni un fallo de descarga | SoilGrids `uncertainty`: el entero sin convertir se guarda en `.largo.csv` (pH 0–5 cm en S2: 5). El normalizado no trae valor convertido; su columna lleva la etiqueta «(sin verificar)». MODIS con `add_offset` ≠ 0 tendría el mismo trato (regla de `ornl.py`; no ha ocurrido) |
-| `fecha_no_publicada` | El servicio no lista esa fecha para el producto. No es un fallo: `dates_in_period` y `dates_returned` coinciden | MOD11A2 tiene 505 fechas y MOD16A2GF 506 en 2015–2025. La que falta es el **16/10/2022**, en los tres lugares. Causa sin explicar (V-09) |
+| `fecha_ausente` | La fecha no está en la respuesta del servicio. **Causa desconocida** (V-09). No es un fallo de descarga: en MODIS, `dates_in_period` y `dates_returned` coinciden | MOD11A2 tiene 505 fechas y MOD16A2GF 506 en 2015–2025. La que falta es el **16/10/2022**, en los tres lugares. Causa sin explicar (V-09). SMAP L3E: 667 de 669 días entre 2025-01-01 y 2026-10-31; faltan el 18/03/2025 y el 18/10/2026 en los tres lugares (`smap_l3_puntos/…-results.csv`, `Date`) |
 | `nodata_del_raster` | El píxel del mapa no tiene dato | `pixel()` en `leer.py`: «sin dato del proveedor (nodata)» (según el código; no verificado con datos) |
 | `fuera_de_cobertura` | El punto cae fuera del mapa o de la caja de Arequipa | `leer()`: «está fuera de la base de Arequipa» (según el código; no verificado con datos) |
 | `fallo_de_descarga` | El bloque o la capa no llegó | `fallos_de_descarga` del trabajo; en T01, 0 bloques fallidos (`missing_blocks: []`) |
@@ -111,9 +112,9 @@ Cada observación sin valor lleva **un motivo** de esta lista. Los ejemplos est�
 | GAEZ (`gaez.py`) | `«{capa} (…): {error}»` | `fallo_de_descarga` |
 | Base (`leer.py`) | `«sin dato del proveedor (nodata)»`, `«el punto cae fuera del mapa»`, `«…fuera de la base de Arequipa…»` | `nodata_del_raster`, `fuera_de_cobertura` |
 | Trabajo (`trabajos.py`) | `estado: no_disponible` + `motivo` de `PENDIENTES` | `no_disponible` |
-| ORNL, fecha que el servicio no lista | Ningún texto: solo se ve al comparar productos | `fecha_no_publicada` |
+| ORNL, fecha que el servicio no lista | Ningún texto: solo se ve al comparar productos | `fecha_ausente` |
 
-**Caso abierto, GAEZ en Chivay:** las 100 capas de `gaez_chivay.normalizado.csv` valen 0; en Majes riego hay 26 distintas de 0. Que 0 sea un índice de aptitud real o una zona sin evaluar se comprueba en la documentación de GAEZ v4 antes de mostrarlo (V-04; la §9.5 bis del README de T01 trata este límite).
+**Caso abierto, GAEZ en Chivay y S2:** las 100 capas de `gaez_chivay.normalizado.csv` y de `gaez_valle_s2.normalizado.csv` valen 0, sin vacías; en Majes riego hay 26 distintas de 0. Que 0 sea un índice de aptitud real o una zona sin evaluar se comprueba en la documentación de GAEZ v4 antes de mostrarlo (V-04; la §9.5 bis del README de T01 trata este límite).
 
 **Estados de un trabajo** (ya en el código, no se cambian): `pendiente`, `en_proceso`, `listo`, `listo_con_vacios`, `parcial`, `sin_datos`, `error`, `cancelado`, y por fuente también `no_disponible`. Se mantiene la distinción entre **vacío del proveedor** (dato completo que no existe en la fuente) y **fallo de descarga**.
 
@@ -173,7 +174,7 @@ erDiagram
 | Trabajo de una parcela | E15; E16 |
 | Puntos y actualización | E03; E17 |
 | AppEEARS: NASADEM por zona y SMAP L3E por punto (`trabajo/extraccion_pesada/salida/`) | E10 o E11 según sea zona o punto; E14 desde `request.json`; E12 para las banderas de SMAP |
-| HLS y SMAP L4 (en cola en AppEEARS) | Pendientes de verificar con la descarga (V-05) |
+| HLS L30 y S30 y SMAP L4 (`trabajo/extraccion_pesada/salida/hls_*_puntos/`, `smap_l4_puntos/`, commit `2ba9f10`) | E11 por punto y fecha (HLS, además, por tesela); E14 desde `request.json`; E08 con la celda del §3. Sin E12: la descarga no trae banderas de calidad (V-B02 y V-B06 de `agregaciones.md`) |
 
 ## 8. Propuestas para el código (para Erick; nada de esto está hecho)
 
@@ -191,8 +192,8 @@ erDiagram
 | V-01 | El origen exacto de la rejilla de 1° de la radiación de POWER | Documentación de POWER, o comparar el `cell_elevation_m` de puntos vecinos |
 | V-02 | Que `xllcorner` y `yllcorner` de ORNL identifican el píxel de forma estable entre peticiones | Pedir dos puntos dentro del mismo píxel y comparar |
 | V-03 | La forma real de `/api/base/parcela` y `/api/trabajos/{clave}` con la base cargada | Pedir a Erick una salida, o la base (`backend/almacen/`, ≈ 620 MB) |
-| V-04 | Si el 0 de GAEZ en Chivay es aptitud nula o zona no evaluada | Documentación de GAEZ v4 |
-| V-05 | Rejilla, variables, relleno y banderas de HLS (L30, S30) y SMAP L4 | Revisar la descarga cuando `pesados.py esperar` termine |
+| V-04 | Si el 0 de GAEZ en Chivay y en S2 (100 de 100 capas) es aptitud nula o zona no evaluada | Documentación de GAEZ v4 |
+| V-05 | ~~Rejilla, variables, relleno y banderas de HLS (L30, S30) y SMAP L4~~ | **Cerrada en lo que da la descarga** (commit `2ba9f10`; detalle en I08 e I17 de `agregaciones.md`). Siguen abiertos el relleno y la unidad de HLS, la capa de calidad de los dos, el píxel de HLS y la regla de las dos teselas (V-B01 a V-B06 de `agregaciones.md`) |
 | V-06 | El factor de `uncertainty` de SoilGrids | Documentación de ISRIC (T01 §9.4) |
 | V-07 | Punto de Cabanaconde (S2) | **Coordenada mantenida por decisión de Erick, 15/11/2026** (sin registrar aún en docs/06); el punto cae en ladera: NASADEM 2663 m frente a 2908 m del censo (2663 m: `trabajo/extraccion_pesada/salida/relieve_3_zonas/NASADEM_NC.001_NASADEM_HGT_doy2000042000000_aid0002.tif`, píxel fila 162, columna 162, punto −15.612386, −71.984857; coincide con [backend/PLAN-PLATAFORMAS-Y-COORDENADA.md](../../backend/PLAN-PLATAFORMAS-Y-COORDENADA.md); 2908 m: CENAGRO 2012, [extraccion_pesada/README.md](../extraccion_pesada/README.md)). La pantalla debe decir que el dato describe ese punto, no una chacra |
 | V-08 | ~~POWER y horas de luz 2015–2025 de `majes_riego` en T01~~ | **Cerrada:** subidos en el commit `23cc1a3` |

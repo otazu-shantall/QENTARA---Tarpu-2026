@@ -29,7 +29,7 @@
 | I05 | Lluvia por mes y por año | POWER `PRECTOTCORR` | ✅ implementado |
 | I06 | Meses con días sin dato | POWER | ✅ implementado |
 | I07 | Verdor (NDVI) por fecha, 250 m | MODIS `MOD13Q1` | 📝 propuesto |
-| I08 | Verdor (NDVI) por fecha, 30 m | HLS L30 y S30 | ⏳ pendiente de verificar con la descarga |
+| I08 | Verdor (NDVI) por fecha, 30 m | HLS L30 y S30 | 📝 propuesto; descarga verificada, sin capa de calidad |
 | I09 | Evapotranspiración real y potencial por compuesto | MODIS `MOD16A2GF` | 📝 propuesto |
 | I10 | Temperatura de superficie de día y de noche | MODIS `MOD11A2` | 📝 propuesto |
 | I11 | Cobertura del suelo por año | MODIS `MCD12Q1` | 📝 propuesto |
@@ -38,8 +38,8 @@
 | I14 | Factor LS (erosión por pendiente) | NASADEM + método USLE | `fuera_de_validez` en Chivay; `sin_regla` sin λ (§4.3) |
 | I15 | Horas de luz por mes | FAO-56 (cálculo) | 📝 propuesto |
 | I16 | Humedad superficial del suelo | SMAP L3E | 📝 propuesto |
-| I17 | Humedad superficial y de raíz (modelada) | SMAP L4 | ⏳ pendiente de verificar con la descarga |
-| I18 | Aptitud por cultivo y tipo de agua | FAO GAEZ v4 | 📝 propuesto; Chivay bloqueado por V-04 |
+| I17 | Humedad superficial y de raíz (modelada) | SMAP L4 | 📝 propuesto; descarga verificada, unidad y relleno pendientes |
+| I18 | Aptitud por cultivo y tipo de agua | FAO GAEZ v4 | 📝 propuesto; Chivay y S2 bloqueados por V-04 |
 
 Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** (ETc = Kc × ETo) van al motor (pantalla 6). Se anotan en el §6 porque usan las mismas variables.
 
@@ -113,8 +113,11 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
 - **Variables:** `250m_16_days_NDVI` (escala 0,0001; relleno −3000; rango −2000 a 10000) y `250m_16_days_pixel_reliability` (relleno −1; rango 0 a 3) (`bands` de la procedencia).
 - **Método:** serie por fecha, **sin agregar**. Es una línea por fecha (docs/10 §5.3).
 - **Calidad**, según la guía de usuario de MOD13 citada en `ornl.py` (`CALIDAD`): 0 bueno · 1 marginal · 2 nieve o hielo · 3 nubes.
-  - **Propuesta:** la línea se corta en 2 y 3, con el motivo `calidad_no_valida`, porque la fuente los describe como nieve o nubes y no como vegetación. El 1 se dibuja, marcado «marginal».
-  - Así se cumple «cortada donde no hubo observación válida» (docs/10 §5.3). Si el rango 1 también se corta depende del texto de la guía de MOD13, que está por leer (V-A03).
+  - **Propuesta de este documento; la decide Erick:** **no cortar la línea** solo por la marca. Las fechas con código 2 o 3 se dibujan con **otro marcador** y la **etiqueta del proveedor** («nieve o hielo», «nubes»). El 1 se dibuja, marcado «marginal».
+  - **Por qué no se corta:** la marca «nubes» no está contrastada (`datos/ndvi/README.md`, §Límites). En el punto urbano de Majes (−16,351; −72,190), **198 de 272 fechas (72,8 %)** tienen código 3, y su NDVI mediano (0,117) apenas difiere del de las fechas «bueno» (0,124).
+    - **Ojo:** esa cifra sale de `datos/ndvi/cache/MOD13Q1_majes_20150101_20261114/`, un **caché que git ignora**, así que **no se puede reproducir desde el repositorio**. Las muestras que `datos/ndvi/README.md` dice conservar en `datos/muestras/` ya no están ahí.
+  - **En los tres lugares de ejemplo** el código 3 es raro: **5, 2 y 0 fechas** (Majes riego, Chivay y S2; tabla de abajo).
+  - Cortar o no, y si el 1 se trata distinto, depende de la guía de MOD13 (V-A03) y de la decisión de Erick. Mientras tanto, docs/10 §5.3 («cortada donde no hubo observación válida») queda pendiente de esa decisión.
 - **Conteo verificado** (`mod13q1_*_detalle.csv`, 272 fechas, de 2015-01-01 a 2026-10-16):
 
   | Lugar | bueno | marginal | nubes | nieve o hielo |
@@ -123,7 +126,7 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
   | Chivay | 214 | 56 | 2 | 0 |
   | S2 | 235 | 37 | 0 | 0 |
 
-- **Vacíos:** `relleno_del_proveedor` (−3000), `fuera_de_rango_valido` y `calidad_no_valida`. En los tres lugares, 0 fechas sin valor de NDVI (`missing_values_by_band`).
+- **Vacíos:** `relleno_del_proveedor` (−3000) y `fuera_de_rango_valido`. En los tres lugares, 0 fechas sin valor de NDVI (`missing_values_by_band`). `calidad_no_valida` solo se usaría si Erick decide cortar la línea por la marca.
 - **Promedios por año o por mes:** no se proponen. No hay un método citado para agregar NDVI entre fechas con distinta calidad, así que **sin regla**.
 - **Qué no significa:** el NDVI no mide fertilidad (AGENTS.md §6). Ningún mes se rotula «sin cultivo» sin un umbral citado (docs/10 §4). Describe un píxel de 231,66 m, mayor que muchas parcelas.
 - **Hallazgo abierto:** la media de 2026 en Majes riego es mayor que la de otros años y no tiene explicación.
@@ -144,7 +147,7 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
 - **Variables:** `LST_Day_1km` y `LST_Night_1km`, en kelvin; escala 0,02; relleno 0; rango 7500 a 65535 (`bands`).
 - **Método:** valor por compuesto de 8 días, en °C. La conversión de kelvin a °C restando 273,15 es la definición del SI, no una regla agronómica.
 - **Conteo bajo 0 °C:** se propone con el mismo corte descriptivo de I03, como «compuestos con temperatura de superficie nocturna bajo 0 °C». Ese corte no es un umbral agronómico, y **usarlo para la superficie lo decide el equipo** (V-A07).
-- **Período:** 2015-01-01 a 2025-12-31, 505 compuestos. Falta el **16/10/2022** en los tres lugares (`fecha_no_publicada`, V-09 del modelo lógico).
+- **Período:** 2015-01-01 a 2025-12-31, 505 compuestos. Falta el **16/10/2022** en los tres lugares (`fecha_ausente`, V-09 del modelo lógico).
 - **Vacíos verificados** (`missing_values_by_band`; crudo 0 = relleno):
 
   | Lugar | Día | Noche |
@@ -162,10 +165,31 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
 - **Vacíos:** `relleno_del_proveedor` (255).
 - **Qué no significa:** clasifica un píxel de 463,31 m. No dice qué cultivo hay en la parcela.
 
-### 5.5 I08 · Verdor de 30 m (HLS L30 y S30) · pendiente de verificar con la descarga
-- **Lo único confirmado:** el pedido de `pesados.py`, con los productos `HLSL30_VI.020` y `HLSS30_VI.020`, la capa `NDVI`, por punto, de 2025-01-01 a 2026-10-31 (`tareas.json`). Las tareas siguen en «pending».
-- **Unidad, escala, relleno, banderas de calidad y fechas:** **pendientes de verificar con la descarga** y con la documentación del producto, que no se consultó en esta sesión (V-05).
-- **Dato previo,** no medido en estos lugares: una prueba de 3 meses de 2024 da conteos de fechas válidas (`backend/PLAN-SECTORES-AREQUIPA.md`). No se usa como resultado.
+### 5.5 I08 · Verdor de 30 m (HLS L30 y S30)
+Verificado con la descarga del commit `2ba9f10`. Ruta: `trabajo/extraccion_pesada/salida/hls_landsat_puntos/` y `hls_sentinel_puntos/`; abajo, «L30» y «S30».
+
+- **Productos y capa:** `HLSL30_VI.020` y `HLSS30_VI.020`, capa `NDVI` (`…-request.json`, `params.layers`). Cita del proveedor: Neigh, C. (2025), *HLS … Vegetation Indices Daily Global 30m v2.0*, LP DAAC (`…-metadata.xml`).
+- **Rejilla:** 30 m (`…-metadata.xml`, `gmd:spatialResolution`, `uom="meters"`). El CSV da la tesela (`HLS_Tile`) pero **no la fila ni la columna del píxel**, así que el identificador de la celda queda pendiente (V-B04).
+- **Valor:** columna `HLSL30_VI_020_NDVI` o `HLSS30_VI_020_NDVI` de `…-results.csv`. AppEEARS dice que extrae «scaled data values» (`README.md`, línea 72), así que el valor ya viene escalado.
+  - **Unidad:** el archivo no la da (pendiente, V-B05). El NDVI es una razón sin unidad, como en MOD13Q1, pero eso está por confirmar en la guía de HLS.
+- **Valor −19999.0:** es el único negativo menor que −1 en las seis series. **Se trata como vacío.** Que sea el relleno documentado del producto **está pendiente de verificar** en la guía de HLS, porque no aparece en los archivos descargados (V-B01). Mientras tanto, su motivo es `relleno_del_proveedor` (pendiente de verificar).
+- **Calidad: no hay banderas en la descarga.** Solo se pidió la capa `NDVI`. AppEEARS dice que HLS trae una capa de calidad con nubes, sombra, nieve, agua y aerosoles, definida en la §6.4 de la guía de usuario de HLS (`README.md`, línea 141). **Sin esa capa, la línea no se puede cortar por nubes.** Se propone volver a pedir el punto con la capa de calidad (V-B02).
+- **Dos teselas en el mismo punto:** en Majes riego (`18KYG` y `18KZG`) y en Chivay (`18LZH` y `19LBC`), **cada fecha trae dos valores**, uno por tesela, y a menudo difieren (ej. Chivay L30: 0,1808 frente a 0,1569). S2 cae en una sola tesela (`18LZH`).
+  - **No se promedian.** Falta la regla para elegir una tesela, con cita (V-B03).
+- **Conteo verificado** (`…-results.csv`, columnas `ID`, `Date`, `HLS_Tile` y la de NDVI; período pedido de 2025-01-01 a 2026-10-31):
+
+  | Serie | Lugar | Filas (fechas × teselas) | −19999 | Válidos | Rango válido observado | Primera y última fecha |
+  |---|---|---|---|---|---|---|
+  | L30 | Majes riego | 158 (79 × 2) | 38 | 120 | 0,0664 a 0,8489 | 2025-01-03 · 2026-10-29 |
+  | L30 | Chivay | 154 (77 × 2) | 70 | 84 | 0,0455 a 0,2385 | 2025-01-04 · 2026-10-30 |
+  | L30 | S2 | 79 (79 × 1) | 25 | 54 | 0,2182 a 0,7378 | 2025-01-03 · 2026-10-29 |
+  | S30 | Majes riego | 366 (187 fechas; 180 + 186) | 71 | 295 | 0,1276 a 0,8837 | 2025-01-03 · 2026-10-30 |
+  | S30 | Chivay | 367 (187 fechas; 184 + 183) | 103 | 264 | −0,0109 a 0,2944 | 2025-01-08 · 2026-10-30 |
+  | S30 | S2 | 184 (184 × 1) | 48 | 136 | 0,2167 a 0,7765 | 2025-01-08 · 2026-10-30 |
+
+- **Diferencia entre teselas** (fechas con las dos válidas): L30 Majes, 8 de 60 distintas; L30 Chivay, 42 de 42; S30 Majes, 143 de 143; S30 Chivay, 127 de 127.
+- **Método propuesto:** serie por fecha y por tesela, sin agregar y sin mezclar L30 con S30. Mezclarlas o elegir una tesela necesita una regla citada (V-B03).
+- **Qué no significa:** el NDVI no mide fertilidad. Sin la capa de calidad, esta descarga no permite distinguir una observación con nubes de una sin nubes.
 
 ## 6. Agua del cultivo y ETo (fuera de la pantalla 5, para el motor)
 - **Método:** ETo de Penman-Monteith de FAO-56 (ec. 6) con `T2M_MAX`, `T2M_MIN`, `RH2M`, `WS2M` y `ALLSKY_SFC_SW_DWN` de POWER. ETc = Kc × ETo, con los Kc de la Tabla 12 de FAO-56 (`metodos_citados_2026-11-15.json`).
@@ -199,7 +223,7 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
   - Es texto literal de `variable`, y los dos se muestran por separado.
 - **Método:** el índice tal cual, **sin clases**. Las clases de aptitud de GAEZ no están copiadas con su cita en el repositorio (V-A10).
 - **Vacíos:** `fallo_de_descarga` o valor no numérico.
-- **Chivay:** las 100 capas valen 0. **No se muestra** hasta resolver V-04 (si 0 es aptitud nula o una zona sin evaluar).
+- **Chivay y S2:** las 100 capas valen 0, sin capas vacías y ninguna distinta de 0 (T01 `gaez_chivay.normalizado.csv` y `gaez_valle_s2.normalizado.csv`, recontado). Majes riego: 26 de 100 distintas de 0 (`gaez_majes_riego.normalizado.csv`). **Chivay y S2 no se muestran** hasta resolver V-04 (si 0 es aptitud nula o una zona sin evaluar).
 - **Qué no significa:** describe una celda de ≈ 9 km con clima de 1981–2010; no es la aptitud de la parcela.
 
 ### 7.3 I15 · Horas de luz
@@ -212,7 +236,8 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
 - **Celda:** la de 9 km (EASE-Grid) que contiene el punto, identificada por (`Line_Y`, `Sample_X`).
 - **Variable:** `Soil_Moisture_Retrieval_Data_AM_soil_moisture`, pasada de la mañana. **Unidad pendiente:** no aparece en los archivos descargados (`results.csv`, `README.md`, `metadata.xml`) (V-A11).
 - **Calidad:** se usa la descripción del propio proveedor, columna `…retrieval_qual_flag_Recommended_Quality_Description`. Entra solo el valor con «Soil moisture retrieval has recommended quality». El resto va como `calidad_no_valida`; los −9999 van como `relleno_del_proveedor`.
-- **Conteo verificado** (667 días, de 2025-01-01 a 2026-10-31):
+- **Fechas:** **667 de 669 días** entre 2025-01-01 y 2026-10-31. Faltan el **18/03/2025** y el **18/10/2026** en los tres lugares (`fecha_ausente`; `…-results.csv`, columna `Date`).
+- **Conteo verificado** (sobre esos 667 días):
 
   | Lugar | Relleno (−9999, bandera 7) | Sin calidad recomendada | Con calidad recomendada |
   |---|---|---|---|
@@ -224,10 +249,35 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
 - **Método propuesto:** valores por día, sin promedio mensual hasta citar un método (V-A12).
 - **Qué no significa:** la humedad estimada de una celda de 9 km no es un análisis de suelo (AGENTS.md §6).
 
-### 7.5 I17 · Humedad modelada (SMAP L4) · pendiente de verificar con la descarga
-- **Lo único confirmado:** el pedido de `pesados.py`, con el producto `SPL4SMGP.008`, las capas `Geophysical_Data_sm_surface` y `Geophysical_Data_sm_rootzone`, por punto, de 2025-01-01 a 2026-10-31 (`tareas.json`, «processing»).
-- **Unidad, relleno, calidad y frecuencia temporal:** **pendientes de verificar con la descarga** (V-05). `datos/analisis-recursos.md` anota «9 km, 3 h», sin cita del producto: se confirma con la descarga.
-- **Qué no significa:** es humedad **modelada**, no observada directamente, y no es un análisis de suelo.
+### 7.5 I17 · Humedad modelada (SMAP L4)
+Verificado con la descarga del commit `2ba9f10`. Ruta: `trabajo/extraccion_pesada/salida/smap_l4_puntos/`.
+
+- **Producto y capas:** `SPL4SMGP.008`, capas `Geophysical_Data_sm_surface` y `Geophysical_Data_sm_rootzone` (`tarpu-smap-l4-puntos-request.json`, `params.layers`). Cita del proveedor: Reichle, R., et al. (2025), *SMAP L4 Global 3-hourly 9 km EASE-Grid Surface and Root Zone Soil Moisture* (`…-SPL4SMGP-008-metadata.xml`).
+- **Rejilla:** 9 km (`…-metadata.xml`, `gmd:spatialResolution`, 9000 `meters`), EASE-Grid (título de la cita).
+- **Celda:** (`SPL4SMGP_008_Line_Y_9.00805km`, `SPL4SMGP_008_Sample_X_9.00805km`). Es la **misma celda que SMAP L3E** en cada lugar:
+
+  | Lugar | Celda L4 | Celda L3E |
+  |---|---|---|
+  | Majes riego | (1040, 1154) | (1040, 1154) |
+  | Chivay | (1030, 1161) | (1030, 1161) |
+  | S2 | (1030, 1156) | (1030, 1156) |
+
+  Chivay y S2 **no** comparten celda de SMAP; sí comparten la de POWER.
+- **Frecuencia:** cada 3 horas, a las 01:30, 04:30, 07:30, 10:30, 13:30, 16:30, 19:30 y 22:30 UTC (columna `Date`). Del 2025-01-01 01:30 UTC al 2026-10-31 22:30 UTC: **669 días × 8 = 5352 valores por lugar y capa, sin huecos** (`…-results.csv`).
+- **Unidad:** no aparece en los archivos descargados. **Pendiente de verificar** en la guía del producto (V-B06).
+- **Relleno:** ningún valor negativo ni ningún −9999 en los 32 112 valores. El valor de relleno del producto **no aparece en los archivos: pendiente** (V-B06).
+- **Calidad:** la descarga no trae banderas, porque solo se pidieron las dos capas. **Pendiente** (V-B06).
+- **Rangos observados** (`…-results.csv`):
+
+  | Lugar | Superficie | Raíz |
+  |---|---|---|
+  | Majes riego | 0,0244756 a 0,1710453 | 0,0219102 a 0,0462857 |
+  | Chivay | 0,0511682 a 0,2925797 | 0,1340335 a 0,2395306 |
+  | S2 | 0,0427613 a 0,2876837 | 0,0992421 a 0,264301 |
+
+- **Método propuesto:** valores cada 3 h, sin promedio diario ni mensual hasta citar un método (V-A12).
+- **S2:** L4 sí da valores en S2, donde L3E no tiene ninguno con calidad recomendada (§7.4). Son productos distintos (L4 es modelado) y la tarjeta debe decir cuál se muestra.
+- **Qué no significa:** es humedad **modelada**, no observada directamente, y no es un análisis de suelo (AGENTS.md §6).
 
 ## 8. Pendientes de verificar
 
@@ -235,7 +285,7 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
 |---|---|---|
 | V-A01 | Que los límites de `CLASES_PENDIENTE` coincidan con el cuadro 7 de FAO (2006) | Leer el cuadro 7 de *Guidelines for soil description* |
 | V-A02 | El exponente m de LS entre 3 y 3,5 % y entre 4,5 y 5 % | Wischmeier y Smith (1978), pp. 12-15 |
-| V-A03 | El texto de la guía de MOD13 sobre el rango 1 («marginal») de `pixel_reliability` | Guía de usuario de MOD13 |
+| V-A03 | El texto de la guía de MOD13 sobre los códigos 1 («marginal») y 3 («nubes») de `pixel_reliability`, y si la línea del NDVI se corta o solo se marca | Guía de usuario de MOD13; **lo decide Erick** |
 | V-A04 | Método citado para repartir los compuestos de 8 días entre meses | Guía de MOD16 o FAO |
 | V-A05 | Significado de los valores de 32701 a 32766 de MOD16A2GF | Guía de usuario de MOD16 |
 | V-A06 | Cita para mostrar kg/m² como mm en MOD16A2GF | Guía de usuario de MOD16 |
@@ -246,6 +296,12 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
 | V-A11 | Unidad de la humedad de SMAP L3E | Guía de SPL3SMP_E v006 (NSIDC) |
 | V-A12 | Método para resumir por mes la humedad de SMAP | Guía del producto |
 | V-A13 | Magnitud del sesgo frío del clima de S2 (celda a 4351,89 m, punto a 2663 m) y cita para describirlo | Una fuente citada sobre la variación de la temperatura con la altura, o una estación de contraste en el valle; mientras tanto, solo aviso |
-| V-04 | Si el 0 de GAEZ en Chivay es aptitud nula o zona no evaluada | Modelo lógico §9 |
-| V-05 | HLS y SMAP L4: unidad, escala, relleno, calidad, fechas | Descarga de `pesados.py esperar` y guía de cada producto |
+| V-04 | Si el 0 de GAEZ en Chivay y en S2 es aptitud nula o zona no evaluada | Modelo lógico §9 |
+| V-05 | ~~HLS y SMAP L4: unidad, escala, relleno, calidad, fechas~~ | **Cerrada en lo que da la descarga** (commit `2ba9f10`): rejilla, capas, fechas y conteos en I08 e I17. Lo que falta sigue en V-B01 a V-B06 |
+| V-B01 | Que −19999 sea el relleno documentado de HLS VI v2.0 | Guía de usuario de HLS |
+| V-B02 | Capa de calidad de HLS (§6.4 de la guía) para cortar la línea por nubes | Volver a pedir los puntos con esa capa en AppEEARS |
+| V-B03 | Regla citada para elegir una tesela de HLS cuando un punto cae en dos (Majes riego, Chivay), y para combinar o no L30 con S30 | Guía de usuario de HLS |
+| V-B04 | Fila y columna del píxel de HLS (el CSV por punto solo da la tesela) | Pedido por área o guía de HLS |
+| V-B05 | Unidad del NDVI de HLS | Guía de usuario de HLS |
+| V-B06 | Unidad, relleno y banderas de calidad de SMAP L4 (`sm_surface`, `sm_rootzone`) | Guía de SPL4SMGP v008 (NSIDC) |
 | V-09 | El 16/10/2022 que no publica MOD11A2 | Modelo lógico §9 |
