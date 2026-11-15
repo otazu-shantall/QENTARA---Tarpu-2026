@@ -1,0 +1,68 @@
+{
+ "source_id": "ORNL DAAC MODIS/VIIRS Land Product Subsets",
+ "product_id": "MOD16A2GF",
+ "bands": {
+  "ET_500m": {
+   "units": "kg/m^2/8day",
+   "valid_range": "-32767 to 32700",
+   "fill_value": "32767",
+   "scale_factor": "0.1",
+   "add_offset": "0",
+   "description": "Evapotranspiration"
+  },
+  "PET_500m": {
+   "units": "kg/m^2/8day",
+   "valid_range": "-32767 to 32700",
+   "fill_value": "32767",
+   "scale_factor": "0.1",
+   "add_offset": "0",
+   "description": "Potential evapotranspiration"
+  }
+ },
+ "conversion": "value = raw * scale_factor (from /bands); fill or out of valid_range => empty. Categorical bands (quality, land cover) keep the raw class code.",
+ "label_sources": {
+  "250m_16_days_pixel_reliability": "MOD13 user guide (pixel reliability ranks)",
+  "LC_Type1": "MCD12 User Guide (Sulla-Menashe and Friedl, 2018), IGBP classes; labels in .detalle.csv only"
+ },
+ "request_base": "https://modis.ornl.gov/rst/api/v1/MOD16A2GF/subset",
+ "bands_url": "https://modis.ornl.gov/rst/api/v1/MOD16A2GF/bands",
+ "dates_url": "https://modis.ornl.gov/rst/api/v1/MOD16A2GF/dates?latitude=-16.367023&longitude=-72.185771",
+ "requests_this_product": 102,
+ "blocks_failed": 0,
+ "service_stats_all_products": {
+  "peticiones": 416,
+  "correctas": 208,
+  "http_5xx": 208,
+  "http_429": 0,
+  "http_4xx": 0,
+  "timeouts_o_red": 0,
+  "reintentos": 170
+ },
+ "blocks_from_cache_all_products": 0,
+ "blocks_fetched_all_products": 208,
+ "concurrency_cap": 4,
+ "written_at": "2026-11-15T08:47:31+00:00",
+ "point": {
+  "latitude": -16.367023,
+  "longitude": -72.185771
+ },
+ "cellsize_m": 463.312716528,
+ "tiles": [
+  "h11v10"
+ ],
+ "observed_start": "2015-01-01",
+ "observed_end": "2025-12-31",
+ "dates_in_period": 506,
+ "dates_returned": 506,
+ "first_date": "2015-01-01",
+ "last_date": "2025-12-27",
+ "missing_values_by_band": {
+  "ET_500m": 0,
+  "PET_500m": 0
+ },
+ "missing_blocks": [],
+ "problems": [],
+ "small_scale_test_max_blocks": null,
+ "note": "Single MODIS pixel (250 m to 1 km): mixes several fields; describes the area, not one plot. NDVI is a greenness index, not a measure of soil fertility.",
+ "generated_with": "tarpu_datos (written with AI assistance, Claude Code)."
+}

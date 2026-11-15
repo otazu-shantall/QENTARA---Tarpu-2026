@@ -1,0 +1,4153 @@
+{
+ "query": {
+  "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/query?where=crop+in+%28%27Alfalfa%27%2C%27Barley%27%2C%27Carrot%27%2C%27Dry+pea%27%2C%27Maize%27%2C%27Olive%27%2C%27Onion%27%2C%27Phaseolus+bean%27%2C%27Sugarcane%27%2C%27Sweet+potato%27%2C%27Tomato%27%2C%27Wetland+rice%27%2C%27Wheat%27%2C%27White+potato%27%2C%27Oat%27%29+and+year%3D%271981-2010%27+and+sub_theme_name%3D%27Suitability+Index%27+and+input_level%3D%27High%27&outFields=objectid%2Cname%2Ccrop%2Cwater_supply%2Cinput_level%2Cyear%2Cvariable&returnGeometry=false&f=json",
+  "requested_at": "2026-11-15T06:26:20+00:00",
+  "response": {
+   "objectIdFieldName": "objectid",
+   "fields": [
+    {
+     "name": "objectid",
+     "type": "esriFieldTypeOID",
+     "alias": "OBJECTID",
+     "domain": null
+    },
+    {
+     "name": "name",
+     "type": "esriFieldTypeString",
+     "alias": "Name",
+     "domain": null,
+     "length": 200
+    },
+    {
+     "name": "crop",
+     "type": "esriFieldTypeString",
+     "alias": "Crop",
+     "domain": null,
+     "length": 255
+    },
+    {
+     "name": "water_supply",
+     "type": "esriFieldTypeString",
+     "alias": "Water Supply",
+     "domain": null,
+     "length": 255
+    },
+    {
+     "name": "input_level",
+     "type": "esriFieldTypeString",
+     "alias": "Input Level",
+     "domain": null,
+     "length": 255
+    },
+    {
+     "name": "year",
+     "type": "esriFieldTypeString",
+     "alias": "Time Period",
+     "domain": null,
+     "length": 255
+    },
+    {
+     "name": "variable",
+     "type": "esriFieldTypeString",
+     "alias": "Variable Name",
+     "domain": null,
+     "length": 255
+    }
+   ],
+   "features": [
+    {
+     "attributes": {
+      "objectid": 257090,
+      "name": "sx1Ha_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257221,
+      "name": "sx1Hr_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257310,
+      "name": "sx2Ha_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257441,
+      "name": "sx2Hr_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257661,
+      "name": "sx3Hr_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257530,
+      "name": "sx3Ha_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257881,
+      "name": "sxHr_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257750,
+      "name": "sxHa_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256870,
+      "name": "suHa_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257001,
+      "name": "suHr_wpo",
+      "crop": "White potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256923,
+      "name": "suHg_wpo",
+      "crop": "White potato",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257043,
+      "name": "suHs_wpo",
+      "crop": "White potato",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256952,
+      "name": "suHi_wpo",
+      "crop": "White potato",
+      "water_supply": "Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257089,
+      "name": "sx1Ha_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257220,
+      "name": "sx1Hr_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257440,
+      "name": "sx2Hr_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257309,
+      "name": "sx2Ha_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257529,
+      "name": "sx3Ha_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257660,
+      "name": "sx3Hr_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257749,
+      "name": "sxHa_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257880,
+      "name": "sxHr_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256869,
+      "name": "suHa_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256951,
+      "name": "suHi_whe",
+      "crop": "Wheat",
+      "water_supply": "Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257000,
+      "name": "suHr_whe",
+      "crop": "Wheat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257042,
+      "name": "suHs_whe",
+      "crop": "Wheat",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256922,
+      "name": "suHg_whe",
+      "crop": "Wheat",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257206,
+      "name": "sx1Hr_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257076,
+      "name": "sx1Ha_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257296,
+      "name": "sx2Ha_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257426,
+      "name": "sx2Hr_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257646,
+      "name": "sx3Hr_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257516,
+      "name": "sx3Ha_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257866,
+      "name": "sxHr_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257736,
+      "name": "sxHa_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256986,
+      "name": "suHr_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256856,
+      "name": "suHa_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256911,
+      "name": "suHg_rcw",
+      "crop": "Wetland rice",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257088,
+      "name": "sx1Ha_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257219,
+      "name": "sx1Hr_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257308,
+      "name": "sx2Ha_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257439,
+      "name": "sx2Hr_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257659,
+      "name": "sx3Hr_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257528,
+      "name": "sx3Ha_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257748,
+      "name": "sxHa_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257879,
+      "name": "sxHr_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256883,
+      "name": "suHd_tom",
+      "crop": "Tomato",
+      "water_supply": "Drip Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256999,
+      "name": "suHr_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256921,
+      "name": "suHg_tom",
+      "crop": "Tomato",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256868,
+      "name": "suHa_tom",
+      "crop": "Tomato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257041,
+      "name": "suHs_tom",
+      "crop": "Tomato",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257081,
+      "name": "sx1Ha_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257212,
+      "name": "sx1Hr_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257432,
+      "name": "sx2Hr_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257301,
+      "name": "sx2Ha_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257652,
+      "name": "sx3Hr_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257521,
+      "name": "sx3Ha_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257741,
+      "name": "sxHa_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257872,
+      "name": "sxHr_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256916,
+      "name": "suHg_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256992,
+      "name": "suHr_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256861,
+      "name": "suHa_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256945,
+      "name": "suHi_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257034,
+      "name": "suHs_spo",
+      "crop": "Sweet potato",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257084,
+      "name": "sx1Ha_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257215,
+      "name": "sx1Hr_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257435,
+      "name": "sx2Hr_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257304,
+      "name": "sx2Ha_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257655,
+      "name": "sx3Hr_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257524,
+      "name": "sx3Ha_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257875,
+      "name": "sxHr_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257744,
+      "name": "sxHa_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256919,
+      "name": "suHg_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256995,
+      "name": "suHr_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256947,
+      "name": "suHi_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256864,
+      "name": "suHa_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257037,
+      "name": "suHs_suc",
+      "crop": "Sugarcane",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257201,
+      "name": "sx1Hr_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257071,
+      "name": "sx1Ha_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257421,
+      "name": "sx2Hr_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257291,
+      "name": "sx2Ha_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257511,
+      "name": "sx3Ha_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257641,
+      "name": "sx3Hr_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257731,
+      "name": "sxHa_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257861,
+      "name": "sxHr_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257026,
+      "name": "suHs_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256851,
+      "name": "suHa_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256908,
+      "name": "suHg_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256981,
+      "name": "suHr_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256881,
+      "name": "suHd_phb",
+      "crop": "Phaseolus bean",
+      "water_supply": "Drip Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257199,
+      "name": "sx1Hr_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257069,
+      "name": "sx1Ha_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257419,
+      "name": "sx2Hr_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257289,
+      "name": "sx2Ha_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257639,
+      "name": "sx3Hr_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257509,
+      "name": "sx3Ha_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257859,
+      "name": "sxHr_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257729,
+      "name": "sxHa_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256849,
+      "name": "suHa_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257024,
+      "name": "suHs_oni",
+      "crop": "Onion",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256906,
+      "name": "suHg_oni",
+      "crop": "Onion",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256979,
+      "name": "suHr_oni",
+      "crop": "Onion",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256880,
+      "name": "suHd_oni",
+      "crop": "Onion",
+      "water_supply": "Drip Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257198,
+      "name": "sx1Hr_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257068,
+      "name": "sx1Ha_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257288,
+      "name": "sx2Ha_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257418,
+      "name": "sx2Hr_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257508,
+      "name": "sx3Ha_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257638,
+      "name": "sx3Hr_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257858,
+      "name": "sxHr_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257728,
+      "name": "sxHa_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256879,
+      "name": "suHd_olv",
+      "crop": "Olive",
+      "water_supply": "Drip Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256905,
+      "name": "suHg_olv",
+      "crop": "Olive",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256939,
+      "name": "suHi_olv",
+      "crop": "Olive",
+      "water_supply": "Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256978,
+      "name": "suHr_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256848,
+      "name": "suHa_olv",
+      "crop": "Olive",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257196,
+      "name": "sx1Hr_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257066,
+      "name": "sx1Ha_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257286,
+      "name": "sx2Ha_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257416,
+      "name": "sx2Hr_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257636,
+      "name": "sx3Hr_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257506,
+      "name": "sx3Ha_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257856,
+      "name": "sxHr_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257726,
+      "name": "sxHa_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257023,
+      "name": "suHs_oat",
+      "crop": "Oat",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256904,
+      "name": "suHg_oat",
+      "crop": "Oat",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256846,
+      "name": "suHa_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256976,
+      "name": "suHr_oat",
+      "crop": "Oat",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257065,
+      "name": "sx1Ha_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257194,
+      "name": "sx1Hr_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257285,
+      "name": "sx2Ha_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257414,
+      "name": "sx2Hr_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257634,
+      "name": "sx3Hr_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257505,
+      "name": "sx3Ha_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257725,
+      "name": "sxHa_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257854,
+      "name": "sxHr_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256903,
+      "name": "suHg_mze",
+      "crop": "Maize",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256974,
+      "name": "suHr_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257022,
+      "name": "suHs_mze",
+      "crop": "Maize",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256845,
+      "name": "suHa_mze",
+      "crop": "Maize",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257070,
+      "name": "sx1Ha_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257200,
+      "name": "sx1Hr_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257420,
+      "name": "sx2Hr_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257290,
+      "name": "sx2Ha_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257510,
+      "name": "sx3Ha_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257640,
+      "name": "sx3Hr_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257730,
+      "name": "sxHa_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257860,
+      "name": "sxHr_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256980,
+      "name": "suHr_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256907,
+      "name": "suHg_pea",
+      "crop": "Dry pea",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256850,
+      "name": "suHa_pea",
+      "crop": "Dry pea",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257025,
+      "name": "suHs_pea",
+      "crop": "Dry pea",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257179,
+      "name": "sx1Hr_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257050,
+      "name": "sx1Ha_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257270,
+      "name": "sx2Ha_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257399,
+      "name": "sx2Hr_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257619,
+      "name": "sx3Hr_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257490,
+      "name": "sx3Ha_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257839,
+      "name": "sxHr_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257710,
+      "name": "sxHa_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256830,
+      "name": "suHa_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256873,
+      "name": "suHd_car",
+      "crop": "Carrot",
+      "water_supply": "Drip Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256890,
+      "name": "suHg_car",
+      "crop": "Carrot",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256959,
+      "name": "suHr_car",
+      "crop": "Carrot",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257009,
+      "name": "suHs_car",
+      "crop": "Carrot",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257176,
+      "name": "sx1Hr_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257047,
+      "name": "sx1Ha_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257267,
+      "name": "sx2Ha_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257396,
+      "name": "sx2Hr_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257616,
+      "name": "sx3Hr_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257487,
+      "name": "sx3Ha_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257707,
+      "name": "sxHa_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257836,
+      "name": "sxHr_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257006,
+      "name": "suHs_brl",
+      "crop": "Barley",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256956,
+      "name": "suHr_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256887,
+      "name": "suHg_brl",
+      "crop": "Barley",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256926,
+      "name": "suHi_brl",
+      "crop": "Barley",
+      "water_supply": "Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256827,
+      "name": "suHa_brl",
+      "crop": "Barley",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257044,
+      "name": "sx1Ha_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257173,
+      "name": "sx1Hr_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of grid cell assessed as VS or S (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257264,
+      "name": "sx2Ha_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257393,
+      "name": "sx2Hr_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257613,
+      "name": "sx3Hr_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257484,
+      "name": "sx3Ha_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Share of VS+S+MS+mS land in grid cell (range 0 – 10000)"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257833,
+      "name": "sxHr_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257704,
+      "name": "sxHa_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); all land in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256884,
+      "name": "suHg_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Gravity Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256953,
+      "name": "suHr_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256824,
+      "name": "suHa_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Rainfed All Phases ",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 256924,
+      "name": "suHi_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    },
+    {
+     "attributes": {
+      "objectid": 257003,
+      "name": "suHs_alf",
+      "crop": "Alfalfa",
+      "water_supply": "Sprinkler Irrigation",
+      "input_level": "High",
+      "year": "1981-2010",
+      "variable": "Suitability index  range (0 – 10000); current cropland in grid cell"
+     }
+    }
+   ]
+  }
+ },
+ "identify": {
+  "256824": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256824%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:21+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256884": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256884%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:21+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256924": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256924%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:21+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256953": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256953%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:21+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257833": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257833%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:22+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256827": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256827%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:22+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257003": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257003%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:22+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257704": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257704%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:22+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256887": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256887%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:23+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256956": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256956%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:23+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257006": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257006%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:23+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256926": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256926%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:23+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257836": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257836%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:24+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256873": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256873%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:24+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257707": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257707%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:24+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256830": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256830%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:24+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257009": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257009%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:25+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256890": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256890%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:25+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "1667",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256959": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256959%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:25+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257710": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257710%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:25+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257839": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257839%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:25+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256907": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256907%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:26+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256850": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256850%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:26+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256980": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256980%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:26+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257025": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257025%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:26+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257730": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257730%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:26+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257860": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257860%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:26+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256903": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256903%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:27+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256974": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256974%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:27+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257022": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257022%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:27+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256845": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256845%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:27+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257725": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257725%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:27+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257854": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257854%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:28+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256879": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256879%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:28+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256905": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256905%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:28+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256848": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256848%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:28+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256939": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256939%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:28+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256978": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256978%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:29+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257728": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257728%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:29+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257858": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257858%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:29+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256906": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256906%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:30+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256849": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256849%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:30+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256880": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256880%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:30+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256979": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256979%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:30+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257024": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257024%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:30+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257859": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257859%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:30+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257729": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257729%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:31+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256881": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256881%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:31+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256908": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256908%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:31+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256851": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256851%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:31+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256981": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256981%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:31+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257026": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257026%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:31+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257861": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257861%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:32+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257731": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257731%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:32+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256919": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256919%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:32+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256864": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256864%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:32+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256947": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256947%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:32+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256995": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256995%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:32+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257037": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257037%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:33+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257744": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257744%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:33+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257875": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257875%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:33+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256861": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256861%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:33+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256916": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256916%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:34+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256945": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256945%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:34+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256992": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256992%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:34+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257034": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257034%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:34+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257741": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257741%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:34+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257872": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257872%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:34+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256883": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256883%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:35+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256868": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256868%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:35+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256921": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256921%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:35+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "1667",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256999": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256999%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:35+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257041": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257041%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:35+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257748": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257748%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:36+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257879": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257879%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:36+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256856": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256856%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:36+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256911": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256911%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:36+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256986": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256986%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:36+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257866": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257866%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:36+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256869": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256869%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:37+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257736": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257736%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:37+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256922": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256922%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:37+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256951": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256951%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:37+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257000": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257000%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:37+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257042": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257042%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:38+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257749": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257749%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:38+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256923": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256923%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:38+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257880": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257880%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:38+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256952": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256952%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:39+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "3333",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256870": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256870%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:39+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257001": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257001%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:39+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257043": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257043%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:39+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "5556",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257881": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257881%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:39+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257750": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257750%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:39+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256904": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256904%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:40+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256846": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256846%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:40+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "256976": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B256976%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:40+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257023": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257023%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:40+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257726": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257726%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:40+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  },
+  "257856": {
+   "request_url": "https://gaez-services.fao.org/server/rest/services/res05/ImageServer/identify?geometry=%7B%22x%22%3A+-72.185771%2C+%22y%22%3A+-16.367023%2C+%22spatialReference%22%3A+%7B%22wkid%22%3A+4326%7D%7D&geometryType=esriGeometryPoint&mosaicRule=%7B%22mosaicMethod%22%3A+%22esriMosaicLockRaster%22%2C+%22lockRasterIds%22%3A+%5B257856%5D%7D&returnGeometry=false&returnCatalogItems=false&f=json",
+   "requested_at": "2026-11-15T06:26:40+00:00",
+   "response": {
+    "objectId": 0,
+    "name": "Pixel",
+    "value": "0",
+    "location": {
+     "x": -72.185771,
+     "y": -16.367023,
+     "spatialReference": {
+      "wkid": 4326,
+      "latestWkid": 4326
+     }
+    },
+    "properties": null,
+    "catalogItems": null,
+    "catalogItemVisibilities": []
+   }
+  }
+ }
+}

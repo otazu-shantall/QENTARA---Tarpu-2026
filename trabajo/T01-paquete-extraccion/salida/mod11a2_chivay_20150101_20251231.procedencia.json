@@ -1,0 +1,68 @@
+{
+ "source_id": "ORNL DAAC MODIS/VIIRS Land Product Subsets",
+ "product_id": "MOD11A2",
+ "bands": {
+  "LST_Day_1km": {
+   "units": "Kelvin",
+   "valid_range": "7500 to 65535",
+   "fill_value": "0",
+   "scale_factor": "0.02",
+   "add_offset": "0",
+   "description": "Daytime Land Surface Temperature"
+  },
+  "LST_Night_1km": {
+   "units": "Kelvin",
+   "valid_range": "7500 to 65535",
+   "fill_value": "0",
+   "scale_factor": "0.02",
+   "add_offset": "0",
+   "description": "Night Land Surface Temperature"
+  }
+ },
+ "conversion": "value = raw * scale_factor (from /bands); fill or out of valid_range => empty. Categorical bands (quality, land cover) keep the raw class code.",
+ "label_sources": {
+  "250m_16_days_pixel_reliability": "MOD13 user guide (pixel reliability ranks)",
+  "LC_Type1": "MCD12 User Guide (Sulla-Menashe and Friedl, 2018), IGBP classes; labels in .detalle.csv only"
+ },
+ "request_base": "https://modis.ornl.gov/rst/api/v1/MOD11A2/subset",
+ "bands_url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/bands",
+ "dates_url": "https://modis.ornl.gov/rst/api/v1/MOD11A2/dates?latitude=-15.64&longitude=-71.6",
+ "requests_this_product": 102,
+ "blocks_failed": 0,
+ "service_stats_all_products": {
+  "peticiones": 206,
+  "correctas": 206,
+  "http_5xx": 0,
+  "http_429": 0,
+  "http_4xx": 0,
+  "timeouts_o_red": 0,
+  "reintentos": 0
+ },
+ "blocks_from_cache_all_products": 2,
+ "blocks_fetched_all_products": 206,
+ "concurrency_cap": 4,
+ "written_at": "2026-11-15T08:53:48+00:00",
+ "point": {
+  "latitude": -15.64,
+  "longitude": -71.6
+ },
+ "cellsize_m": 926.6254330558338,
+ "tiles": [
+  "h11v10"
+ ],
+ "observed_start": "2015-01-01",
+ "observed_end": "2025-12-31",
+ "dates_in_period": 505,
+ "dates_returned": 505,
+ "first_date": "2015-01-01",
+ "last_date": "2025-12-27",
+ "missing_values_by_band": {
+  "LST_Day_1km": 3,
+  "LST_Night_1km": 25
+ },
+ "missing_blocks": [],
+ "problems": [],
+ "small_scale_test_max_blocks": null,
+ "note": "Single MODIS pixel (250 m to 1 km): mixes several fields; describes the area, not one plot. NDVI is a greenness index, not a measure of soil fertility.",
+ "generated_with": "tarpu_datos (written with AI assistance, Claude Code)."
+}

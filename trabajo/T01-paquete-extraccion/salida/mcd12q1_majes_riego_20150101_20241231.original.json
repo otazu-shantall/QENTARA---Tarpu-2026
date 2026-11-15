@@ -1,0 +1,354 @@
+{
+ "bands": {
+  "request_url": "https://modis.ornl.gov/rst/api/v1/MCD12Q1/bands",
+  "requested_at": "2026-11-15T07:26:48+00:00",
+  "response": {
+   "bands": [
+    {
+     "band": "LC_Prop1",
+     "description": "FAO-Land Cover Classification System 1 (LCCS1) land cover layer",
+     "units": "class",
+     "valid_range": "1 to 43",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Prop1_Assessment",
+     "description": "LCCS1 land cover layer confidence",
+     "units": "percent",
+     "valid_range": "0 to 100",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Prop2",
+     "description": "FAO-LCCS2 land use layer",
+     "units": "class",
+     "valid_range": "1 to 40",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Prop2_Assessment",
+     "description": "LCCS2 land use layer confidence",
+     "units": "percent",
+     "valid_range": "0 to 100",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Prop3",
+     "description": "FAO-LCCS3 surface hydrology layer",
+     "units": "class",
+     "valid_range": "1 to 51",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Prop3_Assessment",
+     "description": "LCCS3 surface hydrology layer confidence",
+     "units": "percent",
+     "valid_range": "0 to 100",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Type1",
+     "description": "Land Cover Type 1: Annual International Geosphere-Biosphere Programme (IGBP) classification",
+     "units": "class",
+     "valid_range": "1 to 17",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Type2",
+     "description": "Land Cover Type 2: Annual University of Maryland (UMD) classification",
+     "units": "class",
+     "valid_range": "0 to 15",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Type3",
+     "description": "Land Cover Type 3: Annual Leaf Area Index (LAI) classification",
+     "units": "class",
+     "valid_range": "0 to 10",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Type4",
+     "description": "Land Cover Type 4: Annual BIOME-Biogeochemical Cycles (BGC) classification",
+     "units": "class",
+     "valid_range": "0 to 8",
+     "fill_value": "255"
+    },
+    {
+     "band": "LC_Type5",
+     "description": "Land Cover Type 5: Annual Plant Functional Types classification",
+     "units": "class",
+     "valid_range": "0 to 11",
+     "fill_value": "255"
+    },
+    {
+     "band": "LW",
+     "description": "Binary land (class 2) / water (class 1) mask derived from MOD44W",
+     "units": "class",
+     "valid_range": "1 to 2",
+     "fill_value": "255"
+    },
+    {
+     "band": "QC",
+     "description": "Product quality flags",
+     "units": "quality-flag",
+     "valid_range": "0 to 10",
+     "fill_value": "255"
+    }
+   ]
+  }
+ },
+ "dates": {
+  "request_url": "https://modis.ornl.gov/rst/api/v1/MCD12Q1/dates?latitude=-16.367023&longitude=-72.185771",
+  "requested_at": "2026-11-15T07:27:29+00:00",
+  "response": {
+   "dates": [
+    {
+     "modis_date": "A2001001",
+     "calendar_date": "2001-01-01"
+    },
+    {
+     "modis_date": "A2002001",
+     "calendar_date": "2002-01-01"
+    },
+    {
+     "modis_date": "A2003001",
+     "calendar_date": "2003-01-01"
+    },
+    {
+     "modis_date": "A2004001",
+     "calendar_date": "2004-01-01"
+    },
+    {
+     "modis_date": "A2005001",
+     "calendar_date": "2005-01-01"
+    },
+    {
+     "modis_date": "A2006001",
+     "calendar_date": "2006-01-01"
+    },
+    {
+     "modis_date": "A2007001",
+     "calendar_date": "2007-01-01"
+    },
+    {
+     "modis_date": "A2008001",
+     "calendar_date": "2008-01-01"
+    },
+    {
+     "modis_date": "A2009001",
+     "calendar_date": "2009-01-01"
+    },
+    {
+     "modis_date": "A2010001",
+     "calendar_date": "2010-01-01"
+    },
+    {
+     "modis_date": "A2011001",
+     "calendar_date": "2011-01-01"
+    },
+    {
+     "modis_date": "A2012001",
+     "calendar_date": "2012-01-01"
+    },
+    {
+     "modis_date": "A2013001",
+     "calendar_date": "2013-01-01"
+    },
+    {
+     "modis_date": "A2014001",
+     "calendar_date": "2014-01-01"
+    },
+    {
+     "modis_date": "A2015001",
+     "calendar_date": "2015-01-01"
+    },
+    {
+     "modis_date": "A2016001",
+     "calendar_date": "2016-01-01"
+    },
+    {
+     "modis_date": "A2017001",
+     "calendar_date": "2017-01-01"
+    },
+    {
+     "modis_date": "A2018001",
+     "calendar_date": "2018-01-01"
+    },
+    {
+     "modis_date": "A2019001",
+     "calendar_date": "2019-01-01"
+    },
+    {
+     "modis_date": "A2020001",
+     "calendar_date": "2020-01-01"
+    },
+    {
+     "modis_date": "A2021001",
+     "calendar_date": "2021-01-01"
+    },
+    {
+     "modis_date": "A2022001",
+     "calendar_date": "2022-01-01"
+    },
+    {
+     "modis_date": "A2023001",
+     "calendar_date": "2023-01-01"
+    },
+    {
+     "modis_date": "A2024001",
+     "calendar_date": "2024-01-01"
+    },
+    {
+     "modis_date": "A2025001",
+     "calendar_date": "2025-01-01"
+    }
+   ]
+  }
+ },
+ "subsets": [
+  {
+   "request_url": "https://modis.ornl.gov/rst/api/v1/MCD12Q1/subset?latitude=-16.367023&longitude=-72.185771&band=LC_Type1&startDate=A2015001&endDate=A2024001&kmAboveBelow=0&kmLeftRight=0",
+   "requested_at": "2026-11-15T07:28:09+00:00",
+   "response": {
+    "xllcorner": "-7701647.29",
+    "yllcorner": "-1820355.63",
+    "cellsize": 463.312716528,
+    "nrows": 1,
+    "ncols": 1,
+    "band": "LC_Type1",
+    "units": "class",
+    "scale": "Not Available",
+    "latitude": -16.367023,
+    "longitude": -72.185771,
+    "header": "https://modisrest.ornl.gov/rst/api/v1/MCD12Q1/subset?latitude=-16.367023&longitude=-72.185771&band=LC_Type1&startDate=A2015001&endDate=A2024001&kmAboveBelow=0&kmLeftRight=0",
+    "subset": [
+     {
+      "modis_date": "A2015001",
+      "calendar_date": "2015-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2022165223710",
+      "data": [
+       14
+      ]
+     },
+     {
+      "modis_date": "A2016001",
+      "calendar_date": "2016-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2022166171211",
+      "data": [
+       14
+      ]
+     },
+     {
+      "modis_date": "A2017001",
+      "calendar_date": "2017-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2022168033523",
+      "data": [
+       14
+      ]
+     },
+     {
+      "modis_date": "A2018001",
+      "calendar_date": "2018-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2022168175457",
+      "data": [
+       14
+      ]
+     },
+     {
+      "modis_date": "A2019001",
+      "calendar_date": "2019-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2022169163756",
+      "data": [
+       12
+      ]
+     },
+     {
+      "modis_date": "A2020001",
+      "calendar_date": "2020-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2022171175820",
+      "data": [
+       12
+      ]
+     },
+     {
+      "modis_date": "A2021001",
+      "calendar_date": "2021-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2022216033533",
+      "data": [
+       12
+      ]
+     },
+     {
+      "modis_date": "A2022001",
+      "calendar_date": "2022-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2023243112343",
+      "data": [
+       14
+      ]
+     },
+     {
+      "modis_date": "A2023001",
+      "calendar_date": "2023-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2024252122817",
+      "data": [
+       14
+      ]
+     },
+     {
+      "modis_date": "A2024001",
+      "calendar_date": "2024-01-01",
+      "band": "LC_Type1",
+      "tile": "h11v10",
+      "proc_date": "2025205064132",
+      "data": [
+       14
+      ]
+     }
+    ]
+   },
+   "tramo": [
+    "A2015001",
+    "A2016001",
+    "A2017001",
+    "A2018001",
+    "A2019001",
+    "A2020001",
+    "A2021001",
+    "A2022001",
+    "A2023001",
+    "A2024001"
+   ]
+  }
+ ],
+ "selected_dates": [
+  "A2015001",
+  "A2016001",
+  "A2017001",
+  "A2018001",
+  "A2019001",
+  "A2020001",
+  "A2021001",
+  "A2022001",
+  "A2023001",
+  "A2024001"
+ ]
+}
