@@ -1,0 +1,15 @@
+{
+  "name": "tarpu-qentara",
+  "private": true,
+  "description": "Herramientas de desarrollo del repositorio TARPU (CLI de Supabase). El frontend tiene su propio package.json en Codigo/.",
+  "scripts": {
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:status": "supabase status",
+    "db:reset": "supabase db reset",
+    "db:test": "supabase test db"
+  },
+  "devDependencies": {
+    "supabase": "3.0.0"
+  }
+}

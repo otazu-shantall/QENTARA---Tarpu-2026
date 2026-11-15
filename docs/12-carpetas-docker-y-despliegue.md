@@ -171,7 +171,7 @@ Cada paso deja algo que se puede probar. Hasta el paso 5, el backend sigue funci
 
 **¿Hay que apagar el motor híbrido?** No para planificar ni para los pasos 1 y 2. El paso 3 mueve la base de Arequipa a Supabase y el paso 5 usa los puertos de Docker. Para esos se avisará antes: la API de la pantalla de prueba conviene apagarla, para que no lea archivos a medio mover.
 
-## 9. Decisiones (DT-23, por confirmar)
+## 9. Decisiones (DT-23, confirmada el 15/11/2026)
 
 1. **Base de datos:** Supabase (Postgres + PostGIS + Storage). En local, Docker con la CLI de Supabase, como en Pulse/OS; en producción, Supabase en la nube. Reemplaza el «sin base de datos» de DT-13.
 2. **API, trabajador y actualizador en Google Cloud Run**, con una sola imagen construida desde `backend/`.

@@ -185,6 +185,15 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 - **Pendiente:** proyecto de Google Cloud con Earth Engine (lo crea Erick), servidor de la API interna, canal del aviso e identificación del usuario sin cuentas. Lista completa en [11, §6](11-esquema-mixto.md#6-por-verificar-antes-de-construir-cada-pieza).
 - **Afecta a:** DT-13 (la exportación estática queda como respaldo de los lugares de ejemplo) y DT-15 (el frontend puede seguir siendo estático, pero llama a la API interna).
 
+### DT-23 · Backend con Supabase (simulado con Docker) y despliegue en Google Cloud Run
+**Tomada · 15/11/2026 (Erick).** Plan completo en [12-carpetas-docker-y-despliegue.md](12-carpetas-docker-y-despliegue.md).
+
+- **Base de datos:** Supabase (Postgres + PostGIS + Storage). En local, con Docker y la CLI de Supabase, como en Pulse/OS; en producción, Supabase en la nube. **Reemplaza el «sin base de datos» de DT-13.**
+- **API, trabajador y actualizador:** Google Cloud Run, con una sola imagen construida desde `backend/`. El trabajador toma los trabajos de una cola en la base; la web solo habla con la API.
+- **Las series se guardan por celda o píxel del producto**, no por parcela. Así una parcela vecina que cae en la misma celda reutiliza la extracción.
+- **Mapas grandes:** se simulan con Supabase Storage. Supabase Storage o Google Cloud Storage se decide al desplegar, con los límites reales del plan a la vista.
+- **T03:** el esquema v0 deja huecos para el modelo de Damaris (variables, indicadores, vistas por pantalla y migraciones nuevas).
+
 ## Riesgos
 
 Prioridades cualitativas del informe (SUP-032), sin probabilidad medida.
