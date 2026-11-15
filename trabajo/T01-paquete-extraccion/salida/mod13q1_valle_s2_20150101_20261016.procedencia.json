@@ -1,0 +1,68 @@
+{
+ "source_id": "ORNL DAAC MODIS/VIIRS Land Product Subsets",
+ "product_id": "MOD13Q1",
+ "bands": {
+  "250m_16_days_NDVI": {
+   "units": "NDVI ratio - No units",
+   "valid_range": "-2000 to 10000",
+   "fill_value": "-3000",
+   "scale_factor": "0.0001",
+   "add_offset": "0",
+   "description": "16 day NDVI average"
+  },
+  "250m_16_days_pixel_reliability": {
+   "units": "rank",
+   "valid_range": "0 to 3",
+   "fill_value": "-1",
+   "scale_factor": null,
+   "add_offset": null,
+   "description": "Quality reliability of VI pixel"
+  }
+ },
+ "conversion": "value = raw * scale_factor (from /bands); fill or out of valid_range => empty. Categorical bands (quality, land cover) keep the raw class code.",
+ "label_sources": {
+  "250m_16_days_pixel_reliability": "MOD13 user guide (pixel reliability ranks)",
+  "LC_Type1": "MCD12 User Guide (Sulla-Menashe and Friedl, 2018), IGBP classes; labels in .detalle.csv only"
+ },
+ "request_base": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/subset",
+ "bands_url": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/bands",
+ "dates_url": "https://modis.ornl.gov/rst/api/v1/MOD13Q1/dates?latitude=-15.612386&longitude=-71.984857",
+ "requests_this_product": 56,
+ "blocks_failed": 0,
+ "service_stats_all_products": {
+  "peticiones": 6,
+  "correctas": 6,
+  "http_5xx": 0,
+  "http_429": 0,
+  "http_4xx": 0,
+  "timeouts_o_red": 0,
+  "reintentos": 0
+ },
+ "blocks_from_cache_all_products": 52,
+ "blocks_fetched_all_products": 6,
+ "concurrency_cap": 4,
+ "written_at": "2026-11-15T16:29:20+00:00",
+ "point": {
+  "latitude": -15.612386,
+  "longitude": -71.984857
+ },
+ "cellsize_m": 231.656358264,
+ "tiles": [
+  "h11v10"
+ ],
+ "observed_start": "2015-01-01",
+ "observed_end": "2026-10-16",
+ "dates_in_period": 272,
+ "dates_returned": 272,
+ "first_date": "2015-01-01",
+ "last_date": "2026-10-16",
+ "missing_values_by_band": {
+  "250m_16_days_NDVI": 0,
+  "250m_16_days_pixel_reliability": 0
+ },
+ "missing_blocks": [],
+ "problems": [],
+ "small_scale_test_max_blocks": null,
+ "note": "Single MODIS pixel (250 m to 1 km): mixes several fields; describes the area, not one plot. NDVI is a greenness index, not a measure of soil fertility.",
+ "generated_with": "tarpu_datos (written with AI assistance, Claude Code)."
+}

@@ -1,0 +1,30 @@
+{
+ "source_id": "FAO-56 (calculation, no network)",
+ "product_id": "Daylight hours N",
+ "computed_at": "2026-11-15T15:51:32+00:00",
+ "point": {
+  "latitude": -15.612386,
+  "longitude": -71.984857
+ },
+ "observed_start": "2015-01-01",
+ "observed_end": "2025-12-31",
+ "days": 4018,
+ "units": {
+  "N": "h",
+  "dia_del_anio": "day of year (J)"
+ },
+ "min": {
+  "fecha": "2015-06-21",
+  "dia_del_anio": 172,
+  "N_h": 11.0724
+ },
+ "max": {
+  "fecha": "2015-12-20",
+  "dia_del_anio": 354,
+  "N_h": 12.9275
+ },
+ "missing_days_polar": [],
+ "citation": "Allen, R. G., Pereira, L. S., Raes, D., Smith, M. (1998). Crop evapotranspiration - Guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper 56, chapter 3, eq. 24, 25, 34. https://www.fao.org/3/x0490e/x0490e00.htm",
+ "note": "Astronomical daylight length from latitude only; ignores clouds, slope and horizon.",
+ "generated_with": "tarpu_datos (written with AI assistance, Claude Code)."
+}
