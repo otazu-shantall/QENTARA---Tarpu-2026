@@ -2,7 +2,7 @@
 
 > Escrito con asistencia de IA (Claude Code), 15/11/2026. Declarado en [entrega/uso-de-ia.md](../entrega/uso-de-ia.md).
 
-Aquí se bajan **una vez** los datos de los tres lugares de ejemplo y se suben al repositorio. Esos archivos son la base de datos de la demo (DT-19, DT-21): la web no consulta nada en vivo.
+Aquí se bajan **completos** los datos de los lugares de ejemplo y se suben al repositorio: son la capa 3 del esquema mixto (DT-22, [docs/11](../docs/11-esquema-mixto.md)), lo que el jurado prueba aunque falle la extracción por coordenada. **Obligatorios hoy: Majes riego y Chivay.** El S2 (Cabanaconde) entra si alcanza. La base de Arequipa (capa 1) será otra tarea (T02).
 
 | Carpeta | Qué baja | Cuenta | Quién |
 |---|---|---|---|

@@ -23,9 +23,10 @@
 - **Nueva base de datos y reglas (15/11/2026):**
   - **DT-19** reemplaza DT-17: POWER (19 variables), SoilGrids, GAEZ, MODIS de ORNL, NASADEM, HLS, SMAP y el IV CENAGRO 2012.
   - **DT-20:** en cada sector se muestran los 8 cultivos con más superficie en el censo 2012 que tengan ficha EcoCrop, y el resto en «ver más» (`backend/catalogo/sectores.json`).
-  - **DT-21:** la API no se publica; la web estática muestra y descarga los datos.
+  - **DT-22 (reemplaza DT-21): esquema mixto.** Base de Arequipa guardada (capa 1), series de satélite extraídas por coordenada en Google Cloud con aviso al usuario (capa 2) y Majes riego y Chivay completos para el jurado. La API interna sí se usa; la pública para terceros queda para después. Ver [11](11-esquema-mixto.md).
   - **Lugar de ejemplo S2:** Cabanaconde (Caylloma), −15,612386; −71,984857, 2908 m según el censo; maíz amiláceo.
   - **Métodos con cita** en `backend/investigacion/metodos_citados_2026-11-15.json`: Kc de FAO-56, factor LS de USLE (válido solo en pendientes de 3 a 18 %; Chivay tiene 33 %), textura sin regla (EcoCrop no define sus clases), rotación de costa sin secuencia oficial encontrada.
+- **Guía de Derecho:** una sola guía en PDF para la persona a cargo de la entrega (`entrega/Guia_Derecho_Entrega_y_Pitch.pdf`), con el esquema mixto, los datos reales para el pitch y el guion del video.
 - **Prueba por área de AppEEARS (14–15/11/2026):** `modis_zonas` (7 capas × 2015–2026 × 2 zonas) siguió «processing» más de 2 h; no fue un error del script, sino el volumen. Los datos pesados se piden ahora en tareas pequeñas por punto con `trabajo/extraccion_pesada/pesados.py`.
 
 ## Inventario
@@ -55,6 +56,8 @@
 | Paquete de extracción T01 | 🟡 ejecutado en Majes riego y Chivay (Damaris) | `trabajo/T01-paquete-extraccion/` | Falta el lugar S2 (Cabanaconde) y subir `salida/`. Instrucciones en `trabajo/README.md`. |
 | Extracción pesada (AppEEARS) | 🟡 scripts listos | `trabajo/extraccion_pesada/` | NASADEM, HLS, SMAP e imágenes de Chivay para los tres lugares de ejemplo; los ejecuta un compañero con la cuenta de Earthdata. |
 | Cultivos por sector y métodos citados | ✅ | `backend/catalogo/sectores.json`, `backend/investigacion/` | DT-20; Kc, LS, K, horas de luz, rotación de sierra. |
+| Base de Arequipa (capa 1, DT-22) | ❌ por extraer | — | NASADEM, SoilGrids, GAEZ y POWER para toda la región (propuesta T02). |
+| Trabajos por coordenada en Google Cloud (capa 2) | ❌ | — | Falta el proyecto de Google Cloud con Earth Engine, el servidor de la API interna y el canal del aviso. |
 | Base de datos, autenticación | ❌ | — | Demo sin base de datos (DT-13); PostGIS y cuentas siguen propuestos (SUP-015, SUP-026). |
 | Repositorio git | ✅ | [https://github.com/otazu-shantall/QENTARA---Tarpu-2026](https://github.com/otazu-shantall/QENTARA---Tarpu-2026) | Publicado el 14/11/2026, rama `main`. Falta confirmar que sea público y elegir la licencia. |
 

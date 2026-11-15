@@ -2,6 +2,10 @@
 
 > Dos partes: lo que **existe** (el prototipo visual de `Codigo/`) y lo que se **propone** para el producto. Lo propuesto está en el apartado 06 del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#06-ingeniería-y-desarrollo-dev) y es SUP-015: no está aprobado por el hecho de que exista el prototipo.
 
+## 0. Enfoque de datos vigente (DT-22)
+
+Esquema mixto: base de Arequipa guardada, extracción por coordenada en Google Cloud con aviso al usuario y API interna del motor. Detalle en [11-esquema-mixto.md](11-esquema-mixto.md). El backend de la hackathon está en `backend/` (DT-13, DT-14).
+
 ## 1. Lo que existe: el prototipo visual
 
 | Capa | Elección | Notas |

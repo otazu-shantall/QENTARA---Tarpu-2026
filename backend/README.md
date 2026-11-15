@@ -53,7 +53,7 @@ backend/
 
 | Qué | Dónde | Por qué ahí |
 |---|---|---|
-| Decisiones DT-13 a DT-21 | [docs/06](../docs/06-decisiones-y-riesgos.md) | Todas las decisiones del equipo se registran en un solo archivo |
+| Decisiones DT-13 a DT-22 | [docs/06](../docs/06-decisiones-y-riesgos.md) | Todas las decisiones del equipo se registran en un solo archivo |
 | Recorrido del usuario y escala | [docs/10](../docs/10-recorrido-y-escala.md) | Lo comparten backend y frontend |
 | Conectores a las fuentes | [datos/](../datos/README.md) | Son del área de Damaris; el backend solo los invoca |
 | Pantallas | [Codigo/](../Codigo/README.md) | Área de Shantall |
@@ -65,7 +65,7 @@ backend/
 3. `procesamiento` pide en segundo plano los datos del **centroide** de la parcela a los conectores del área de datos. `ingesta` e `indicadores` los convierten en conteos, promedios y totales con su procedencia.
 4. El **motor** compara cada cultivo del catálogo con rangos **citados** de FAO EcoCrop, criterio por criterio, sin puntaje ni pesos.
 5. El **agente** responde preguntas con esos datos y sus citas, sin modelo de IA.
-6. Todo sale por una **API FastAPI que solo corre en local** (DT-21); `exportar` copia las rutas GET a JSON para la web publicada.
+6. Todo sale por la **API interna FastAPI** (DT-22): lee la base de Arequipa al instante y lanza un trabajo por coordenada para las series de satélite. `exportar` copia las rutas GET a JSON como respaldo de los lugares de ejemplo.
 
 En la demo **no hay base de datos**: `almacen.py` guarda JSON en disco y es el único que lo toca, para que pasar después a PostGIS cambie un solo archivo.
 
@@ -91,7 +91,8 @@ Métodos con cita (Kc de FAO-56, factor LS de USLE con su rango válido, factor 
 | ~~DT-17~~ | Reemplazada por DT-19 |
 | **DT-19** | Fuentes y variables de la demo: POWER, SoilGrids, GAEZ, MODIS (ORNL), NASADEM, HLS, SMAP y el censo agropecuario 2012 |
 | **DT-20** | Cultivos por sector: los 8 con más superficie en el censo 2012 que tengan ficha EcoCrop, más «ver más» |
-| **DT-21** | La API no se publica: FastAPI solo en local para generar los JSON; la web muestra y descarga los datos |
+| ~~DT-21~~ | Reemplazada por DT-22 |
+| **DT-22** | Esquema mixto: base de Arequipa guardada + extracción por coordenada en Google Cloud con aviso; API interna sí, API pública no ([docs/11](../docs/11-esquema-mixto.md)) |
 
 ## Lo que el desafío espera y cómo se responde
 

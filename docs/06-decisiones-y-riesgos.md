@@ -171,7 +171,19 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 - **Límites de los pisos:** la variable `WPISO` del censo (INEI, *Guía estadística del IV CENAGRO*). En los microdatos de Arequipa, los rangos de altitud por piso coinciden con los de Pulgar Vidal (Quechua 2301–3500 m; Suni 3501–4000 m). Esto cierra el pendiente de DT-18.
 
 ### DT-21 · La API no se publica
-**Tomada · 15/11/2026 (Erick).** No se aloja la API en ningún servidor ni se ofrece como servicio. FastAPI se usa solo en local para generar los JSON (DT-13). La demo pública es el sitio estático (DT-15), que **muestra los datos y permite descargarlos** (CSV, JSON y PDF). Sin servidor no hay claves que proteger en producción ni costos de alojamiento. Consultar una parcela nueva en vivo queda para después de la hackathon.
+**Reemplazada por DT-22 el 15/11/2026.** Tomada el 15/11/2026 (Erick). No se aloja la API en ningún servidor ni se ofrece como servicio. FastAPI se usa solo en local para generar los JSON (DT-13). La demo pública es el sitio estático (DT-15), que **muestra los datos y permite descargarlos** (CSV, JSON y PDF). Sin servidor no hay claves que proteger en producción ni costos de alojamiento. Consultar una parcela nueva en vivo queda para después de la hackathon.
+
+### DT-22 · Esquema mixto: base de Arequipa y extracción por coordenada
+**Tomada · 15/11/2026 (Erick).** Reemplaza DT-21. Detalle en [11-esquema-mixto.md](11-esquema-mixto.md).
+
+- **Por coordenada, desde ya:** es la esencia de TARPU. El usuario marca su campo y TARPU extrae los datos de ese punto.
+- **Capa 1, base de Arequipa:** lo estático o de celda grande (NASADEM y pendiente, SoilGrids, GAEZ, POWER, censo, sectores, cultivos y horas de luz) se baja **una vez para todo Arequipa** y se guarda.
+- **Capa 2, por coordenada:** las series de satélite (MODIS, HLS, SMAP) se extraen solo para el punto del usuario, en **Google Cloud**, como un trabajo en segundo plano. **Cuando termina, se avisa al usuario** y vuelve a entrar con todo listo. Lo ya pedido se guarda y no se repite.
+- **API interna:** sí se usa; es el motor. Lo que no se ofrece en la hackathon es una **API pública para terceros**, que queda como valor agregado.
+- **Demo:** sigue vigente. Majes riego y Chivay se extraen **completos hoy** y se guardan, para que el jurado pruebe TARPU aunque Google Cloud o un proveedor fallen. El S2 (Cabanaconde) entra si alcanza.
+- **Respaldo:** ORNL (T01) y AppEEARS (`trabajo/extraccion_pesada/`) siguen siendo la vía de respaldo de la capa 2.
+- **Pendiente:** proyecto de Google Cloud con Earth Engine (lo crea Erick), servidor de la API interna, canal del aviso e identificación del usuario sin cuentas. Lista completa en [11, §6](11-esquema-mixto.md#6-por-verificar-antes-de-construir-cada-pieza).
+- **Afecta a:** DT-13 (la exportación estática queda como respaldo de los lugares de ejemplo) y DT-15 (el frontend puede seguir siendo estático, pero llama a la API interna).
 
 ## Riesgos
 

@@ -26,7 +26,7 @@ Todo lo del backend está en esta carpeta; [README.md](README.md) es el índice.
   - DT-13: Python 3.13, FastAPI y Pydantic v2, sin base de datos; las rutas `GET` se exportan a JSON estático en `Codigo/public/api/` con `exportar.py`.
   - DT-14: agente guiado con plantillas y datos reales, **sin modelo de IA**.
   - DT-15: publicación en Vercel o Netlify (sitio estático).
-  - DT-21: **la API no se publica**; FastAPI solo corre en local para generar los JSON.
+  - DT-22 (reemplaza DT-21): **esquema mixto** ([docs/11](../docs/11-esquema-mixto.md)). La API interna sí se usa: lee la base de Arequipa al instante y lanza un trabajo por coordenada en Google Cloud, con aviso al usuario. No hay API pública para terceros en la hackathon. La exportación estática queda como respaldo de los lugares de ejemplo.
   - No añadas otro framework ni una base de datos sin una decisión nueva en `../docs/06`.
 - **DT-16, cero supuestos (la regla más importante):**
   - todo valor que devuelva el backend viene de una fuente real, con su procedencia, o lo declaró el usuario (`origen: "declarado"`);

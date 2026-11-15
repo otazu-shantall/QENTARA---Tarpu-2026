@@ -1,5 +1,7 @@
 # Diseño del backend de TARPU
 
+> **15/11/2026:** las fuentes vigentes son las de **DT-19** y el enfoque de datos es el **esquema mixto (DT-22)**, en [docs/11](../docs/11-esquema-mixto.md). Donde este diseño hable de tres fuentes (DT-17) o de una web sin servidor, manda docs/11.
+>
 > Área de **Erick**. 14/11/2026: revisado para quitar todo supuesto (DT-16), ajustado a las tres fuentes de la demo (DT-17) y alineado con el código ya construido. Explica **cómo se conecta todo**:
 >
 > - qué herramientas usamos y cómo;

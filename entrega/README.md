@@ -4,14 +4,11 @@
 
 **Cierre oficial del envío: domingo 15/11/2026, 11:59 p. m., hora del evento local.** Todo lo que se envía va **en inglés**.
 
-## Guías en PDF (empiecen por aquí)
+## Guía en PDF (empieza por aquí)
 
-| Para | Guía |
-|---|---|
-| Derecho A · Entrega y legal | [Guia_Derecho_A_Entrega_y_Legal.pdf](Guia_Derecho_A_Entrega_y_Legal.pdf) |
-| Derecho B · Pitch e investigación | [Guia_Derecho_B_Pitch_e_Investigacion.pdf](Guia_Derecho_B_Pitch_e_Investigacion.pdf) |
+**[Guia_Derecho_Entrega_y_Pitch.pdf](Guia_Derecho_Entrega_y_Pitch.pdf)** (15/11/2026): una sola guía para la persona de Derecho a cargo de la entrega. Reemplaza las dos guías anteriores (A y B).
 
-Cada guía explica TARPU, las reglas oficiales, las tareas paso a paso (con por qué importan y cuándo están hechas), qué llevar a la reunión de unión y la lista final antes del envío.
+Explica TARPU con el esquema mixto (DT-22), las decisiones ya tomadas, los datos reales que se pueden usar en el pitch, qué se puede y qué no se puede decir, el guion del video de 30 s (y la alternativa de 7 diapositivas), el formulario con el borrador del campo *NASA Data*, las referencias nuevas, el uso de IA, la licencia y la lista final antes del envío.
 
 ## Archivos de esta carpeta
 
@@ -68,7 +65,7 @@ Son límites del proyecto. Decir lo contrario baja la validez ante los jueces:
 
 ## Qué sí se puede decir
 
-- Que TARPU usa datos abiertos de NASA: hoy, **NASA POWER** con una consulta real para Majes (`datos/`).
+- Que TARPU usa datos abiertos de NASA: **NASA POWER y MODIS** ya extraídos para Majes y Chivay; NASADEM, HLS y SMAP solo si están en la versión enviada.
 - Que ayuda a **comprender** y **comparar**, y que la decisión es del agricultor.
 - Que cada dato muestra de dónde viene y qué no permite concluir.
 - Que cuando falta evidencia, TARPU lo dice en lugar de inventar un resultado.

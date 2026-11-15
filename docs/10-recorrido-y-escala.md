@@ -1,5 +1,7 @@
 # Recorrido del usuario, cálculo por parcela y escala posible
 
+> **15/11/2026: el enfoque de datos vigente es el esquema mixto (DT-22, [11](11-esquema-mixto.md)).** Las fuentes son las de DT-19; donde este documento hable solo de tres fuentes o de una web sin servidor, manda [11](11-esquema-mixto.md).
+>
 > Planificación del 14/11/2026. Ese mismo día se revisó para quitar todo supuesto (DT-16) y se ajustó a las tres fuentes de la demo (DT-17). El backend que la implementa ya está construido. Responde a tres preguntas:
 >
 > 1. ¿Qué ve y hace el usuario, paso a paso?
@@ -12,7 +14,7 @@
 
 El usuario **ubica su campo en el mapa**, **dibuja su contorno** y **declara qué siembra y cuándo**. TARPU le muestra **datos reales de su zona**, en el punto central de su campo, y dice siempre la escala de cada dato y de dónde sale. Después **compara cultivos con rangos citados**.
 
-**Fuentes de la demo (DT-17):** NASA POWER (clima), NDVI de MODIS (verdor) y SoilGrids (suelo). Ninguna describe el interior de una parcela pequeña. Por eso TARPU habla de «tu zona» y nunca de «dentro de tu parcela».
+**Fuentes (DT-19):** POWER, SoilGrids, GAEZ, MODIS, NASADEM, HLS, SMAP y el censo agropecuario 2012. Solo HLS y NASADEM (30 m) se acercan a la escala de una parcela; el resto describe la zona. Por eso TARPU habla de «tu zona» salvo donde la escala lo permita, y lo dice.
 
 ## 2. El recorrido, paso a paso
 
@@ -22,7 +24,7 @@ El usuario **ubica su campo en el mapa**, **dibuja su contorno** y **declara qu�
 | 1 | **Ubicar mi campo** | Busca su distrito, usa «Estoy en mi campo» (GPS) o mueve el mapa satelital | Centra el mapa | — (en el navegador) | — |
 | 2 | **Dibujar mi parcela** | Toca las esquinas de su campo sobre la imagen; pulsa «Listo» | Valida el contorno; calcula el área real, cuántos píxeles de MODIS caben y el centroide | `POST /api/parcelas` | `geometria`, `parcelas` |
 | 3 | **Contar mi campo** | Declara el cultivo actual y el anterior, secano o riego, **los meses en que el cultivo está en el campo** y qué le importa. Siempre puede responder «No sé» | Lo guarda como «declarado por ti». «No sé» queda como desconocido | `PUT /api/parcelas/{id}/contexto` | `parcelas`, `catalogo` |
-| 4 | **Preparando tus datos** | Espera | Pide los datos reales de cada fuente en el centroide y muestra el estado de cada una | `POST …/procesar` · `GET …/procesamiento` | `procesamiento`, `conectores`, `ingesta`, `indicadores` |
+| 4 | **Preparando tus datos** | Ve lo de la base de Arequipa al instante; puede salir y volver | Lee la capa 1 en el centroide y lanza el trabajo por coordenada de la capa 2 (DT-22); avisa cuando termina | `POST …/procesar` · `GET …/procesamiento` | `procesamiento`, `conectores`, `ingesta`, `indicadores` |
 | 5 | **Cómo está mi campo** | Lee frases y tarjetas: temperatura, noches bajo 0 °C, lluvia y verdor | Cada dato lleva su escala («tu zona, celda de ≈ 55 × 67 km» o «tu zona, píxel de 250 m»), su fuente y su período | `GET …/indicadores` · `…/clima` | `indicadores` |
 | 6 | **¿Qué siembro después?** | Ve su cultivo actual y los demás del catálogo, criterio por criterio | Compara cada criterio con el rango citado de FAO EcoCrop; dice qué falta y qué fuentes chocan | `GET …/rotaciones` | `motor` |
 | 7 | **Pregunta a Tarpu** | Toca una pregunta sugerida o escribe la suya | Responde con los datos de su parcela y la cita | `GET …/agente` · `POST /api/agente` | `agente` |
@@ -183,6 +185,8 @@ TARPU muestra el número de píxeles de MODIS de cada parcela para que el usuari
 - Calcular una dosis de riego a partir de un dato aislado.
 
 ## 7. Qué se puede hacer en la web publicada
+
+> **Reemplazado por DT-22.** La web llama a la API interna y permite dibujar parcelas nuevas; los lugares de ejemplo quedan además en JSON estático como respaldo. La tabla siguiente describe el plan anterior y se conserva como antecedente.
 
 La web publicada es un sitio de **JSON estático** (DT-13): no tiene servidor.
 
