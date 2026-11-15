@@ -28,6 +28,7 @@
 | I04 | Noches con mínima ≤ temperatura letal citada | POWER `T2M_MIN` + EcoCrop | ✅ implementado (para el motor) |
 | I05 | Lluvia por mes y por año | POWER `PRECTOTCORR` | ✅ implementado |
 | I06 | Meses con días sin dato | POWER | ✅ implementado |
+| I19 | Clima del último año completo | POWER `T2M`, `PRECTOTCORR` | 🔎 **candidato**: ya lo calcula el frontend nuevo, no el backend (§3.1) |
 | I07 | Verdor (NDVI) por fecha, 250 m | MODIS `MOD13Q1` | 📝 propuesto |
 | I08 | Verdor (NDVI) por fecha, 30 m | HLS L30 y S30 | 📝 propuesto; descarga verificada, sin capa de calidad |
 | I09 | Evapotranspiración real y potencial por compuesto | MODIS `MOD16A2GF` | 📝 propuesto |
@@ -66,7 +67,26 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
 | I05 | `PRECTOTCORR` (mm/día) | Por mes: promedio de los totales mensuales. Por año: total, solo años completos | Un mes con algún día sin dato no entra; un año incompleto no tiene total | Lluvia regional, no la de la parcela (docs/10 §6.4) |
 | I06 | `T2M`, `T2M_MIN`, `PRECTOTCORR` | Lista de (año, mes, días sin dato) | — | — |
 
-**Dato de referencia, recalculado:** en Chivay, en julio, la mínima estuvo bajo 0 °C en promedio **29,2 noches**.
+### 3.1 I19 · Clima del último año completo (candidato)
+
+**Dónde está hoy:** en el frontend nuevo, no en el backend: `climateYear` (`Codigo/src/nuevo/fieldData.ts`, líneas 58-98; `docs/informes/08-frontend-conectado-api.md`, §1). Lo calcula sobre el normalizado de la celda de POWER que devuelve `/api/base/parcela`.
+
+| Campo | Lo que hace el código del frontend | Qué falta para aceptarlo |
+|---|---|---|
+| Variables | `T2M` y `PRECTOTCORR` | — |
+| «Año completo» | El último año que tiene la fila del **31/12**. No comprueba que estén los 365 o 366 días; informa `days` | Definir «completo» igual que I05: todos los días del año presentes (`indicadores.py`, línea 109) |
+| Temperatura | Media de los días **con dato**, del año y de cada mes. Los días sin dato se cuentan en `missingTemperature` | Igual que I01, pero de un solo año |
+| Lluvia | Suma del año y de cada mes. **Si falta un día, la suma es `null`**; nunca 0 | Igual que I05 |
+| Período | Un solo año, distinto de I01–I06, que promedian 2015–2025 | La tarjeta debe decir qué año es |
+| Qué no significa | Un año, no el clima típico de la zona; registro del pasado, no pronóstico | — |
+
+- **Por qué es candidato y no indicador:** el método (media y suma) es aritmética de la serie, sin umbral, así que DT-16 no lo impide. Pero no está en `backend/catalogo/indicadores.json` ni en este documento, y su definición de «completo» no es la de I05.
+- **Por confirmar con Erick:** si entra como indicador del backend o se queda en el frontend.
+- **Ejemplo** (no verificado aquí, `docs/informes/08-frontend-conectado-api.md`, Comprobaciones): un campo en Majes da 16,5 °C en 2025.
+
+### 3.2 Dato de referencia de I03
+
+**Recalculado:** en Chivay, en julio, la mínima estuvo bajo 0 °C en promedio **29,2 noches**.
 - **Fuente:** `trabajo/T01-paquete-extraccion/salida/power_chivay_20150101_20251231.normalizado.csv`, columna `T2M_MIN (C)`, julio de 2015 a 2025, con el método de I03.
 - **Cálculo:** los 11 julios están completos (31 días cada uno). Las noches con `T2M_MIN < 0` por año son 31, 29, 30, 31, 30, 28, 30, 30, 26, 26 y 30, que suman 321; 321 / 11 = 29,18, redondeado a 29,2. Coincide con docs/10 §5.2.
 - **Ojo en S2:** las series de POWER de S2 y Chivay son **idénticas**: las 19 variables coinciden en los 4018 días (`power_valle_s2_…normalizado.csv` frente a `power_chivay_…normalizado.csv`). Su julio da, por tanto, la misma cifra (ver la limitación de arriba).
@@ -118,6 +138,10 @@ Fuera de la pantalla 5: la **ETo de Penman-Monteith** y el **agua del cultivo** 
     - **Ojo:** esa cifra sale de `datos/ndvi/cache/MOD13Q1_majes_20150101_20261114/`, un **caché que git ignora**, así que **no se puede reproducir desde el repositorio**. Las muestras que `datos/ndvi/README.md` dice conservar en `datos/muestras/` ya no están ahí.
   - **En los tres lugares de ejemplo** el código 3 es raro: **5, 2 y 0 fechas** (Majes riego, Chivay y S2; tabla de abajo).
   - Cortar o no, y si el 1 se trata distinto, depende de la guía de MOD13 (V-A03) y de la decisión de Erick. Mientras tanto, docs/10 §5.3 («cortada donde no hubo observación válida») queda pendiente de esa decisión.
+  - **Choque con el frontend nuevo (commit `d78a70b`):** el frontend **sí corta**. Dibuja solo las fechas con fiabilidad 0 o 1, y deja 2 y 3 como vacío, citando la «MOD13 User Guide, pixel reliability» (`Codigo/src/nuevo/FieldEvidence.tsx`, líneas 91-94). En pantalla dice: «se omiten fechas con nubes o nieve» (línea 409; también en `docs/informes/08-frontend-conectado-api.md`, §3).
+    - Si la propuesta de este documento se acepta, cambia el frontend: dibujaría los códigos 2 y 3 con otro marcador, sin cortar.
+    - Si no, cambia este documento.
+    - **Lo decide Erick** (V-A03). En los tres lugares de ejemplo la diferencia afecta a 5, 2 y 0 fechas.
 - **Conteo verificado** (`mod13q1_*_detalle.csv`, 272 fechas, de 2015-01-01 a 2026-10-16):
 
   | Lugar | bueno | marginal | nubes | nieve o hielo |

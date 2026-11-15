@@ -1,241 +1,233 @@
 # T03 · 4. Contrato de datos por pantalla
 
-> **Área:** datos (Damaris). **Tarea:** [README.md](README.md), §3.4 («Forma de la respuesta por pantalla»). **Estado:** borrador para revisar con Shantall y Erick, 15/11/2026.
+> **Área:** datos (Damaris). **Tarea:** [README.md](README.md), §3.4 («Forma de la respuesta por pantalla»). **Estado:** borrador, reescrito el 15/11/2026 sobre el frontend nuevo (commit `d78a70b`). Para revisar con Erick.
 > Escrito con asistencia de IA (Claude Code); declarado en [entrega/uso-de-ia.md](../../entrega/uso-de-ia.md).
 >
-> **Qué es:** para cada pantalla, qué muestra, qué entidad del [modelo lógico](modelo-logico.md) o qué indicador de [agregaciones.md](agregaciones.md) alimenta cada elemento, qué campos del [diccionario](diccionario-variables.md) usa y qué se muestra cuando el dato falta. Es diseño: no cambia `backend/` ni `Codigo/`.
+> **Qué es:** para cada vista del frontend real, qué muestra, qué entidad del [modelo lógico](modelo-logico.md) o qué indicador de [agregaciones.md](agregaciones.md) alimenta cada elemento, qué campos del [diccionario](diccionario-variables.md) usa, de qué campo de la API sale y qué se muestra cuando falta. Es diseño: no cambia `backend/`, `supabase/` ni `Codigo/`.
 
 ## 1. Fuentes y cuál prevalece
 
 | Fuente | Qué aporta | Prevalencia |
 |---|---|---|
-| **Plan maestro:** `Documentación/TARPU_Documentacion_Maestra.md`, v0.4 | Requisitos RF-01 a RF-12 (§04, «PRD y alcance del MVP»), historias HU-01 a HU-09 (§04, «Historias y flujos de usuario»), rutas y estados de interfaz (§06, «Frontend, mapas y visualización») y datos detallados (§06, «Acceso a datos detallados y exportación») | Hay tres formatos (`.md`, `.tex`, `.pdf`). **Prevalece el `.md`**: su Guía de uso dice que «la fuente editable principal de esta edición es el Markdown». Manda sobre el producto (AGENTS.md raíz, §2), pero **no enumera pantallas**: sus rutas de interfaz son propuestas (SUP-013, SUP-021) |
-| **`docs/10-recorrido-y-escala.md`** | **La única lista de pantallas:** el recorrido de 9 pasos (§2, del 0 al 8), lo que lleva cada dato (§5.2), gráficos y mapa (§5.3) y estados de fuente (§5.4) | Es la fuente de las pantallas de este contrato. Donde choca con `docs/11-esquema-mixto.md` (DT-22), **manda docs/11** (encabezado de docs/11). Afecta a la pantalla 4 |
-| **`backend/prueba_web/index.html`** | **La única pantalla hecha** con datos del esquema mixto: mapa, dibujo por esquinas, datos base de la parcela, trabajos de la capa 2 y puntos extraídos | Es la pantalla de prueba del backend, **no el diseño final** (README de T03, §1.2). Sirve como evidencia de qué campos se leen hoy |
+| **Frontend nuevo:** `Codigo/src/nuevo/` (commit `d78a70b`; `docs/informes/07-frontend-nuevo.md` y `08-frontend-conectado-api.md`; DT-24) | **Las vistas que existen:** portada, Mi campo, Cultivos, Mis datos y Agente TARPU | **Es la fuente de este contrato.** Su diseño sigue pendiente de aprobación (informe 07, «Resultado») |
+| **Backend:** `backend/tarpu_api/` (`main.py`, `base.py`) y `backend/tarpu_datos/` (`base/leer.py`, `coordenada/trabajos.py`, `celdas.py`) | **La forma de las respuestas**, leída en el código | La forma sale del código. Los valores reales solo están en las pruebas (`backend/tests/test_tarpu_datos.py`) y en el informe 08. Sigo sin una salida real propia (V-03) |
+| **`docs/10-recorrido-y-escala.md`, §2** | Los 9 pasos del recorrido planeado | Solo para marcar qué pasos **no tienen vista** (§8). Donde choca con docs/11 (DT-22), manda docs/11 |
+| **Plan maestro:** `Documentación/TARPU_Documentacion_Maestra.md` v0.4 (prevalece el `.md`) | Requisitos RF y HU | Se citan solo donde una vista los cumple o no |
 
-**No se usan como fuente de pantallas:**
-- el prototipo de `Codigo/`: 7 vistas de panel (`DashboardPage` en `Codigo/src/types/index.ts`), con fixtures y como guía, no diseño final (DT-10);
-- las rutas propuestas del plan maestro (`/parcelas`, `/parcelas/:id/evidencia`…).
-
-Se citan solo donde coinciden con docs/10.
-
-**No se inventan pantallas:** este contrato cubre las 9 de docs/10 §2 y ninguna más.
+`backend/prueba_web/` deja de ser fuente: «lo que hacía ahora vive en el frontend» (informe 08, encabezado).
 
 ## 2. Reglas comunes
 
 ### 2.1 Marcas
-- **[hecha]:** el elemento existe en `backend/prueba_web/index.html`; se cita la línea.
-- **[por confirmar con Shantall]:** sale solo de una propuesta (docs/10 o plan maestro), no de una pantalla hecha.
-- **[V-03]:** pendiente de verificar con una salida real de `/api/base/parcela` o `/api/trabajos/{clave}`. Los campos de esas rutas se leyeron en el código de la pantalla de prueba y en `leer.py`, no en una respuesta real, porque la base de Arequipa no está en esta computadora (modelo lógico V-03).
+- **[en el frontend]:** leído en el código de `Codigo/src/nuevo/`; se cita archivo y línea.
+- **[por confirmar con Erick]:** propuesta de este documento o desajuste entre frontend y backend.
+- **[V-03]:** forma leída en el código del backend, sin una respuesta real propia.
 
 ### 2.2 El sobre
-Toda respuesta llega en `{data, procedencia, avisos, modo, generado}` ✔ (`backend/contrato/esquemas/Sobre.json`; `modo` = `en_vivo` o `publicado`). La pantalla de prueba lee `data` y `avisos` (`index.html:300`, `:323`).
+Toda respuesta llega en `{data, procedencia, avisos, modo, generado}` (`backend/contrato/esquemas/Sobre.json`). El cliente lee la respuesta con `request()` (`Codigo/src/nuevo/api.ts`, línea 23), y la dirección de la API va en `VITE_TARPU_API` (informe 08, «Archivos»).
 
-### 2.3 Lo que lleva cada dato (docs/10 §5.2)
-- frase;
-- valor y unidad;
-- escala;
-- fuente y período;
-- origen («dato de la fuente» o «declarado por ti»);
-- faltantes;
-- qué no significa;
-- enlace a los datos.
+### 2.3 Qué se muestra cuando falta un dato
+- **Hoy, en el frontend:**
+  - un número `null` se muestra como **«Sin dato»** (`data.ts`, `number`, líneas 22-28);
+  - un sector ausente, como «—» (`FieldEvidence.tsx:185`);
+  - la lluvia incompleta, como «N días sin dato» (`FieldEvidence.tsx:278`);
+  - el estado de cada fuente, con su texto (`STATES`, `FieldEvidence.tsx:24-35`) y su `motivo` cuando no está lista (`:357`).
+- **Nunca se muestra 0.**
+- **Lo que falta [por confirmar con Erick]:** el **motivo por fecha** (modelo lógico §4.1). El frontend no lee `vacios_del_proveedor` ni `fallos_de_descarga`, y la API no da un motivo por fecha (P-04 del modelo lógico).
+- **Textos propuestos por motivo** [por confirmar con Erick]:
 
-En el modelo, la escala sale de E07 y E08, la fuente de E04 y E05, el período y los faltantes de E14 y E21, y el origen de E02.
+  | Motivo (§4.1) | Texto propuesto |
+  |---|---|
+  | `relleno_del_proveedor` | «La fuente no tiene dato para esta fecha.» |
+  | `fuera_de_rango_valido` | «La fuente entregó un valor fuera de su rango válido; no se muestra.» |
+  | `calidad_no_valida` | «La fuente marcó este dato como de calidad no recomendada.» |
+  | `sin_verificar` | «Hay un valor, pero TARPU aún no ha verificado cómo leerlo.» (no es un vacío) |
+  | `fecha_ausente` | «Esta fecha no está en la respuesta de la fuente; no sabemos por qué.» |
+  | `nodata_del_raster` | «El mapa de la fuente no tiene dato en este lugar.» |
+  | `fuera_de_cobertura` | «Tu campo queda fuera de la zona que cubre TARPU.» |
+  | `fallo_de_descarga` | «No se pudo descargar; se puede reintentar.» |
+  | `no_disponible` | «Esta fuente todavía no está conectada.» |
 
-### 2.4 Qué se muestra cuando falta un dato
-**Nunca 0, nunca un color, nunca un valor de relleno** (docs/10 §5.3; plan maestro, HU-03: «Una escena vacía no se rellena con color verde ni se representa como NDVI cero»).
+### 2.4 Dos orígenes de datos en la misma pantalla
+- **Lugar de referencia** (Majes riego o Chivay): sale de `Codigo/src/nuevo/reference-data.json` (`data.ts:2-4`). Lo prepara `Codigo/scripts/prepare-reference-data.py` desde `datos/muestras/`: POWER 2025, NDVI, SoilGrids y cultivos (informe 07, «Procedencia»).
+- **Campo dibujado:** sale de la API en vivo (`useFieldData`, `fieldData.ts:105`).
+- **Consecuencias** [por confirmar con Erick]:
+  - **S2 (Cabanaconde) no está entre los lugares de referencia:** `places` tiene solo `majes_riego` y `chivay`;
+  - **los lugares de referencia no usan el esquema mixto:** no tienen capa 1 de toda la parcela, ni trabajos, ni reutilización.
 
-Se muestra **«Sin dato»** más el texto del motivo (modelo lógico §4.1). Los textos son propuestos [por confirmar con Shantall]:
+## 3. Formas de las dos rutas del esquema mixto
 
-| Motivo (§4.1) | Texto propuesto en pantalla |
-|---|---|
-| `relleno_del_proveedor` | «La fuente no tiene dato para esta fecha.» |
-| `fuera_de_rango_valido` | «La fuente entregó un valor fuera de su rango válido; no se muestra.» |
-| `calidad_no_valida` | «La fuente marcó este dato como de calidad no recomendada.» |
-| `sin_verificar` | «Hay un valor, pero TARPU aún no ha verificado cómo leerlo.» (no es un vacío) |
-| `fecha_ausente` | «Esta fecha no está en la respuesta de la fuente; no sabemos por qué.» |
-| `nodata_del_raster` | «El mapa de la fuente no tiene dato en este lugar.» |
-| `fuera_de_cobertura` | «Tu campo queda fuera de la zona que cubre TARPU.» |
-| `fallo_de_descarga` | «No se pudo descargar; se puede reintentar.» |
-| `no_disponible` | «Esta fuente todavía no está conectada.» |
+### 3.1 `POST /api/base/parcela`
+- **Entrada:** `{contorno: GeoJSON Polygon}` (`api.ts:132`).
+- **Salida `data`:** `base.en_parcela`, que es `leer_parcela(contorno)` más `geometria` (`backend/tarpu_api/base.py`, líneas 41-43; `backend/tarpu_datos/base/leer.py`, `leer_parcela`). [V-03]
 
-En el motor, los estados de criterio `sin_dato` y `sin_regla` (E23) se muestran con su `nota` (`comparacion.py`).
-
-## 3. Pantalla 0 · Inicio
-**Plan:** docs/10 §2, fila 0. **Ruta:** `GET /api/meta`. Toda la pantalla [por confirmar con Shantall]: no existe en `prueba_web`.
-
-| Elemento | Alimenta | Campos | Si falta |
-|---|---|---|---|
-| Qué hace TARPU y qué no | Texto fijo | — | — |
-| Fuentes y período | E04 y E05 | `meta.py`: `fuentes`, `periodo_power.inicio` y `fin`, `catalogo` (según el código) | Fuente sin conector: `no_disponible` |
-| Modo | Sobre | `modo` (`en_vivo` o `publicado`) | — |
-
-## 4. Pantalla 1 · Ubicar mi campo
-**Plan:** docs/10 §2, fila 1, y §3.1; plan maestro HU-01 y RF-01.
-
-| Elemento | Alimenta | Campos | Si falta | Marca |
+| Clave | Contenido (según el código) | Entidad | Regla E09 | Valor real (pruebas o informe 08) |
 |---|---|---|---|---|
-| Mapa satelital (Esri World Imagery, con «Clarity» como imagen principal) y capa de calles | — (teselas, sin datos de TARPU) | — | Sin imagen: lo resuelve el mapa, no el contrato | [hecha] `index.html:179-189` |
-| Saltos a lugares de ejemplo (Majes, Chivay, Cabanaconde) | E03 (lugares de ejemplo) | Coordenadas de `trabajo/README.md`, «Los tres lugares» | — | [hecha] `index.html:133-135` |
-| Mapa de sectores S1, S2 y S3 y caja de la base | E18 y E10 (capa derivada `sectores_0p01`) | `GET /api/base/sectores`: `limites_mapa`, `sectores.<S>.altitud_m`, `color_rgba`, `aviso` | Sobre 4800 m: «fuera de los sectores» (`index.html:207`) | [hecha] `index.html:194-210`; forma [V-03] |
-| Buscar distrito | — | — | — | [por confirmar con Shantall] (docs/10 §2) |
-| «Estoy en mi campo» (GPS), con la precisión del navegador tal cual | — (`coords.accuracy`, docs/10 §3.1) | — | GPS denegado: el usuario mueve el mapa | [por confirmar con Shantall] |
+| `estado`, `motivo` | `listo` o `sin_dato`, con el motivo (ej. fuera de la caja de Arequipa) | — | — | `leer.leer(0, 0)` da `sin_dato` (prueba `test_base_de_arequipa_en_majes`) |
+| `centroide` | `{lat, lon}` | E01, E03 | — | — |
+| `geometria` | `area_ha`, `perimetro_m`, `pixeles_modis_250m`, `metodo` (`geometria.medir`) | E01 | — | — |
+| `relieve` | `estado`, `pixeles`, `altitud_m{min, media, max}`, `pendiente_pct{min, mediana, max}`, `clases_pendiente_pixeles`, `procedencia` | I13 · E10 | `centro_dentro` | Parcela de Majes: 49 píxeles, pendiente mediana 2,4 % (`test_base_en_una_parcela_de_majes`) |
+| `relieve_centroide` | Relieve en el centroide (`leer.nasadem`) | E10 | — | Majes: 1391 m (`test_base_de_arequipa_en_majes`) |
+| `sector` | `estado`, `sector`, `nombre`, `pisos_inei`, `cultivos_principales`, `cultivos_ver_mas`, `procedencia` | E18 | altitud media | S1 en Majes (prueba) |
+| `suelo` | `estado`, `pixeles`, `capas{<prop>_<prof>_mean: {propiedad, profundidad, unidad, valores_por_pixel, crudos, media}}`, `procedencia` | I12 · E10 | `toca` | 2 píxeles; `9.8` en `clay_0-5cm_mean.valores_por_pixel` (prueba) |
+| `aptitud` | `estado`, `capas[]`, `procedencia` | I18 · E10 | `contiene_centroide` | — |
+| `clima` | `estado`, `celda`, `centro`, `elevacion_celda_m`, `desde`, `hasta`, `dias_faltantes_por_variable`, `archivos{original, normalizado, procedencia}`, `procedencia` | E08 y E14 (POWER) | `contiene_centroide` | Majes: 1940,88 m (prueba) |
+| `avisos` | Diferencia de altitud entre la celda de POWER y NASADEM; rango de altitud de la parcela | E14 | — | — |
+| `cobertura` | La regla de cada fuente, en texto | E09 | las cuatro | — |
 
-## 5. Pantalla 2 · Dibujar mi parcela
-**Plan:** docs/10 §2, fila 2, y §3.2–3.3; plan maestro HU-01 y RF-01. **Ruta en docs/10:** `POST /api/parcelas`. **Ruta en `prueba_web`:** `POST /api/base/parcela` con `{contorno}` (`index.html:298`).
+- **Ojo:** el sobre repite `avisos` más el `motivo` (`main.py`, `post_base_parcela`).
+- **El tipo del frontend** (`BaseParcel`, `api.ts:74-131`) declara todas estas claves salvo `relieve_centroide`.
 
-| Elemento | Alimenta | Campos | Si falta | Marca |
+### 3.2 `GET /api/trabajos/{clave}`
+- **Salida `data`:** el trabajo (`backend/tarpu_datos/coordenada/trabajos.py`, `crear`, `ejecutar`, `_power_de_la_base` y `_modis`). [V-03]
+
+| Clave | Contenido (según el código) | Entidad |
+|---|---|---|
+| `clave`, `nombre`, `punto{lat, lon}`, `parcela{contorno, area_ha, perimetro_m}` | Punto con 4 decimales | E03, E15 |
+| `estado` | `pendiente`, `en_proceso`, `listo`, `listo_con_vacios`, `parcial`, `sin_datos`, `error`, `cancelado`, `interrumpido` | E15 |
+| `fuentes.power` | `estado`, `archivos`, `vacios_del_proveedor`, `fallos_de_descarga`, `motivo`, `hasta`, más **`reutilizado{de: 'base de Arequipa', celda, hasta, elevacion_celda_m}`** | E15, E08 |
+| `fuentes.modis.productos.<MOD13Q1 \| MOD16A2GF \| MOD11A2 \| MCD12Q1>` | Lo mismo, y si el píxel ya tenía serie, **`reutilizado{de: 'otra parcela en el mismo píxel', celda, hasta, actualizado}`** | E15, E08 |
+| `fuentes.hls`, `fuentes.smap` | `estado: no_disponible` y `motivo` (`PENDIENTES`) | E15 |
+| `aviso` | `estado` (`pendiente` o `por_enviar`), `canal` (null), `nota`, `listo_desde` | E16 |
+| `creado`, `iniciado`, `terminado`, `actualizado`, `cancelacion` | Fechas ISO | E15 |
+
+- **Prueba:** POWER sale de la celda `POWER:-15.500,-71.875`, con `elevacion_celda_m` 4351.89 (`test_power_se_lee_de_la_celda_de_la_base`).
+- **Desajuste** [por confirmar con Erick]: el frontend declara `reutilizado_de?: string` en `ProductResult` (`api.ts`), pero el backend escribe el objeto `reutilizado{…}`. El frontend rotula `reutilizado` como un estado («Reutilizado de un campo vecino», `FieldEvidence.tsx:33`), y en el backend no es un estado (modelo lógico §4).
+
+## 4. Portada
+**Código:** `Codigo/src/nuevo/Landing.tsx` (informe 07; DT-24).
+
+| Elemento | Datos | Si falta |
+|---|---|---|
+| Fotografía de trigo y cielo, con atribución | `Codigo/public/images/README.md` (Arnaud Weyts, Unsplash; licencia verificada el 15/11/2026 según el informe 07) | — |
+| Navegación a las cuatro vistas | `navigation` (`App.tsx:49-52`) | — |
+
+No usa la API. Equivale al paso 0 de docs/10 («Inicio»), sin `GET /api/meta`.
+
+## 5. Mi campo
+**Código:** `FieldDashboard.tsx`, `FieldMap.tsx`, `FieldEvidence.tsx`, `fieldData.ts`. **Requisitos:** plan maestro RF-01, RF-03, RF-04, RF-10 y HU-01, HU-02, HU-03. Cubre los pasos 1, 2, 4 y parte del 5 de docs/10.
+
+### 5.1 Mapa y dibujo
+
+| Elemento | Datos | Entidad | Si falta |
+|---|---|---|---|
+| Imagen Esri Clarity (zoom 21) y OpenStreetMap | Teselas | — | Sin capa de zonas, el mapa sigue (informe 08, «Mapa») |
+| Zonas S1, S2 y S3, con leyenda | `GET /api/base/sectores`: `limites_mapa`, `sectores.<S>.altitud_m`, `color_rgba`, `fuera`, `metodo`, `aviso` (`SectorMap`, `api.ts`) y `.png` | E18 | Ídem |
+| Dibujo por esquinas, con deshacer, cancelar, comprobar cruces y guardar; o coordenadas por texto (`CoordinateDialog`, `App.tsx:1063`) | Contorno GeoJSON `[lon, lat]` (`polygon`, `api.ts:45`) | E01 | — |
+| Campos guardados | `localStorage` `tarpu.fields.v2` (`App.tsx`) | E01 (solo en el navegador) | Si el navegador no guarda: aviso para descargar el contorno |
+| Lugares de referencia | `reference-data.json` (§2.4) | E03 | — |
+
+### 5.2 Tarjetas de la capa 1 (campo dibujado)
+Todas desde `POST /api/base/parcela` (§3.1).
+
+| Tarjeta | Campos que lee el frontend | Indicador | Diccionario | Si falta, hoy |
 |---|---|---|---|---|
-| Dibujo por esquinas: guardar punto, deshacer, cerrar y empezar de nuevo | E01 (contorno GeoJSON `[lon, lat]`) | `contornoGeoJSON()` (`index.html:275`) | Menos de 3 esquinas: no se puede cerrar (`index.html:255`) | [hecha] `index.html:236-275` |
-| Área y perímetro | E01 | `data.geometria.area_ha`, `perimetro_m` | Contorno inválido: `400 contorno_invalido` con qué corregir (docs/10 §3.3) | [hecha] `index.html:319`; forma [V-03] |
-| Centroide | E01 y E03 | `data.centroide.lat`, `lon` | — | [hecha] `index.html:317`; [V-03] |
-| Píxeles de MODIS que caben | E01 y E09 | `data.geometria.pixeles_modis_250m` | — | [hecha] `index.html:329`; [V-03]. **Ojo:** el backend divide por 6,25 ha, el píxel nominal de 250 m (docs/10 §3.3; `geometria.py:60`), pero el píxel real de MOD13Q1 mide 231,66 m (diccionario §2). Pendiente P-C01 |
-| Versión al redibujar | E01 | `PUT …/contorno` → `409 parcela_desactualizada` (docs/10 §3.3) | Resultados de una versión anterior: no se sirven | [por confirmar con Shantall]; no está en `prueba_web` |
-| «Dibujar no acredita propiedad» | Texto fijo (docs/10 §3.3; plan maestro HU-01) | — | — | [por confirmar con Shantall] |
+| Superficie | `geometria.area_ha` (`FieldEvidence.tsx:132`) | E01 | — | «Sin dato» |
+| Altitud | `relieve.altitud_m`, `relieve.pixeles` (`:153-157`) | I13 | §5 `NASADEM_HGT` | «Sin dato» |
+| Pendiente | `relieve.pendiente_pct` (`:166`) | I13 | §5, Pendiente | «Sin dato». I14 (LS) no se muestra |
+| Sector y cultivos de la zona | `sector.sector`, `nombre`, `motivo`, `cultivos_principales` (`:185-211`), «como descripción de la zona, no como recomendación» (informe 08, §1) | E18, E19 | §9 | Sector «—» y su `motivo` |
+| Suelo, 0–5 cm | `suelo.capas['<prop>_0-5cm_mean'].media` para `phh2o`, `sand`, `silt` y `clay` (`:87-88`, `:296-306`); `suelo.pixeles` (`:310`) | I12 | §6 | «Sin dato». No muestra otras profundidades ni Q0,05–Q0,95, que agregaciones I12 propone por píxel [por confirmar con Erick] |
+| Clima del último año completo, por mes | Normalizado de POWER de `clima.archivos` → `climateYear` (`fieldData.ts:58-98`) | **I19 (candidato)** | §1 `T2M`, `PRECTOTCORR` | Mes con un día sin lluvia: sin total y «N días sin dato». Ver agregaciones §3.1 |
+| Avisos | Sobre `avisos` | E14 | — | — |
 
-## 6. Pantalla 3 · Contar mi campo
-**Plan:** docs/10 §2, fila 3; plan maestro RF-02 («admitir desconocido sin transformarlo en cero»). **Ruta:** `PUT /api/parcelas/{id}/contexto`, con el esquema `backend/contrato/esquemas/ContextoEntrada.json` ✔. Toda la pantalla [por confirmar con Shantall]: no está en `prueba_web`.
+### 5.3 Tarjeta de la capa 2 (trabajo)
+Desde `POST /api/trabajos`, consultando `GET /api/trabajos/{clave}` cada 3 s, más `POST /api/trabajos/cancelar` y `GET /api/trabajos/punto` (`fieldData.ts`; informe 08, §2).
 
-| Elemento | Alimenta | Campos (`ContextoEntrada.json`) | Si falta |
+| Elemento | Campos | Entidad | Si falta, hoy |
 |---|---|---|---|
-| Cultivo actual | E02 | `cultivo_actual` (texto o `null`) | `null` = «No sé». Nunca se rellena con un valor por defecto (`description` del esquema) |
-| Cultivo anterior | E02 | `cultivo_anterior` | Ídem |
-| Secano o riego | E02 | `agua`: `secano`, `riego` o `null` | Ídem |
-| Meses en campo | E02 | `meses_campana`: lista de 1 a 12, o `null` | Ídem |
-| Qué le importa | E02 | `prioridades`: orden de `temperatura`, `frio`, `lluvia`, `suelo`, `familia`, `altitud`. **«No son pesos»** (esquema) | Sin orden: se muestra el del motor |
-| Origen | E02 | Siempre «declarado por ti» | — |
+| Estado general | `estado`, con `STATES` (`FieldEvidence.tsx:345`) | E15 | — |
+| Estado por fuente | `fuentes.<f>.estado` y `motivo` (`:347-357`), con `SOURCES` (`:36-41`) | E15 | `no_disponible`: «No disponible todavía» (HLS y SMAP) |
+| Reutilización | Texto «Si un campo vecino ya la tiene, se reutiliza» (`:327`) | E08, E09 | Desajuste de §3.2 [por confirmar con Erick] |
+| Detener y volver a intentar | `POST /api/trabajos/cancelar` | E15 | — |
 
-## 7. Pantalla 4 · Preparando tus datos
-**Plan:** docs/10 §2, fila 4, **reemplazada por docs/11 §3** (DT-22): primero la capa 1 al instante, luego el trabajo de capa 2 y el aviso. Plan maestro RF-10 («identificador persistente, estado, progreso por etapa y recuperación tras recargar») y HU-07.
+### 5.4 Tarjetas de la capa 2 (cuando MODIS termina)
 
-**Rutas:**
-- docs/10: `POST …/procesar` y `GET …/procesamiento`;
-- esquema mixto, en `prueba_web`: `POST /api/base/parcela` y `POST /api/trabajos`, `GET /api/trabajos/{clave}`, `GET /api/trabajos/punto` y `POST /api/trabajos/cancelar` (`index.html:298`, `:361`, `:388`, `:397`, `:405`).
-- **Cuál de los dos caminos usa la pantalla final** lo decide Erick (README de T03, §1.3, «El hueco») (P-C02).
-
-### 7.1 Lo de la base, al instante (capa 1)
-Todo [hecha] en `index.html:314-350`; la forma, [V-03].
-
-| Elemento | Alimenta | Campos de `data` | Diccionario | Si falta |
+| Tarjeta | Datos | Indicador | Diccionario | Si falta, hoy |
 |---|---|---|---|---|
-| Sector | E18 | `sector.sector`, `nombre`, `estado` | §9, Sector | `sin_dato` con `motivo` (ej. fuera de 0 a 4800 m) |
-| Altitud media, mínima y máxima | I13 · E10 y E09 (`centro_dentro`) | `relieve.altitud_m.media`, `min`, `max` | §5, `NASADEM_HGT` | `relieve.estado` ≠ `listo`: «—» más `relieve.motivo` (`index.html:320`), ej. «la parcela es más pequeña que un píxel» |
-| Pendiente mediana, rango y clases FAO | I13 | `relieve.pendiente_pct.mediana`, `min`, `max`; `clases_pendiente_pixeles` | §5, Pendiente | Ídem |
-| «Qué datos cubren la parcela»: píxeles de NASADEM dentro, píxeles de SoilGrids que la tocan, celda de GAEZ, celda de POWER | E09 (reglas de cobertura) | `relieve.pixeles`, `suelo.pixeles`, `geometria.pixeles_modis_250m`; `cobertura` (`leer_parcela`) | §1, §5, §6 y §7 (escala) | — |
-| Cultivos del sector | E18 y E19 | `sector.cultivos_principales`, `cultivos_ver_mas` | §9 | Lista vacía: no se muestra la tarjeta |
-| Suelo por propiedad y profundidad | I12 · E10 y E09 (`toca`) | `suelo.capas.<prop>_<prof>_mean.media`, `valores_por_pixel`, `unidad` | §6 | Celda vacía: «—» (`index.html:309`) con `nodata_del_raster`. `uncertainty` no se muestra como valor convertido (`sin_verificar`) |
-| Clima: celda, elevación, período y días sin dato | E08 y E14 (POWER) | `clima.celda`, `elevacion_celda_m`, `desde`, `hasta`, `dias_faltantes_por_variable`, `archivos` | §1 | `relleno_del_proveedor` por variable, con el número real (`index.html:345`) |
-| Aptitud por cultivo y agua | I18 · E10 | `aptitud.capas[].cultivo`, `agua`, `indice` | §7 | Ver P-C03: `prueba_web` dice «Las 100 capas valen 0 aquí» (`index.html:349`), pero agregaciones I18 propone **no mostrar** Chivay ni S2 hasta resolver V-04 |
-| Avisos (ej. la diferencia de altitud entre la celda de POWER y el punto) | E14 | sobre `avisos` | — | — |
+| Verdor (NDVI), últimas 23 composiciones | Normalizado de MOD13Q1 (`modisFile`, `fieldData.ts:99`; lectura en `:185-210`), con `reliability` | I07 | §2 `250m_16_days_NDVI`, `pixel_reliability` | **Fiabilidad 2 y 3 se dejan como vacío** (`FieldEvidence.tsx:91-94`). Choque con la propuesta de agregaciones I07 (marcar sin cortar); **lo decide Erick** (V-A03) |
+| Última observación válida | La última fecha con valor no nulo (`:95-97`, `:393-395`) | I07 | Ídem | — |
+| Cobertura | Última clase `LC_Type1` de MCD12Q1, con etiquetas IGBP en español (`:42-62`, «MODIS Land Cover Type User Guide, C6.1, cuadro 3») | I11 | §2 `LC_Type1` | Relleno 255 sin etiqueta: por verificar cómo se muestra [por confirmar con Erick] |
+| ET y PET, temperatura de superficie | **No se muestran** | I09, I10 | §2 | — |
+| HLS, SMAP | **No se muestran** (`no_disponible` en el trabajo) | I08, I16, I17 | §3, §4 | Los datos de AppEEARS (`trabajo/extraccion_pesada/salida/`) no llegan al frontend |
 
-### 7.2 Los datos pesados (capa 2)
-Todo [hecha] en `index.html:352-430`; la forma, [V-03].
+### 5.5 Lugar de referencia (Majes riego o Chivay)
+Tarjetas `SourceCards` (`App.tsx:108`) desde `reference-data.json`: `relief` (`altitud_m`, `pendiente_pct`, `clase`), `climate` (filas diarias de 2025), `soil`, `vegetation` y `sources` (`request_url` de cada fuente). Los datos son los de `datos/muestras/`, no los de T01 ni de la base de Arequipa [por confirmar con Erick].
 
-| Elemento | Alimenta | Campos del trabajo | Si falta |
+## 6. Cultivos
+**Código:** `CropView` (`App.tsx:403`). **Datos:** `place.crops` de `reference-data.json`, del IV CENAGRO 2012 (DT-20), con búsqueda y comparación de hasta 3 fichas (informe 07).
+
+| Elemento | Datos | Entidad | Si falta |
 |---|---|---|---|
-| Estado general y clave | E15 | `clave`, `estado` (`pendiente`, `en_proceso`, `listo`, `listo_con_vacios`, `parcial`, `sin_datos`, `error`, `cancelado`) | — |
-| Estado por fuente y producto | E15 | `fuentes.<f>.estado`, `motivo`, `productos.<p>.estado` | `no_disponible` con `motivo` (HLS y SMAP en `trabajos.py`) |
-| Vacíos de la fuente y fallos de descarga | E11 y E15 | `vacios_del_proveedor[]`, `fallos_de_descarga[]` | «vacío en la fuente: …» y «N bloque(s) sin descargar» (`index.html:409-410`). Con P-04 del modelo lógico, cada uno llevaría su motivo del §4.1 |
-| Leyenda de estados | — | Texto de `index.html:424`: «listo con vacíos», «parcial» y «no disponible» | — |
-| Detener extracción | E15 | `POST /api/trabajos/cancelar` `{claves}` | Lo descargado queda guardado (`index.html:423`) |
-| Aviso al terminar | E16 | `aviso.estado`, `aviso.nota` | Canal sin decidir (docs/11 §6): se muestra la nota tal cual |
-| Archivos en crudo | E13 | `archivos` → `GET /api/archivo?ruta=` → `bytes`, `recortado`, `ruta`, `contenido` | — |
+| Cultivos del sector | `place.crops[].clave` y su nombre (`cropName`, `data.ts:36`) | E18, E19 | — |
+| Ficha conjunta | Información del censo y «el estado pendiente de la evaluación» (informe 07, «Integraciones pendientes») | E19 | Sin motor: no se muestra ninguna evaluación |
 
-### 7.3 Puntos extraídos
-[hecha] `index.html:433-459`; [V-03]. Es una lista de trabajos (E15) con `nombre`, `punto`, `parcela.area_ha`, `creado`, `terminado` y `estado`, más el contorno en el mapa. **No está en docs/10:** es una herramienta de la pantalla de prueba; si entra en el recorrido, lo decide Shantall.
+- **Lo que no hay:** comparación con EcoCrop. `GET /api/parcelas/{id}/rotaciones` (E22 y E23) no tiene vista (informe 08, «Lo que falta»). El paso 6 de docs/10 y el desafío (docs/08: al menos tres estrategias, incluida la actual) **no están cubiertos** [por confirmar con Erick].
+- **Para un campo dibujado:** usa `place`, el lugar de referencia activo, no el sector del campo (`CropView({place, field})`). Hay que confirmar si toma los cultivos de `/api/base/parcela` [por confirmar con Erick].
 
-## 8. Pantalla 5 · Cómo está mi campo
-**Plan:** docs/10 §2, fila 5, §5.2 y §5.3; plan maestro RF-03, RF-04, RF-05, HU-02 y HU-03.
+## 7. Mis datos
+**Código:** `DataView` (`App.tsx:162`); para un campo dibujado, `FieldFiles.tsx` (`App.tsx:239`). **Requisitos:** plan maestro RF-08, RF-12 y HU-09.
 
-**Rutas:**
-- `GET /api/parcelas/{id}/indicadores` y `…/clima`. Hoy solo leen POWER por el camino antiguo (README de T03, §1.3).
-- **Forma real ✔** en `backend/contrato/ejemplos/indicadores_chivay.json`, calculada con POWER: `data.punto_consultado`, `periodo`, `clima_mensual[]`, `lluvia_anual_mm` y `resumen`.
-
-Todo lo que no es POWER: [por confirmar con Shantall] y sin ruta todavía (P-C02). La pantalla no existe en `prueba_web`.
-
-| Tarjeta | Indicador | Campos del diccionario | Campos de respuesta | Si falta | Gráfico (docs/10 §5.3) |
-|---|---|---|---|---|---|
-| Temperatura del aire | I01, I02 | §1 `T2M`, `T2M_MIN` | `clima_mensual[].temperatura_media_c`, `temperatura_minima_registrada_c` ✔ | Mes con días sin dato: fuera del cálculo y listado en `meses_con_dias_sin_dato` (I06) | — |
-| Noches bajo 0 °C | I03 | §1 `T2M_MIN` | `clima_mensual[].noches_minima_bajo_0c_promedio` ✔ | Mes incompleto: hueco en la barra, no 0 | Barras por mes |
-| Lluvia | I05 | §1 `PRECTOTCORR` | `clima_mensual[].lluvia_promedio_mm`, `lluvia_anual_mm` ✔ | Mes sin dato: **hueco**; año incompleto: sin total | Barras por mes |
-| Aviso de escala del clima | I01–I06 | §1 (escala y celda) | Sobre `avisos` ✔ | — | — |
-| Aviso de sesgo frío en S2 | I01–I06 (limitación) | §1 `cell_elevation_m`; §5 `NASADEM_HGT` | Por definir | — | — |
-| Verdor de 250 m | I07 | §2 `250m_16_days_NDVI`, `pixel_reliability` | Por definir | `relleno_del_proveedor` y `fuera_de_rango_valido`: hueco. Códigos 2 y 3: punto con otro marcador y la etiqueta del proveedor; **lo decide Erick** (V-A03) | Línea por fecha |
-| Verdor de 30 m | I08 | §3 `HLSL30_VI_020_NDVI`, `HLSS30_VI_020_NDVI` | Por definir | −19999: hueco (V-B01). Sin capa de calidad: aviso «no distingue nubes» (V-B02). Dos teselas: sin mezclar (V-B03) | Línea por fecha y tesela |
-| Evapotranspiración | I09 | §2 `ET_500m`, `PET_500m` | Por definir | `relleno_del_proveedor` (32767); 32701–32766: `fuera_de_rango_valido` (V-A05) | Por compuesto de 8 días |
-| Temperatura de superficie | I10 | §2 `LST_Day_1km`, `LST_Night_1km` | Por definir | Crudo 0: `relleno_del_proveedor`. 16/10/2022: `fecha_ausente` | Por compuesto de 8 días |
-| Cobertura | I11 | §2 `LC_Type1` | Por definir | 255: `relleno_del_proveedor` | Clase por año |
-| Suelo | I12 | §6 | Igual que la pantalla 4 (§7.1) | Igual | Tabla por profundidad |
-| Pendiente | I13, I14 | §5 | Igual que la pantalla 4 | I14 fuera de 3–18 %: «fuera de validez»; sin λ: `sin_regla` | Mapa por píxel (el único dato que puede colorear el interior; docs/10 §5.3 y agregaciones §4.2) |
-| Horas de luz | I15 | §8 `N` | Por definir | — | Mínimo y máximo por mes |
-| Humedad del suelo | I16, I17 | §4 | Por definir | L3E sin calidad recomendada: `calidad_no_valida` (en S2, ninguna fecha con calidad recomendada). L4: unidad ❓ (V-B06) | Por día (L3E) o cada 3 h (L4) |
-| Aptitud GAEZ | I18 | §7 | Igual que la pantalla 4 | Chivay y S2: no se muestra (V-04) | Tabla |
-
-**Mapa de esta pantalla:** el contorno siempre y el centroide marcado. Nunca se colorea el campo con un dato de una fuente que no describe su interior; solo NASADEM de 30 m puede hacerlo (docs/10 §5.3).
-
-## 9. Pantalla 6 · ¿Qué siembro después?
-**Plan:** docs/10 §2, fila 6; plan maestro RF-06 y HU-04; desafío, docs/08: al menos tres estrategias, incluida la actual. **Ruta:** `GET /api/parcelas/{id}/rotaciones`. Su forma, según el código (`backend/tarpu_api/motor/__init__.py`, `comparar`), no está verificada con datos. Toda la pantalla [por confirmar con Shantall].
-
-| Elemento | Alimenta | Campos (según el código) | Si falta |
+| Elemento | Datos | Entidad | Si falta |
 |---|---|---|---|
-| Lista de estrategias | E22 | `estrategias[].id`, `cultivo`, `tipo` (`repetir_actual`, `cambiar_de_familia`, `cultivo_del_catalogo`), `por_que_aparece`, `familia`, `nombre_cientifico`, `ciclo_dias` | Sin cultivo actual declarado: la lista del catálogo, con el vacío en `vacios_generales` (`estrategias.py`) |
-| Criterio por criterio | E23 | `estrategias[].criterios[].criterio`, `titulo`, `estado`, `dato`, `regla`, `nota` | `sin_dato` (falta el dato real) y `sin_regla` (EcoCrop no trae el valor), con su `nota` |
-| Frases | E23 | Las de `explicacion.frases` | — |
-| Beneficios | E20 | `beneficios.estado` = `sin_beneficio_citado` | «Todavía no hay una fuente citada de beneficios» (`motor/__init__.py`) |
-| Cita del cultivo | E20 | `cita` (FAO EcoCrop) | — |
-| No incluidos y vacíos generales | E22 | `no_incluidos[]`, `vacios_generales[]`, `advertencias_catalogo` | — |
-| Nota fija | — | `nota`: «Sin puntaje ni pesos…» | — |
+| Registros del lugar de referencia: clima, vegetación y suelo, con filtros por texto y fecha, CSV, JSON e impresión | `place.climate`, `place.vegetation` (con `quality`), `place.soil` (con P5–P95) (`App.tsx:178-202`) | E11, E13 | «Sin dato» (`number`) |
+| Archivos de un campo dibujado: original, normalizado, detalle y procedencia de POWER y de cada producto de MODIS, con Ver y Descargar | `GET /api/archivo?ruta=` → `RawFile` (`api.ts:217`; `FieldFiles.tsx:64-80`) | E13, E14 | Archivo grande: «Se descargó la primera parte del archivo (es muy grande para la API)» (`FieldFiles.tsx:79`) |
+| Campos del servidor | `GET /api/trabajos` (`FieldFiles.tsx:8`) | E15 | — |
+| Contorno y respuesta completa de la base | Descarga (informe 08, §4) | E01 | — |
 
-**Choque con el plan maestro:** RF-07 y HU-05 proponen pesos que suman 100 (SUP-019). Pero las prioridades del contexto «no son pesos» (`ContextoEntrada.json`), y el motor no usa ni puntaje ni pesos (`motor/__init__.py`, `NOTA`; DT-16). **Manda lo más reciente: sin pesos.** La pantalla solo ordena los criterios (P-C04).
+- **Niveles:** el frontend muestra los archivos por tipo (`KINDS`), no los separa en original, normalizado y derivado como pide el plan maestro, «Acceso a datos detallados y exportación».
+- **`GET /api/parcelas/{id}/datos`** no tiene vista [por confirmar con Erick].
 
-## 10. Pantalla 7 · Pregunta a TARPU
-**Plan:** docs/10 §2, fila 7; plan maestro RF-11, HU-08 y §06 (agente); DT-14: agente guiado, sin modelo de IA. **Rutas:** `GET /api/parcelas/{id}/agente` y `POST /api/agente`. Su forma, según el código, no está verificada con datos. Toda la pantalla [por confirmar con Shantall].
+## 8. Agente TARPU
+**Código:** `Chat.tsx`, en vista completa y en un panel modal (`App.tsx`). **Datos:** respuestas guardadas de `answer()` (`data.ts:124-187`), **no** `POST /api/agente` (informe 08, «Lo que falta»).
 
-| Elemento | Alimenta | Campos (según el código, `agente/plantillas.py`) | Si falta |
-|---|---|---|---|
-| Preguntas sugeridas | — | `EJEMPLOS` de `agente/intenciones.py`: frío, lluvia, por qué este cultivo, qué falta, NDVI, fuentes, descargar, pronóstico | — |
-| Respuesta | E21, E22 y E23 (lo ya calculado) | `intencion`, `respuesta`, `datos_usados[]` | Pregunta no reconocida: `intencion` = `null` |
-| Citas | E14 | `citas[]` (`fuente`, `url`) | — |
-| Qué falta | E11 y E23 | `faltantes[]` | Siempre visible si no está vacío (HU-08) |
-| Límite de pronóstico | — | Intención `pronostico` | El agente comunica la limitación (plan maestro §06) |
+| Pregunta reconocida | Fuente que cita la respuesta | Si falta |
+|---|---|---|
+| Pronóstico | — (comunica el límite) | — |
+| NDVI o verdor | «MOD13Q1 v061 · ORNL DAAC · 250 m / 16 días» | — |
+| Suelo o pH | «ISRIC SoilGrids 2.0 · 250 m · profundidad 0–5 cm» | — |
+| Lluvia, clima o frío | `place.sources.climate.request_url` | — |
+| Cultivo o rotación | «INEI · IV CENAGRO 2012 · DT-20» | — |
+| Descargas | Remite a «Mis datos» | — |
+| Campo dibujado | «Sus datos ambientales están pendientes de conectar» | Lo dice explícitamente |
 
-## 11. Pantalla 8 · Ver y descargar
-**Plan:** docs/10 §2, fila 8; plan maestro RF-08, RF-12, HU-09 y §06, «Acceso a datos detallados y exportación». **No ejecuta el motor** (`datos_detallados.py`).
+- **Choque:** para un campo dibujado, el agente dice que sus datos «están pendientes de conectar», aunque la vista Mi campo ya los muestra desde la API [por confirmar con Erick].
 
-**Rutas:**
-- **`GET /api/parcelas/{id}/datos`:** forma según el código, no verificada con datos.
-- **`GET /api/archivo?ruta=`:** [hecha] en `index.html:374`, como visor de archivos en crudo; forma [V-03].
+## 9. Pasos de docs/10 sin vista
 
-| Elemento | Alimenta | Campos | Si falta | Marca |
-|---|---|---|---|---|
-| Fuente y estado | E04 y E15 | `fuentes[].fuente`, `nombre`, `estado`, `motivo`, `resolucion` | `no_disponible` o `sin_datos` con `motivo` | [por confirmar con Shantall] |
-| Original | E13 (`original`) | `fuentes[].original.contenido` («sin tocar») | — | Ídem |
-| Normalizado | E13 (`normalizado`) y E11 | `fuentes[].normalizado.columnas[]` (`nombre`, `unidad`) y `filas[]` | «celda vacía (null) = sin dato, nunca 0» (`datos_detallados.py`), con el motivo del §4.1 | Ídem |
-| Derivado | E21 | `derivado.metodo[]`, `serie_mensual`, `indicadores` | Sin indicadores: `derivado` = `null` | Ídem |
-| Procedencia | E14 | `fuentes[].procedencia` | — | Ídem |
-| Archivo en crudo | E13 | `bytes`, `recortado`, `ruta`, `contenido` | Archivo grande: `recortado` | [hecha] `index.html:374-375` |
-| Descarga (CSV o JSON) y PDF | E13 y E14 | Por definir (plan maestro RF-08: «PDF como reporte, no sustituto de los registros») | La descarga conserva los faltantes y sus metadatos (HU-09) | [por confirmar con Shantall] |
+| Paso de docs/10 §2 | Vista del frontend nuevo | Qué falta |
+|---|---|---|
+| 0 · Inicio | Portada (§4) | No usa `GET /api/meta` |
+| 1 · Ubicar mi campo | Mi campo (§5.1) | **Búsqueda de distrito y GPS no existen.** Los únicos buscadores son de registros (`App.tsx:297`) y de cultivos (`:443`); no hay `geolocation` en `Codigo/src/nuevo/`. Hay coordenadas por texto |
+| 2 · Dibujar mi parcela | Mi campo (§5.1) | — |
+| **3 · Contar mi campo** | **Sin vista con la API**; solo el formulario de guardado | `PUT /api/parcelas/{id}/contexto` (E02) no se usa. El formulario declara `name`, `crop` y `water` (`Field`, `data.ts:7-14`), y `water` se elige entre «Sin declarar», «Riego», «Lluvia» y «Riego y lluvia» (`App.tsx`, formulario de «Ahora, pongámosle nombre»). **No coincide con `ContextoEntrada.json`**: allí `agua` es `secano`, `riego` o `null`, y hay además `cultivo_anterior`, `meses_campana` y `prioridades`. Se guarda solo en el navegador [por confirmar con Erick] |
+| 4 · Preparando tus datos | Mi campo (§5.2 y §5.3) | Aviso al terminar (E16): canal sin decidir |
+| 5 · Cómo está mi campo | Mi campo, en parte (§5.2 y §5.4) | Indicadores de 2015–2025 (I01–I06, `GET /api/parcelas/{id}/indicadores`), I09, I10, I15, I16, I17 e I18 |
+| **6 · ¿Qué siembro después?** | **Sin vista** | `GET /api/parcelas/{id}/rotaciones` (E22, E23) |
+| 7 · Pregunta a TARPU | Agente (§8), con respuestas guardadas | `POST /api/agente` |
+| 8 · Ver y descargar | Mis datos (§7), en parte | `GET /api/parcelas/{id}/datos`, con su nivel |
 
-**Cubre hoy solo POWER:** `datos_detallados.py` recorre las fuentes de `procesamiento`, el camino antiguo. Para los datos de MODIS, SoilGrids, GAEZ, NASADEM, HLS y SMAP no hay ruta (P-C02).
-
-## 12. Propuestas para Erick (nada de esto está hecho)
+## 10. Propuestas (por confirmar con Erick)
 
 | Id | Propuesta | Por qué |
 |---|---|---|
-| P-C01 | Que `pixeles_modis_250m` use el tamaño real del píxel de cada producto (231,66 m en MOD13Q1; `cellsize_m` de la procedencia) o diga en pantalla que es el píxel nominal | Hoy divide por 6,25 ha (`geometria.py:60`), y el diccionario §2 registra 231,66 m |
-| P-C02 | Decidir qué camino alimenta las pantallas 4, 5 y 8: el antiguo (`/api/parcelas/{id}/…`) o el del esquema mixto (`/api/base/parcela` y `/api/trabajos`) | Las rutas de las pantallas 5 y 8 solo leen POWER (README de T03, §1.3) |
-| P-C03 | Que la tarjeta de aptitud no diga «Las 100 capas valen 0 aquí» mientras V-04 esté abierta | Agregaciones I18: Chivay y S2 no se muestran hasta saber si 0 es aptitud nula o zona no evaluada |
-| P-C04 | Registrar en docs/06 que la pantalla 6 no usa pesos, aunque RF-07 y HU-05 del plan maestro los proponen | Evitar que se reabra con el plan maestro |
+| P-C01 | Que `pixeles_modis_250m` use el píxel real de cada producto (231,66 m en MOD13Q1) o diga que es el nominal | `geometria.py` divide por 6,25 ha; el diccionario §2 registra 231,66 m |
+| P-C02 | Unir el camino antiguo (`/api/parcelas/{id}/…`: indicadores, rotaciones, agente, datos) con el del esquema mixto, para que los pasos 3, 5, 6, 7 y 8 tengan datos de la parcela dibujada | Hoy esas rutas no tienen vista en el frontend nuevo (§9) |
+| P-C03 | No mostrar «0» de GAEZ en Chivay ni en S2 mientras V-04 siga abierta | Agregaciones I18 |
+| P-C04 | Registrar en docs/06 que la vista de cultivos no usa pesos, aunque el plan maestro (RF-07, HU-05) los propone | DT-16 y `motor/__init__.py` (`NOTA`) |
+| P-C05 | Alinear el tipo del frontend (`reutilizado_de: string`) con el objeto `reutilizado{de, celda, hasta…}` del backend, y no rotularlo como estado | §3.2 |
+| P-C06 | Que el frontend lea `vacios_del_proveedor` y, cuando exista, el motivo por fecha (P-04 del modelo lógico) | §2.3 |
+| P-C07 | Que el agente use los datos del campo dibujado, o que no diga que están «pendientes de conectar» | §8 |
+| P-C08 | Añadir S2 (Cabanaconde) a los lugares de referencia, o decir por qué no está | §2.4 |
+| P-C09 | Alinear lo que declara el formulario (`crop`, `water` con «Lluvia» y «Riego y lluvia») con `ContextoEntrada.json` (`cultivo_actual`, `cultivo_anterior`, `agua: secano \| riego \| null`, `meses_campana`, `prioridades`) y enviarlo con `PUT …/contexto` | §9, paso 3. Hoy el motor no recibe lo declarado |
 
-## 13. Pendientes de verificar
+## 11. Pendientes de verificar
 
 | Id | Qué falta | Con quién o cómo |
 |---|---|---|
-| V-03 | Forma real de `/api/base/parcela` y `/api/trabajos/{clave}`: la pantalla 4 entera y el suelo, la pendiente y la aptitud de la pantalla 5 | Una salida real de Erick, o la base de Arequipa |
-| V-C01 | Forma real de `/rotaciones`, `/agente`, `/datos` y `/meta`, solo leída en el código | Una salida real; hay ejemplo verificado solo de `/indicadores` |
-| V-C02 | Las pantallas 0, 3, 5, 6, 7 y 8, y la búsqueda de distrito y el GPS de la 1 | Shantall: la tabla «Datos que necesita cada pantalla» de `docs/areas/propuesta-frontend.md` §6 sigue vacía |
-| V-C03 | Los textos de «Sin dato» del §2.4 | Shantall |
-| V-C04 | Si «Puntos extraídos» entra en el recorrido | Shantall |
-| V-A03 | Si la línea del NDVI se corta o solo se marca | Erick |
-| V-04, V-B01 a V-B06, V-A05 | Pendientes de los datos que usan las tarjetas de la pantalla 5 | Agregaciones §8 |
+| V-03 | Una salida real de `/api/base/parcela` y `/api/trabajos/{clave}` (las formas de §3 salen del código y de las pruebas) | Erick, o la base de Arequipa |
+| V-C01 | Forma real de `/rotaciones`, `/agente`, `/datos` y `/meta` | Erick |
+| V-C02 | Textos de «Sin dato» por motivo (§2.3) | Erick |
+| V-C03 | ~~Si hay búsqueda de distrito o GPS, y qué declara el usuario~~ | **Resuelta:** no hay ni búsqueda de distrito ni GPS; se declaran `name`, `crop` y `water` (§9). Queda abierto alinear `water` con `ContextoEntrada.json` (P-C09) |
+| V-C04 | Cómo muestra el frontend el relleno 255 de MCD12Q1 | `FieldEvidence.tsx` |
+| V-A03 | Si el NDVI se corta (frontend) o solo se marca (agregaciones I07) | Erick |
+| I19 | Si el clima del último año completo entra en el backend | Erick (agregaciones §3.1) |

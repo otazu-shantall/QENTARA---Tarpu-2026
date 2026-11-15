@@ -27,8 +27,8 @@
 ### 1.2 Qué se gana y qué cuesta
 
 - **Se gana:** no se baja dos veces el mismo píxel; la escala real del dato queda guardada; la actualización periódica (`actualizacion.py`) recorre celdas, no parcelas, y cada celda se actualiza una sola vez.
-- **Cuesta:** hay que calcular el identificador de la celda de cada fuente antes de pedirla. Para POWER y los rasters es aritmética de la rejilla; para MODIS solo se sabe **después** de la primera respuesta de ORNL (§9, tarea V-02).
-- **En la demo no cambia nada obligatorio:** los archivos por punto siguen sirviendo. Basta con registrar a qué celda pertenece cada punto (§8, propuesta P-01).
+- **Cuesta:** hay que calcular el identificador de la celda de cada fuente antes de pedirla. Para POWER y los rasters es aritmética de la rejilla. Para MODIS, `backend/tarpu_datos/celdas.py` ya lo calcula **antes** de pedir, con la malla sinusoidal (V-02, resuelta).
+- **Ya está así en el código:** DT-23 (`docs/06-decisiones-y-riesgos.md`, 15/11/2026, Erick) decide guardar las series **por celda o píxel del producto**, y `docs/12-carpetas-docker-y-despliegue.md` §3 lo implementa con reutilización entre parcelas vecinas (§8, P-01 y P-02).
 
 ## 2. Entidades
 
@@ -50,7 +50,7 @@ Parte de la lista del README (§3.1) corregida. Las marcadas **nueva** no estaba
 | E12 | **Código de calidad o clase** (nueva) | Lo que significa un código del proveedor | variable, código, etiqueta, fuente de la etiqueta | Ej.: `pixel_reliability` 1 = «marginal»; `LC_Type1` 10; `retrieval_qual_flag` de SMAP | Verificado con datos (T01) |
 | E13 | **Archivo** (nueva) | Un archivo guardado | ruta, nivel (`original`, `normalizado`, `derivado`, `detalle`, `procedencia`), consulta de la que sale | Los tres o cuatro archivos por producto y lugar | Verificado con datos (T01) |
 | E14 | **Consulta o procedencia** | Una petición a un proveedor | URL de la petición, fecha de consulta, versión del servicio, peticiones, reintentos, bloques fallidos, método de conversión | `*.procedencia.json`, `request.json` de AppEEARS | Verificado con datos (T01) |
-| E15 | **Trabajo** | La extracción de capa 2 de un punto | clave del punto, estado general, estado por fuente y producto, vacíos del proveedor, fallos de descarga, fechas, aviso, cancelación, parcela | `almacen/trabajos/<clave>.json` | Según el código; no verificado con datos |
+| E15 | **Trabajo** | La extracción de capa 2 de un punto | clave del punto, estado general (incluye `interrumpido`), estado por fuente y producto, `reutilizado` (de dónde sale la serie y de qué celda), vacíos del proveedor, fallos de descarga, fechas, aviso, cancelación, parcela (§4) | `almacen/trabajos/<clave>.json` | Según el código; no verificado con datos |
 | E16 | **Aviso** (nueva, separada del trabajo) | El aviso de que el trabajo terminó | estado (`pendiente`, `por_enviar`), canal (sin decidir), desde cuándo | Dentro del trabajo | Según el código; no verificado con datos |
 | E17 | **Vuelta de actualización** (nueva) | Una actualización periódica | tarea (POWER, MODIS, cobertura), punto o celda, última fecha, resultado | `almacen/actualizacion.json` | Según el código; no verificado con datos |
 | E18 | **Sector y cultivo del sector** (nueva) | S1, S2, S3 (DT-18) y los cultivos que se muestran en cada uno (DT-20) | sector, pisos del INEI, límites de altitud con su cita, cultivos | `catalogo/sectores.json` | Archivo leído |
@@ -58,7 +58,7 @@ Parte de la lista del README (§3.1) corregida. Las marcadas **nueva** no estaba
 | E20 | **Cultivo y regla citada** (nueva) | Un cultivo del catálogo y sus rangos | cultivo, familia, rangos óptimo y absoluto, cita (FAO EcoCrop), fecha del catálogo | `catalogo/ecocrop_2026-11-14.json`, `investigacion/` | Archivo leído |
 | E21 | **Indicador derivado** | Una descripción calculada para la pantalla 5 | id, método citado, variables usadas, celdas usadas, período, valor por mes o fecha, faltantes listados | `indicadores.json` (hoy solo POWER) | Según el código; no verificado con datos |
 | E22 | **Estrategia** (nueva) | Una alternativa de rotación | id (`E1`…), cultivo, tipo (`repetir_actual`, `cambiar_de_familia`, `cultivo_del_catalogo`), por qué aparece, no incluidos, vacíos | `rotaciones.json` (`motor/estrategias.py`) | Según el código; no verificado con datos |
-| E23 | **Evaluación por criterio** | Un criterio de un cultivo para una parcela | estrategia, criterio, estado (`dentro_optimo`, `dentro_absoluto`, `fuera_absoluto`, `sin_dato`, `sin_regla`), dato usado (indicador), regla (E20), nota | `motor/comparacion.py` | Según el código; no verificado con datos |
+| E23 | **Evaluación por criterio** | Un criterio de un cultivo para una parcela | estrategia, criterio, estado (comparan con un rango citado: `dentro_optimo`, `dentro_absoluto`, `fuera_absoluto`; describen un hecho sin evaluarlo: `medido` (frío) e `informativo` (familia, altitud); `conflicto_entre_fuentes` (altitud de EcoCrop frente a la elevación de la celda de POWER); faltantes: `sin_dato`, `sin_regla`; `backend/tarpu_api/motor/comparacion.py`, líneas 4-7), dato usado (indicador), regla (E20), nota | `motor/comparacion.py` | Según el código; no verificado con datos |
 
 ## 3. Cómo se identifica una celda en cada fuente
 
@@ -66,7 +66,7 @@ Parte de la lista del README (§3.1) corregida. Las marcadas **nueva** no estaba
 |---|---|---|---|
 | POWER, meteorología | 0,5° × 0,625°, EPSG:4326 | centro redondeado a la rejilla, como en `power_celda` | antes de pedir |
 | POWER, radiación | 1° × 1° | ídem con la rejilla de 1° | antes de pedir (por verificar el origen de la rejilla, V-01) |
-| MOD13Q1, MOD16A2GF, MOD11A2, MCD12Q1 | Sinusoidal de MODIS, 231,66 / 463,31 / 926,63 m | (producto, `xllcorner`, `yllcorner`) que devuelve ORNL | después de la primera respuesta (V-02) |
+| MOD13Q1, MOD16A2GF, MOD11A2, MCD12Q1 | Sinusoidal de MODIS, 231,66 / 463,31 / 926,63 m | (producto, `xllcorner`, `yllcorner`), igual a lo que devuelve ORNL. En el código es `<producto>:x=<xll>,y=<yll>` (`backend/tarpu_datos/celdas.py`, `modis`) | **antes de pedir**: `celdas.py` lo calcula con la malla sinusoidal y coincide con las 1621 respuestas de ORNL guardadas (docs/12 §6 bis). En Chivay da −7666898,83, frente a −7666898,86 de ORNL (V-02, resuelta) |
 | SoilGrids | GeoTIFF EPSG:4326, ≈ 250 m (0,00225°, manifiesto `base_arequipa.json`) | (archivo de referencia, fila, columna), como `_pixeles_raster` | antes de pedir |
 | GAEZ v4, servicio `identify` (T01) | 0,0833° | El servicio **no devuelve identificador de celda**: responde `objectId: 0`, `name: "Pixel"` y la coordenada pedida (`cache/gaez/…/identify_256824.json`). El `objectid` (ej. 256952) es **la capa**, no la celda: 256952 = `suHi_wpo`, papa con riego, y aparece igual en los tres lugares (`identify_256952.json`). Clave propuesta: (`objectid` de la capa, fila y columna calculadas en la rejilla de 0,0833°) | la capa, antes; la fila y la columna, cuando se verifique el origen de la rejilla (V-10) |
 | GAEZ v4, GeoTIFF de la base | 0,0833° | (archivo de la capa, fila, columna) de la cabecera del GeoTIFF, como `_pixeles_raster` | antes de pedir (según el código; no verificado con datos) |
@@ -76,6 +76,10 @@ Parte de la lista del README (§3.1) corregida. Las marcadas **nueva** no estaba
 | HLS L30 y S30 (AppEEARS) | 30 m (`hls_*_puntos/…-metadata.xml`) | (`HLS_Tile`, píxel). El CSV por punto da la tesela pero no la fila ni la columna, así que el píxel queda **pendiente** (V-B04 de `agregaciones.md`). En Majes riego y Chivay el punto cae en **dos teselas** a la vez | la tesela, después de la respuesta; el píxel, pendiente |
 | Horas de luz (FAO-56) | Sin rejilla: depende solo de la latitud | la latitud del punto | antes (se calcula) |
 
+**Lo que dice docs/12 de esta tabla** (`docs/12-carpetas-docker-y-despliegue.md` §3):
+- **POWER:** la clave es el centro de la celda (`POWER:<lat>,<lon>`, `celdas.py`, `power`). La celda se lee de la base de Arequipa y no se pide por parcela.
+- **SoilGrids, GAEZ y NASADEM:** «ya están para toda la región», así que **no tienen clave de celda en la base** y se leen de los mapas (`capas_base`).
+- **HLS y SMAP:** docs/12 los deja **«por definir con Earth Engine»**. Las claves de esta tabla salen de la descarga de AppEEARS; son una propuesta, todavía no están en `celdas.py`.
 ## 4. Valores vacíos: un faltante nunca es 0
 
 Cada observación sin valor lleva **un motivo** de esta lista. Los ejemplos están verificados con datos salvo que se diga otra cosa.
@@ -116,7 +120,8 @@ Cada observación sin valor lleva **un motivo** de esta lista. Los ejemplos est�
 
 **Caso abierto, GAEZ en Chivay y S2:** las 100 capas de `gaez_chivay.normalizado.csv` y de `gaez_valle_s2.normalizado.csv` valen 0, sin vacías; en Majes riego hay 26 distintas de 0. Que 0 sea un índice de aptitud real o una zona sin evaluar se comprueba en la documentación de GAEZ v4 antes de mostrarlo (V-04; la §9.5 bis del README de T01 trata este límite).
 
-**Estados de un trabajo** (ya en el código, no se cambian): `pendiente`, `en_proceso`, `listo`, `listo_con_vacios`, `parcial`, `sin_datos`, `error`, `cancelado`, y por fuente también `no_disponible`. Se mantiene la distinción entre **vacío del proveedor** (dato completo que no existe en la fuente) y **fallo de descarga**.
+**Estados de un trabajo** (ya en el código, no se cambian): `pendiente`, `en_proceso`, `listo`, `listo_con_vacios`, `parcial`, `sin_datos`, `error`, `cancelado` e **`interrumpido`**: un trabajo en curso cuyo hilo ya no existe, por ejemplo tras reiniciar la API (`trabajos.py`, `marcar_interrumpidos`; también en el `check` de `trabajos.estado` del esquema v0). Por fuente, también `no_disponible`.
+- **`reutilizado` no es un estado, es un dato que acompaña al resultado de una fuente o un producto.** Dice de dónde sale la serie: `{de: 'base de Arequipa' | 'otra parcela en el mismo píxel', celda, hasta, …}` (`trabajos.py`, `_power_de_la_base` y `_modis`). La fuente sigue con su estado (`listo`, `listo_con_vacios`…). Se mantiene la distinción entre **vacío del proveedor** (dato completo que no existe en la fuente) y **fallo de descarga**.
 
 ## 5. Procedencia: a qué nivel se guarda
 
@@ -176,21 +181,23 @@ erDiagram
 | AppEEARS: NASADEM por zona y SMAP L3E por punto (`trabajo/extraccion_pesada/salida/`) | E10 o E11 según sea zona o punto; E14 desde `request.json`; E12 para las banderas de SMAP |
 | HLS L30 y S30 y SMAP L4 (`trabajo/extraccion_pesada/salida/hls_*_puntos/`, `smap_l4_puntos/`, commit `2ba9f10`) | E11 por punto y fecha (HLS, además, por tesela); E14 desde `request.json`; E08 con la celda del §3. Sin E12: la descarga no trae banderas de calidad (V-B02 y V-B06 de `agregaciones.md`) |
 
-## 8. Propuestas para el código (para Erick; nada de esto está hecho)
+## 8. Propuestas para el código (para Erick)
 
-| Id | Propuesta | Por qué |
-|---|---|---|
-| P-01 | Guardar en el trabajo, por producto, el identificador de la celda o píxel (§3) | Saber cuándo dos puntos comparten dato, sin cambiar los archivos de la demo |
-| P-02 | Antes de lanzar ORNL, buscar si otro punto ya tiene ese píxel y reutilizarlo | Solo es posible después de P-01 y de V-02 |
-| P-03 | Guardar la relación parcela ↔ celda (E09) junto a `parcela.json` | Hoy se recalcula en cada llamada y la regla de cobertura no queda escrita con el resultado |
-| P-04 | Añadir una columna `motivo` por fecha en los `detalle.csv`, con los nombres del §4.1, y conservar los textos actuales como resumen | Hoy el motivo solo existe como resumen por banda (§4.2), y «sin valor válido» junta relleno y fuera de rango |
+Estado revisado con los commits de Erick hasta `d78a70b` (15/11/2026).
+
+| Id | Propuesta | Por qué | Estado |
+|---|---|---|---|
+| P-01 | Guardar en el trabajo, por producto, el identificador de la celda o píxel (§3) | Saber cuándo dos puntos comparten dato, sin cambiar los archivos de la demo | ✅ **Hecha:** `backend/tarpu_datos/celdas.py` calcula la clave, y el trabajo la guarda en `reutilizado.celda`. En Supabase, tabla `celdas` (`producto_id + clave`) (docs/12 §3 y §4) |
+| P-02 | Antes de lanzar ORNL, buscar si otro punto ya tiene ese píxel y reutilizarlo | Solo es posible después de P-01 y de V-02 | ✅ **Hecha:** `trabajos.py`, `_modis`, reutiliza la serie si el píxel tiene una reciente («otra parcela en el mismo píxel»). POWER sale siempre de la celda de la base (`_power_de_la_base`). Prueba de docs/12 §6 bis: un punto a 30 m de Chivay salió todo reutilizado en 0,5 s |
+| P-03 | Guardar la relación parcela ↔ celda (E09) junto a `parcela.json` | Hoy se recalcula en cada llamada y la regla de cobertura no queda escrita con el resultado | 🟡 **Parcial:** existe la tabla `parcela_celdas` (esquema v0), pero guarda `fraccion_parcela` (qué parte de la parcela cubre la celda) en lugar de la **regla** (`centro_dentro`, `toca`, `contiene_centroide`) y el número de píxeles. Propuesta en `modelo-fisico.md` |
+| P-04 | Añadir una columna `motivo` por fecha en los `detalle.csv`, con los nombres del §4.1, y conservar los textos actuales como resumen | Hoy el motivo solo existe como resumen por banda (§4.2), y «sin valor válido» junta relleno y fuera de rango | ⏳ **Pendiente:** ni los `detalle.csv` ni la tabla `observaciones` del esquema v0 tienen `motivo`. Propuesta en `modelo-fisico.md` |
 
 ## 9. Tareas de verificación
 
 | Id | Qué falta saber | Cómo se resuelve |
 |---|---|---|
 | V-01 | El origen exacto de la rejilla de 1° de la radiación de POWER | Documentación de POWER, o comparar el `cell_elevation_m` de puntos vecinos |
-| V-02 | Que `xllcorner` y `yllcorner` de ORNL identifican el píxel de forma estable entre peticiones | Pedir dos puntos dentro del mismo píxel y comparar |
+| V-02 | ~~Que `xllcorner` y `yllcorner` de ORNL identifican el píxel de forma estable entre peticiones~~ | **Resuelta:** `backend/tarpu_datos/celdas.py` calcula la esquina con la malla sinusoidal y coincide con las 1621 respuestas de ORNL guardadas, con diferencias < 1 m (encabezado de `celdas.py`; docs/12 §6 bis). La prueba `test_clave_de_pixel_modis_igual_a_ornl` (`backend/tests/test_tarpu_datos.py`) comprueba además que dos puntos a ≈ 30 m caen en el mismo píxel |
 | V-03 | La forma real de `/api/base/parcela` y `/api/trabajos/{clave}` con la base cargada | Pedir a Erick una salida, o la base (`backend/almacen/`, ≈ 620 MB) |
 | V-04 | Si el 0 de GAEZ en Chivay y en S2 (100 de 100 capas) es aptitud nula o zona no evaluada | Documentación de GAEZ v4 |
 | V-05 | ~~Rejilla, variables, relleno y banderas de HLS (L30, S30) y SMAP L4~~ | **Cerrada en lo que da la descarga** (commit `2ba9f10`; detalle en I08 e I17 de `agregaciones.md`). Siguen abiertos el relleno y la unidad de HLS, la capa de calidad de los dos, el píxel de HLS y la regla de las dos teselas (V-B01 a V-B06 de `agregaciones.md`) |

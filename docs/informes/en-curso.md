@@ -30,7 +30,7 @@ Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](
   - comprobar el punto de Chivay en vista satélite;
   - las secciones 1, 2, 5 y 6 de la propuesta.
   - **T01, paquete de extracción** (`trabajo/T01-paquete-extraccion/tarpu_datos/`): POWER, SoilGrids (WCS), GAEZ, luz y ORNL escritos y probados a pequeña escala en Chivay. Falta la cola completa de ORNL (MOD13Q1, MCD12Q1, MOD16A2GF y MOD11A2), que se lanza aparte, y cerrar la tabla de la §6 con `python -m tarpu_datos.pruebas`. Notas técnicas en la §9 de su README.
-  - **T03, modelado de datos** (`trabajo/T03-modelado-datos/`): 4 de 5 entregables en borrador (15/11/2026): `modelo-logico.md`, que propone guardar las series por celda o píxel de la fuente; `agregaciones.md` (18 indicadores de la pantalla 5); `diccionario-variables.md`, y `contrato-pantallas.md` (las 9 pantallas de docs/10, por confirmar con Shantall). HLS y SMAP L4 ya están completados con la descarga del commit `2ba9f10`. Sigue `modelo-fisico.md`.
+  - **T03, modelado de datos** (`trabajo/T03-modelado-datos/`): **5 de 5 entregables en borrador** (15/11/2026), revisados con los commits de Erick hasta `d78a70b` (DT-23, Supabase, frontend nuevo): `modelo-logico.md`, `agregaciones.md`, `diccionario-variables.md`, `contrato-pantallas.md` (sobre el frontend real) y `modelo-fisico.md` (delta SQL sobre el esquema v0, no aplicado). Pendiente de revisión de Erick y Shantall.
 
 ## Pasos
 
