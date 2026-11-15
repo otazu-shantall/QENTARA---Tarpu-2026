@@ -1,0 +1,179 @@
+{
+ "type": "Feature",
+ "geometry": {
+  "type": "Point",
+  "coordinates": [
+   -72.185771,
+   -16.367023
+  ]
+ },
+ "properties": {
+  "layers": [
+   {
+    "name": "clay",
+    "unit_measure": {
+     "d_factor": 10,
+     "mapped_units": "g/kg",
+     "target_units": "%",
+     "uncertainty_unit": ""
+    },
+    "depths": [
+     {
+      "range": {
+       "top_depth": 0,
+       "bottom_depth": 5,
+       "unit_depth": "cm"
+      },
+      "label": "0-5cm",
+      "values": {
+       "Q0.05": 3,
+       "Q0.5": 38,
+       "Q0.95": 554,
+       "mean": 98,
+       "uncertainty": 145
+      }
+     },
+     {
+      "range": {
+       "top_depth": 5,
+       "bottom_depth": 15,
+       "unit_depth": "cm"
+      },
+      "label": "5-15cm",
+      "values": {
+       "Q0.05": 3,
+       "Q0.5": 38,
+       "Q0.95": 568,
+       "mean": 101,
+       "uncertainty": 149
+      }
+     }
+    ]
+   },
+   {
+    "name": "phh2o",
+    "unit_measure": {
+     "d_factor": 10,
+     "mapped_units": "pH*10",
+     "target_units": "-",
+     "uncertainty_unit": ""
+    },
+    "depths": [
+     {
+      "range": {
+       "top_depth": 0,
+       "bottom_depth": 5,
+       "unit_depth": "cm"
+      },
+      "label": "0-5cm",
+      "values": {
+       "Q0.05": 69,
+       "Q0.5": 82,
+       "Q0.95": 94,
+       "mean": 81,
+       "uncertainty": 3
+      }
+     },
+     {
+      "range": {
+       "top_depth": 5,
+       "bottom_depth": 15,
+       "unit_depth": "cm"
+      },
+      "label": "5-15cm",
+      "values": {
+       "Q0.05": 70,
+       "Q0.5": 82,
+       "Q0.95": 94,
+       "mean": 82,
+       "uncertainty": 3
+      }
+     }
+    ]
+   },
+   {
+    "name": "sand",
+    "unit_measure": {
+     "d_factor": 10,
+     "mapped_units": "g/kg",
+     "target_units": "%",
+     "uncertainty_unit": ""
+    },
+    "depths": [
+     {
+      "range": {
+       "top_depth": 0,
+       "bottom_depth": 5,
+       "unit_depth": "cm"
+      },
+      "label": "0-5cm",
+      "values": {
+       "Q0.05": 264,
+       "Q0.5": 775,
+       "Q0.95": 957,
+       "mean": 697,
+       "uncertainty": 9
+      }
+     },
+     {
+      "range": {
+       "top_depth": 5,
+       "bottom_depth": 15,
+       "unit_depth": "cm"
+      },
+      "label": "5-15cm",
+      "values": {
+       "Q0.05": 264,
+       "Q0.5": 782,
+       "Q0.95": 957,
+       "mean": 699,
+       "uncertainty": 9
+      }
+     }
+    ]
+   },
+   {
+    "name": "soc",
+    "unit_measure": {
+     "d_factor": 10,
+     "mapped_units": "dg/kg",
+     "target_units": "g/kg",
+     "uncertainty_unit": ""
+    },
+    "depths": [
+     {
+      "range": {
+       "top_depth": 0,
+       "bottom_depth": 5,
+       "unit_depth": "cm"
+      },
+      "label": "0-5cm",
+      "values": {
+       "Q0.05": 5,
+       "Q0.5": 74,
+       "Q0.95": 481,
+       "mean": 137,
+       "uncertainty": 64
+      }
+     },
+     {
+      "range": {
+       "top_depth": 5,
+       "bottom_depth": 15,
+       "unit_depth": "cm"
+      },
+      "label": "5-15cm",
+      "values": {
+       "Q0.05": 5,
+       "Q0.5": 60,
+       "Q0.95": 310,
+       "mean": 101,
+       "uncertainty": 51
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "query_time_s": 10.362277030944824
+}

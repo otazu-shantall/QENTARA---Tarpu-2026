@@ -1,0 +1,69 @@
+{
+ "source_id": "ISRIC SoilGrids",
+ "product_id": "SoilGrids 2.0, REST API properties/query",
+ "api_version": "2.0",
+ "api_status": "beta (per ISRIC SoilGrids access documentation)",
+ "request_url": "https://rest.isric.org/soilgrids/v2.0/properties/query?lon=-72.185771&lat=-16.367023&property=phh2o&property=clay&property=sand&property=soc&depth=0-5cm&depth=5-15cm&value=mean&value=Q0.05&value=Q0.5&value=Q0.95&value=uncertainty",
+ "requested_at": "2026-11-14T22:40:51+00:00",
+ "point": {
+  "latitude": -16.367023,
+  "longitude": -72.185771
+ },
+ "geometry_returned_lon_lat": [
+  -72.185771,
+  -16.367023
+ ],
+ "properties": [
+  "phh2o",
+  "clay",
+  "sand",
+  "soc"
+ ],
+ "depths": [
+  "0-5cm",
+  "5-15cm"
+ ],
+ "values": [
+  "mean",
+  "Q0.05",
+  "Q0.5",
+  "Q0.95",
+  "uncertainty"
+ ],
+ "units": {
+  "clay": {
+   "mapped_units": "g/kg",
+   "target_units": "%",
+   "d_factor": 10
+  },
+  "phh2o": {
+   "mapped_units": "pH*10",
+   "target_units": "-",
+   "d_factor": 10
+  },
+  "sand": {
+   "mapped_units": "g/kg",
+   "target_units": "%",
+   "d_factor": 10
+  },
+  "soc": {
+   "mapped_units": "dg/kg",
+   "target_units": "g/kg",
+   "d_factor": 10
+  }
+ },
+ "unit_conversion": "normalized = mapped value / d_factor; uncertainty = (Q0.95 - Q0.05) / Q0.5, as a ratio",
+ "missing_values": {
+  "phh2o": 0,
+  "clay": 0,
+  "sand": 0,
+  "soc": 0
+ },
+ "resolution": "250 m",
+ "query_time_s": 10.362277030944824,
+ "license": "CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)",
+ "citation": "Poggio, L., de Sousa, L. M., Batjes, N. H., Heuvelink, G. B. M., Kempen, B., Ribeiro, E., and Rossiter, D.: SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty, SOIL, 7, 217-240, 2021. https://doi.org/10.5194/soil-7-217-2021",
+ "data_policy": "https://isric.org/about/data-policy",
+ "note": "Machine-learning prediction at 250 m with wide uncertainty; not an in-field soil analysis.",
+ "generated_with": "Script written with AI assistance (Claude Code)."
+}
