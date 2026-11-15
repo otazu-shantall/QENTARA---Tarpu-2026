@@ -31,7 +31,7 @@
   details { margin:6px 0; }
   summary { cursor:pointer; color:var(--verde); font-weight:600; }
   .estado { display:inline-block; padding:1px 8px; border-radius:10px; font-size:12px; background:var(--bg); border:1px solid var(--line); }
-  .listo { color:var(--verde); } .parcial, .en_proceso, .pendiente { color:var(--ambar); } .error, .sin_dato, .no_disponible, .sin_datos { color:var(--rojo); }
+  .listo, .listo_con_vacios { color:var(--verde); } .parcial, .en_proceso, .pendiente { color:var(--ambar); } .error, .sin_dato, .no_disponible, .sin_datos { color:var(--rojo); }
   .aviso { background:#fdf1da; border-left:3px solid var(--ambar); padding:6px 10px; margin:6px 0; font-size:13px; }
   .leyenda { background:#fff; padding:8px 10px; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,.2); font-size:12px; }
   .leyenda i { display:inline-block; width:12px; height:12px; margin-right:6px; vertical-align:-2px; border-radius:2px; }
@@ -176,14 +176,20 @@ async function extraer(lat, lon) {
   } catch (e) { boton.disabled = false; document.getElementById('trabajo').innerHTML = `<div class="aviso">${esc(e.message)}</div>`; }
 }
 
+function detalleVacios(x) {
+  const v = (x.vacios_del_proveedor || []).map(s => `<div class="nota">vacío del proveedor: ${esc(s)}</div>`).join('');
+  const f = (x.fallos_de_descarga || []).map(s => `<div class="aviso">falló la descarga: ${esc(s)}</div>`).join('');
+  return v + f;
+}
 function mostrarTrabajo(t) {
   const filas = Object.entries(t.fuentes).map(([f, v]) => {
     const productos = v.productos ? Object.entries(v.productos).map(([p, x]) =>
-      `<div>${esc(p)} ${chip(x.estado)} ${x.faltan ? `· ${x.faltan} fechas vacías` : ''} ${botonesArchivos(x.archivos)}</div>`).join('') : '';
-    return `<tr><td><b>${esc(f)}</b></td><td>${chip(v.estado)} ${esc(v.motivo || '')}${v.archivos ? botonesArchivos(v.archivos) : ''}${productos}</td></tr>`;
+      `<div>${esc(p)} ${chip(x.estado)} ${detalleVacios(x)} ${botonesArchivos(x.archivos)}</div>`).join('') : '';
+    return `<tr><td><b>${esc(f)}</b></td><td>${chip(v.estado)} ${esc(v.motivo || '')}${detalleVacios(v)}${v.archivos ? botonesArchivos(v.archivos) : ''}${productos}</td></tr>`;
   }).join('');
   document.getElementById('trabajo').innerHTML = `
     <h3>Trabajo ${esc(t.clave)} · ${chip(t.estado)}</h3>
+    <p class="nota"><b>listo_con_vacios</b> = todo se descargó; los vacíos los trae la propia fuente (no hay dato ese día). <b>parcial</b> = algo no se pudo descargar. <b>no_disponible</b> = fuente aún sin conectar.</p>
     <table>${filas}<tr><td>aviso</td><td>${chip(t.aviso.estado)} ${esc(t.aviso.nota || '')}</td></tr></table>
     <details><summary>Estado del trabajo (en crudo)</summary>${json(t)}</details>`;
   enlazarArchivos();

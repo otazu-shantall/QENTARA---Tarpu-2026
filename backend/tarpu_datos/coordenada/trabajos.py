@@ -38,7 +38,20 @@ PENDIENTES = {
     'hls': 'NDVI de 30 m: pendiente de la vía principal (Google Earth Engine). Respaldo manual: tarpu_datos.fuentes.appeears.',
     'smap': 'Humedad del suelo de 9 km: pendiente de la vía principal (Google Earth Engine). Respaldo manual: tarpu_datos.fuentes.appeears.',
 }
+LISTOS = ('listo', 'listo_con_vacios')
 _HILOS: dict[str, threading.Thread] = {}
+
+
+def _clasificar(estado: str, faltan: list[str]) -> dict:
+    """Separa lo que falló al pedir (bloques que no llegaron) de los vacíos que trae el propio proveedor.
+
+    Vacío del proveedor = el valor llegó como relleno (POWER «días con relleno», MODIS «fechas sin valor válido»):
+    la descarga está completa y el dato no existe en la fuente. Esos casos quedan «listo_con_vacios»."""
+    del_proveedor = [f for f in faltan if 'con relleno' in f or 'sin valor válido' in f]
+    fallos = [f for f in faltan if f not in del_proveedor]
+    if estado == 'parcial' and not fallos:
+        estado = 'listo_con_vacios'
+    return {'estado': estado, 'vacios_del_proveedor': del_proveedor, 'fallos_de_descarga': fallos}
 _LOCK = threading.Lock()
 
 
@@ -64,7 +77,7 @@ def crear(lat: float, lon: float, nombre: str | None = None) -> dict:
     if not nombre:  # si el punto ya está registrado con un nombre (p. ej. «chivay»), se reutiliza su carpeta
         nombre = next((n for n, p in actualizacion.puntos().items() if clave_punto(p['lat'], p['lon']) == clave), None)
     previo = estado(clave)
-    if previo and previo['estado'] in ('listo', 'parcial', 'en_proceso'):
+    if previo and previo['estado'] in (*LISTOS, 'parcial', 'en_proceso'):
         return previo
     t = {'clave': clave, 'nombre': nombre or clave, 'punto': {'lat': lat, 'lon': lon}, 'creado': ahora_iso(),
          'estado': 'pendiente', 'fuentes': {'power': {'estado': 'pendiente'}, 'modis': {'estado': 'pendiente'},
@@ -82,7 +95,7 @@ def ejecutar(clave: str) -> dict:
     _guardar(t)
     actualizacion.agregar_punto(nombre, lat, lon)  # desde ahora se mantiene al día
     for fuente in ('power', 'modis'):
-        if t['fuentes'][fuente]['estado'] in ('listo',):
+        if t['fuentes'][fuente]['estado'] in LISTOS:
             continue
         t['fuentes'][fuente] = {'estado': 'en_proceso', 'desde': ahora_iso()}
         _guardar(t)
@@ -90,23 +103,26 @@ def ejecutar(clave: str) -> dict:
             if fuente == 'power':
                 r = power.obtener(lat=lat, lon=lon, salida=salida, cache=cache, inicio=INICIO, nombre=nombre,
                                   archivo_base=f'power_{nombre}')
-                t['fuentes'][fuente] = {'estado': r['estado'], 'archivos': r.get('archivos'),
-                                        'faltan': r.get('faltan', [])[:10], 'motivo': r.get('motivo')}
+                t['fuentes'][fuente] = {**_clasificar(r['estado'], r.get('faltan', [])), 'archivos': r.get('archivos'),
+                                        'motivo': r.get('motivo')}
             else:
                 rs = ornl.obtener_varios(lat=lat, lon=lon, salida=salida, cache=cache, inicio=INICIO, nombre=nombre,
                                          productos={p: None for p in MODIS}, tope=4)
-                estados = {p: v['estado'] for p, v in rs.items()}
+                productos = {p: {**_clasificar(v['estado'], v.get('faltan', [])), 'archivos': v.get('archivos'),
+                                 'motivo': v.get('motivo')} for p, v in rs.items()}
+                estados = [x['estado'] for x in productos.values()]
                 t['fuentes'][fuente] = {
-                    'estado': 'listo' if all(e == 'listo' for e in estados.values())
-                    else ('sin_datos' if all(e == 'sin_datos' for e in estados.values()) else 'parcial'),
-                    'productos': {p: {'estado': v['estado'], 'archivos': v.get('archivos'),
-                                      'faltan': len(v.get('faltan', [])), 'motivo': v.get('motivo')} for p, v in rs.items()}}
+                    'estado': 'listo' if all(e == 'listo' for e in estados)
+                    else ('listo_con_vacios' if all(e in LISTOS for e in estados)
+                          else ('sin_datos' if all(e == 'sin_datos' for e in estados) else 'parcial')),
+                    'productos': productos}
         except Exception as e:  # noqa: BLE001 - se anota; relanzar continúa
             t['fuentes'][fuente] = {'estado': 'error', 'motivo': f'{type(e).__name__}: {e}'}
         t['fuentes'][fuente]['hasta'] = ahora_iso()
         _guardar(t)
     hechas = [t['fuentes'][f]['estado'] for f in ('power', 'modis')]
-    t['estado'] = 'listo' if all(e == 'listo' for e in hechas) else ('error' if all(e in ('error', 'sin_datos') for e in hechas) else 'parcial')
+    t['estado'] = ('listo' if all(e == 'listo' for e in hechas) else 'listo_con_vacios' if all(e in LISTOS for e in hechas)
+                   else 'error' if all(e in ('error', 'sin_datos') for e in hechas) else 'parcial')
     t['terminado'] = ahora_iso()
     t['aviso'] = {**t['aviso'], 'estado': 'por_enviar', 'listo_desde': t['terminado']}
     _guardar(t)
@@ -119,7 +135,7 @@ def iniciar(lat: float, lon: float, nombre: str | None = None) -> dict:
     t = crear(lat, lon, nombre)
     with _LOCK:
         vivo = _HILOS.get(t['clave'])
-        if t['estado'] in ('listo',) or (vivo and vivo.is_alive()):
+        if t['estado'] in LISTOS or (vivo and vivo.is_alive()):
             return t
         hilo = threading.Thread(target=ejecutar, args=(t['clave'],), name=f'trabajo-{t["clave"]}', daemon=True)
         _HILOS[t['clave']] = hilo
