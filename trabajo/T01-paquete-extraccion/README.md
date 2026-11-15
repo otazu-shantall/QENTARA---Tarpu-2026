@@ -186,3 +186,117 @@ En internet:
 3. Avisa a Erick y a Damaris: el paquete se mueve a `datos/` y el backend reemplaza la llamada por línea de comandos por `obtener()`.
 
 **Fuera de esta tarea:** NASADEM, SMAP y HLS (necesitan la cuenta de Earthdata; los lleva Erick) y el censo (CENAGRO 2012; lo lleva Erick).
+
+## 9. Notas técnicas de la implementación (15/11/2026)
+
+> Escrito con asistencia de IA (Claude Code). Lo verificado aquí se hizo con peticiones reales el 15/11/2026.
+
+### 9.1 Diferencias con lo que decía este README
+
+1. **El GeoTIFF del WCS viene comprimido con Deflate** (etiqueta TIFF 259 = 8), no sin comprimir como decía la §3.2. Se lee con `struct` y `zlib`, las dos de la biblioteca estándar: **no se usa Pillow**. Si un archivo no se puede leer, la capa queda vacía, el estado es `parcial` y el motivo se registra. Nunca se usa un valor inventado.
+2. **La ventana de ±0,002° de la §3.2 no sirve para elegir el píxel.** Devuelve 2 × 2 píxeles y el punto cae justo en su esquina común, así que elegir uno depende del redondeo (en Chivay, arcilla 0–5 cm: 191, 190, 183 y 180). Con **±0,001°** el WCS devuelve **1 píxel centrado en el punto**. Comprobado: **32 de 32 valores** (phh2o, clay, sand y soc; mean, Q0.05, Q0.95 y uncertainty; 0–5 cm) son iguales a la REST guardada, en Chivay y en Majes riego. El original conserva todos los píxeles leídos.
+3. **El subtema «Suitability Index» de GAEZ también devuelve capas «Share of grid cell…»** (`sx1…`, `sx2…`, `sx3…`), que son otra variable. Solo se leen las capas cuyo `variable` empieza por «Suitability index»; las demás quedan listadas en la procedencia (`layers_skipped_not_suitability_index`).
+
+### 9.2 Formato del normalizado (acordado con Damaris)
+
+- **Fuentes sin fechas (SoilGrids y GAEZ):** una sola fila con la columna `fecha` **vacía**. El lector del backend (`ingesta.leer_normalizado`) solo exige que la cabecera empiece por `fecha` y acepta la celda vacía. **Esa «fecha» no es una fecha de observación**: el suelo y la aptitud de GAEZ no tienen serie temporal. Así lo dice también la procedencia (`fecha_column_note`).
+- **SoilGrids:** una columna por capa, `{propiedad}_{profundidad}_{valor} (unidad)`, con media, Q0.05, Q0.5, Q0.95 e incertidumbre. El formato largo anterior se conserva aparte, en `soilgrids_{nombre}.largo.csv`. Su última columna ahora es «incertidumbre (entero del proveedor, sin convertir)».
+- **ORNL:** el normalizado solo lleva columnas numéricas, porque el lector del backend hace `float()` de cada celda. El texto va en `*.detalle.csv`: `modis_date`, valor crudo, etiqueta de calidad, clase IGBP y tesela. Las cabeceras usan el nombre de la banda y la unidad tal como la da `/bands`, por ejemplo `250m_16_days_NDVI (NDVI ratio - No units)`.
+
+### 9.3 Factores de conversión de SoilGrids (`d_factor`)
+
+- **Sembrados desde las procedencias REST del área de datos** (`referencia/muestras/soilgrids_*.procedencia.json`, consultas del 14/11/2026; los tres archivos coinciden):
+
+  | Propiedad | Unidad mapeada → unidad final | `d_factor` |
+  |---|---|---|
+  | `phh2o` | pH*10 → «-» | 10 |
+  | `clay` | g/kg → % | 10 |
+  | `sand` | g/kg → % | 10 |
+  | `soc` | dg/kg → g/kg | 10 |
+
+- **Los otros 7** (silt, nitrogen, cec, bdod, cfvo, wv0033 y wv1500) salen de **una** consulta REST (`unit_measure`). Cada factor guarda su origen (archivo o URL, y fecha) en `cache/soilgrids/_factores.json` y en la procedencia.
+- **Si la REST no responde:** esas capas quedan vacías, el estado es `parcial` y el motivo queda en la procedencia (`unit_factors_missing_reason`). Nunca se inventa un factor.
+
+### 9.3 bis · Factores obtenidos por REST (15/11/2026)
+
+- **Resultado:** la consulta REST de los 7 factores que faltaban agotó el tiempo (180 s) en el primer intento y respondió en el reintento.
+- **Factores leídos de `unit_measure`:**
+  - `d_factor` = 100: `nitrogen` y `bdod`;
+  - `d_factor` = 10: `silt`, `cec`, `cfvo`, `wv0033` y `wv1500`.
+- **Detalle:** las unidades de cada uno están en la procedencia de SoilGrids (`units`), con la URL y la fecha de la consulta.
+
+### 9.4 Pendiente de verificar: `uncertainty` de SoilGrids
+
+- La columna `…_uncertainty` del normalizado queda **vacía** y el estado de SoilGrids es `parcial` por ese motivo. El entero del proveedor se guarda en el original y en el `.largo.csv`.
+- **Indicio, no cita:** en las muestras REST, el entero equivale a (Q0.95 − Q0.05) / Q0.5 × 10. Por ejemplo, pH en Chivay: (89 − 53) / 68 = 0,53 → 5; arcilla: (606 − 17) / 130 = 4,53 → 45. La REST da `uncertainty_unit` vacío.
+- **Tarea:** confirmar la unidad y el factor en la documentación de ISRIC antes de rellenar la columna.
+
+### 9.5 Paralelo y reintentos
+
+- **Topes de peticiones simultáneas, todos parámetros:**
+  - ORNL `--tope-ornl`, **4 por defecto**; subirlo a 8 solo si el resumen de 5xx del log lo justifica;
+  - SoilGrids `--tope-soilgrids` = 4;
+  - GAEZ `--tope-gaez` = 4.
+- **Reintentos en línea:** cortos (2, 4 y 8 s).
+- **Ronda final:** el bloque que falla pasa a ella, con la mitad de hilos y esperas de 15, 30, 60 y 120 s (`--espera-max-ornl`). Si aún falla, el estado es `parcial` y `faltan` lleva las fechas.
+- **Caché:** cada respuesta se guarda en `cache/` apenas llega, así que un relanzamiento retoma.
+- **Resumen:** `cache/ornl/_resumen_{nombre}_{productos}.json` guarda el tiempo total y el recuento de 5xx.
+- **Prueba pequeña** (Chivay, 15/11/2026): `/bands` de MOD13Q1 respondió 503, 503 y 502 antes de responder. Los metadatos tardaron unos 4 minutos; el bloque de prueba, 32 s.
+- **Tiempos medidos del NDVI** (MOD13Q1, 2015-01-01 a 2026-10-16), con ORNL degradado y el tope de 4:
+  - Majes riego: **37,8 min**, 152 peticiones, el 62,5 % con fallos recuperables;
+  - Chivay: **12,1 min**, el 35,6 % con fallos recuperables.
+- **Las 8 salidas de ORNL** (4 productos × 2 lugares) terminaron con **0 bloques fallidos**.
+- **Fechas de MOD11A2 y MOD16A2GF** (2015-01-01 a 2025-12-31): MOD11A2 tiene **505 fechas** y MOD16A2GF **506**. El servicio lista 505 para MOD11A2; la causa no está verificada.
+- **Faltantes de LST en MOD11A2** (celdas vacías en el normalizado):
+
+  | Lugar | `LST_Day_1km` | `LST_Night_1km` |
+  |---|---|---|
+  | Chivay | 3 | 25 |
+  | Majes riego | 2 | 64 |
+
+### 9.5 bis · Límite de GAEZ en Chivay (valores del 15/11/2026)
+
+**Consulta:** los 15 cultivos de la §3.3; periodo 1981-2010; insumos altos; capas cuyo `variable` empieza por «Suitability index». Son **100 capas** por lugar, con los tipos de agua que devolvió `query`. Chivay se consultó en −15,64; −71,60 y Majes riego en −16,367023; −72,185771.
+
+- **Chivay:** las **100 capas valen 0**, con prefijos `su…` y `sx…` y todos los tipos de agua.
+- **Majes riego:** las capas de secano (`Rainfed` y `Rainfed All Phases`, `su…` y `sx…`) valen 0. Las de riego distintas de 0 son estas:
+
+  | Cultivo | Irrigation | Gravity | Sprinkler | Drip |
+  |---|---|---|---|---|
+  | Alfalfa | 5556 | 3333 | 5556 | — |
+  | Barley | 5556 | 0 | 0 | — |
+  | Carrot | — | 1667 | 3333 | 3333 |
+  | Dry pea | — | 3333 | 3333 | — |
+  | Maize | — | 3333 | 3333 | — |
+  | Onion | — | 3333 | 5556 | 5556 |
+  | Phaseolus bean | — | 3333 | 3333 | 3333 |
+  | Tomato | — | 1667 | 3333 | 3333 |
+  | Wheat | 5556 | 3333 | 5556 | — |
+  | White potato | 3333 | 5556 | 5556 | — |
+
+  - «—»: el servicio no devolvió esa capa para el cultivo.
+  - Olive, Sugarcane, Sweet potato, Wetland rice y Oat valen 0 en todas sus capas.
+
+**Lo que se puede decir:** en Chivay, GAEZ no distingue ningún cultivo del catálogo, porque todas las capas leídas valen 0. **La causa no está verificada** y no se interpreta aquí. Queda como tarea: revisar en la documentación de GAEZ v4 qué significa el 0 en estas capas y qué cubre la celda de 0,0833° que contiene el punto.
+
+**Tipos de agua:** `query` devolvió además **`Drip Irrigation`**, que no figuraba en la lista de la §3.3, para Carrot, Olive, Onion, Phaseolus bean y Tomato. Se guarda como cualquier otro tipo de agua.
+
+### 9.6 Cómo lanzar y comprobar
+
+```bash
+# Rápidas (segundos): POWER, SoilGrids, GAEZ y luz
+python -m tarpu_datos --lat -16.367023 --lon -72.185771 --nombre majes_riego --fuentes power soilgrids gaez luz --inicio 2015-01-01 --fin 2025-12-31
+# ORNL, en otra terminal y un lugar a la vez (NDVI con el período de la §6)
+python -m tarpu_datos --lat -15.64 --lon -71.60 --nombre chivay --fuentes ornl --productos MOD13Q1 --inicio 2015-01-01 --fin 2026-10-16 --tope-ornl 4
+python -m tarpu_datos --lat -15.64 --lon -71.60 --nombre chivay --fuentes ornl --productos MCD12Q1 --inicio 2015-01-01 --fin 2024-12-31 --tope-ornl 4
+# Comprobaciones de la §6, sobre lo que haya en salida/ (no descarga nada)
+python -m tarpu_datos.pruebas
+```
+
+- **Prueba pequeña:** `--capas phh2o_0-5cm_mean,clay_0-5cm_mean`, `--cultivos "White potato"` y `--max-tramos 1`.
+- **Rango de MCD12Q1:** las comprobaciones esperan el archivo con `2015-01-01` a `2024-12-31`.
+- **En PowerShell 5.1, no usar `2>&1 | Tee-Object`** con el paquete: PowerShell convierte los mensajes del log (stderr) en errores y corta la ejecución. Hay que pasar por `cmd`:
+
+  ```powershell
+  cmd /c "python -m tarpu_datos ... >> cache\x.log 2>&1"
+  ```

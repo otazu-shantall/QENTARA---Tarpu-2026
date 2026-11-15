@@ -16,6 +16,7 @@ Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](
   - ~~la muestra de POWER en el punto de riego de Majes~~: hecha, `power_majes_riego_20250101_20251231.*`. Comprobado el 14/11/2026 frente al punto urbano: la radiación es idéntica los 365 días (misma celda de 1° × 1°), pero la temperatura, la humedad y la lluvia difieren (otra celda de ½° × ⅝°). Por ejemplo, la media del 01/01/2025 es de 20,08 °C en el punto urbano y de 16,50 °C en el de riego. Para Majes se usa la muestra del punto de riego;
   - comprobar el punto de Chivay en vista satélite;
   - las secciones 1, 2, 5 y 6 de la propuesta.
+  - **T01, paquete de extracción** (`trabajo/T01-paquete-extraccion/tarpu_datos/`): POWER, SoilGrids (WCS), GAEZ, luz y ORNL escritos y probados a pequeña escala en Chivay. Falta la cola completa de ORNL (MOD13Q1, MCD12Q1, MOD16A2GF y MOD11A2), que se lanza aparte, y cerrar la tabla de la §6 con `python -m tarpu_datos.pruebas`. Notas técnicas en la §9 de su README.
 
 ## Pasos
 
@@ -39,3 +40,4 @@ Cada área llena su propuesta: [datos](../areas/propuesta-datos.md), [frontend](
   - la marca «nubes» de MOD13Q1 en el punto urbano no está contrastada;
   - la media del NDVI de 2026 en Majes riego (0,571) es mayor que la de otros años y no tiene explicación;
   - la lluvia de POWER en Majes (169,6 mm en 2025) está por contrastar.
+- **Datos, 15/11/2026, T01:** el WCS de SoilGrids entrega GeoTIFF con Deflate (se lee con `zlib`, sin dependencias). Con una ventana de ±0,001° devuelve 1 píxel centrado en el punto: 32 de 32 valores iguales a la REST guardada. La `uncertainty` de SoilGrids queda pendiente de verificar su factor. El servicio de ORNL respondió 503 y 502 en `/bands`, y los reintentos lo resolvieron.
