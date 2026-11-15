@@ -1,6 +1,8 @@
 # Ficha · ISRIC SoilGrids 2.0
 
 > Fuente de suelo del núcleo sin cuenta. Verificado el 14/11/2026 con consultas reales a Majes y Chivay. Script: [consulta_soilgrids.py](consulta_soilgrids.py), escrito con asistencia de IA (Claude Code).
+>
+> Ficha redactada con asistencia de IA (Claude Code).
 
 ## Cómo se usa
 

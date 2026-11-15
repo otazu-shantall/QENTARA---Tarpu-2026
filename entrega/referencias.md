@@ -7,12 +7,15 @@
 | Recurso | Uso en TARPU | Enlace | ¿Usado ya? |
 |---|---|---|---|
 | NASA POWER, Daily Point API (AG), v2.10.3 | Clima histórico de un punto de Majes, 2025 | https://power.larc.nasa.gov/ | ✅ consulta real en `datos/` |
+| NASA POWER, Daily Point API (AG), v2.10.3 | Clima histórico de Chivay, 2025. Cita oficial (dos partes): «The data was obtained from National Aeronautics and Space Administration (NASA) Langley Research Center's Prediction Of Worldwide Energy Resources (POWER) project funded through the NASA Earth Science Division.» + «The data was obtained from the POWER Project's Daily API v2.10.3 on 2026/11/14.» (plantilla oficial adaptada; ver [ficha](../datos/power/README.md)) | https://power.larc.nasa.gov/docs/referencing/ | ✅ consulta real en `datos/` |
+| MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061 (MOD13Q1) | Serie de NDVI 2015–2026 en Chivay y Majes (riego). Cita: Didan, K. (2021). *MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061* [Data set]. NASA Land Processes Distributed Active Archive Center. | https://doi.org/10.5067/MODIS/MOD13Q1.061 | ✅ consulta real en `datos/` ([ficha](../datos/ndvi/README.md)) |
+| ORNL DAAC, TESViS RESTful Web Service (MODIS/VIIRS Land Product Subsets) | Herramienta con la que se obtuvo el NDVI de un píxel. Cita: ORNL DAAC. 2018. *Terrestrial Ecology Subsetting & Visualization Services (TESViS) RESTful Web Service*. ORNL DAAC, Oak Ridge, Tennessee, USA. Se añade fecha de acceso, producto, punto, período y tamaño del recorte (un píxel) | https://doi.org/10.3334/ORNLDAAC/1600 | ✅ usada en `datos/ndvi/` |
 
 ## Datos de agencias socias y otras fuentes
 
 | Recurso | Uso | Enlace | ¿Usado ya? |
 |---|---|---|---|
-| — | — | — | — |
+| ISRIC SoilGrids 2.0 (API REST v2.0, beta) | pH, arcilla, arena y carbono orgánico a 0–5 y 5–15 cm en Chivay y Majes. **No es un dato de NASA**: va solo aquí, no en «NASA Data». Licencia CC BY 4.0. Cita: Poggio, L., de Sousa, L. M., Batjes, N. H., Heuvelink, G. B. M., Kempen, B., Ribeiro, E., and Rossiter, D.: SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty, *SOIL*, 7, 217–240, 2021. | https://doi.org/10.5194/soil-7-217-2021 | ✅ consulta real en `datos/` ([ficha](../datos/soilgrids/README.md)) |
 
 ## Mapas e imágenes
 

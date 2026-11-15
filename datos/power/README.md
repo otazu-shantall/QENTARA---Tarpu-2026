@@ -1,6 +1,8 @@
 # Ficha · NASA POWER
 
 > Fuente de clima del núcleo sin cuenta y principal «dato de NASA» de la demo. Verificada el 14/11/2026 con consultas reales a Majes y Chivay y contrastada con la documentación oficial de POWER. Script: [consulta_power.py](consulta_power.py), escrito con asistencia de IA (Claude Code).
+>
+> Ficha redactada con asistencia de IA (Claude Code).
 
 ## Cómo se usa
 
@@ -101,6 +103,7 @@ Sí. POWER es global, y las dos consultas devolvieron 365 días de 2025 sin falt
 | Punto | Rango de fechas | Días | Faltantes | Elevación de la celda | Consultado (UTC) |
 |---|---|---|---|---|---|
 | Majes (−16,351; −72,190) | 01/01/2025 – 31/12/2025 | 365 | 0 en las 6 variables | 835 m | 14/11/2026 14:23 |
+| Majes riego (−16,367023; −72,185771) | 01/01/2025 – 31/12/2025 | 365 | 0 en las 6 variables | 1 941 m | 15/11/2026 01:27 |
 | Chivay (−15,64; −71,60) | 01/01/2025 – 31/12/2025 | 365 | 0 en las 6 variables | 4 352 m | 14/11/2026 18:46 |
 
 Resumen calculado del CSV normalizado:
@@ -108,6 +111,7 @@ Resumen calculado del CSV normalizado:
 | Punto | T media | T máx. más alta | T mín. más baja | Días con mínima < 0 °C | Lluvia acumulada |
 |---|---|---|---|---|---|
 | Majes | 18,4 °C | 26,4 °C | 11,0 °C | 0 | 169,6 mm |
+| Majes riego | 16,5 °C | 26,0 °C | 7,7 °C | 0 | 194,0 mm |
 | Chivay | 6,2 °C | 19,8 °C | −5,8 °C | 157 | 405,2 mm |
 
 ## Límites (qué no dice)
@@ -119,4 +123,11 @@ Resumen calculado del CSV normalizado:
 - **La elevación de la respuesta** (tercer valor de `geometry.coordinates`) no está definida en la documentación leída. Que sea la elevación media de la celda de MERRA-2 (la documentación dice que la elevación de la celda es «the mean elevation of the earth's surface under the grid») es probable, pero no está confirmado.
 - **Un histórico no es un pronóstico.** La serie de 2025 describe ese año, no el próximo.
 - **Distinta fuente y escala:** la radiación y la meteorología vienen de fuentes y celdas distintas, así que no hay que tratarlas como medidas en el mismo lugar.
+- **Dos puntos a unos 2 km pueden dar temperaturas muy distintas por el borde de celda.**
+  - **Comparación comprobada el 14/11/2026:** punto urbano de Majes (−16,351; −72,190, `power_majes_20250101_20251231.*`) frente al punto de riego (−16,367023; −72,185771, `power_majes_riego_20250101_20251231.*`).
+  - **Lo que coincide:** la radiación es idéntica los 365 días: es la misma celda de 1° × 1°.
+  - **Lo que difiere:** la temperatura y la humedad, todos los días, y la lluvia, en casi todos (coincide en 61). Son celdas distintas de ½° × ⅝°. Por ejemplo, la media del 01/01/2025 es de 20,08 °C en el punto urbano y de 16,50 °C en el de riego.
+  - **Elevación de la celda:** 835 m en el punto urbano y 1 941 m en el de riego.
+  - **Muestra de POWER para Majes:** la del punto de riego, `power_majes_riego_20250101_20251231`.
+  - **Explicación posible (no verificada):** si POWER entrega la celda nativa de MERRA-2, con centros de longitud cada 0,625° desde −180°, el borde entre las celdas centradas en −72,5° y −71,875° pasa por −72,1875°. El punto urbano (−72,190) quedaría al oeste y el de riego (−72,1858) al este, cada uno en una celda con su propia elevación media. Esa diferencia de elevación explicaría la de temperatura. No está confirmado en la documentación, que tampoco dice si el valor de un punto se interpola.
 - **La lluvia no es IMERG:** `PRECTOTCORR` es la precipitación corregida de MERRA-2. Para la lluvia de la sierra, el análisis propone IMERG como fuente principal.

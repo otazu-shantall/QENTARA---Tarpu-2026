@@ -22,7 +22,13 @@ La IA no debe usarse para idear la solución. La idea, el alcance y los límites
 | 09/11/2026 | Erick | Claude Code | Rediseño de landing y dashboard; versiones del logo en blanco y negro | `Codigo/`, `Codigo/public/brand/` | ❌ falta |
 | 14/11/2026 | Erick | Claude Code | Organización de la documentación | `docs/` | — |
 | 14/11/2026 | Erick | Claude Code | Script de consulta a NASA POWER | `datos/power/consulta_power.py` | ✅ en el encabezado |
-| | | | | | |
+| 14/11/2026 | Damaris | Claude Code | Script de consulta a ISRIC SoilGrids | `datos/soilgrids/consulta_soilgrids.py` | ✅ en el encabezado |
+| 14/11/2026 | Damaris | Claude Code | Script de NDVI MODIS (MOD13Q1) por el servicio de ORNL, con caché y reanudación | `datos/ndvi/consulta_ndvi.py` | ✅ en el encabezado |
+| 14/11/2026 | Damaris | Claude | Script que lanza las consultas de POWER, SoilGrids y NDVI para los dos puntos | `datos/obtener_muestras.py` | ✅ en el encabezado |
+| 14/11/2026 | Damaris | Claude Code | Ficha de la fuente NASA POWER | `datos/power/README.md` | ✅ en el encabezado |
+| 14/11/2026 | Damaris | Claude Code | Ficha de la fuente ISRIC SoilGrids | `datos/soilgrids/README.md` | ✅ en el encabezado |
+| 14/11/2026 | Damaris | Claude Code | Ficha de la fuente NDVI MOD13Q1 | `datos/ndvi/README.md` | ✅ en el encabezado |
+| 14/11/2026 | Damaris | Claude Code | Filas del área de datos en el registro de IA y en las referencias; propuesta de datos y estado | `entrega/uso-de-ia.md`, `entrega/referencias.md`, `docs/areas/propuesta-datos.md`, `docs/` | — |
 
 ## Pendientes
 

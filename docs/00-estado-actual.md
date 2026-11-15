@@ -14,6 +14,9 @@
   - **Real:** el mapa base (Esri World Imagery y OpenStreetMap) y las imágenes satelitales.
   - **De demostración:** parcelas, indicadores, series, registros y respuestas del agente, todos rotulados como tales.
 - **Logo:** se usa en blanco y negro desde el rediseño del 09/11/2026. Los originales a color se conservan.
+- **Datos, fase 1 (14/11/2026):**
+  - **Fuentes listas:** POWER, SoilGrids y NDVI MOD13Q1 tienen script, muestras y ficha, para Chivay y Majes. Ninguna llega todavía a la app.
+  - **Cambio de punto en Majes:** se pasó al punto de riego (−16,367023; −72,185771), porque el anterior (−16,351; −72,190) caía en el casco urbano. La muestra de POWER del punto de riego es `power_majes_riego_20250101_20251231.*`; la del punto urbano se conserva solo como referencia.
 
 ## Inventario
 
@@ -28,9 +31,13 @@
 | Agente | 🟡 guiado | `Codigo/src/lib/domain.ts` (`answerQuestion`) | Respuestas locales fijas; no hay modelo de IA. |
 | Exportación CSV/JSON y PDF | 🟡 con sintéticos | `Codigo/src/lib/download.ts`, `features/reports/` | La exportación funciona; los datos no son reales. |
 | Pruebas | ✅ | `Codigo/tests/` | 8 de lógica y la suite Playwright completa, que pasan (09/11/2026). |
-| **Consulta real a NASA POWER** | ✅ | `datos/power/consulta_power.py`, `datos/muestras/` | 365 días de 2025 para Majes, 0 faltantes. Todavía no llega a la app. |
+| **Consulta real a NASA POWER** | ✅ | `datos/power/consulta_power.py`, `datos/muestras/` | 365 días de 2025 para Majes y Chivay, 0 faltantes. Todavía no llega a la app. |
 | Análisis de los recursos oficiales | ✅ | `datos/analisis-recursos.md` | Verificado en el catálogo de NASA para Majes y Chivay: qué sirve, qué se usa sin cuenta y qué solo cubre EE. UU. |
-| Otras fuentes (MODIS/VIIRS, SoilGrids, GIBS, HLS, IMERG, SMAP…) | 🟡 | `datos/` | Accesos probados; falta convertirlos en scripts como el de POWER (Damaris). |
+| Otras fuentes (GIBS, HLS, IMERG, SMAP…) | 🟡 | `datos/` | Accesos probados; falta convertirlos en scripts como el de POWER (Damaris). MODIS y SoilGrids ya tienen script (filas siguientes). |
+| **Consulta real a SoilGrids** | ✅ | `datos/soilgrids/consulta_soilgrids.py`, `datos/muestras/` | pH, arcilla, arena y carbono a 0–5 y 5–15 cm para Majes riego, Majes urbano y Chivay; 0 faltantes. No es un dato de NASA. |
+| **Consulta real a NDVI MOD13Q1** | ✅ | `datos/ndvi/consulta_ndvi.py`, `datos/muestras/` | 272 fechas (2015–2026) para Majes riego, Majes urbano y Chivay; 0 faltantes. Servicio de ORNL inestable; el script guarda caché y retoma. |
+| Lanzador de muestras | ✅ | `datos/obtener_muestras.py` | Lanza las tres consultas para Majes riego y Chivay. |
+| Fichas de las fuentes | ✅ | `datos/power/`, `datos/soilgrids/`, `datos/ndvi/` (`README.md`) | Las 7 preguntas de `datos/README.md`, con citas verificadas y límites. |
 | Guías de las cuatro áreas | ✅ | `datos/`, `backend/`, `entrega/`, `docs/areas/frontend.md` | Base para que cada uno arranque. |
 | Borradores de la entrega | 🟡 | `entrega/` | Formulario en inglés, guion, referencias y registro de IA, por completar. |
 | Backend, base de datos, autenticación | ❌ | — | Solo propuestos (SUP-015, SUP-026). |

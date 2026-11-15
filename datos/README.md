@@ -49,9 +49,9 @@ Para cada fuente hay que responder lo mismo y dejarlo en una ficha (`datos/<fuen
 
 | # | Fuente | Para qué en TARPU | Acceso |
 |---|---|---|---|
-| 1 | **NASA POWER** ✅ | Clima: temperatura, heladas, lluvia, radiación | Sin cuenta · hecha |
-| 2 | **NDVI MODIS/VIIRS** (servicio de ORNL) | Curva de verdor desde 2000; épocas sin cultivo | Sin cuenta · probado, inestable |
-| 3 | **SoilGrids** | pH, textura y carbono del suelo | Sin cuenta · probado |
+| 1 | **NASA POWER** ✅ | Clima: temperatura, heladas, lluvia, radiación | Sin cuenta · hecha · [ficha](power/README.md) |
+| 2 | **NDVI MODIS (MOD13Q1)** (servicio de ORNL) ✅ | Curva de verdor desde 2000; épocas sin cultivo | Sin cuenta · hecha (inestable; con caché) · [ficha](ndvi/README.md) |
+| 3 | **SoilGrids** ✅ | pH, textura y carbono del suelo | Sin cuenta · hecha · [ficha](soilgrids/README.md) |
 | 4 | **Capas de NASA GIBS** | Capas de NASA para el mapa (NDVI, SMAP, lluvia, relieve) | Sin cuenta · probado |
 | 5 | **HLS** (Landsat + Sentinel-2, 30 m) | NDVI a escala de parcela | Cuenta Earthdata |
 | 6 | **IMERG** | Lluvia, sobre todo en la sierra | Cuenta Earthdata |
