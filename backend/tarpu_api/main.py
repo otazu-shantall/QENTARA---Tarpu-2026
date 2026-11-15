@@ -6,6 +6,9 @@ Escrito con asistencia de IA (Claude Code). Declarado en entrega/uso-de-ia.md.
 """
 from __future__ import annotations
 
+import os
+from contextlib import asynccontextmanager
+
 from fastapi import BackgroundTasks, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,7 +17,20 @@ from fastapi.responses import JSONResponse
 from . import __version__, agente, almacen, catalogo, config, datos_detallados, errores, indicadores, meta, motor, parcelas, procesamiento
 from .esquemas import ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, Sobre, sobre
 
-app = FastAPI(title="TARPU API", version=__version__,
+@asynccontextmanager
+async def _ciclo(_: FastAPI):
+    """Con TARPU_ACTUALIZAR_CADA_HORAS, actualiza los datos en segundo plano (tarpu_datos.actualizar, DT-22)."""
+    parar = None
+    cada = os.environ.get("TARPU_ACTUALIZAR_CADA_HORAS")
+    if cada:
+        from tarpu_datos import actualizar  # solo si se activa: la API no depende de él para arrancar
+        _, parar = actualizar.iniciar_en_segundo_plano(float(cada))
+    yield
+    if parar:
+        parar.set()
+
+
+app = FastAPI(title="TARPU API", version=__version__, lifespan=_ciclo,
               description="Backend de TARPU (QENTARA · NASA Space Apps 2026). Datos reales con procedencia; sin supuestos (DT-16).")
 app.add_middleware(CORSMiddleware, allow_origins=config.obtener().cors, allow_methods=["GET", "POST", "PUT"], allow_headers=["*"])
 

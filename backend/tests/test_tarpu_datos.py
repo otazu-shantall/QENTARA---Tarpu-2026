@@ -1,0 +1,33 @@
+"""Pruebas de las correcciones de tarpu_datos (15/11/2026): bloques anclados de MODIS y caché con antigüedad.
+Escrito con asistencia de IA (Claude Code). Declarado en entrega/uso-de-ia.md.
+"""
+from __future__ import annotations
+
+import json
+from datetime import datetime, timedelta, timezone
+
+from tarpu_datos import cliente, ornl
+
+
+def test_tramos_anclados_no_cambian_al_ampliar_el_periodo():
+    todas = [f"A{i:04d}" for i in range(25)]
+    antes = ornl.tramos_anclados(todas[:23], todas[5:23])
+    despues = ornl.tramos_anclados(todas, todas[5:])
+    # los bloques completos de antes siguen idénticos (se reutiliza su caché); solo cambia el último
+    assert antes[:2] == despues[:2]
+    assert antes[2] != despues[2] and despues[2] == todas[20:25]
+    assert all(len(b) <= ornl.FECHAS_POR_PETICION for b in despues)
+
+
+def test_cache_con_antiguedad_vuelve_a_pedir(tmp_path):
+    caja = cliente.Cache(tmp_path)
+    viejo = (datetime.now(timezone.utc) - timedelta(days=10)).isoformat(timespec="seconds")
+    caja.escribir_json("x.json", {"request_url": "u", "requested_at": viejo, "response": {"v": 1}})
+
+    class Falso:
+        def get_json(self, url, **kw):
+            return {"v": 2}
+
+    assert caja.obtener_json("x.json", Falso(), "u")["response"] == {"v": 1}           # sin límite: caché
+    assert caja.obtener_json("x.json", Falso(), "u", max_edad_dias=8)["response"] == {"v": 2}  # vieja: se pide
+    assert json.loads((tmp_path / "x.json").read_text(encoding="utf-8"))["response"] == {"v": 2}

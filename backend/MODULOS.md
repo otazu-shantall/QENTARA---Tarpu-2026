@@ -60,6 +60,8 @@ backend/
 
 ## 1. Fuentes (DT-17, área de datos)
 
+> **15/11/2026 (DT-19 y DT-22):** la extracción vive ahora en el paquete **`backend/tarpu_datos/`**, junto a `tarpu_api`, con un módulo por fuente (`power`, `soilgrids`, `gaez`, `luz`, `ornl`), la base de Arequipa (`base_regional`) y la actualización periódica (`actualizar`). Detalle en [tarpu_datos/README.md](tarpu_datos/README.md). Lo que sigue describe el diseño anterior, con tres fuentes.
+
 No son módulos del backend: el backend solo **invoca y lee** lo que producen los conectores de Damaris. Las tres se consultan en el centroide de la parcela.
 
 | Fuente | Acceso | Para qué | Escala | Conector |

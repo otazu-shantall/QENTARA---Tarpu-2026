@@ -53,6 +53,7 @@ backend/
 
 | Qué | Dónde | Por qué ahí |
 |---|---|---|
+| Extracción y actualización de datos | [tarpu_datos/README.md](tarpu_datos/README.md) | Base de Arequipa, puntos registrados y actualización periódica (DT-22) |
 | Decisiones DT-13 a DT-22 | [docs/06](../docs/06-decisiones-y-riesgos.md) | Todas las decisiones del equipo se registran en un solo archivo |
 | Recorrido del usuario y escala | [docs/10](../docs/10-recorrido-y-escala.md) | Lo comparten backend y frontend |
 | Conectores a las fuentes | [datos/](../datos/README.md) | Son del área de Damaris; el backend solo los invoca |

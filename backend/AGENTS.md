@@ -35,7 +35,7 @@ Todo lo del backend está en esta carpeta; [README.md](README.md) es el índice.
   - sin interpretaciones sin evidencia;
   - lo que no se sabe se devuelve como `sin_dato` o `sin_regla` con su motivo, nunca se rellena.
 - **El plan manda:** sigue [DISENO.md](DISENO.md) y [MODULOS.md](MODULOS.md).
-- **El backend no descarga:** invoca los conectores del área de datos (registro en `conectores.py`) y lee los archivos que dejan (original, normalizado y procedencia).
+- **Extracción dentro del backend (DT-22, 15/11/2026):** `tarpu_datos/` (copia corregida del paquete T01 de Damaris) extrae y actualiza los datos: la base de Arequipa (`base_regional.py`) y los puntos registrados (`actualizar.py`). Siempre deja original, normalizado y procedencia. `tarpu_api` los lee; los módulos de lógica no descargan.
 - **Catálogo:** `catalogo/ecocrop_2026-11-14.json` (FAO EcoCrop, copiado tal cual con su URL). No se le añade ningún valor sin cita; donde EcoCrop no trae el dato, es `null` y el criterio sale `sin_regla`.
 - **Lo que devuelve el motor:** el cultivo actual y todos los del catálogo de otra familia (al menos tres estrategias, incluida la actual). Cada criterio se compara con su rango citado (`dentro_optimo`, `dentro_absoluto`, `fuera_absoluto`, `sin_dato`, `sin_regla`), con vacíos y conflictos entre fuentes.
   - **Sin puntaje, sin pesos y sin «apto / no apto».**
@@ -45,7 +45,7 @@ Todo lo del backend está en esta carpeta; [README.md](README.md) es el índice.
 - **Datos detallados:** la consulta de registros **no ejecuta** el motor.
 - **El agente:** solo responde con evidencia disponible y dice lo que falta. No inventa observaciones ni cambia las reglas.
 - **Claves:** fuera del repositorio y fuera del frontend. Van en variables de entorno, y se deja un `.env.example` sin valores.
-- **Reutiliza los conectores de `../datos/`.** No los dupliques; si necesitas cambiarlos, coordínalo con Damaris.
+- **Un solo paquete de extracción:** `tarpu_datos/` es la versión vigente. La copia de `trabajo/T01-paquete-extraccion/` es de Damaris; los cambios se coordinan con ella para que no se separen.
 - **Contrato con el frontend:** parte de los tipos de `../Codigo/src/types/index.ts`. Si lo cambias, avisa a Shantall y actualiza [README.md](README.md).
 - **Pensado para todas las plataformas:** la misma API servirá a la web y luego a Android e iOS.
 - **Uso de IA:** si escribes o modificas código, añade una nota en el encabezado y una fila en [../entrega/uso-de-ia.md](../entrega/uso-de-ia.md).
