@@ -46,7 +46,7 @@ El servicio entrega enteros. Se dividen por `d_factor` (10 en las cuatro propied
 | `clay`, `sand` | g/kg | % |
 | `soc` | dg/kg | g/kg |
 
-`uncertainty` también se divide por 10. Queda como la razón (Q0.95 − Q0.05) / Q0.5: cuanto más alta, menos fiable el valor. Ejemplo comprobado en la arcilla de Majes, a 0–5 cm: (24,4 − 0,3) / 3,5 ≈ 6,9.
+`uncertainty`: sin verificar: ISRIC no publica su unidad; se guarda el entero sin convertir. **Indicio, no cita:** en las muestras REST, el entero se parece a (Q0.95 − Q0.05) / Q0.5 × 10. No está confirmado en la documentación de ISRIC, así que no se usa para convertir ni para interpretar el valor. Detalle en [trabajo/T01-paquete-extraccion/README.md](../../trabajo/T01-paquete-extraccion/README.md), §9.4, y tarea V-06 de [trabajo/T03-modelado-datos/modelo-logico.md](../../trabajo/T03-modelado-datos/modelo-logico.md).
 
 ### Faltantes
 

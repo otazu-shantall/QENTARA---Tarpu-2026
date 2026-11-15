@@ -139,7 +139,7 @@ Sí. En los dos puntos, el servicio devolvió **272 de 272 fechas** entre el 01/
   - Es una sospecha, no una conclusión. No conviene filtrar la serie solo por esta marca sin revisarla antes.
 - **El punto de Majes se eligió sobre campos de riego mirando la vista satélite.**
   - El punto anterior (−16,351; −72,190) caía en el **casco urbano** y daba un NDVI bajo, con mediana de 0,117 y máximo de 0,306.
-  - Sus muestras se conservan en `datos/muestras/` como referencia (`mod13q1-ndvi_majes_20150101_20261114.*`), pero **no representan los cultivos de Majes**.
+  - Sus muestras (`mod13q1-ndvi_majes_20150101_20261114.*`) **ya no están en `datos/muestras/`**. Solo queda un caché local que git ignora (`datos/ndvi/cache/MOD13Q1_majes_20150101_20261114/`), así que la cifra del 73 % no se puede reproducir desde el repositorio. En cualquier caso, **no representan los cultivos de Majes**.
 - **El punto de Chivay todavía no se ha comprobado en vista satélite.** No se sabe si cae sobre campos, ladera, pueblo o una mezcla. Hay que comprobarlo antes de presentarlo como curva de cultivo.
 - **2026 tiene en Majes riego una media anual mayor que no tiene explicación:** 0,571, frente a 0,42–0,49 en los demás años, aunque solo llega hasta octubre.
   - Puede ser un cambio de cultivo o de manejo en el píxel, pero no está verificado.
