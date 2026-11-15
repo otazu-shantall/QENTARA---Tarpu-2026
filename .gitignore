@@ -28,3 +28,7 @@ backend/almacen/
 
 # Descargas de prueba de Earthdata (pueden pesar)
 backend/herramientas/salida/
+
+# Tarea T01: descargas y caché locales
+trabajo/T01-paquete-extraccion/salida/
+trabajo/T01-paquete-extraccion/cache/
