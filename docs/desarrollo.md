@@ -23,8 +23,8 @@ npm --prefix Codigo run dev
 | Dirección | Qué abre |
 |---|---|
 | http://127.0.0.1:5173/ | Landing |
-| http://127.0.0.1:5173/#/overview | Dashboard (Vista general) |
-| `#/parcels`, `#/monitor`, `#/climate`, `#/rotations`, `#/data`, `#/reports` | Las demás vistas |
+| http://127.0.0.1:5173/#/campo | Dashboard nuevo y mapa |
+| `#/cultivos`, `#/datos`, `#/agente` | Cultivos, registros y conversación |
 
 En la app de escritorio de Claude, la configuración `tarpu-dashboard` de `.claude/launch.json` levanta el mismo servidor y abre la vista previa.
 
@@ -42,11 +42,12 @@ Las capturas y resultados de `test:ui` quedan en `Codigo/test-results/` (ignorad
 
 | Qué | Dónde |
 |---|---|
-| Rutas y composición | `Codigo/src/app/App.tsx` |
-| Datos sintéticos | `Codigo/src/data/demo.ts` |
-| Respuestas del agente | `Codigo/src/lib/domain.ts` (`answerQuestion`) |
-| Mapa y zonas de referencia | `Codigo/src/features/monitor/` (`FarmMap.tsx`, `mapConfig.ts`, `TileMosaic.tsx`) |
-| Colores, tipografía y radios | `Codigo/src/styles/tokens.css` |
+| Rutas y composición | `Codigo/src/nuevo/App.tsx` |
+| Consultas reales guardadas | `Codigo/src/nuevo/reference-data.json`, generadas con `Codigo/scripts/prepare-reference-data.py` |
+| Conversación y respuestas guiadas | `Codigo/src/nuevo/Chat.tsx`, `Codigo/src/nuevo/data.ts` |
+| Mapa y dashboard | `Codigo/src/nuevo/FieldMap.tsx`, `Codigo/src/nuevo/FieldDashboard.tsx` |
+| Portada | `Codigo/src/nuevo/Landing.tsx` |
+| Estilos | `Codigo/src/nuevo/styles.css`, `dashboard.css`, `landing.css` |
 | Logos | `Codigo/public/brand/` |
 
 ## Reglas al tocar el código

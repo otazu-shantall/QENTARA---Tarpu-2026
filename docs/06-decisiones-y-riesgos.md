@@ -194,6 +194,16 @@ Detalle en [backend/DISENO.md](../backend/DISENO.md).
 - **Mapas grandes:** se simulan con Supabase Storage. Supabase Storage o Google Cloud Storage se decide al desplegar, con los límites reales del plan a la vista.
 - **T03:** el esquema v0 deja huecos para el modelo de Damaris (variables, indicadores, vistas por pantalla y migraciones nuevas).
 
+### DT-24 · Frontend nuevo basado en las referencias actuales
+
+**Indicada · 15/11/2026 (usuario de este chat).** Alcance de la petición de frontend.
+
+- Construir una implementación nueva en `Codigo/`, tomando las referencias recién aportadas y el contenido actual del proyecto.
+- Portada agrícola fotográfica con navegación flotante. Dashboard satelital con datos en tarjetas laterales y una ficha flotante, según las referencias que el usuario destacó.
+- Letras cómodas para personas mayores, controles amplios, logo de TARPU en negro o blanco, agente y chat accesibles desde el recorrido.
+- Considerar las futuras integraciones y mantener este trabajo en el frontend. La aprobación final del diseño y la conexión de servicios tienen seguimiento propio.
+- Reemplaza la dirección de DT-05 para la interfaz vigente. DT-05 conserva su valor histórico para el prototipo anterior.
+
 ## Riesgos
 
 Prioridades cualitativas del informe (SUP-032), sin probabilidad medida.

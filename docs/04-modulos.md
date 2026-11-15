@@ -1,5 +1,7 @@
 # Módulos
 
+**Interfaz vigente desde el 15/11/2026.** La entrada de `Codigo/` utiliza `src/nuevo/`, con portada y cuatro destinos de trabajo, Mi campo, Cultivos, Mis datos y Agente TARPU. Hay consultas reales guardadas, campos declarados localmente y conversación guiada con fuentes. La API, el motor y la IA generativa tienen su integración pendiente. Recorrido y comprobaciones en [informe 07](informes/07-frontend-nuevo.md). Las siete vistas descritas a continuación pertenecen al prototipo anterior conservado en el repositorio.
+
 > Qué hace cada parte del prototipo, qué es real y qué es de demostración, y con qué requisito del informe se relaciona (RF-xx, apartado 04 del [informe maestro](../Documentación/TARPU_Documentacion_Maestra.md#04-producto-ux-y-requisitos)). Código en `Codigo/src/features/`.
 
 ## Landing · `#/`

@@ -8,6 +8,10 @@
 
 ## Pendiente de la demo (no olvidar)
 
+### Frontend nuevo cerrado · 15/11/2026
+
+Petición del usuario de este chat. Implementación independiente en `Codigo/src/nuevo/`, con portada agrícola fotográfica, mapa protagonista y panel de datos apilados. Compilación y recorrido nuevo de navegador aprobados. Resultado, procedencia y conexiones pendientes en [informe 07](07-frontend-nuevo.md). La revisión del diseño por el usuario y la futura integración de servicios continúan como próximos trabajos.
+
 Datos completos de los lugares de ejemplo (capa 3 de DT-22), para que el jurado pruebe TARPU. Se dejaron para después el 15/11/2026 (Erick):
 
 - [ ] **Majes riego:** NASA POWER y horas de luz 2015–2025 con T01 (Damaris). Comando en [trabajo/README.md](../../trabajo/README.md).

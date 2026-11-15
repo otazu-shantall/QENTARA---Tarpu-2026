@@ -1,16 +1,20 @@
 # Estado actual
 
-> Última actualización: **15 de noviembre de 2026**. Desafío: **Field Shift: Adapting Farms with NASA Data** ([08](08-desafio-oficial.md)); el envío oficial cierra el **domingo 15/11/2026 a las 11:59 p. m.**, hora del evento local ([09](09-entrega-oficial.md)). El equipo se dividió en cuatro áreas ([07](07-equipo-y-areas.md)). TARPU está en **planificación y definición de producto**, con un **prototipo visual** local (landing y dashboard de siete vistas). El informe maestro está en la versión **0.4** (23/10/2026). El backend ya funciona con datos reales de NASA POWER, pero todavía no está conectado a las pantallas. No hay cálculo NDVI, modelo de IA ni autenticación.
+> Última actualización: **15 de noviembre de 2026**. Desafío: **Field Shift: Adapting Farms with NASA Data** ([08](08-desafio-oficial.md)); el envío oficial cierra el **domingo 15/11/2026 a las 11:59 p. m.**, hora del evento local ([09](09-entrega-oficial.md)). El equipo se dividió en cuatro áreas ([07](07-equipo-y-areas.md)). TARPU está en **planificación y definición de producto**, con un **frontend nuevo** local (portada, mapa, cultivos, datos y agente). El informe maestro está en la versión **0.4** (23/10/2026). El frontend nuevo ya está conectado al backend: un campo dibujado muestra datos reales de la base de Arequipa y pide sus datos satelitales ([informe 08](informes/08-frontend-conectado-api.md)). No hay cálculo NDVI, modelo de IA ni autenticación.
 >
 > **Informes de cada trabajo:** [informes/](informes/README.md). **Si algo quedó a medias**, la bitácora para retomar está en [informes/en-curso.md](informes/en-curso.md).
 
 ## Resumen
 
+- **Frontend conectado (15/11/2026):** al dibujar un campo, la pantalla lee la base de Arequipa (relieve, suelo, sector y cultivos del censo, clima del último año de POWER), lanza y sigue el trabajo satelital (con Detener), muestra el NDVI de MODIS y deja ver y descargar los archivos en crudo. Mapa con imagen Clarity, zoom 21 y zonas S1–S3. El motor, el agente y las rutas `/api/parcelas` siguen sin pantalla. Detalle en [informe 08](informes/08-frontend-conectado-api.md).
+
+- **Frontend nuevo (15/11/2026):** la entrada de `Codigo/` carga `src/nuevo/`. Portada fotográfica con navegación flotante y logo blanco, mapa protagonista con tarjetas laterales, cultivos por sector, registros filtrables y descargables, campos declarados con contorno y chat guiado con fuentes. Muestra consultas reales guardadas de Majes riego y Chivay. La API en vivo, el motor y la IA generativa tienen su integración pendiente. Compilación y recorrido de navegador aprobados. Detalle en [informe 07](informes/07-frontend-nuevo.md).
+
 - **Revisión del repositorio (14/11/2026):** compilación, 8 pruebas de frontend, 15 de backend y suite de interfaz aprobadas. Se identificaron pendientes de vigencia de resultados en agente/datos detallados y se reprodujeron fallos ante meses parciales y resúmenes ausentes. El backend sigue sin integrarse con las pantallas y parte de sus archivos permanece sin seguimiento en Git. Alcance, evidencias y orden propuesto en [informe 06](informes/06-analisis-repositorio.md).
 
 - **Producto definido:** identidad, problema, misión, visión, valores, objetivos, territorio (todo Arequipa), agricultor autónomo, agente integrado, datos detallados y exportación están **confirmados** (DEC-001 a DEC-008). Ver [01](01-vision-y-alcance.md) y [06](06-decisiones-y-riesgos.md).
 - **Abierto:** stack del producto, fuentes exactas, reglas agronómicas, precios, identidad visual y lema. Son los 37 supuestos (SUP) del anexo D del informe.
-- **Prototipo visual** (`Codigo/`):
+- **Antecedente del prototipo visual** (conservado en `Codigo/src/app/` y `src/features/`):
   - **Landing** en `#/`, con hero satelital real de Majes, capas de evidencia explicadas, principios y territorio.
   - **Dashboard** con siete vistas: Vista general, Mis parcelas, Monitor satelital, Clima e históricos, Rotaciones, Explorar datos y Mis informes.
   - **Real:** el mapa base (Esri World Imagery y OpenStreetMap) y las imágenes satelitales.

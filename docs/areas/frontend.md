@@ -1,5 +1,7 @@
 # Frontend y experiencia de usuario
 
+**Implementación vigente · 15/11/2026.** Trabajar sobre `Codigo/src/nuevo/`, según el pedido del usuario y las referencias actuales (DT-24). La entrada activa carga esa implementación. Rutas `#/campo`, `#/cultivos`, `#/datos` y `#/agente`, además de la portada. Detalle en [Codigo/README.md](../../Codigo/README.md) y [informe 07](../informes/07-frontend-nuevo.md). La descripción de siete vistas y los archivos de la primera versión que siguen en esta guía son antecedentes.
+
 > Guía para **Shantall**. Lo que hay en `Codigo/` es un **ejemplo para guiarse, no el diseño final**. El enfoque: **claro, conciso y fácil de usar para personas mayores**. Las pantallas definitivas se acuerdan en la etapa 2 ([07](../07-equipo-y-areas.md)).
 
 ## Empezar

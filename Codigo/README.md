@@ -1,4 +1,45 @@
-# Tarpu - Landing y dashboard visual
+# Frontend de TARPU
+
+**Interfaz vigente · 15/11/2026.** El punto de entrada carga `src/nuevo/`, construido con las referencias nuevas del usuario. La portada usa una fotografía real de trigo, navegación flotante, logo blanco y acentos lima. El dashboard presenta un mapa satelital a toda altura, tarjetas de datos a la izquierda y una ficha flotante del lugar.
+
+```powershell
+npm --prefix Codigo run dev
+```
+
+| Ruta | Contenido |
+|---|---|
+| `#/` | Portada |
+| `#/campo` | Mapa, consultas de referencia y dibujo de campos |
+| `#/cultivos` | Cultivos del sector según CENAGRO 2012 y selección de fichas |
+| `#/datos` | Registros, filtros, CSV, JSON, procedencia e impresión |
+| `#/agente` | Conversación guiada con fuentes, compartida con el panel de chat |
+
+El cuerpo usa 18 px y los textos de apoyo, al menos 16 px. La navegación incluye palabras y existe una opción para ampliar la letra. El chat ofrece lectura en voz alta cuando el navegador la admite.
+
+## Datos de esta interfaz
+
+- Las consultas guardadas de Majes riego y Chivay se generan desde archivos reales del repositorio. Clima diario de 2025, NDVI de 2015–2026, propiedades de suelo con profundidad y percentiles, relieve y catálogo por sector.
+- `scripts/prepare-reference-data.py` prepara `src/nuevo/reference-data.json` a partir de `datos/muestras/` y catálogos e investigación de `backend/`. La generación lee esos archivos y escribe el resultado dentro de `Codigo/`.
+- Los campos dibujados y sus declaraciones se guardan con la clave `tarpu.fields.v2` de `localStorage`. Sus datos llegan de la API del backend (`src/nuevo/api.ts`): la base de Arequipa al guardarlos y los datos satelitales al pedirlos. La dirección se fija con `VITE_TARPU_API` (por defecto `http://127.0.0.1:8000`); el backend se enciende desde `backend/` con `.venv/Scripts/uvicorn tarpu_api.main:app --port 8000`. Detalle en `docs/informes/08-frontend-conectado-api.md`.
+- Las respuestas del chat usan datos guardados y reglas de conversación en `src/nuevo/data.ts`. La conexión con un modelo generativo y con el agente de la API está pendiente.
+- Las fichas de cultivos muestran superficie histórica del censo. La evaluación agronómica depende de la futura integración del motor y del contrato de T03.
+- La fotografía y su atribución se documentan en `public/images/README.md`.
+
+## Archivos activos y comprobaciones
+
+`src/nuevo/App.tsx` compone las vistas, `Landing.tsx` presenta la portada, `FieldDashboard.tsx` organiza el dashboard, `FieldMap.tsx` gestiona el mapa y el dibujo, y `Chat.tsx` implementa la conversación. `data.ts` contiene los tipos de pantalla y el acceso a las consultas guardadas. La sustitución de este acceso por un adaptador de API deberá conservar procedencia, períodos, faltantes y estados pendientes.
+
+```powershell
+npm --prefix Codigo run build
+npm --prefix Codigo test
+npm --prefix Codigo run test:ui
+```
+
+`test:ui` verifica el recorrido nuevo con Chrome. Usa `TARPU_BASE_URL` para un puerto diferente. `npm test` conserva las ocho pruebas del dominio del prototipo anterior como antecedente.
+
+## Antecedente del primer prototipo
+
+La descripción siguiente documenta la versión anterior, cuyo código sigue conservado en `src/app/`, `src/features/`, `src/data/`, `src/lib/` y `src/styles/`. El punto de entrada vigente utiliza la implementación de `src/nuevo/` descrita arriba.
 
 Primer frontend local de TARPU, producto del equipo QENTARA. Incluye una **landing pública** (`#/`) y un **dashboard** con siete vistas. **El mapa base y las imágenes satelitales usan cartografía real; los valores y las fichas de parcelas siguen siendo sintéticos. El agente utiliza respuestas locales guiadas.**
 
