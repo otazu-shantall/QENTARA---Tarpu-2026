@@ -27,9 +27,18 @@ class _Estricto(BaseModel):
 
 
 class TrabajoEntrada(_Estricto):
-    lat: Annotated[float, Field(ge=-90, le=90)]
-    lon: Annotated[float, Field(ge=-180, le=180)]
+    lat: Annotated[float | None, Field(default=None, ge=-90, le=90)] = None
+    lon: Annotated[float | None, Field(default=None, ge=-180, le=180)] = None
+    contorno: Annotated[dict | None, Field(default=None, description="GeoJSON Polygon [lon, lat] de la parcela")] = None
     nombre: Annotated[str | None, Field(default=None, max_length=60, pattern=r"^[A-Za-z0-9_-]+$")] = None
+
+
+class ContornoEntrada(_Estricto):
+    contorno: Annotated[dict, Field(description="GeoJSON Polygon [lon, lat], cerrado")]
+
+
+class CancelarEntrada(_Estricto):
+    claves: Annotated[list[str], Field(min_length=1, max_length=100)]
 
 
 class ParcelaNueva(_Estricto):

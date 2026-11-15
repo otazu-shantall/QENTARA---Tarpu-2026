@@ -45,3 +45,19 @@ def test_base_de_arequipa_en_majes(tmp_path):
     assert r["suelo"]["capas"]["phh2o_0-5cm_mean"]["valor"] == 8.2
     assert r["clima"]["elevacion_celda_m"] == 1940.88   # igual a la consulta por punto a POWER
     assert leer.leer(0, 0)["estado"] == "sin_dato"      # fuera de la caja: no se rellena
+
+
+def test_base_en_una_parcela_de_majes():
+    """Capa 1 en todo el espacio de una parcela dibujada (si la base está en esta computadora)."""
+    import pytest
+    from tarpu_datos.base import leer
+    if not (leer.BASE / "nasadem").exists():
+        pytest.skip("la base de Arequipa no está extraída en esta computadora")
+    lat, lon, d = -16.367023, -72.185771, 0.001
+    contorno = {"type": "Polygon", "coordinates": [[[lon - d, lat - d], [lon + d, lat - d], [lon + d, lat + d],
+                                                    [lon - d, lat + d], [lon - d, lat - d]]]}
+    r = leer.leer_parcela(contorno)
+    assert r["relieve"]["pixeles"] == 49                       # 7 x 7 píxeles de 1'' en un cuadrado de ≈ 215 m
+    assert r["relieve"]["pendiente_pct"]["mediana"] == 2.4     # igual a la medida por AppEEARS en el mismo lugar
+    assert r["suelo"]["pixeles"] == 2
+    assert 9.8 in r["suelo"]["capas"]["clay_0-5cm_mean"]["valores_por_pixel"]  # incluye el valor nativo del punto

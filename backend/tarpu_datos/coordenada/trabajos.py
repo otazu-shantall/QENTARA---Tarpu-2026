@@ -40,6 +40,7 @@ PENDIENTES = {
 }
 LISTOS = ('listo', 'listo_con_vacios')
 _HILOS: dict[str, threading.Thread] = {}
+_CANCELAR: dict[str, threading.Event] = {}
 
 
 def _clasificar(estado: str, faltan: list[str]) -> dict:
@@ -79,7 +80,7 @@ def listar() -> list[dict]:
             t = json.loads(ruta.read_text(encoding='utf-8'))
         except (json.JSONDecodeError, OSError):
             continue
-        salida.append({k: t.get(k) for k in ('clave', 'nombre', 'punto', 'estado', 'creado', 'iniciado', 'terminado', 'actualizado')}
+        salida.append({k: t.get(k) for k in ('clave', 'nombre', 'punto', 'estado', 'creado', 'iniciado', 'terminado', 'actualizado', 'parcela')}
                       | {'fuentes': {f: v.get('estado') for f, v in t.get('fuentes', {}).items()}})
     return sorted(salida, key=lambda x: x.get('actualizado') or '', reverse=True)
 
@@ -88,18 +89,39 @@ def de_punto(lat: float, lon: float) -> dict | None:
     return estado(clave_punto(lat, lon))
 
 
-def crear(lat: float, lon: float, nombre: str | None = None) -> dict:
+def cancelar(clave: str) -> dict | None:
+    """Detiene un trabajo: no se piden más bloques. Lo descargado queda guardado; volver a pedirlo continúa."""
+    t = estado(clave)
+    if t is None:
+        return None
+    evento = _CANCELAR.get(clave)
+    hilo = _HILOS.get(clave)
+    if evento and hilo and hilo.is_alive():
+        evento.set()
+        t['cancelacion'] = {'pedida': ahora_iso()}
+    elif t['estado'] in ('pendiente', 'en_proceso'):  # sin hilo vivo (p. ej., se reinició la API)
+        t['estado'], t['terminado'] = 'cancelado', ahora_iso()
+        t['cancelacion'] = {'pedida': ahora_iso(), 'nota': 'no había una extracción en curso en este proceso'}
+    _guardar(t)
+    return t
+
+
+def crear(lat: float, lon: float, nombre: str | None = None, parcela: dict | None = None) -> dict:
     """Crea (o devuelve) el trabajo del punto. No lo ejecuta; para eso, iniciar()."""
     clave = clave_punto(lat, lon)
     if not nombre:  # si el punto ya está registrado con un nombre (p. ej. «chivay»), se reutiliza su carpeta
         nombre = next((n for n, p in actualizacion.puntos().items() if clave_punto(p['lat'], p['lon']) == clave), None)
     previo = estado(clave)
     if previo and previo['estado'] in (*LISTOS, 'parcial', 'en_proceso'):
+        if parcela and previo.get('parcela') != parcela:
+            previo['parcela'] = parcela
+            _guardar(previo)
         return previo
     t = {'clave': clave, 'nombre': nombre or clave, 'punto': {'lat': lat, 'lon': lon}, 'creado': ahora_iso(),
          'estado': 'pendiente', 'fuentes': {'power': {'estado': 'pendiente'}, 'modis': {'estado': 'pendiente'},
                                             **{k: {'estado': 'no_disponible', 'motivo': m} for k, m in PENDIENTES.items()}},
-         'aviso': {'estado': 'pendiente', 'canal': None, 'nota': 'canal de aviso por decidir (docs/11, §6)'}}
+         'aviso': {'estado': 'pendiente', 'canal': None, 'nota': 'canal de aviso por decidir (docs/11, §6)'},
+         **({'parcela': parcela} if parcela else {})}
     _guardar(t)
     return t
 
@@ -107,12 +129,18 @@ def crear(lat: float, lon: float, nombre: str | None = None) -> dict:
 def ejecutar(clave: str) -> dict:
     t = estado(clave)
     lat, lon, nombre = t['punto']['lat'], t['punto']['lon'], t['nombre']
+    parar = _CANCELAR.setdefault(clave, threading.Event())
+    parar.clear()
+    t.pop('cancelacion', None)
     salida, cache = str(BACKEND / 'almacen' / 'fuentes' / nombre), str(BACKEND / 'almacen' / 'cache')
     t['estado'], t['iniciado'] = 'en_proceso', ahora_iso()
     _guardar(t)
     actualizacion.agregar_punto(nombre, lat, lon)  # desde ahora se mantiene al día
     for fuente in ('power', 'modis'):
         if t['fuentes'][fuente]['estado'] in LISTOS:
+            continue
+        if parar.is_set():
+            t['fuentes'][fuente] = {'estado': 'cancelado', 'motivo': 'detenido por el usuario antes de empezar esta fuente'}
             continue
         t['fuentes'][fuente] = {'estado': 'en_proceso', 'desde': ahora_iso()}
         _guardar(t)
@@ -124,7 +152,7 @@ def ejecutar(clave: str) -> dict:
                                         'motivo': r.get('motivo')}
             else:
                 rs = ornl.obtener_varios(lat=lat, lon=lon, salida=salida, cache=cache, inicio=INICIO, nombre=nombre,
-                                         productos={p: None for p in MODIS}, tope=4)
+                                         productos={p: None for p in MODIS}, tope=4, cancelar=parar)
                 productos = {p: {**_clasificar(v['estado'], v.get('faltan', [])), 'archivos': v.get('archivos'),
                                  'motivo': v.get('motivo')} for p, v in rs.items()}
                 estados = [x['estado'] for x in productos.values()]
@@ -138,18 +166,21 @@ def ejecutar(clave: str) -> dict:
         t['fuentes'][fuente]['hasta'] = ahora_iso()
         _guardar(t)
     hechas = [t['fuentes'][f]['estado'] for f in ('power', 'modis')]
-    t['estado'] = ('listo' if all(e == 'listo' for e in hechas) else 'listo_con_vacios' if all(e in LISTOS for e in hechas)
+    t['estado'] = ('cancelado' if parar.is_set() else 'listo' if all(e == 'listo' for e in hechas) else 'listo_con_vacios' if all(e in LISTOS for e in hechas)
                    else 'error' if all(e in ('error', 'sin_datos') for e in hechas) else 'parcial')
     t['terminado'] = ahora_iso()
-    t['aviso'] = {**t['aviso'], 'estado': 'por_enviar', 'listo_desde': t['terminado']}
+    if parar.is_set():
+        t['cancelacion'] = {'pedida': ahora_iso(), 'nota': 'lo descargado queda guardado; volver a pedirlo continúa desde ahí'}
+    else:
+        t['aviso'] = {**t['aviso'], 'estado': 'por_enviar', 'listo_desde': t['terminado']}
     _guardar(t)
     log(f'trabajo {clave}: {t["estado"]}')
     return t
 
 
-def iniciar(lat: float, lon: float, nombre: str | None = None) -> dict:
+def iniciar(lat: float, lon: float, nombre: str | None = None, parcela: dict | None = None) -> dict:
     """Crea el trabajo y lo ejecuta en un hilo (en la API; en Google Cloud será un trabajo de Cloud Run o una cola)."""
-    t = crear(lat, lon, nombre)
+    t = crear(lat, lon, nombre, parcela)
     with _LOCK:
         vivo = _HILOS.get(t['clave'])
         if t['estado'] in LISTOS or (vivo and vivo.is_alive()):

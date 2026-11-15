@@ -94,7 +94,8 @@ def obtener_varios(*, lat: float, lon: float, salida: str, cache: str, inicio: s
                    fin: str | None = None, progreso=None, nombre: str | None = None,
                    productos: dict[str, list[str] | None] | None = None, tope: int = 4,
                    espera_max: float = 120, max_tramos: int | None = None, refrescar_fechas_dias: float | None = 8,
-                   **_: object) -> dict[str, dict]:
+                   cancelar: threading.Event | None = None, **_: object) -> dict[str, dict]:
+    """cancelar: si se activa, no se piden más bloques (los ya guardados quedan en caché para retomar)."""
     comienzo = time.monotonic()
     productos = {p: (b or PRODUCTOS.get(p)) for p, b in (productos or {'MOD13Q1': None}).items()}
     nombre = nombre or clave_punto(lat, lon)
@@ -154,6 +155,10 @@ def obtener_varios(*, lat: float, lon: float, salida: str, cache: str, inicio: s
 
     def bajar(tarea, esperas) -> None:
         _, producto, banda, tramo = tarea
+        if cancelar is not None and cancelar.is_set():
+            with lock:
+                bloques[(producto, banda, tramo[0])] = {'request_url': None, 'error': 'cancelado por el usuario', 'tramo': tramo}
+            return
         nombre_archivo = f'{clave}/{producto}/{banda}_{tramo[0]}_{tramo[-1]}.json'
         url = f'{API}/{producto}/subset?' + urllib.parse.urlencode({
             **punto, 'band': banda, 'startDate': tramo[0], 'endDate': tramo[-1], 'kmAboveBelow': 0, 'kmLeftRight': 0})
@@ -171,7 +176,7 @@ def obtener_varios(*, lat: float, lon: float, salida: str, cache: str, inicio: s
     with ThreadPoolExecutor(max_workers=servicio.tope) as hilos:
         list(hilos.map(lambda t: bajar(t, (2, 4, 8)), tareas))
     pendientes = [t for t in tareas if 'error' in bloques[(t[1], t[2], t[3][0])]]
-    if pendientes:
+    if pendientes and not (cancelar is not None and cancelar.is_set()):
         esperas = _esperas_finales(espera_max)
         log(f'ORNL: ronda final para {len(pendientes)} bloques con {max(1, servicio.tope // 2)} hilos '
             f'y esperas {esperas} s')

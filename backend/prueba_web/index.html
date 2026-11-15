@@ -16,7 +16,7 @@
     --bg:#f2f2ef; --surface:#fff; --surface-2:#f7f7f4; --surface-3:#eeeee9;
     --ink:#111311; --ink-2:#4b504c; --ink-3:#868b85; --line:#e6e6e0; --line-2:#d8d9d2;
     --green:#2e7d4f; --green-soft:#e6f2e9; --sun:#f4b23e; --sun-soft:#fdf1da; --sun-ink:#7a4f08;
-    --sky:#3d78ad; --sky-soft:#e5eef7; --danger:#b4382f; --danger-soft:#fbe9e7;
+    --danger:#b4382f; --danger-soft:#fbe9e7;
     --radius:16px; --radius-sm:12px; --radius-xs:9px;
     --shadow:0 1px 2px rgb(16 24 16 / 4%), 0 8px 28px rgb(16 24 16 / 6%);
     --shadow-float:0 2px 6px rgb(10 20 12 / 8%), 0 18px 48px rgb(10 20 12 / 18%);
@@ -25,19 +25,20 @@
   * { box-sizing:border-box; }
   html, body { height:100%; }
   body { margin:0; font:14px/1.5 var(--font); color:var(--ink); background:var(--bg); display:flex; flex-direction:column; }
-  /* Barra superior */
   .barra { display:flex; align-items:center; gap:18px; padding:10px 18px; background:var(--surface); border-bottom:1px solid var(--line); flex-wrap:wrap; }
   .marca { display:flex; align-items:center; gap:12px; }
   .marca img { height:30px; display:block; }
   .marca .sep { width:1px; height:26px; background:var(--line-2); }
   .marca .sub { font-size:12.5px; color:var(--ink-2); line-height:1.25; }
   .marca .sub b { color:var(--ink); font-weight:600; display:block; font-size:13.5px; }
-  .ir { display:flex; gap:6px; flex-wrap:wrap; margin-left:auto; }
-  .pildora { font:500 13px var(--font); padding:7px 13px; border-radius:999px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); cursor:pointer; transition:.15s; }
+  .ir { display:flex; gap:6px; flex-wrap:wrap; margin-left:auto; align-items:center; }
+  .ir .nota { margin-right:4px; }
+  .pildora { font:500 13px var(--font); padding:7px 13px; border-radius:999px; border:1px solid var(--line-2); background:var(--surface); color:var(--ink); cursor:pointer; }
   .pildora:hover { border-color:var(--ink); }
-  /* Cuerpo */
   .cuerpo { flex:1; display:grid; grid-template-columns:minmax(0,1fr) 500px; min-height:0; }
-  #mapa { height:100%; background:#dfe3dc; }
+  .zona-mapa { position:relative; min-height:0; }
+  #mapa { position:absolute; inset:0; background:#dfe3dc; }
+  #mapa.dibujando { cursor:crosshair; }
   .lateral { display:flex; flex-direction:column; min-height:0; background:var(--surface-2); border-left:1px solid var(--line); }
   .pestanas { display:flex; gap:4px; padding:10px 12px 0; background:var(--surface); border-bottom:1px solid var(--line); }
   .pestana { font:500 13.5px var(--font); padding:9px 14px; border:0; background:none; color:var(--ink-2); cursor:pointer; border-bottom:2px solid transparent; }
@@ -49,8 +50,8 @@
   .tarjeta h3 { margin:0 0 10px; font-size:13px; font-weight:600; letter-spacing:.02em; color:var(--ink-2); text-transform:uppercase; display:flex; align-items:center; gap:8px; }
   .tarjeta h3 .fuente { margin-left:auto; text-transform:none; letter-spacing:0; font-weight:400; color:var(--ink-3); font-size:12px; }
   .titulo-punto { font-size:20px; font-weight:600; margin:0; }
-  .coord { font-family:var(--mono); font-size:12.5px; color:var(--ink-2); }
-  .metricas { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0 4px; }
+  .coord { font-family:var(--mono); font-size:12.5px; color:var(--ink-2); word-break:break-all; }
+  .metricas { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0 4px; }
   .metrica { background:var(--surface-2); border:1px solid var(--line); border-radius:var(--radius-sm); padding:9px 10px; }
   .metrica .et { font-size:11.5px; color:var(--ink-3); }
   .metrica .va { font-size:17px; font-weight:600; }
@@ -60,11 +61,11 @@
   th { color:var(--ink-2); font-weight:500; }
   tr:last-child td, tr:last-child th { border-bottom:0; }
   .num { font-family:var(--mono); font-size:12.5px; }
-  .chip { display:inline-block; padding:1px 9px; border-radius:999px; font-size:12px; font-weight:500; border:1px solid transparent; }
+  .chip { display:inline-block; padding:1px 9px; border-radius:999px; font-size:12px; font-weight:500; white-space:nowrap; }
   .chip.listo, .chip.listo_con_vacios { background:var(--green-soft); color:var(--green); }
   .chip.parcial, .chip.en_proceso, .chip.pendiente, .chip.por_enviar { background:var(--sun-soft); color:var(--sun-ink); }
   .chip.error, .chip.sin_dato, .chip.sin_datos { background:var(--danger-soft); color:var(--danger); }
-  .chip.no_disponible { background:var(--surface-3); color:var(--ink-2); }
+  .chip.no_disponible, .chip.cancelado { background:var(--surface-3); color:var(--ink-2); }
   .cultivos { display:flex; flex-wrap:wrap; gap:6px; }
   .cultivo { padding:3px 10px; border-radius:999px; background:var(--green-soft); color:var(--green); font-size:12.5px; }
   .cultivo.mas { background:var(--surface-3); color:var(--ink-2); }
@@ -72,7 +73,9 @@
   .error-caja { background:var(--danger-soft); color:var(--danger); border-radius:var(--radius-xs); padding:8px 11px; margin:6px 0; font-size:13px; }
   .nota { color:var(--ink-3); font-size:12.5px; }
   .boton { font:600 14px var(--font); padding:10px 16px; border-radius:var(--radius-sm); border:0; background:var(--ink); color:#fff; cursor:pointer; }
-  .boton:disabled { opacity:.45; cursor:default; }
+  .boton.sec { background:var(--surface); color:var(--ink); border:1px solid var(--line-2); }
+  .boton.peligro { background:var(--danger); }
+  .boton:disabled { opacity:.4; cursor:default; }
   .mini { font:500 12px var(--font); padding:4px 9px; border-radius:var(--radius-xs); border:1px solid var(--line-2); background:var(--surface); cursor:pointer; margin:3px 4px 0 0; }
   .mini:hover { border-color:var(--ink); }
   .campo { font:14px var(--font); padding:9px 11px; border-radius:var(--radius-sm); border:1px solid var(--line-2); flex:1; min-width:140px; }
@@ -83,25 +86,39 @@
   .fuente-fila:last-child { border-bottom:0; }
   .fuente-fila .cab { display:flex; align-items:center; gap:8px; font-weight:600; }
   .prod { margin:6px 0 0 12px; }
-  .lista-punto { display:flex; gap:10px; align-items:center; padding:11px 12px; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--surface); margin-bottom:8px; cursor:pointer; transition:.15s; }
+  .lista-punto { display:flex; gap:10px; align-items:center; padding:11px 12px; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--surface); margin-bottom:8px; }
   .lista-punto:hover { border-color:var(--ink); }
+  .lista-punto input { width:18px; height:18px; accent-color:var(--ink); flex:none; }
   .lista-punto .pin { width:12px; height:12px; border-radius:50%; background:var(--green); flex:none; box-shadow:0 0 0 3px var(--green-soft); }
   .lista-punto .pin.en_proceso, .lista-punto .pin.pendiente, .lista-punto .pin.parcial { background:var(--sun); box-shadow:0 0 0 3px var(--sun-soft); }
-  .lista-punto .datos { flex:1; min-width:0; }
+  .lista-punto .pin.cancelado { background:var(--ink-3); box-shadow:0 0 0 3px var(--surface-3); }
+  .lista-punto .datos { flex:1; min-width:0; cursor:pointer; }
   .lista-punto .nom { font-weight:600; }
-  .vacio { text-align:center; color:var(--ink-3); padding:40px 10px; }
+  .vacio { text-align:center; color:var(--ink-3); padding:34px 10px; }
   .vacio img { width:46px; opacity:.85; margin-bottom:8px; }
-  /* Controles del mapa */
+  .pasos { margin:10px 0 0; padding-left:20px; color:var(--ink-2); }
+  .pasos li { margin:4px 0; }
+  /* barra de dibujo sobre el mapa */
+  .dibujo { position:absolute; left:50%; top:14px; transform:translateX(-50%); z-index:800; background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow-float); padding:12px 14px; display:flex; flex-direction:column; gap:10px; width:min(600px, calc(100% - 150px)); }
+  .dibujo .instr { font-size:14.5px; font-weight:500; }
+  .dibujo .instr small { display:block; font-weight:400; color:var(--ink-3); font-size:12.5px; }
+  .dibujo .acciones { display:flex; gap:8px; flex-wrap:wrap; }
+  .dibujo .boton { padding:11px 16px; font-size:14.5px; }
   .leaflet-control-zoom, .leaflet-control-layers, .leaflet-bar { border:0 !important; box-shadow:var(--shadow-float) !important; border-radius:var(--radius-sm) !important; overflow:hidden; }
-  .leyenda, .panel-mapa { background:var(--surface); padding:10px 12px; border-radius:var(--radius-sm); box-shadow:var(--shadow-float); font:12.5px/1.5 var(--font); max-width:260px; }
+  .leaflet-control-zoom a { width:38px !important; height:38px !important; line-height:38px !important; font-size:20px !important; }
+  .leyenda, .panel-mapa { background:var(--surface); padding:10px 12px; border-radius:var(--radius-sm); box-shadow:var(--shadow-float); font:12.5px/1.5 var(--font); max-width:250px; }
   .leyenda b { display:block; margin-bottom:4px; }
   .leyenda i { display:inline-block; width:12px; height:12px; margin-right:7px; vertical-align:-2px; border-radius:3px; }
   .panel-mapa label { display:flex; align-items:center; gap:8px; }
   .panel-mapa input[type=range] { width:110px; accent-color:var(--ink); }
   .zoom-info { font-family:var(--mono); font-size:12px; color:var(--ink-2); margin-top:4px; }
+  .vertice { width:14px; height:14px; border-radius:50%; background:#fff; border:3px solid var(--ink); box-shadow:0 1px 4px rgb(0 0 0 / 45%); }
+  .vertice.primero { background:var(--green); border-color:#fff; }
+  .tentativo { width:22px; height:22px; border-radius:50%; background:rgb(244 178 62 / 45%); border:3px solid var(--sun); box-shadow:0 0 0 4px rgb(255 255 255 / 85%); }
   .punto-extraido { width:14px; height:14px; border-radius:50%; background:var(--green); border:2px solid #fff; box-shadow:0 0 0 2px var(--green), 0 2px 6px rgb(0 0 0 / 35%); }
   .punto-extraido.en_proceso, .punto-extraido.pendiente, .punto-extraido.parcial { background:var(--sun); box-shadow:0 0 0 2px var(--sun), 0 2px 6px rgb(0 0 0 / 35%); }
-  @media (max-width: 980px) { .cuerpo { grid-template-columns:1fr; } #mapa { height:58vh; } .lateral { border-left:0; } .metricas { grid-template-columns:repeat(2,1fr); } }
+  .punto-extraido.cancelado { background:var(--ink-3); box-shadow:0 0 0 2px var(--ink-3), 0 2px 6px rgb(0 0 0 / 35%); }
+  @media (max-width: 980px) { .cuerpo { grid-template-columns:1fr; } .zona-mapa { height:62vh; } .lateral { border-left:0; } .metricas { grid-template-columns:repeat(2,1fr); } }
 </style>
 </head>
 <body>
@@ -109,80 +126,92 @@
   <div class="marca">
     <img src="marca/tarpu-logo-black.png" alt="TARPU">
     <span class="sep"></span>
-    <span class="sub"><b>Prueba de integración del backend</b>Base de Arequipa · extracción por coordenada · datos en crudo</span>
+    <span class="sub"><b>Prueba de integración del backend</b>Base de Arequipa · extracción por parcela · datos en crudo</span>
   </div>
   <div class="ir">
-    <button class="pildora" data-ir="-16.367023,-72.185771">Majes riego</button>
+    <span class="nota">Ir a:</span>
+    <button class="pildora" data-ir="-16.367023,-72.185771">Majes</button>
     <button class="pildora" data-ir="-15.64,-71.60">Chivay</button>
-    <button class="pildora" data-ir="-15.612386,-71.984857">Cabanaconde (censo)</button>
+    <button class="pildora" data-ir="-15.612386,-71.984857">Cabanaconde</button>
   </div>
 </header>
 <div class="cuerpo">
-  <div id="mapa"></div>
+  <div class="zona-mapa">
+    <div id="mapa" class="dibujando"></div>
+    <div class="dibujo" id="dibujo">
+      <div class="instr" id="instr"></div>
+      <div class="acciones">
+        <button class="boton" id="b-guardar" disabled>Guardar punto</button>
+        <button class="boton sec" id="b-deshacer" disabled>Deshacer último</button>
+        <button class="boton sec" id="b-cerrar" disabled>Cerrar parcela</button>
+        <button class="boton sec" id="b-nueva">Empezar de nuevo</button>
+      </div>
+    </div>
+  </div>
   <aside class="lateral">
     <nav class="pestanas">
-      <button class="pestana activa" data-vista="punto">Punto seleccionado</button>
+      <button class="pestana activa" data-vista="parcela">Parcela</button>
       <button class="pestana" data-vista="extraidos">Puntos extraídos <span class="n" id="n-extraidos">0</span></button>
     </nav>
     <div class="contenido">
-      <section class="vista activa" id="vista-punto">
-        <div class="vacio"><img src="marca/tarpu-mark-black.png" alt=""><br>Haz clic en el mapa para ver los datos base de ese punto.<br>Acércate todo lo que necesites para ubicar tu parcela.</div>
-      </section>
+      <section class="vista activa" id="vista-parcela"></section>
       <section class="vista" id="vista-extraidos"></section>
     </div>
   </aside>
 </div>
 <script>
-const API = '';
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const crudo = o => `<pre>${esc(JSON.stringify(o, null, 1))}</pre>`;
 const chip = e => `<span class="chip ${esc(e)}">${esc(String(e ?? '').replace(/_/g, ' '))}</span>`;
 async function pedir(ruta, op) {
-  const r = await fetch(API + ruta, op);
+  const r = await fetch(ruta, op);
   const c = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(`${r.status} · ${JSON.stringify(c)}`);
+  if (!r.ok) throw new Error(c?.error?.mensaje ? `${c.error.mensaje}${c.error.detalle ? ' (' + JSON.stringify(c.error.detalle) + ')' : ''}` : `${r.status} · ${JSON.stringify(c)}`);
   return c;
 }
+const post = (ruta, cuerpo) => pedir(ruta, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(cuerpo) });
 
-/* ---------------- mapa ---------------- */
-// Esri tiene imagen real hasta el zoom 17 en el campo de Arequipa (≈ 1 m por píxel; medido el 15/11/2026: desde el 18
-// devuelve «Map data not yet available»). Por eso se amplía la imagen del 17 hasta el zoom 21, sin recuadros vacíos.
-// La ciudad de Arequipa tiene imagen real hasta el 19: capa aparte.
-const mapa = L.map('mapa', { maxZoom: 21, zoomControl: false }).setView([-16.0, -72.6], 7);
+/* ================= mapa =================
+   Imagen principal: Esri World Imagery «Clarity» (más nítida que la estándar en el mismo zoom; comparado el 15/11/2026).
+   En el campo de Arequipa las dos tienen imagen real hasta el zoom 17 (≈ 1 m por píxel); desde ahí se amplía esa imagen
+   hasta el zoom 21 para poder ubicar bien las esquinas. La ciudad de Arequipa tiene imagen real hasta el 19 (capa aparte). */
+const mapa = L.map('mapa', { maxZoom: 21, zoomControl: false, doubleClickZoom: false }).setView([-16.0, -72.6], 7);
 L.control.zoom({ position: 'topleft' }).addTo(mapa);
 L.control.scale({ imperial: false, position: 'bottomright' }).addTo(mapa);
-const esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
 const credito = 'Imágenes: Esri, Maxar, Earthstar Geographics';
-const satCampo = L.tileLayer(esri, { maxNativeZoom: 17, maxZoom: 21, attribution: credito }).addTo(mapa);
-const satCiudad = L.tileLayer(esri, { maxNativeZoom: 19, maxZoom: 21, attribution: credito });
+const clarity = L.tileLayer('https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  { maxNativeZoom: 17, maxZoom: 21, attribution: credito + ' (World Imagery Clarity)' }).addTo(mapa);
+const estandar = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  { maxNativeZoom: 17, maxZoom: 21, attribution: credito });
+const ciudad = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  { maxNativeZoom: 19, maxZoom: 21, attribution: credito });
 const calles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxNativeZoom: 19, maxZoom: 21, attribution: '© OpenStreetMap' });
 const capaExtraidos = L.layerGroup().addTo(mapa);
-let capaSectores = null, marcador = null, sondeo = null, puntoActual = null;
+const capaDibujo = L.layerGroup().addTo(mapa);
+let capaSectores = null;
 
 async function cargarSectores() {
   const m = (await pedir('/api/base/sectores')).data;
-  capaSectores = L.imageOverlay('/api/base/sectores.png', m.limites_mapa, { opacity: .85, interactive: false }).addTo(mapa);
+  capaSectores = L.imageOverlay('/api/base/sectores.png', m.limites_mapa, { opacity: .6, interactive: false }).addTo(mapa);
   const caja = L.rectangle(m.limites_mapa, { color: '#111311', weight: 1, fill: false, dashArray: '4 5', interactive: false }).addTo(mapa);
   L.control.layers(
-    { 'Satélite · campo (ampliado desde el zoom 17)': satCampo, 'Satélite · ciudad (real hasta el zoom 19)': satCiudad, 'Calles (OpenStreetMap)': calles },
+    { 'Satélite nítido (Esri Clarity)': clarity, 'Satélite estándar (Esri)': estandar, 'Satélite ciudad (real hasta zoom 19)': ciudad, 'Calles (OpenStreetMap)': calles },
     { 'Sectores S1 · S2 · S3': capaSectores, 'Caja de la base': caja, 'Puntos extraídos': capaExtraidos },
     { position: 'topright', collapsed: true }).addTo(mapa);
   const leyenda = L.control({ position: 'bottomleft' });
   leyenda.onAdd = () => {
     const d = L.DomUtil.create('div', 'leyenda');
     const fila = (k, v, txt) => `<div><i style="background:rgb(${v.color_rgba.slice(0, 3).join(',')})"></i>${k} · ${txt}</div>`;
-    d.innerHTML = '<b>Sectores (desde NASADEM)</b>'
-      + Object.entries(m.sectores).map(([k, v]) => fila(k, v, v.altitud_m.join('–') + ' m')).join('')
-      + fila('Sobre 4800 m', m.fuera, 'fuera de los sectores')
-      + `<div class="nota" style="margin-top:6px">${esc(m.aviso)}</div>`;
+    d.innerHTML = '<b>Sectores (desde NASADEM)</b>' + Object.entries(m.sectores).map(([k, v]) => fila(k, v, v.altitud_m.join('–') + ' m')).join('')
+      + fila('Sobre 4800 m', m.fuera, 'fuera de los sectores') + `<div class="nota" style="margin-top:6px">${esc(m.aviso)}</div>`;
     return d;
   };
   leyenda.addTo(mapa);
-  const panel = L.control({ position: 'topright' });
+  const panel = L.control({ position: 'bottomright' });
   panel.onAdd = () => {
     const d = L.DomUtil.create('div', 'panel-mapa');
-    d.innerHTML = `<label>Sectores <input type="range" id="opacidad" min="0" max="1" step="0.05" value="0.85"></label><div class="zoom-info" id="zoom-info"></div>`;
+    d.innerHTML = `<label>Sectores <input type="range" id="opacidad" min="0" max="1" step="0.05" value="0.6"></label><div class="zoom-info" id="zoom-info"></div>`;
     L.DomEvent.disableClickPropagation(d);
     return d;
   };
@@ -193,97 +222,149 @@ async function cargarSectores() {
 function mostrarZoom() {
   const z = mapa.getZoom();
   const mpp = 156543.03 * Math.cos(mapa.getCenter().lat * Math.PI / 180) / 2 ** z;
-  const nota = z > 17 && mapa.hasLayer(satCampo) ? ' · ampliado' : '';
-  if ($('zoom-info')) $('zoom-info').textContent = `zoom ${z} · ${mpp < 1 ? mpp.toFixed(2) : mpp.toFixed(0)} m por píxel${nota}`;
+  const nativo = mapa.hasLayer(ciudad) || mapa.hasLayer(calles) ? 19 : 17;
+  if ($('zoom-info')) $('zoom-info').textContent = `zoom ${z} · ${mpp < 1 ? mpp.toFixed(2) : mpp.toFixed(0)} m/píxel${z > nativo ? ' · ampliado' : ''}`;
+  // a mucho zoom los sectores (celdas de ≈ 1 km) tapan la parcela: se atenúan solos
+  if (capaSectores) capaSectores.setOpacity(z >= 14 ? Math.min(+$('opacidad').value, .15) : +$('opacidad').value);
 }
 mapa.on('zoomend moveend baselayerchange', mostrarZoom);
-mapa.on('click', e => seleccionar(+e.latlng.lat.toFixed(6), +e.latlng.lng.toFixed(6)));
 document.querySelectorAll('[data-ir]').forEach(b => b.onclick = () => {
   const [lat, lon] = b.dataset.ir.split(',').map(Number);
-  mapa.setView([lat, lon], 15); seleccionar(lat, lon);
+  mapa.setView([lat, lon], 16);
 });
 
-/* ---------------- pestañas ---------------- */
+/* ================= dibujo de la parcela ================= */
+const dib = { vertices: [], tentativo: null, cerrada: false, cursor: null };
+const icono = (cls) => L.divIcon({ className: '', html: `<div class="${cls}"></div>`, iconSize: [22, 22], iconAnchor: [11, 11] });
+function redibujar() {
+  capaDibujo.clearLayers();
+  const v = dib.vertices;
+  if (dib.cerrada && v.length >= 3) {
+    L.polygon(v, { color: '#111311', weight: 3, fillColor: '#f4b23e', fillOpacity: .25 }).addTo(capaDibujo);
+  } else if (v.length) {
+    L.polyline(v, { color: '#111311', weight: 3 }).addTo(capaDibujo);
+    const fin = dib.tentativo || dib.cursor;
+    if (fin) L.polyline([v[v.length - 1], fin], { color: '#111311', weight: 2, dashArray: '6 6' }).addTo(capaDibujo);
+    if (v.length >= 2 && fin) L.polyline([fin, v[0]], { color: '#111311', weight: 1, dashArray: '2 6', opacity: .6 }).addTo(capaDibujo);
+  }
+  v.forEach((p, i) => L.marker(p, { icon: icono('vertice' + (i === 0 ? ' primero' : '')), interactive: false }).addTo(capaDibujo));
+  if (dib.tentativo) L.marker(dib.tentativo, { icon: icono('tentativo'), interactive: false }).addTo(capaDibujo);
+  const n = v.length;
+  $('b-guardar').disabled = dib.cerrada || !dib.tentativo;
+  $('b-deshacer').disabled = dib.cerrada || (!n && !dib.tentativo);
+  $('b-cerrar').disabled = dib.cerrada || n < 3;
+  $('instr').innerHTML = dib.cerrada
+    ? `Parcela cerrada con ${n} esquinas.<small>Revisa sus datos a la derecha. Para dibujar otra, pulsa «Empezar de nuevo».</small>`
+    : dib.tentativo ? `Esquina ${n + 1} marcada.<small>Si está bien, pulsa «Guardar punto» (o Enter). Si no, toca otro lugar para moverla.</small>`
+    : n === 0 ? 'Acércate a tu parcela y toca su primera esquina.<small>Puedes hacer zoom hasta ver bien los bordes.</small>'
+    : n < 3 ? `Toca la siguiente esquina (${n} guardada${n > 1 ? 's' : ''}).<small>La línea punteada sigue tu cursor desde la última esquina.</small>`
+    : `Toca la siguiente esquina o pulsa «Cerrar parcela».<small>${n} esquinas guardadas.</small>`;
+  $('mapa').classList.toggle('dibujando', !dib.cerrada);
+}
+mapa.on('click', e => { if (dib.cerrada) return; dib.tentativo = [e.latlng.lat, e.latlng.lng]; redibujar(); });
+mapa.on('mousemove', e => { if (dib.cerrada || !dib.vertices.length || dib.tentativo) return; dib.cursor = [e.latlng.lat, e.latlng.lng]; redibujar(); });
+$('b-guardar').onclick = () => { if (!dib.tentativo) return; dib.vertices.push(dib.tentativo); dib.tentativo = null; redibujar(); };
+$('b-deshacer').onclick = () => { if (dib.tentativo) dib.tentativo = null; else dib.vertices.pop(); redibujar(); };
+$('b-cerrar').onclick = () => { if (dib.vertices.length < 3) return; dib.tentativo = null; dib.cerrada = true; redibujar(); analizarParcela(); };
+$('b-nueva').onclick = () => { Object.assign(dib, { vertices: [], tentativo: null, cerrada: false, cursor: null }); detenerSondeo(); redibujar(); vistaInicial(); };
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'Enter') $('b-guardar').click();
+  if (e.key === 'Backspace') { e.preventDefault(); $('b-deshacer').click(); }
+});
+const contornoGeoJSON = () => ({ type: 'Polygon', coordinates: [[...dib.vertices.map(([la, lo]) => [lo, la]), [dib.vertices[0][1], dib.vertices[0][0]]]] });
+
+/* ================= panel de la parcela ================= */
 function abrirVista(v) {
   document.querySelectorAll('.pestana').forEach(p => p.classList.toggle('activa', p.dataset.vista === v));
   document.querySelectorAll('.vista').forEach(s => s.classList.toggle('activa', s.id === 'vista-' + v));
 }
 document.querySelectorAll('.pestana').forEach(p => p.onclick = () => abrirVista(p.dataset.vista));
-
-/* ---------------- punto seleccionado ---------------- */
-async function seleccionar(lat, lon) {
-  if (sondeo) { clearInterval(sondeo); sondeo = null; }
-  puntoActual = { lat, lon };
-  if (marcador) marcador.remove();
-  marcador = L.marker([lat, lon]).addTo(mapa);
-  abrirVista('punto');
-  const vista = $('vista-punto');
-  vista.innerHTML = `<div class="tarjeta"><p class="titulo-punto">Punto seleccionado</p><div class="coord">${lat}, ${lon}</div><p class="nota">Leyendo la base de Arequipa…</p></div>`;
+function vistaInicial() {
+  $('vista-parcela').innerHTML = `<div class="tarjeta"><div class="vacio" style="padding:14px 6px 6px"><img src="marca/tarpu-mark-black.png" alt=""></div>
+    <p class="titulo-punto" style="text-align:center">Dibuja tu parcela</p>
+    <ol class="pasos"><li>Acércate a tu campo con el zoom (hasta 21).</li><li>Toca una esquina y pulsa <b>Guardar punto</b>.</li>
+      <li>Ve a la siguiente esquina: la línea te sigue. Toca y guarda otra vez.</li><li>Con 3 o más esquinas, pulsa <b>Cerrar parcela</b>.</li>
+      <li>TARPU lee los datos de todo ese espacio y luego puedes extraer los datos pesados.</li></ol></div>`;
+  abrirVista('parcela');
+}
+let ultimaParcela = null;
+async function analizarParcela(contorno = contornoGeoJSON(), nombreTrabajo = null) {
+  abrirVista('parcela');
+  const vista = $('vista-parcela');
+  vista.innerHTML = `<div class="tarjeta"><p class="titulo-punto">Parcela</p><p class="nota">Leyendo la base de Arequipa en todo su espacio…</p></div>`;
   const t0 = performance.now();
   let s;
-  try { s = await pedir(`/api/base?lat=${lat}&lon=${lon}`); }
-  catch (e) { vista.innerHTML += `<div class="error-caja">${esc(e.message)}</div>`; return; }
+  try { s = await post('/api/base/parcela', { contorno }); }
+  catch (e) { vista.innerHTML = `<div class="tarjeta"><p class="titulo-punto">Parcela</p><div class="error-caja">${esc(e.message)}</div></div>`; return; }
   const ms = Math.round(performance.now() - t0), d = s.data;
-  if (d.estado !== 'listo') {
-    vista.innerHTML = `<div class="tarjeta"><p class="titulo-punto">Punto seleccionado</p><div class="coord">${lat}, ${lon}</div>${chip(d.estado)}<div class="aviso">${esc(d.motivo)}</div><details><summary>Respuesta en crudo</summary>${crudo(s)}</details></div>`;
-    return;
-  }
-  const r = d.relieve, sec = d.sector, cl = d.clima, capas = d.suelo.capas;
-  const v = k => capas[k] ? `${capas[k].valor} <small>${esc(capas[k].unidad)}</small>` : '—';
-  const props = [...new Set(Object.values(capas).map(c => c.propiedad))];
+  ultimaParcela = { contorno, datos: d };
+  if (d.estado !== 'listo') { vista.innerHTML = `<div class="tarjeta"><p class="titulo-punto">Parcela</p>${chip(d.estado)}<div class="aviso">${esc(d.motivo)}</div><details><summary>Respuesta en crudo</summary>${crudo(s)}</details></div>`; return; }
+  const g = d.geometria, r = d.relieve, sec = d.sector, cl = d.clima, su = d.suelo;
+  const relieveOk = r.estado === 'listo';
+  const props = [...new Set(Object.values(su.capas || {}).map(c => c.propiedad))];
   const prof = ['0-5cm', '5-15cm', '15-30cm'];
   const sueloFilas = props.map(p => `<tr><th>${esc(p)}</th>${prof.map(z => {
-    const c = capas[`${p}_${z}_mean`]; return `<td class="num">${c ? esc(c.valor) : '—'}</td>`;
-  }).join('')}<td class="nota">${esc(capas[`${p}_0-5cm_mean`]?.unidad)}</td></tr>`).join('');
+    const c = su.capas[`${p}_${z}_mean`];
+    return `<td class="num" title="${esc((c?.valores_por_pixel || []).join(' · '))}">${c?.media ?? '—'}${c && c.valores_por_pixel.length > 1 ? `<br><span class="nota">${esc(Math.min(...c.valores_por_pixel))}–${esc(Math.max(...c.valores_por_pixel))}</span>` : ''}</td>`;
+  }).join('')}<td class="nota">${esc(su.capas[`${p}_0-5cm_mean`]?.unidad)}</td></tr>`).join('');
   const gaez = d.aptitud.capas.filter(c => c.indice).sort((a, b) => b.indice - a.indice)
     .map(c => `<tr><td>${esc(c.cultivo)}</td><td>${esc(c.agua)}</td><td class="num">${esc(c.indice)}</td></tr>`).join('');
+  const clases = relieveOk ? Object.entries(r.clases_pendiente_pixeles).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${esc(k)}: ${n}`).join(' · ') : '';
   vista.innerHTML = `
     <div class="tarjeta">
-      <div class="fila" style="justify-content:space-between"><p class="titulo-punto">Punto seleccionado</p>${chip(sec.sector ? sec.sector + ' · ' + sec.nombre : sec.estado)}</div>
-      <div class="coord">${lat}, ${lon} · capa 1 en ${ms} ms</div>
+      <div class="fila" style="justify-content:space-between"><p class="titulo-punto">Parcela</p>${chip(sec.sector ? sec.sector + ' · ' + sec.nombre : sec.estado)}</div>
+      <div class="coord">centro ${d.centroide.lat}, ${d.centroide.lon} · capa 1 en ${ms} ms</div>
       <div class="metricas">
-        <div class="metrica"><div class="et">Altitud</div><div class="va">${esc(r.altitud_m)} <small>m</small></div></div>
-        <div class="metrica"><div class="et">Pendiente</div><div class="va">${esc(r.pendiente_pct)} <small>%</small></div><div class="et">${esc(r.clase_pendiente)}</div></div>
-        <div class="metrica"><div class="et">pH 0–5 cm</div><div class="va">${v('phh2o_0-5cm_mean')}</div></div>
-        <div class="metrica"><div class="et">Arcilla 0–5 cm</div><div class="va">${v('clay_0-5cm_mean')}</div></div>
+        <div class="metrica"><div class="et">Área</div><div class="va">${esc(g.area_ha)} <small>ha</small></div><div class="et">perímetro ${esc(Math.round(g.perimetro_m))} m</div></div>
+        <div class="metrica"><div class="et">Altitud media</div><div class="va">${relieveOk ? esc(r.altitud_m.media) : '—'} <small>m</small></div><div class="et">${relieveOk ? `${r.altitud_m.min}–${r.altitud_m.max} m` : esc(r.motivo)}</div></div>
+        <div class="metrica"><div class="et">Pendiente mediana</div><div class="va">${relieveOk ? esc(r.pendiente_pct.mediana) : '—'} <small>%</small></div><div class="et">${relieveOk ? `${r.pendiente_pct.min}–${r.pendiente_pct.max} %` : ''}</div></div>
       </div>
       ${(s.avisos || []).map(a => `<div class="aviso">${esc(a)}</div>`).join('')}
     </div>
-    <div class="tarjeta"><h3>Cultivos del sector <span class="fuente">censo agropecuario 2012 + FAO EcoCrop</span></h3>
+    <div class="tarjeta"><h3>Qué datos cubren la parcela</h3>
+      <table>
+        <tr><th>Relieve (NASADEM, 30 m)</th><td>${relieveOk ? `<b>${r.pixeles}</b> píxeles dentro` : esc(r.motivo)}</td></tr>
+        <tr><th>Suelo (SoilGrids, 250 m)</th><td><b>${esc(su.pixeles)}</b> ${su.pixeles === 1 ? 'píxel que la toca' : 'píxeles que la tocan'}</td></tr>
+        <tr><th>Verdor MODIS (250 m)</th><td>la parcela equivale a <b>${esc(g.pixeles_modis_250m)}</b> píxeles de 6,25 ha</td></tr>
+        <tr><th>Aptitud (GAEZ, ≈ 9 km)</th><td>una celda la cubre entera</td></tr>
+        <tr><th>Clima (POWER, ≈ 55 km)</th><td>una celda la cubre entera</td></tr>
+      </table>
+      ${relieveOk ? `<p class="nota" style="margin-bottom:0">Pendiente por píxel (FAO 2006): ${clases}</p>` : ''}
+    </div>
+    <div class="tarjeta"><h3>Cultivos del sector <span class="fuente">censo 2012 + FAO EcoCrop</span></h3>
       <div class="cultivos">${(sec.cultivos_principales || []).map(c => `<span class="cultivo">${esc(c)}</span>`).join('')}</div>
       ${(sec.cultivos_ver_mas || []).length ? `<details><summary>Ver más (${sec.cultivos_ver_mas.length})</summary><div class="cultivos" style="margin-top:8px">${sec.cultivos_ver_mas.map(c => `<span class="cultivo mas">${esc(c)}</span>`).join('')}</div></details>` : ''}
     </div>
+    <div class="tarjeta"><h3>Suelo <span class="fuente">SoilGrids · media de los píxeles (rango si son varios)</span></h3>
+      <table><tr><th></th><th>0–5 cm</th><th>5–15 cm</th><th>15–30 cm</th><th>unidad</th></tr>${sueloFilas}</table>
+    </div>
     <div class="tarjeta"><h3>Clima <span class="fuente">celda de NASA POWER</span></h3>
-      <table><tr><th>Celda</th><td class="num">${esc(cl.celda)}</td></tr>
-        <tr><th>Elevación de la celda</th><td>${esc(cl.elevacion_celda_m)} m</td></tr>
+      <table><tr><th>Celda</th><td class="num">${esc(cl.celda)}</td></tr><tr><th>Elevación de la celda</th><td>${esc(cl.elevacion_celda_m)} m</td></tr>
         <tr><th>Período</th><td>${esc(cl.desde)} a ${esc(cl.hasta)}</td></tr>
         <tr><th>Días sin publicar</th><td class="num">${esc(Object.entries(cl.dias_faltantes_por_variable || {}).map(([k, n]) => `${k}: ${n}`).join(' · ') || 'ninguno')}</td></tr></table>
       ${botones(cl.archivos)}
     </div>
-    <div class="tarjeta"><h3>Suelo <span class="fuente">SoilGrids · media por profundidad</span></h3>
-      <table><tr><th></th><th>0–5 cm</th><th>5–15 cm</th><th>15–30 cm</th><th>unidad</th></tr>${sueloFilas}</table>
-    </div>
     <div class="tarjeta"><h3>Aptitud <span class="fuente">FAO GAEZ v4 · índice 0–10 000</span></h3>
-      ${gaez ? `<table><tr><th>Cultivo</th><th>Agua</th><th>Índice</th></tr>${gaez}</table>` : '<p class="nota">Las 100 capas valen 0 en este punto.</p>'}
+      ${gaez ? `<table><tr><th>Cultivo</th><th>Agua</th><th>Índice</th></tr>${gaez}</table>` : '<p class="nota">Las 100 capas valen 0 aquí.</p>'}
     </div>
-    <div class="tarjeta"><h3>Respuesta completa</h3><details><summary>Ver /api/base en crudo</summary>${crudo(s)}</details></div>
-    <div class="tarjeta"><h3>Datos pesados de este punto <span class="fuente">capa 2</span></h3>
-      <p class="nota">POWER hasta ayer y MODIS (NDVI, ET y PET, temperatura de superficie, cobertura). HLS y SMAP esperan a Earth Engine. Un punto nuevo tarda minutos; uno ya extraído se reutiliza.</p>
-      <div class="fila"><input class="campo" id="nombre" placeholder="Nombre del punto (opcional, sin espacios)"><button class="boton" id="extraer">Extraer datos pesados</button></div>
+    <div class="tarjeta"><h3>Respuesta completa</h3><details><summary>Ver /api/base/parcela en crudo</summary>${crudo(s)}</details></div>
+    <div class="tarjeta"><h3>Datos pesados de esta parcela <span class="fuente">capa 2</span></h3>
+      <p class="nota">Se extraen en el centro de la parcela: POWER hasta ayer y MODIS (NDVI, ET y PET, temperatura de superficie, cobertura). Sus píxeles son más grandes que la mayoría de parcelas y la cubren. HLS y SMAP esperan a Earth Engine.</p>
+      <div class="fila"><input class="campo" id="nombre" placeholder="Nombre de la parcela (opcional, sin espacios)" value="${esc(nombreTrabajo || '')}"><button class="boton" id="extraer">Extraer datos pesados</button></div>
       <div id="trabajo"></div>
     </div>
     <div id="visor"></div>`;
   enlazarBotones();
-  $('extraer').onclick = () => extraer(lat, lon);
-  try {  // si el punto ya tiene un trabajo, se muestra al instante
-    const previo = (await pedir(`/api/trabajos/punto?lat=${lat}&lon=${lon}`)).data;
+  $('extraer').onclick = () => extraer(contorno);
+  try {
+    const previo = (await pedir(`/api/trabajos/punto?lat=${d.centroide.lat}&lon=${d.centroide.lon}`)).data;
     if (previo) { mostrarTrabajo(previo); if (['pendiente', 'en_proceso'].includes(previo.estado)) seguir(previo.clave); }
   } catch (e) { /* sin trabajo previo */ }
 }
 
 function botones(archivos) {
-  return Object.keys(archivos || {}).length ? '<div>' + Object.entries(archivos).map(([k, ruta]) =>
-    `<button class="mini" data-archivo="${esc(ruta)}">${esc(k)}</button>`).join('') + '</div>' : '';
+  return Object.keys(archivos || {}).length ? '<div>' + Object.entries(archivos).map(([k, ruta]) => `<button class="mini" data-archivo="${esc(ruta)}">${esc(k)}</button>`).join('') + '</div>' : '';
 }
 function enlazarBotones() {
   document.querySelectorAll('[data-archivo]').forEach(b => b.onclick = async () => {
@@ -297,70 +378,116 @@ function enlazarBotones() {
   });
 }
 
-async function extraer(lat, lon) {
+/* ================= trabajos (capa 2) ================= */
+let sondeo = null;
+function detenerSondeo() { if (sondeo) { clearInterval(sondeo); sondeo = null; } }
+async function extraer(contorno) {
   $('extraer').disabled = true;
   const nombre = $('nombre').value.trim() || undefined;
   try {
-    const t = (await pedir('/api/trabajos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lat, lon, nombre }) })).data;
+    const t = (await post('/api/trabajos', { contorno, nombre })).data;
     mostrarTrabajo(t); seguir(t.clave); cargarExtraidos();
   } catch (e) { $('extraer').disabled = false; $('trabajo').innerHTML = `<div class="error-caja">${esc(e.message)}</div>`; }
 }
 function seguir(clave) {
-  if (sondeo) clearInterval(sondeo);
+  detenerSondeo();
   if ($('extraer')) $('extraer').disabled = true;
   sondeo = setInterval(async () => {
     try {
       const t = (await pedir('/api/trabajos/' + clave)).data;
       mostrarTrabajo(t);
-      if (!['pendiente', 'en_proceso'].includes(t.estado)) { clearInterval(sondeo); sondeo = null; if ($('extraer')) $('extraer').disabled = false; cargarExtraidos(); }
-    } catch (e) { /* se reintenta en la próxima vuelta */ }
+      if (!['pendiente', 'en_proceso'].includes(t.estado)) { detenerSondeo(); if ($('extraer')) $('extraer').disabled = false; cargarExtraidos(); }
+    } catch (e) { /* se reintenta */ }
   }, 4000);
+}
+async function cancelar(claves) {
+  if (!claves.length) return;
+  try { await post('/api/trabajos/cancelar', { claves }); } catch (e) { alert(e.message); }
+  cargarExtraidos();
 }
 function vacios(x) {
   return (x.vacios_del_proveedor || []).map(s => `<div class="nota">· vacío en la fuente: ${esc(s)}</div>`).join('')
-    + (x.fallos_de_descarga || []).map(s => `<div class="error-caja">falló la descarga: ${esc(s)}</div>`).join('');
+    + ((x.fallos_de_descarga || []).length ? `<div class="${x.estado === 'cancelado' || (x.fallos_de_descarga[0] || '').includes('cancelado') ? 'nota' : 'error-caja'}">${x.fallos_de_descarga.length} bloque(s) sin descargar${(x.fallos_de_descarga[0] || '').includes('cancelado') ? ' (detenido)' : ': ' + esc(x.fallos_de_descarga[0])}</div>` : '');
 }
 function mostrarTrabajo(t) {
   if (!$('trabajo')) return;
+  const enCurso = ['pendiente', 'en_proceso'].includes(t.estado);
   const filas = Object.entries(t.fuentes).map(([f, v]) => `
     <div class="fuente-fila"><div class="cab">${esc(f)} ${chip(v.estado)}</div>
       ${v.motivo ? `<div class="nota">${esc(v.motivo)}</div>` : ''}${vacios(v)}${botones(v.archivos)}
       ${Object.entries(v.productos || {}).map(([p, x]) => `<div class="prod"><div class="cab">${esc(p)} ${chip(x.estado)}</div>${vacios(x)}${botones(x.archivos)}</div>`).join('')}
     </div>`).join('');
   $('trabajo').innerHTML = `
-    <div class="fila" style="margin-top:12px"><b>Trabajo</b><span class="coord">${esc(t.clave)}</span>${chip(t.estado)}</div>
+    <div class="fila" style="margin-top:12px"><b>Trabajo</b><span class="coord">${esc(t.clave)}</span>${chip(t.estado)}
+      ${enCurso ? `<button class="boton peligro" id="b-detener" style="margin-left:auto;padding:7px 12px;font-size:13px">Detener extracción</button>` : ''}</div>
+    ${t.estado === 'cancelado' ? '<div class="aviso">Extracción detenida. Lo descargado queda guardado: pulsa «Extraer datos pesados» para continuar desde ahí.</div>' : ''}
     <p class="nota"><b>listo con vacíos</b>: todo se descargó y los huecos los trae la propia fuente. <b>parcial</b>: algo no se pudo descargar. <b>no disponible</b>: fuente aún sin conectar.</p>
     ${filas}
     <div class="fuente-fila"><div class="cab">aviso ${chip(t.aviso?.estado)}</div><div class="nota">${esc(t.aviso?.nota || '')}</div></div>
     <details><summary>Estado del trabajo en crudo</summary>${crudo(t)}</details>`;
+  if (enCurso) $('b-detener').onclick = () => cancelar([t.clave]);
   enlazarBotones();
 }
 
-/* ---------------- puntos extraídos ---------------- */
+/* ================= puntos extraídos ================= */
+let lista = [];
 async function cargarExtraidos() {
-  let lista = [];
   try { lista = (await pedir('/api/trabajos')).data || []; } catch (e) { $('vista-extraidos').innerHTML = `<div class="error-caja">${esc(e.message)}</div>`; return; }
   $('n-extraidos').textContent = lista.length;
   capaExtraidos.clearLayers();
-  lista.forEach(t => {
-    const icono = L.divIcon({ className: '', html: `<div class="punto-extraido ${esc(t.estado)}"></div>`, iconSize: [14, 14], iconAnchor: [7, 7] });
-    L.marker([t.punto.lat, t.punto.lon], { icon: icono, title: t.nombre }).on('click', () => irA(t)).addTo(capaExtraidos);
+  lista.forEach((t, i) => {
+    const colores = { listo: '#2e7d4f', listo_con_vacios: '#2e7d4f', cancelado: '#868b85' };
+    const color = colores[t.estado] || '#f4b23e';
+    if (t.parcela?.contorno) {
+      L.geoJSON(t.parcela.contorno, { style: { color, weight: 2, fillOpacity: .15 } }).on('click', () => abrirExtraido(i)).addTo(capaExtraidos);
+    }
+    L.marker([t.punto.lat, t.punto.lon], { icon: L.divIcon({ className: '', html: `<div class="punto-extraido ${esc(t.estado)}"></div>`, iconSize: [14, 14], iconAnchor: [7, 7] }), title: t.nombre })
+      .on('click', () => abrirExtraido(i)).addTo(capaExtraidos);
   });
-  $('vista-extraidos').innerHTML = lista.length ? `<p class="nota" style="margin-top:0">Puntos con datos pesados extraídos o en curso. También salen en el mapa como círculos verdes (amarillos si siguen en curso).</p>`
+  const enCurso = lista.filter(t => ['pendiente', 'en_proceso'].includes(t.estado)).length;
+  $('vista-extraidos').innerHTML = lista.length ? `
+    <div class="fila" style="margin-bottom:10px"><span class="nota" style="flex:1">${lista.length} punto(s) · ${enCurso} en curso. Marca los que quieras detener.</span>
+      <button class="boton peligro" id="b-detener-sel" style="padding:7px 12px;font-size:13px" disabled>Detener seleccionados</button></div>`
     + lista.map((t, i) => `
-      <div class="lista-punto" data-i="${i}">
+      <div class="lista-punto">
+        <input type="checkbox" data-sel="${i}" ${['pendiente', 'en_proceso'].includes(t.estado) ? '' : 'disabled'} title="${['pendiente', 'en_proceso'].includes(t.estado) ? 'seleccionar para detener' : 'no está en curso'}">
         <span class="pin ${esc(t.estado)}"></span>
-        <div class="datos"><div class="nom">${esc(t.nombre)}</div><div class="coord">${t.punto.lat}, ${t.punto.lon}</div>
+        <div class="datos" data-abrir="${i}"><div class="nom">${esc(t.nombre)}${t.parcela ? ` <span class="nota">· parcela de ${esc(t.parcela.area_ha)} ha</span>` : ''}</div>
+          <div class="coord">${t.punto.lat}, ${t.punto.lon}</div>
           <div class="nota">${t.terminado ? 'terminado ' + esc(t.terminado.replace('T', ' ').slice(0, 16)) + ' UTC' : 'creado ' + esc((t.creado || '').replace('T', ' ').slice(0, 16)) + ' UTC'}</div></div>
         ${chip(t.estado)}
       </div>`).join('')
     : `<div class="vacio"><img src="marca/tarpu-mark-black.png" alt=""><br>Todavía no hay puntos extraídos.</div>`;
-  document.querySelectorAll('.lista-punto').forEach(el => el.onclick = () => irA(lista[+el.dataset.i]));
+  document.querySelectorAll('[data-abrir]').forEach(el => el.onclick = () => abrirExtraido(+el.dataset.abrir));
+  const sel = () => [...document.querySelectorAll('[data-sel]:checked')].map(c => lista[+c.dataset.sel].clave);
+  document.querySelectorAll('[data-sel]').forEach(c => c.onchange = () => { $('b-detener-sel').disabled = !sel().length; });
+  if ($('b-detener-sel')) $('b-detener-sel').onclick = () => cancelar(sel());
 }
-function irA(t) { mapa.setView([t.punto.lat, t.punto.lon], Math.max(mapa.getZoom(), 14)); seleccionar(t.punto.lat, t.punto.lon); }
+function abrirExtraido(i) {
+  const t = lista[i];
+  detenerSondeo();
+  if (t.parcela?.contorno) {
+    const anillo = t.parcela.contorno.coordinates[0];
+    Object.assign(dib, { vertices: anillo.slice(0, -1).map(([lo, la]) => [la, lo]), tentativo: null, cerrada: true, cursor: null });
+    redibujar();
+    mapa.fitBounds(L.polygon(dib.vertices).getBounds(), { maxZoom: 18, padding: [40, 40] });
+    analizarParcela(t.parcela.contorno, t.nombre);
+  } else {
+    // trabajo antiguo de un solo punto: se muestra como una parcela mínima alrededor del punto (≈ 30 m)
+    const d = 0.00015, { lat, lon } = t.punto;
+    const contorno = { type: 'Polygon', coordinates: [[[lon - d, lat - d], [lon + d, lat - d], [lon + d, lat + d], [lon - d, lat + d], [lon - d, lat - d]]] };
+    Object.assign(dib, { vertices: contorno.coordinates[0].slice(0, -1).map(([lo, la]) => [la, lo]), tentativo: null, cerrada: true, cursor: null });
+    redibujar();
+    mapa.setView([lat, lon], 17);
+    analizarParcela(contorno, t.nombre);
+  }
+}
 
-cargarSectores().catch(e => $('vista-punto').innerHTML = `<div class="error-caja">No se pudo cargar el mapa de sectores: ${esc(e.message)}</div>`);
+vistaInicial();
+redibujar();
+cargarSectores().catch(e => $('vista-parcela').innerHTML = `<div class="error-caja">No se pudo cargar el mapa de sectores: ${esc(e.message)}</div>`);
 cargarExtraidos();
+setInterval(cargarExtraidos, 15000);
 </script>
 </body>
 </html>

@@ -17,7 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
 from . import __version__, agente, almacen, base, coordenada, catalogo, config, datos_detallados, errores, indicadores, meta, motor, parcelas, procesamiento
-from .esquemas import TrabajoEntrada, ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, Sobre, sobre
+from .esquemas import CancelarEntrada, ContornoEntrada, TrabajoEntrada, ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, Sobre, sobre
 
 @asynccontextmanager
 async def _ciclo(_: FastAPI):
@@ -75,7 +75,13 @@ def get_base_sectores_png():
 def post_trabajo(entrada: TrabajoEntrada):
     """Lanza (o reutiliza) la extracción de datos pesados para un punto (DT-22)."""
     _solo_en_vivo()
-    return sobre(coordenada.iniciar(entrada.lat, entrada.lon, entrada.nombre))
+    return sobre(coordenada.iniciar(entrada.lat, entrada.lon, entrada.nombre, entrada.contorno))
+
+
+@app.post("/api/trabajos/cancelar", response_model=Sobre, tags=["capa 2 por coordenada"])
+def post_cancelar_trabajos(entrada: CancelarEntrada):
+    """Detiene uno o varios trabajos. Lo descargado queda guardado; volver a pedirlos continúa desde ahí."""
+    return sobre(coordenada.cancelar(entrada.claves))
 
 
 @app.get("/api/trabajos", response_model=Sobre, tags=["capa 2 por coordenada"])
@@ -99,6 +105,13 @@ def get_trabajo(clave: str):
 def get_archivo(ruta: str):
     """Contenido en crudo de un .csv o .json del almacén (original, normalizado o procedencia)."""
     return sobre(coordenada.archivo(ruta))
+
+
+@app.post("/api/base/parcela", response_model=Sobre, tags=["base de Arequipa"])
+def post_base_parcela(entrada: ContornoEntrada):
+    """Capa 1 en todo el espacio de una parcela dibujada: relieve en cada píxel de 30 m, suelo en los píxeles que la tocan."""
+    r = base.en_parcela(entrada.contorno)
+    return sobre(r, procedencia=base.procedencia(r), avisos=r.get("avisos", []) + ([r["motivo"]] if r.get("motivo") else []))
 
 
 @app.get("/api/base", response_model=Sobre, tags=["base de Arequipa"])

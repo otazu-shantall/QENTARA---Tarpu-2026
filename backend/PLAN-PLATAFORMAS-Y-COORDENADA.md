@@ -65,6 +65,22 @@ Probado el 15/11/2026:
 
 Medido ese día: Esri tiene imagen real hasta el zoom 17 en el campo (Majes, Chivay, Camaná, La Joya; ≈ 1 m por píxel). Desde el 18 devuelve «Map data not yet available». Solo la ciudad de Arequipa llega al 19. Por eso el mapa amplía la imagen del zoom 17 y lo indica con «ampliado». Hay una capa aparte con la imagen real de la ciudad hasta el 19.
 
+**Versión 3 de la pantalla (15/11/2026):**
+
+- **Imagen más nítida:** Esri World Imagery «Clarity» como mapa principal. En el mismo zoom 17 se ve mucho más nítida que la estándar (comparado en Majes) y también llega hasta el 17. Más allá se amplía.
+- **Dibujo de la parcela por esquinas:** se toca una esquina, «Guardar punto» y una línea punteada sigue al cursor hasta la siguiente. Hay «Deshacer», «Cerrar parcela» y «Empezar de nuevo», con Enter y Retroceso como atajos.
+- **Al cerrar la parcela:** `POST /api/base/parcela` lee la capa 1 en todo su espacio:
+  - relieve en cada píxel de 30 m dentro;
+  - suelo en los píxeles de 250 m que la tocan;
+  - GAEZ y POWER en la celda que la contiene, mayor que la parcela.
+
+  Prueba en Majes, 1,1 ha: 12 píxeles de NASADEM, 1 de suelo y 0,18 píxeles de MODIS, en 0,8 s.
+- **Datos pesados:** el trabajo guarda el contorno y extrae en el centroide.
+- **Detener extracciones:** «Detener» en cada trabajo y «Detener seleccionados» en «Puntos extraídos» (`POST /api/trabajos/cancelar`). La extracción para antes del siguiente bloque de ORNL (medido: 2,2 s). Lo bajado queda guardado y volver a pedirla continúa desde ahí.
+- **Límites:**
+  - Detener solo funciona en el mismo proceso de la API que lanzó el trabajo.
+  - Si la API se reinicia a mitad de una extracción, el trabajo queda «en proceso». Se detiene y se vuelve a pedir, y continúa con lo ya bajado.
+
 ## 3. Plataformas (propuesta, a confirmar)
 
 Un solo proveedor, **Google Cloud**, porque la capa 2 ya se decidió allí (DT-22) y así todo queda en un proyecto.

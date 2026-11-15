@@ -242,3 +242,136 @@ def leer(lat: float, lon: float) -> dict:
     return {'estado': 'listo', 'punto': {'lat': lat, 'lon': lon}, 'relieve': relieve,
             'sector': sector(relieve.get('altitud_m')), 'suelo': soilgrids(lat, lon), 'aptitud': gaez(lat, lon),
             'clima': clima, 'avisos': avisos}
+
+
+# ------------------------------------------------------------------ parcela (contorno dibujado)
+@lru_cache(maxsize=2)
+def _tesela_nasadem(nombre: str):
+    from array import array
+    import sys
+    with zipfile.ZipFile(BASE / 'nasadem' / f'NASADEM_HGT_{nombre}.zip') as z:
+        alturas = array('h', z.read(f'{nombre}.hgt'))
+    if sys.byteorder == 'little':
+        alturas.byteswap()
+    return alturas
+
+
+def _relieve_parcela(poligono) -> dict:
+    """Altitud y pendiente (Horn) de cada píxel de 1'' de NASADEM cuyo centro cae dentro de la parcela."""
+    from shapely.geometry import Point
+    from shapely.prepared import prep
+    oeste, sur, este, norte = poligono.bounds
+    t_sur, t_oeste = math.floor(sur), math.floor(oeste)
+    if math.floor(norte) != t_sur or math.floor(este) != t_oeste:
+        return {'estado': 'sin_dato', 'motivo': 'la parcela cruza el borde de una tesela de NASADEM (caso no implementado todavía)'}
+    nombre = f"{'s' if t_sur < 0 else 'n'}{abs(t_sur):02d}{'w' if t_oeste < 0 else 'e'}{abs(t_oeste):03d}"
+    if not (BASE / 'nasadem' / f'NASADEM_HGT_{nombre}.zip').exists():
+        return {'estado': 'sin_dato', 'motivo': f'no está la tesela NASADEM {nombre}'}
+    h, n, dentro = _tesela_nasadem(nombre), 3601, prep(poligono)
+    f0, f1 = round((t_sur + 1 - norte) * 3600), round((t_sur + 1 - sur) * 3600)
+    c0, c1 = round((oeste - t_oeste) * 3600), round((este - t_oeste) * 3600)
+    c = poligono.centroid
+    dx = _GEOD.inv(c.x, c.y, c.x + 1 / 3600, c.y)[2]
+    dy = _GEOD.inv(c.x, c.y, c.x, c.y + 1 / 3600)[2]
+    alt, pend = [], []
+    for fila in range(max(f0, 1), min(f1, n - 2) + 1):
+        for col in range(max(c0, 1), min(c1, n - 2) + 1):
+            if not dentro.contains(Point(t_oeste + col / 3600, t_sur + 1 - fila / 3600)):
+                continue
+            v = [h[(fila + i) * n + col + j] for i in (-1, 0, 1) for j in (-1, 0, 1)]
+            if -32768 in v:
+                continue
+            a, b, cc, d, e_, ff, g, hh, i9 = v
+            dzdx = ((cc + 2 * ff + i9) - (a + 2 * d + g)) / (8 * dx)
+            dzdy = ((g + 2 * hh + i9) - (a + 2 * b + cc)) / (8 * dy)
+            alt.append(e_)
+            pend.append(100 * math.hypot(dzdx, dzdy))
+    if not alt:
+        return {'estado': 'sin_dato', 'motivo': "ningún centro de píxel de NASADEM (1'' ≈ 30 m) cae dentro: la parcela es más pequeña que un píxel"}
+    pend_ord = sorted(pend)
+    clases: dict[str, int] = {}
+    for p in pend:
+        k = next(nc for lim, nc in CLASES_PENDIENTE if p < lim)
+        clases[k] = clases.get(k, 0) + 1
+    return {'estado': 'listo', 'pixeles': len(alt), 'altitud_m': {'min': min(alt), 'media': round(sum(alt) / len(alt), 1), 'max': max(alt)},
+            'pendiente_pct': {'min': round(pend_ord[0], 1), 'mediana': round(pend_ord[len(pend_ord) // 2], 1), 'max': round(pend_ord[-1], 1)},
+            'clases_pendiente_pixeles': clases,
+            'procedencia': {'fuente': 'NASADEM_HGT v001 (LP DAAC)', 'tesela': nombre, 'escala': "1'' (≈ 30 m)",
+                            'metodo': "píxeles cuyo centro cae dentro del contorno; pendiente de Horn (1981) en 3 x 3; clases FAO (2006), cuadro 7"}}
+
+
+def _pixeles_raster(ruta: Path, poligono) -> list[tuple[int, int]]:
+    """Píxeles de un GeoTIFF (EPSG:4326) que tocan la parcela: los que contienen algún punto de una malla fina."""
+    from shapely.geometry import Point
+    from shapely.prepared import prep
+    c = _cabecera(str(ruta))
+    sx, sy = c['escala'][:2]
+    x0, y0 = c['tiepoint'][3:5]
+    oeste, sur, este, norte = poligono.bounds
+    paso = min(sx, sy) / 4
+    dentro, vistos = prep(poligono), set()
+    lat = norte
+    while lat >= sur:
+        lon = oeste
+        while lon <= este:
+            if dentro.contains(Point(lon, lat)):
+                vistos.add((math.floor((y0 - lat) / sy), math.floor((lon - x0) / sx)))
+            lon += paso
+        lat -= paso
+    if not vistos:  # parcela más pequeña que la malla: el píxel del centroide
+        cen = poligono.centroid
+        vistos.add((math.floor((y0 - cen.y) / sy), math.floor((cen.x - x0) / sx)))
+    return sorted(vistos)
+
+
+def _suelo_parcela(poligono) -> dict:
+    ref = BASE / 'soilgrids' / 'phh2o_0-5cm_mean.tif'
+    if not ref.exists():
+        return {'estado': 'sin_dato', 'motivo': 'no está SoilGrids'}
+    pix = _pixeles_raster(ref, poligono)
+    c = _cabecera(str(ref))
+    sx, sy = c['escala'][:2]
+    x0, y0 = c['tiepoint'][3:5]
+    centros = [(y0 - (f + .5) * sy, x0 + (k + .5) * sx) for f, k in pix]
+    unidades = _unidades_soilgrids()
+    capas = {}
+    for ruta in sorted((BASE / 'soilgrids').glob('*_mean.tif')):
+        prop, prof, _ = ruta.stem.split('_')
+        factor = unidades.get(prop, {}).get('d_factor')
+        valores = [pixel(ruta, la, lo)['valor'] for la, lo in centros]
+        convertidos = [round(v / factor, 3) for v in valores if v is not None and factor]
+        capas[ruta.stem] = {'propiedad': prop, 'profundidad': prof, 'unidad': unidades.get(prop, {}).get('target_units'),
+                            'valores_por_pixel': convertidos, 'crudos': valores,
+                            'media': round(sum(convertidos) / len(convertidos), 3) if convertidos else None}
+    m = _manifiesto().get('soilgrids', {})
+    return {'estado': 'listo', 'pixeles': len(pix), 'capas': capas,
+            'procedencia': {'fuente': m.get('fuente'), 'escala': m.get('resolucion'), 'nivel': m.get('nivel'),
+                            'metodo': 'píxeles del mapa regional que tocan la parcela (si no toca ninguno, el del centroide)',
+                            'aviso': m.get('diferencia_con_el_punto')}}
+
+
+def leer_parcela(contorno: dict) -> dict:
+    """Capa 1 para un contorno (GeoJSON Polygon, [lon, lat]): todo el espacio de la parcela.
+
+    Relieve: cada píxel de 30 m dentro. Suelo: los píxeles de 250 m que la tocan. Clima (POWER, ≈ 55 km), aptitud (GAEZ,
+    ≈ 9 km), sector y cultivos: la celda o el valor del centroide, que cubre la parcela entera (las celdas son mayores)."""
+    from shapely.geometry import shape
+    pol = shape(contorno)
+    cen = pol.centroid
+    base = leer(round(cen.y, 6), round(cen.x, 6))
+    if base.get('estado') != 'listo':
+        return base
+    rel = _relieve_parcela(pol)
+    sec = sector(rel['altitud_m']['media']) if rel.get('estado') == 'listo' else base['sector']
+    avisos = list(base['avisos'])
+    if rel.get('estado') == 'listo':
+        a = rel['altitud_m']
+        if a['max'] != a['min']:
+            avisos.append(f"La parcela va de {a['min']} a {a['max']} m (NASADEM); el sector se asigna con la altitud media.")
+    return {'estado': 'listo', 'centroide': {'lat': round(cen.y, 6), 'lon': round(cen.x, 6)},
+            'relieve': rel, 'relieve_centroide': base['relieve'], 'sector': sec, 'suelo': _suelo_parcela(pol),
+            'aptitud': base['aptitud'], 'clima': base['clima'], 'avisos': avisos,
+            'cobertura': {'nasadem': 'píxeles de 30 m cuyo centro cae dentro de la parcela',
+                          'soilgrids': 'píxeles de 250 m que tocan la parcela',
+                          'gaez': 'celda de ≈ 9 km que contiene el centroide',
+                          'power': 'celda de ≈ 55 x 67 km que contiene el centroide'}}

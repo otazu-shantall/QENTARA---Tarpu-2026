@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from tarpu_datos.base import leer as _leer
 
-from . import errores
+from . import errores, geometria
 
 
 def en_punto(lat: float, lon: float) -> dict:
@@ -35,3 +35,9 @@ def mapa_sectores() -> dict:
 def ruta_mapa_sectores():
     from tarpu_datos.base import mapa
     return mapa.ruta_png()
+
+
+def en_parcela(contorno: dict) -> dict:
+    """Capa 1 en todo el espacio de una parcela dibujada (contorno GeoJSON validado por geometria)."""
+    medidas = geometria.medir(contorno)
+    return {**_leer.leer_parcela(contorno), "geometria": medidas}
