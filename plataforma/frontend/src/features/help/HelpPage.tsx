@@ -6,6 +6,7 @@ import { useNavigate, useSearchParams, useLocation } from 'react-router'
 import { useWorkspace } from '../../app/WorkspaceContext'
 import { Icon } from '../../components/ui/Icon'
 import { AGENT } from '../../lib/agent'
+import { TOURS } from './Tour'
 
 export const SOURCES: { id: string; name: string; who: string; use: string; scale: string; url: string }[] = [
   { id: 'power', name: 'NASA POWER', who: 'NASA Langley Research Center', use: 'Clima de cada día desde 2015: temperatura (media, mínima y máxima), lluvia, humedad del aire y radiación solar. Alimenta «Mi campo», el Historial y la comparación de cultivos.', scale: 'Celda de 0,5° × 0,625° (unos 55 × 67 km)', url: 'https://power.larc.nasa.gov/' },
@@ -76,11 +77,30 @@ export function HelpPage() {
               className="button button-green extract-button"
               onClick={() => {
                 navigate('/app')
-                startTour()
+                startTour('campo')
               }}
             >
               <Icon name="compass" size={19} /> Empezar el recorrido
             </button>
+          </div>
+          <div className="card">
+            <h3>Recorrido de cada sección</h3>
+            <p>Cada sección muestra su recorrido la primera vez que entras. Aquí puedes repetir cualquiera.</p>
+            <div className="tour-list">
+              {Object.entries(TOURS)
+                .filter(([key]) => key !== 'asistente')
+                .map(([key, tour]) => (
+                  <button
+                    key={key}
+                    onClick={() => {
+                      navigate(tour.path)
+                      setTimeout(() => startTour(key), 700)
+                    }}
+                  >
+                    {tour.name}
+                  </button>
+                ))}
+            </div>
           </div>
           <div className="how-grid">
             {HOW.map((step) => (

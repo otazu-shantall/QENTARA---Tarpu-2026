@@ -24,24 +24,32 @@ export function WorkspaceLayout() {
     setTheme,
     assistantOpen,
     setAssistantOpen,
-    startTour,
+    startTourOnce,
   } = useWorkspace()
   const [account, setAccount] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
   const name = sessionStorage.getItem('tarpu.prototype.session')
-  // La primera vez que se entra a «Mi campo» se abre el recorrido guiado.
+  // La primera vez que se entra a cada sección se abre su recorrido guiado; igual con el asistente.
+  const section = location.pathname.includes('nueva')
+    ? 'dibujo'
+    : location.pathname.includes('historial')
+      ? 'historial'
+      : location.pathname.includes('rotacion')
+        ? 'rotacion'
+        : location.pathname.includes('informes')
+          ? 'informes'
+          : location.pathname.includes('estudio')
+            ? 'estudio'
+            : location.pathname.includes('ayuda')
+              ? 'ayuda'
+              : 'campo'
   useEffect(() => {
-    if (!name || location.pathname !== '/app') return
-    try {
-      if (localStorage.getItem('tarpu.tour.visto')) return
-    } catch {
-      return
-    }
-    const timer = setTimeout(startTour, 900)
+    if (!name) return
+    const timer = setTimeout(() => startTourOnce(assistantOpen ? 'asistente' : section), 900)
     return () => clearTimeout(timer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [section, assistantOpen])
   if (!name) return <Navigate to="/acceso" replace />
   const current = location.pathname.includes('nueva')
     ? 'Delimitar parcela'

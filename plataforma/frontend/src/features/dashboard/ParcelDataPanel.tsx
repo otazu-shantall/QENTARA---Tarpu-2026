@@ -186,16 +186,67 @@ function Finding({
         </button>
       </article>
       {open && (
-        <Dialog title={title} onClose={() => setOpen(false)} className="about-dialog">
-          {info.what.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-          <p className="about-source">
-            <Icon name="shield" size={16} /> Fuente: {info.source}.{' '}
-            <Link to={`/app/ayuda?tab=fuentes#${info.anchor}`} onClick={() => setOpen(false)}>
-              Ver en Ayuda y fuentes
-            </Link>
-          </p>
+        <Dialog title={title} onClose={() => setOpen(false)} className="about-dialog wide-dialog">
+          <div className="about-grid">
+            <section className="about-value">
+              <span className="about-label">Tu dato</span>
+              <strong className="finding-value">
+                {value}
+                {unit && <small>{unit}</small>}
+              </strong>
+              <div className="finding-text">{children}</div>
+            </section>
+            <section className="about-facts">
+              <span className="about-label">De dónde sale</span>
+              <dl>
+                <div>
+                  <dt>Fuente</dt>
+                  <dd>{info.source}</dd>
+                </div>
+                <div>
+                  <dt>Escala</dt>
+                  <dd>{info.scale}</dd>
+                </div>
+                <div>
+                  <dt>Cada cuánto</dt>
+                  <dd>{info.frequency}</dd>
+                </div>
+              </dl>
+              <Link to={`/app/ayuda?tab=fuentes#${info.anchor}`} onClick={() => setOpen(false)} className="text-link">
+                Ver la fuente completa <Icon name="upRight" size={15} />
+              </Link>
+            </section>
+          </div>
+          <div className="about-columns">
+            <section>
+              <h3>
+                <Icon name="help" size={18} /> Qué es
+              </h3>
+              {info.what.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </section>
+            <section>
+              <h3>
+                <Icon name="eye" size={18} /> Cómo leerlo
+              </h3>
+              <ul>
+                {info.read.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </section>
+            <section className="about-limits">
+              <h3>
+                <Icon name="shield" size={18} /> Lo que no dice
+              </h3>
+              <ul>
+                {info.limits.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </section>
+          </div>
           <div className="about-actions">
             <button
               className="button button-green"

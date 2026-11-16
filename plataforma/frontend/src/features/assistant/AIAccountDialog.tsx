@@ -1,108 +1,118 @@
 // Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md.
-import { useState } from 'react'
+// 15/11/2026 (Claude Code): muestra el estado REAL del conector de IA del servidor (GET /api/ia/estado) y el
+// reparto del trabajo: TARPU calcula y redacta; la IA solo da voz natural. Las claves viven en el servidor.
+import { useEffect, useState } from 'react'
 import { Dialog } from '../../components/ui/Dialog'
 import { Icon } from '../../components/ui/Icon'
+import { aiStatus } from '../../services/api'
+import type { AiStatus } from '../../services/api'
 import { AGENT } from '../../lib/agent'
+
 export const providers = [
-  {
-    id: 'openai',
-    name: 'OpenAI / ChatGPT',
-    short: 'O',
-    description: 'Voz en tiempo real mediante su API; acceso y créditos deben verificarse.',
-    url: 'https://help.openai.com/en/articles/9039756-managing-billing-for-chatgpt-and-the-api-platform',
-  },
-  {
-    id: 'gemini',
-    name: 'Google / Gemini',
-    short: 'G',
-    description:
-      'Conversación mediante Live API; requiere acceso autorizado y sus límites propios.',
-    url: 'https://ai.google.dev/gemini-api/docs/billing',
-  },
-  {
-    id: 'claude',
-    name: 'Anthropic / Claude',
-    short: 'A',
-    description:
-      'Asistente de texto mediante API; la capa de audio necesita una integración adicional.',
-    url: 'https://support.claude.com/en/articles/9876003-why-is-claude-api-usage-billed-separately-from-my-paid-claude-plan',
-  },
+  { id: 'claude', name: 'Anthropic · Claude', short: 'A' },
+  { id: 'openai', name: 'OpenAI · ChatGPT', short: 'O' },
+  { id: 'gemini', name: 'Google · Gemini', short: 'G' },
 ]
+const STATE: Record<string, { label: string; tone: string }> = {
+  conectado: { label: 'Conectado', tone: 'on' },
+  sin_clave: { label: 'Falta su clave en el servidor', tone: 'off' },
+  sin_sdk: { label: 'Falta instalar su paquete', tone: 'off' },
+  previsto: { label: 'Previsto, aún sin programar', tone: 'later' },
+}
+
 export function AIAccountDialog({ onClose }: { onClose: () => void }) {
-  const [selected, setSelected] = useState(
-      () => localStorage.getItem('tarpu.prototype.ai-provider') ?? 'openai',
-    ),
-    [saved, setSaved] = useState(false)
+  const [status, setStatus] = useState<AiStatus | null>(null)
+  const [error, setError] = useState('')
+  useEffect(() => {
+    aiStatus()
+      .then(setStatus)
+      .catch((e: Error) => setError(e.message))
+  }, [])
   return (
-    <Dialog title="Mi proveedor de IA" onClose={onClose} className="ai-dialog">
-      <div className="ai-now">
+    <Dialog title="Mi proveedor de IA" onClose={onClose} className="ai-dialog wide-dialog">
+      <div className={`ai-now ${status?.activo ? 'on' : ''}`}>
         <span className="how-icon">
-          <Icon name="send" size={22} />
+          <Icon name={status?.activo ? 'volume' : 'shield'} size={22} />
         </span>
         <div>
-          <strong>Hoy, {AGENT} funciona sin proveedor</strong>
+          <strong>
+            {status === null && !error
+              ? 'Comprobando el servidor…'
+              : status?.activo
+                ? `${AGENT} tiene voz natural con IA`
+                : `${AGENT} funciona sin proveedor de IA`}
+          </strong>
           <p>
-            Responde con explicaciones preparadas a partir de tus datos y sus fuentes. No usa un
-            modelo de IA ni consume ninguna cuenta.
+            {status?.activo
+              ? `El servidor tiene conectado un proveedor (${status.modelo}). Solo se usa para decir las respuestas con naturalidad.`
+              : 'Las respuestas las prepara TARPU con tus datos y sus fuentes, y se leen con la voz del navegador.'}
           </p>
         </div>
       </div>
-      <h3>Más adelante: conecta el modelo que prefieras</h3>
-      <p>
-        Cuando TARPU conecte un modelo de IA, podrás elegir con cuál conversar. Deja aquí tu
-        preferencia; tu cuenta de TARPU y la del proveedor son independientes.
+      {error && <p className="form-error">{error}</p>}
+
+      <h3>Quién hace qué</h3>
+      <div className="ai-split">
+        <section>
+          <span className="ai-split-title">
+            <Icon name="shield" size={17} /> Lo hace TARPU
+          </span>
+          <ul>
+            {(status?.reparto.tarpu ?? ['Leer los datos', 'Comparar cultivos', 'Redactar cada respuesta con su fuente']).map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
+        </section>
+        <section>
+          <span className="ai-split-title">
+            <Icon name="volume" size={17} /> Solo lo hace la IA
+          </span>
+          <ul>
+            {(status?.reparto.ia ?? ['Decir la respuesta con naturalidad']).map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
+        </section>
+      </div>
+      <p className="small-note">
+        La IA recibe la respuesta ya hecha por TARPU y solo la reescribe para escucharla. No puede añadir datos,
+        cifras ni recomendaciones.
       </p>
-      <div className="provider-options" role="group" aria-label="Proveedor de IA">
-        {providers.map((p) => (
-          <button
-            key={p.id}
-            aria-pressed={selected === p.id}
-            onClick={() => {
-              setSelected(p.id)
-              setSaved(false)
-            }}
-          >
-            <span className={`provider-mark ${p.id}`}>{p.short}</span>
-            <span>
-              <strong>{p.name}</strong>
-              <small>{p.description}</small>
-            </span>
-            <Icon name={selected === p.id ? 'check' : 'plus'} size={18} />
-          </button>
-        ))}
-      </div>
-      <div className="account-state">
-        <span className="status-pill neutral">Cuenta sin vincular</span>
-        <ul>
-          <li>Todavía no se vincula ninguna cuenta ni se cobra nada.</li>
-          <li>Aquí no se guardan claves ni contraseñas, solo tu preferencia.</li>
-          <li>Una suscripción al chat de un proveedor no equivale a su API: tienen condiciones propias.</li>
-        </ul>
-      </div>
-      <a
-        className="text-link"
-        href={providers.find((p) => p.id === selected)?.url}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Consultar condiciones del proveedor
-        <Icon name="external" size={16} />
-      </a>
-      <button
-        className="button button-green"
-        onClick={() => {
-          localStorage.setItem('tarpu.prototype.ai-provider', selected)
-          setSaved(true)
-        }}
-      >
-        Guardar preferencia
-        <Icon name="check" size={17} />
+
+      <h3>Proveedores</h3>
+      <ul className="ai-providers">
+        {providers.map((p) => {
+          const real = status?.proveedores.find((x) => x.id === p.id)
+          const state = STATE[real?.estado ?? 'previsto']
+          return (
+            <li key={p.id} className={`ai-provider tone-${state.tone}`}>
+              <span className={`provider-mark ${p.id}`}>{p.short}</span>
+              <span>
+                <strong>{p.name}</strong>
+                <small>{real?.motivo ?? 'Listo para dar voz a las respuestas.'}</small>
+              </span>
+              <span className="ai-provider-state">{state.label}</span>
+            </li>
+          )
+        })}
+      </ul>
+
+      <h3>Cómo se conecta</h3>
+      <ol className="ai-steps">
+        <li>
+          La clave del proveedor se guarda <strong>solo en el servidor</strong> de TARPU, como variable de entorno
+          (por ejemplo <code>ANTHROPIC_API_KEY</code> en <code>infra/.env</code>).
+        </li>
+        <li>Se reinicia el servidor con <code>npm start</code>.</li>
+        <li>Esta ventana mostrará «Conectado» y el botón «Escuchar» usará la voz natural.</li>
+      </ol>
+      <p className="small-note">
+        Nunca se escribe una clave en esta página ni viaja al navegador. Una suscripción al chat de un proveedor no
+        equivale a su API: tienen condiciones y costos propios.
+      </p>
+      <button className="button button-green" onClick={onClose}>
+        Entendido <Icon name="check" size={17} />
       </button>
-      {saved && (
-        <p role="status">
-          Preferencia guardada. La cuenta continúa sin vincular; no se realizó ningún cobro.
-        </p>
-      )}
     </Dialog>
   )
 }

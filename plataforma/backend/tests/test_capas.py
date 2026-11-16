@@ -9,9 +9,9 @@ from pathlib import Path
 
 PAQUETE = Path(__file__).parent.parent / "tarpu_api"
 CAPA = {
-    "config": 1, "almacen": 1, "catalogo": 1, "conectores": 1, "errores": 1,
+    "config": 1, "almacen": 1, "lectura": 1, "catalogo": 1, "conectores": 1, "errores": 1,
     "parcelas": 2, "geometria": 2, "base": 2, "ingesta": 2, "indicadores": 2, "datos_detallados": 2,
-    "motor": 3, "agente": 3,
+    "motor": 3, "agente": 3, "ia": 3,
     "main": 4, "esquemas": 4, "coordenada": 4, "meta": 4, "procesamiento": 4, "exportar": 4,
 }
 

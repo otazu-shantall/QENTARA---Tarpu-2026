@@ -41,7 +41,16 @@ try {
   await page.locator('.tour-spot').waitFor()
   await tour.getByRole('button', { name: 'Salir del recorrido' }).click()
   await tour.waitFor({ state: 'hidden' })
-  assert.equal(await page.evaluate(() => localStorage.getItem('tarpu.tour.visto')), '1')
+  assert.equal(await page.evaluate(() => localStorage.getItem('tarpu.tour.campo')), '1')
+  // Cada sección abre su propio recorrido la primera vez: se comprueba el de Historial y se marcan los demás como vistos.
+  await page.getByRole('link', { name: 'Historial', exact: false }).first().click()
+  await tour.getByText('Historial · paso 1 de', { exact: false }).waitFor({ timeout: 60000 })
+  await tour.getByRole('button', { name: 'Salir del recorrido' }).click()
+  await page.evaluate(() => {
+    for (const key of ['rotacion', 'informes', 'estudio', 'ayuda', 'asistente', 'dibujo'])
+      localStorage.setItem(`tarpu.tour.${key}`, '1')
+  })
+  await page.goto(base + '#/app')
 
   // 3. Lugar de referencia con datos reales del servidor (sin parcelas de ejemplo)
   const options = await page.getByLabel('Parcela activa').locator('option').allTextContents()
@@ -132,7 +141,10 @@ try {
       [...document.querySelectorAll('button')].some((b) => b.textContent.includes('Extraer datos completos') && !b.disabled),
   )
   if (!(await page.locator('.extraction').count()))
-    await page.getByRole('button', { name: 'Extraer datos completos' }).click()
+    await page
+      .getByRole('button', { name: 'Extraer datos completos' })
+      .click({ timeout: 5000 })
+      .catch(() => undefined) // el servidor ya tenía la extracción y la lista apareció sola
   await page.locator('.step-done').filter({ hasText: 'Altitud y pendiente' }).waitFor({ timeout: 60000 })
   await page.getByRole('heading', { name: 'Lo que encontramos' }).waitFor()
   assert.match(await finding('Altitud y zona').innerText(), /\d/)

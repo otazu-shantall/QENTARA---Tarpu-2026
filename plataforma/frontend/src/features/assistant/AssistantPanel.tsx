@@ -1,16 +1,26 @@
 // Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md.
+// 15/11/2026 (Claude Code): interfaz rehecha (burbujas, indicador de «escribiendo», sugerencias) y voz natural:
+// TARPU redacta la respuesta; si el servidor tiene un proveedor de IA conectado, la IA solo la reescribe para decirla.
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useWorkspace } from '../../app/WorkspaceContext'
 import { assistantService } from '../../services/local'
+import { aiStatus, naturalize } from '../../services/api'
 import { VoiceRoom } from './VoiceRoom'
 import { useBrowserVoice } from './useBrowserVoice'
 import { Icon } from '../../components/ui/Icon'
 import { AGENT } from '../../lib/agent'
-type Message = { id: string; role: 'user' | 'assistant'; text: string; evidence?: string | null }
+
+type Message = { id: string; role: 'user' | 'assistant'; text: string; evidence?: string | null; question?: string }
+const SUGGESTIONS = [
+  '¿Qué es el pH del suelo?',
+  '¿Qué significa el verdor?',
+  '¿Cómo comparo cultivos para rotar?',
+  '¿Esto es un pronóstico?',
+]
+
 export function AssistantPanel() {
-  const { parcel, evidence, setAssistantOpen, assistantQuestion, clearAssistantQuestion } =
-    useWorkspace()
+  const { parcel, evidence, setAssistantOpen, assistantQuestion, clearAssistantQuestion } = useWorkspace()
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
@@ -22,27 +32,24 @@ export function AssistantPanel() {
   const [input, setInput] = useState('')
   const [pending, setPending] = useState(false)
   const [error, setError] = useState('')
+  const [ai, setAi] = useState<boolean | null>(null)
+  const [speaking, setSpeaking] = useState<string | null>(null)
   const controller = useRef<AbortController | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const end = useRef<HTMLDivElement>(null)
   const voice = useBrowserVoice(() => {})
-  const current = pending ? 'thinking' : voice.state
-  const labels = {
-    idle: 'Listo para conversar',
-    listening: 'Escuchando…',
-    thinking: 'Preparando respuesta…',
-    speaking: 'Hablando…',
-  }
+
   useEffect(() => {
     inputRef.current?.focus()
+    aiStatus()
+      .then((status) => setAi(status.activo !== null))
+      .catch(() => setAi(false))
     return () => controller.current?.abort()
   }, [])
   useEffect(() => {
     end.current?.scrollIntoView({
       block: 'nearest',
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ? 'instant'
-        : 'smooth',
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
     })
   }, [messages, pending])
   useEffect(() => {
@@ -52,7 +59,8 @@ export function AssistantPanel() {
     window.addEventListener('keydown', close)
     return () => window.removeEventListener('keydown', close)
   }, [setAssistantOpen, voiceOpen])
-  async function send(text: string, spoken = false) {
+
+  async function send(text: string) {
     if (!text.trim() || pending) return
     voice.stop()
     setInput('')
@@ -64,14 +72,29 @@ export function AssistantPanel() {
     try {
       const reply = await assistantService.answer(text, parcel, evidence, request.signal)
       if (request.signal.aborted) return
-      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', ...reply }])
-      if (spoken) voice.speak(reply.text)
+      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: 'assistant', question: text.trim(), ...reply }])
     } catch (err) {
       if (!(err instanceof DOMException && err.name === 'AbortError'))
         setError('No pudimos preparar la respuesta. Inténtalo otra vez.')
     } finally {
       if (!request.signal.aborted) setPending(false)
     }
+  }
+  /** Lee la respuesta en voz alta. Con IA conectada, primero se pide su versión natural; si falla, se lee tal cual. */
+  async function speak(message: Message) {
+    if (speaking === message.id) {
+      voice.stop()
+      setSpeaking(null)
+      return
+    }
+    setSpeaking(message.id)
+    let text = message.text
+    if (ai && message.question)
+      try {
+        text = (await naturalize(message.question, message.text)).texto
+      } catch {}
+    voice.speak(text)
+    setTimeout(() => setSpeaking((current) => (current === message.id ? null : current)), 1200)
   }
   // Si se abrió desde una tarjeta, la pregunta se envía sola.
   useEffect(() => {
@@ -85,89 +108,95 @@ export function AssistantPanel() {
     return () => clearTimeout(timer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [assistantQuestion])
+
   return (
     <>
-      {' '}
-      <aside
-        className="assistant-panel"
-        role="dialog"
-        aria-modal="false"
-        aria-label={`Asistente ${AGENT}`}
-      >
-        <header className="assistant-header">
-          <span className="assistant-logo">
-            <img src="brand/tarpu-mark-white.png" alt="" />
+      <aside className="yq-panel" role="dialog" aria-modal="false" aria-label={`Asistente ${AGENT}`}>
+        <header className="yq-header">
+          <span className="yq-avatar" aria-hidden="true">
+            <i />
+            <i />
+            <i />
           </span>
           <div>
-            <h2>Conversa con {AGENT}</h2>
-            <small>
-              <span className="live-dot" /> {parcel.name}
-            </small>
+            <h2>{AGENT}</h2>
+            <small>Asistente de TARPU · {parcel.name}</small>
           </div>
-          <button
-            className="icon-button"
-            aria-label="Cerrar asistente"
-            onClick={() => setAssistantOpen(false)}
-          >
+          <button className="icon-button" aria-label="Cerrar asistente" onClick={() => setAssistantOpen(false)}>
             <Icon name="close" />
           </button>
         </header>
-        <div className={`voice-stage state-${current}`}>
-          <div className="voice-bubbles" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </div>
-          <span role="status">{labels[current]}</span>
-          <small>Asistente de demostración · respuestas guiadas</small>
+        <div className={`yq-mode ${ai ? 'on' : ''}`}>
+          <Icon name={ai ? 'volume' : 'shield'} size={15} />
+          {ai === null
+            ? 'Comprobando la voz…'
+            : ai
+              ? 'Respuestas de TARPU · voz natural con IA conectada'
+              : 'Respuestas de TARPU con sus fuentes · voz del navegador'}
         </div>
-        <div className="assistant-messages" role="log" aria-label="Conversación">
+        <div className="yq-messages" role="log" aria-label="Conversación">
           {messages.map((message) => (
-            <article key={message.id} className={`message ${message.role}`}>
-              <span>{message.role === 'user' ? 'Tú' : AGENT}</span>
+            <article key={message.id} className={`yq-bubble ${message.role}`}>
               <p>{message.text}</p>
               {message.role === 'assistant' && message.id !== 'welcome' && (
-                <div className="message-actions">
-                  <button onClick={() => voice.speak(message.text)}>
-                    <Icon name="volume" size={16} /> Escuchar
-                  </button>
+                <footer>
                   {message.evidence && (
-                    <Link to="/app/estudio-tecnico" onClick={() => setAssistantOpen(false)}>
-                      Ver evidencia <Icon name="upRight" size={14} />
+                    <Link to="/app/ayuda?tab=fuentes" onClick={() => setAssistantOpen(false)} className="yq-source">
+                      <Icon name="shield" size={13} /> {message.evidence}
                     </Link>
                   )}
-                </div>
+                  <button onClick={() => void speak(message)}>
+                    <Icon name={speaking === message.id ? 'stop' : 'volume'} size={15} />
+                    {speaking === message.id ? 'Detener' : 'Escuchar'}
+                  </button>
+                </footer>
               )}
             </article>
           ))}
           {pending && (
-            <p className="muted" role="status">
-              Consultando la evidencia disponible…
-            </p>
+            <div className="yq-bubble assistant yq-typing" role="status" aria-label={`${AGENT} está preparando la respuesta`}>
+              <i />
+              <i />
+              <i />
+            </div>
           )}
           <div ref={end} />
         </div>
-        <div className="assistant-bottom">
-          <div className="suggestions">
-            {['¿Qué significa la humedad?', '¿Qué puedo sembrar después?'].map((q) => (
-              <button key={q} disabled={pending} onClick={() => void send(q)}>
-                {q}
-                <Icon name="plus" size={14} />
-              </button>
-            ))}
-          </div>
+        <div className="yq-bottom">
+          {messages.length < 3 && (
+            <div className="yq-suggestions">
+              {SUGGESTIONS.map((q) => (
+                <button key={q} disabled={pending} onClick={() => void send(q)}>
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
           {(error || voice.error) && (
             <p className="form-error" role="alert">
               {error || voice.error}
             </p>
           )}
           <form
-            className="assistant-input"
+            className="yq-input"
             onSubmit={(e) => {
               e.preventDefault()
               void send(input)
             }}
           >
+            <button
+              type="button"
+              className="yq-mic"
+              aria-label="Abrir conversación de voz"
+              title="Hablar con voz"
+              disabled={pending}
+              onClick={() => {
+                voice.stop()
+                setVoiceOpen(true)
+              }}
+            >
+              <Icon name="mic" size={19} />
+            </button>
             <input
               ref={inputRef}
               aria-label={`Tu pregunta a ${AGENT}`}
@@ -176,36 +205,12 @@ export function AssistantPanel() {
               maxLength={700}
               onChange={(e) => setInput(e.target.value)}
             />
-            <button disabled={!input.trim() || pending} aria-label="Enviar pregunta">
-              <Icon name="send" size={19} />
+            <button className="yq-send" disabled={!input.trim() || pending} aria-label="Enviar pregunta">
+              <Icon name="send" size={18} />
             </button>
           </form>
-          <div className="voice-controls">
-            <button
-              className="button button-outline"
-              onClick={() => {
-                voice.stop()
-                setVoiceOpen(true)
-              }}
-              disabled={pending}
-            >
-              <Icon name="mic" size={17} /> Abrir conversación de voz
-            </button>
-            <button
-              className="icon-button"
-              aria-label="Detener voz"
-              onClick={() => {
-                voice.stop()
-                controller.current?.abort()
-                setPending(false)
-              }}
-            >
-              <Icon name="stop" size={17} />
-            </button>
-          </div>
-          <p className="voice-note">
-            La voz usa servicios del navegador y puede necesitar conexión. Puedes escribir en
-            cualquier momento.
+          <p className="yq-note">
+            {AGENT} explica; no pronostica ni decide por ti.
           </p>
         </div>
       </aside>

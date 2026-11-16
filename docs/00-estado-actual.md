@@ -6,6 +6,7 @@
 
 ## Resumen
 
+- **Asistente y conector de IA (15/11/2026):** panel del asistente rehecho; conector en el backend donde la IA solo reescribe, para decirlas en voz alta, las respuestas que TARPU ya preparó (`/api/ia/estado`, `/api/ia/naturalizar`; clave solo en el servidor; sin probar aún con una clave real). Ventanas de detalle amplias y recorridos guiados por sección. Detalle en [informe 21](informes/21-asistente-conector-ia.md).
 - **Pulido (15/11/2026):** «Rotación de cultivos» conectada al motor (`POST /api/rotaciones`, sin puntaje), tarjetas con «¿Qué es este dato?», historial por año, Ayuda y fuentes con preguntas frecuentes, tutorial guiado e informe imprimible. Asistente con nombre propuesto «Yachaq» (por confirmar). El catálogo del motor sigue con 4 cultivos. Detalle en [informe 20](informes/20-pulido-interactivo.md).
 - **Mi campo más simple (15/11/2026):** sin textos de relleno; mapa grande con zonas S1–S3 y el recuadro de la base; un botón «Extraer datos completos» con lista de avance (✔ o «Cargando…») y resultados explicados en palabras sencillas, con cita (pendiente FAO, pH frente a FAO EcoCrop de los cultivos de la zona). Detalle en [informe 19](informes/19-mi-campo-simple.md).
 - **Carpeta única (15/11/2026, DT-27):** todo el producto está en `plataforma/` (frontend, backend, Supabase, infraestructura, datos y documentación). `npm start` desde ahí enciende Docker, Supabase, la API, el trabajador y la web. Detalle en [informe 18](informes/18-carpeta-plataforma.md).

@@ -346,3 +346,18 @@ export const rotations = (
     }),
   })
 export const catalog = () => request<{ cultivo: string; nombre_cientifico: string; familia: string }[]>('/api/catalogo')
+
+// ------------------------------------------------------------------ conector de IA (solo voz natural)
+export interface AiStatus {
+  proveedores: { id: string; nombre: string; variable: string; estado: string; motivo: string | null }[]
+  activo: string | null
+  modelo: string | null
+  reparto: { tarpu: string[]; ia: string[] }
+}
+export const aiStatus = () => request<AiStatus>('/api/ia/estado')
+/** La IA reescribe, para decirla en voz alta, una respuesta que TARPU ya preparó. Sin IA devuelve el mismo texto. */
+export const naturalize = (pregunta: string, respuesta: string) =>
+  request<{ texto: string; con_ia: boolean; motivo: string | null }>('/api/ia/naturalizar', {
+    method: 'POST',
+    body: JSON.stringify({ pregunta: pregunta.slice(0, 700), respuesta: respuesta.slice(0, 3000) }),
+  })

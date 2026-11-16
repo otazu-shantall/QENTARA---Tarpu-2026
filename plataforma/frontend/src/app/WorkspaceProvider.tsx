@@ -79,6 +79,7 @@ function useWorkspaceState() {
   const [assistantQuestion, setAssistantQuestion] = useState('')
   // Recorrido guiado: se abre solo la primera vez (se recuerda en este navegador).
   const [tourOpen, setTourOpen] = useState(false)
+  const [tourKey, setTourKey] = useState('campo')
   const [theme, setTheme] = useState<'light' | 'dark'>(() =>
     localStorage.getItem('tarpu.prototype.theme') === 'dark' ? 'dark' : 'light',
   )
@@ -142,11 +143,26 @@ function useWorkspaceState() {
     },
     clearAssistantQuestion: () => setAssistantQuestion(''),
     tourOpen,
-    startTour: () => setTourOpen(true),
+    tourKey,
+    /** Abre el recorrido de una sección (campo, historial, rotacion, informes, estudio, ayuda, asistente). */
+    startTour: (key = 'campo') => {
+      setTourKey(key)
+      setTourOpen(true)
+    },
+    /** Abre el recorrido de la sección solo si todavía no se vio en este navegador. */
+    startTourOnce: (key: string) => {
+      try {
+        if (localStorage.getItem(`tarpu.tour.${key}`)) return
+      } catch {
+        return
+      }
+      setTourKey(key)
+      setTourOpen(true)
+    },
     closeTour: () => {
       setTourOpen(false)
       try {
-        localStorage.setItem('tarpu.tour.visto', '1')
+        localStorage.setItem(`tarpu.tour.${tourKey}`, '1')
       } catch {}
     },
   }

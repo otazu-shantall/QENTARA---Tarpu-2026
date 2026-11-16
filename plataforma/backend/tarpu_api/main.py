@@ -16,8 +16,8 @@ from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
-from . import __version__, agente, almacen, base, coordenada, catalogo, config, datos_detallados, errores, geometria, indicadores, meta, motor, parcelas, procesamiento
-from .esquemas import CancelarEntrada, ContornoEntrada, TrabajoEntrada, ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, RotacionEntrada, Sobre, sobre
+from . import __version__, agente, almacen, base, coordenada, catalogo, config, datos_detallados, errores, geometria, ia, indicadores, meta, motor, parcelas, procesamiento
+from .esquemas import CancelarEntrada, ContornoEntrada, TrabajoEntrada, ContextoEntrada, ContornoNuevo, ParcelaNueva, NaturalizarEntrada, PreguntaEntrada, RotacionEntrada, Sobre, sobre
 
 @asynccontextmanager
 async def _ciclo(_: FastAPI):
@@ -199,6 +199,20 @@ def get_rotaciones(parcela_id: str):
     resultado = motor.comparar(p, parcelas.leer_contexto(parcela_id), ind)
     almacen.guardar(parcela_id, "rotaciones", resultado)
     return sobre(resultado, ind["procedencia"], ind["avisos"] + ["Sin puntaje: compara cada criterio con su rango citado de FAO EcoCrop."])
+
+
+@app.get("/api/ia/estado", response_model=Sobre, tags=["agente"])
+def get_ia_estado():
+    """Qué proveedor de IA está conectado en el servidor y qué hace cada parte. Nunca devuelve claves."""
+    return sobre(ia.estado())
+
+
+@app.post("/api/ia/naturalizar", response_model=Sobre, tags=["agente"])
+def post_ia_naturalizar(entrada: NaturalizarEntrada):
+    """La IA solo reescribe, para decirla en voz alta, una respuesta que TARPU ya preparó. Sin IA, la devuelve igual."""
+    _solo_en_vivo()
+    r = ia.naturalizar(entrada.pregunta, entrada.respuesta)
+    return sobre(r, avisos=[r["motivo"]] if r["motivo"] else [])
 
 
 @app.post("/api/rotaciones", response_model=Sobre, tags=["resultados"])

@@ -59,6 +59,12 @@ class ContextoEntrada(_Estricto):
     prioridades: list[Criterio] = Field(default_factory=list, description="Orden en que el usuario quiere ver los criterios. No son pesos.")
 
 
+class NaturalizarEntrada(_Estricto):
+    """Respuesta ya preparada por TARPU que la IA solo reescribe para decirla en voz alta."""
+    pregunta: Annotated[str, Field(min_length=1, max_length=700)]
+    respuesta: Annotated[str, Field(min_length=1, max_length=3000)]
+
+
 class RotacionEntrada(_Estricto):
     """Comparación de rotaciones en una sola llamada: el lugar (contorno o punto) y lo que declara el usuario."""
     nombre: Annotated[str, Field(min_length=1, max_length=80)] = "mi campo"

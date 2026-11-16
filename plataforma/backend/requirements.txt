@@ -7,6 +7,8 @@ shapely==2.2.0
 pyproj==3.8.0
 # Base de datos (DT-23): Supabase / Postgres
 psycopg[binary]==3.3.9
+# Conector de IA (solo voz natural; tarpu_api/ia.py). Opcional: sin clave, TARPU funciona igual.
+anthropic==2.8.0
 # Pruebas
 pytest==9.2.0
 httpx==0.28.1
