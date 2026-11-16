@@ -59,6 +59,8 @@ Quien te habla **integra QENTARA**. Trabaja con esa persona como integrante del 
 
 Web para computadora con sidebar izquierda, inicio y acceso, temas claro/oscuro, Estudio técnico y asistente por chat y voz. El avatar humano queda como ampliación. El prototipo local conserva ejemplos señalizados; antes de la entrega deben reconciliarse con los datos y el contrato del equipo, sin presentar integración o validación ausentes.
 
+**DT-28 (Erick, 15/11/2026):** la voz se integra en el propio chat con un orbe. El asistente puede usar IA para explicar la evidencia preparada por TARPU; las reglas y cálculos siguen en el motor. La conexión de suscripción ChatGPT está limitada a instalación local personal mediante SIWC, pendiente de prueba con cuenta real; no se habilita en un servidor compartido ni se reutilizan credenciales del Codex instalado. Claude y Gemini se ofrecen por API, sin simular inicios de sesión de suscripción. Esta conexión de proveedor no constituye autenticación de usuarios de TARPU. Detalle en [informe 23](docs/informes/23-correcciones-chat-voz-publicacion.md).
+
 ### Cero supuestos (DT-16)
 
 **Regla del equipo para toda la demo:** cada valor viene de una fuente real con su procedencia, o lo declara el usuario y se rotula así. Ninguna regla, umbral, rango, límite ni peso se usa sin cita. Nada sintético: ni parcelas, ni personajes, ni valores de ejemplo. Sin interpretaciones sin evidencia («parece», «puede indicar»). Lo que no se sabe se lista como tarea de verificación; nunca se rellena. Si no puedes verificar algo, dilo en vez de suponerlo.

@@ -9,6 +9,8 @@ pyproj==3.8.0
 psycopg[binary]==3.3.9
 # Conector de IA (solo voz natural; tarpu_api/ia.py). Opcional: sin clave, TARPU funciona igual.
 anthropic==2.8.0
+# Validación criptográfica de OIDC local de ChatGPT (asistencia de IA: entrega/uso-de-ia.md).
+PyJWT[crypto]==2.10.1
 # Pruebas
 pytest==9.2.0
 httpx==0.28.1

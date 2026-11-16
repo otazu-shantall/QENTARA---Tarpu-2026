@@ -36,8 +36,10 @@ class Config:
     almacen_dir: Path = field(default_factory=lambda: _ruta("almacen"))
     catalogo: Path = field(default_factory=lambda: _ruta("catalogo/ecocrop_2026-11-14.json"))
     export_dir: Path = field(default_factory=lambda: _ruta("../frontend/public/api"))
-    cors: list[str] = field(default_factory=lambda: ["http://127.0.0.1:5173", "http://localhost:5173",
-                                                       "http://127.0.0.1:5174", "http://localhost:5174"])
+    # Puertos locales del lanzador; en publicación TARPU_CORS fija los dominios explícitos.
+    # Corrección asistida por IA (Codex); entrega/uso-de-ia.md.
+    cors: list[str] = field(default_factory=lambda: [f'http://{host}:{port}'
+        for host in ('127.0.0.1', 'localhost') for port in range(5173, 5185)])
     power_inicio: str = "2015-01-01"
     power_fin: str = "2025-12-31"
 

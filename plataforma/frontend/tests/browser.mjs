@@ -14,6 +14,19 @@ const context = await browser.newContext({
   reducedMotion: 'reduce',
 })
 const page = await context.newPage()
+// Esta suite comprueba el modo guiado y nunca consume una cuenta de IA configurada en el servidor.
+await page.route('**/api/ia/responder', (route) =>
+  route.fulfill({
+    json: {
+      data: {
+        texto: '',
+        con_ia: false,
+        fuente: '',
+        motivo: 'Modo guiado durante las pruebas de interfaz.',
+      },
+    },
+  }),
+)
 const errors = []
 page.on('pageerror', (error) => errors.push(error.message))
 await mkdir('test-results', { recursive: true })
@@ -60,20 +73,33 @@ try {
   // Majes ya tiene su extracción en el servidor: se ven los resultados explicados.
   await page.getByRole('heading', { name: 'Lo que encontramos' }).waitFor({ timeout: 60000 })
   assert.match(await finding('Altitud y zona').innerText(), /\d/)
-  assert.match(await page.locator('.finding').filter({ hasText: 'Altitud y zona' }).innerText(), /zona S1/)
+  assert.match(
+    await page.locator('.finding').filter({ hasText: 'Altitud y zona' }).innerText(),
+    /zona S1/,
+  )
   await page.locator('.zone-legend').waitFor()
   assert.equal(await page.locator('.leaflet-image-layer').count(), 1, 'capa de zonas de Arequipa')
   assert.match(
-    await page.locator('.workspace-main .finding').first().evaluate((el) => getComputedStyle(el).backdropFilter),
+    await page
+      .locator('.workspace-main .finding')
+      .first()
+      .evaluate((el) => getComputedStyle(el).backdropFilter),
     /blur/,
   )
   await page.screenshot({ path: 'test-results/mi-campo.png', fullPage: true })
   // Cada tarjeta explica su tipo de dato y permite seguir con el asistente
-  await page.locator('.finding').filter({ hasText: 'Acidez del suelo' }).getByRole('button', { name: '¿Qué es este dato?' }).click()
+  await page
+    .locator('.finding')
+    .filter({ hasText: 'Acidez del suelo' })
+    .getByRole('button', { name: '¿Qué es este dato?' })
+    .click()
   const about = page.getByRole('dialog', { name: 'Acidez del suelo (pH)' })
   await about.getByText('El pH mide qué tan ácido o alcalino es el suelo').waitFor()
   await about.getByRole('button', { name: /Explorar más con/ }).click()
-  await page.getByRole('log').getByText('Cada cultivo tiene un rango de pH', { exact: false }).waitFor()
+  await page
+    .getByRole('log')
+    .getByText('Cada cultivo tiene un rango de pH', { exact: false })
+    .waitFor()
   await page.getByRole('button', { name: 'Cerrar asistente', exact: true }).click()
 
   await page.getByLabel('Parcela activa').selectOption('reference-cabanaconde')
@@ -82,7 +108,9 @@ try {
   await page.waitForFunction(
     () =>
       /zona S2/.test(document.querySelector('.findings')?.textContent ?? '') ||
-      [...document.querySelectorAll('button')].some((b) => b.textContent.includes('Extraer datos completos')),
+      [...document.querySelectorAll('button')].some((b) =>
+        b.textContent.includes('Extraer datos completos'),
+      ),
   )
 
   // 4. Historial y Estudio técnico con la serie de POWER
@@ -101,7 +129,10 @@ try {
     await page.locator('.month-picker').getByRole('button', { name: month, exact: true }).click()
   await page.getByRole('button', { name: 'Comparar cultivos para rotar' }).click()
   await page.locator('.strategy').first().waitFor({ timeout: 60000 })
-  assert.ok((await page.locator('.strategy').count()) >= 3, 'al menos tres estrategias, incluida la actual')
+  assert.ok(
+    (await page.locator('.strategy').count()) >= 3,
+    'al menos tres estrategias, incluida la actual',
+  )
   await page.screenshot({ path: 'test-results/rotacion.png', fullPage: true })
   await page.locator('.strategy-current .strategy-tag').waitFor()
   assert.equal(await page.getByText(/puntaje de|\bapto\b/i).count(), 0)
@@ -138,14 +169,19 @@ try {
   await page.waitForFunction(
     () =>
       document.querySelector('.extraction') ||
-      [...document.querySelectorAll('button')].some((b) => b.textContent.includes('Extraer datos completos') && !b.disabled),
+      [...document.querySelectorAll('button')].some(
+        (b) => b.textContent.includes('Extraer datos completos') && !b.disabled,
+      ),
   )
   if (!(await page.locator('.extraction').count()))
     await page
       .getByRole('button', { name: 'Extraer datos completos' })
       .click({ timeout: 5000 })
       .catch(() => undefined) // el servidor ya tenía la extracción y la lista apareció sola
-  await page.locator('.step-done').filter({ hasText: 'Altitud y pendiente' }).waitFor({ timeout: 60000 })
+  await page
+    .locator('.step-done')
+    .filter({ hasText: 'Altitud y pendiente' })
+    .waitFor({ timeout: 60000 })
   await page.getByRole('heading', { name: 'Lo que encontramos' }).waitFor()
   assert.match(await finding('Altitud y zona').innerText(), /\d/)
   await page.screenshot({ path: 'test-results/parcela-dibujada.png', fullPage: true })

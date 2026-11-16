@@ -2,7 +2,7 @@
 
 > Área de **Erick**. Aquí está **todo lo del backend en un solo lugar**: código, diseño, módulos, propuesta, diagramas, catálogo citado y contrato. Objetivo del área: **cómo se conecta todo**, es decir, la API que alimenta las pantallas, la orquestación de los conectores del área de datos, el motor que compara cultivos y el agente.
 
-**Estado (14/11/2026):** **construido y probado.** La API funciona en vivo con datos reales de NASA POWER (probado de punta a punta con el servidor). Hay 15 pruebas automáticas y todas pasan. Falta lo que depende de otras áreas: los conectores de MODIS y SoilGrids (Damaris) y conectar las pantallas (Shantall).
+**Estado vigente (15/11/2026):** frontend conectado, motor con POWER y pH de SoilGrids, extracción oficial en `tarpu_datos/`, repositorios de archivos y Supabase, y archivos de extracción publicados en Storage para separar API y trabajador. **37 pruebas de backend aprobadas.** Asistente con evidencia preparada en el servidor y proveedores de IA configurables; conexión personal de ChatGPT con PKCE/OIDC. No se probó una cuenta real ni un despliegue remoto. [Alcance, configuración y límites](../../docs/informes/23-correcciones-chat-voz-publicacion.md). Corrección con asistencia de IA (Codex), registrada en entrega/uso-de-ia.md.
 
 ## Arrancar en 3 comandos
 

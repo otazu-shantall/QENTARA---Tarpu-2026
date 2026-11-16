@@ -20,6 +20,7 @@ from pathlib import Path
 import psycopg
 from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
+from ..archivos import relativa
 
 CAMPOS_TRABAJO = ('clave', 'nombre', 'estado', 'fuentes', 'parcela', 'aviso', 'motivo', 'creado', 'iniciado',
                   'terminado', 'actualizado', 'tomado_por', 'intentos', 'cancelar', 'meta')
@@ -118,6 +119,7 @@ class RepositorioSupabase:
                         procedencia: dict | None = None, filas: dict | None = None) -> None:
         """Guarda la celda y su serie: lee el normalizado y lo pasa a observaciones (una fila por fecha y variable)."""
         normalizado = (archivos or {}).get('normalizado')
+        self.publicar_archivos(archivos)
         with self._con() as c:
             celda_id = c.execute('select public.celda_id(%s, %s, %s, %s, %s, %s::numeric) as id',
                                  (producto, celda['clave'], celda['centro']['lon'], celda['centro']['lat'],
@@ -150,6 +152,35 @@ class RepositorioSupabase:
                            Jsonb({**(procedencia or {}), 'archivos': archivos}), original))
 
     # ---------------------------------------------------------- Storage
+    def publicar_archivos(self, archivos: dict | None) -> None:
+        """Publica antes de marcar listo: el lector no necesita el disco del trabajador."""
+        for ruta in (archivos or {}).values():
+            if isinstance(ruta, str) and Path(ruta).is_file():
+                nombre = relativa(ruta)
+                self.subir('originales', f'archivos/{nombre}', Path(ruta).read_bytes(),
+                           'text/csv' if nombre.endswith('.csv') else 'application/json')
+
+    def leer_archivo(self, nombre: str) -> bytes | None:
+        import urllib.error
+        nombre = relativa(nombre)
+        destinos = [('originales', f'archivos/{nombre}')]
+        if nombre.startswith('base_arequipa/'):
+            destinos.append(('base-arequipa', nombre.removeprefix('base_arequipa/')))
+        for bucket, clave in destinos:
+            try:
+                return self.bajar(bucket, clave)
+            except urllib.error.HTTPError as e:
+                # Storage también puede representar Object not found como HTTP 400.
+                missing = e.code == 404
+                if e.code == 400:
+                    try:
+                        missing = str(json.loads(e.read()).get('statusCode')) == '404'
+                    except (ValueError, TypeError):
+                        pass
+                if not missing:
+                    raise
+        return None
+
     def _storage(self, metodo: str, ruta: str, datos: bytes | None = None, tipo: str = 'application/octet-stream'):
         cab = {'Authorization': f'Bearer {self.clave}', 'apikey': self.clave}
         if datos is not None:

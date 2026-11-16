@@ -12,6 +12,7 @@ import './styles/landing-codex.css'
 import './styles/glass.css'
 import './styles/extras.css'
 import './styles/asistente.css'
+import './styles/corrections.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

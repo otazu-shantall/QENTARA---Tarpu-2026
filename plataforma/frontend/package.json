@@ -10,7 +10,7 @@
     "build": "tsc --noEmit && vite build --configLoader native",
     "preview": "vite preview --configLoader native --host 127.0.0.1",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
-    "test:ui": "node tests/browser.mjs",
+    "test:ui": "node tests/browser.mjs && node tests/browser-regressions.mjs",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"tests/*.{ts,mjs}\" vite.config.ts"
   },
   "dependencies": {

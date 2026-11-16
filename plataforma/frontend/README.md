@@ -2,6 +2,8 @@
 
 Prototipo local con inicio panorámico, acceso, múltiples parcelas, lectura ambiental sencilla, historial, Estudio técnico, catálogo de cultivos y conversación por voz. Los temas claro y oscuro siguen disponibles para comparar. La identidad visual y la validación con agricultores permanecen abiertas.
 
+**Vigente · 15/11/2026 (Codex):** el producto está en `plataforma/`. Chat y voz comparten la respuesta del asistente; el micrófono abre la conversación dentro del panel, con orbe y controles para detenerla. Tutorial limitado a la ventana, estado de rotación por parcela y series con las fechas propias de MODIS. La web consulta la API; el modo guiado permanece disponible cuando falla la IA. El inicio de sesión personal de ChatGPT requiere `npm run start:personal` desde `plataforma/`, con las dependencias de backend instaladas. Claude y Gemini se conectan mediante API del servidor; no hay inicio de sesión de suscripción simulado. [Informe 23](../../docs/informes/23-correcciones-chat-voz-publicacion.md). Registro de asistencia de IA en `entrega/uso-de-ia.md`.
+
 ## Presentación visual vigente
 
 La cabecera del inicio utiliza vidrio con opacidad moderada, ocupa todo el ancho y permanece fija al borde superior, sin márgenes laterales ni esquinas redondeadas. La navegación a Equipo encuadra la sección sin dejar contenido anterior visible. La sidebar tiene transparencia y desenfoque con paletas propias clara y oscura. Los títulos son más contenidos y el texto principal más grande. Las barras de desplazamiento se ocultan visualmente; las páginas y tablas siguen admitiendo desplazamiento, y las tablas extensas reciben foco por teclado.
@@ -18,7 +20,7 @@ El inicio comparte la paleta del dashboard y permite alternar entre tema claro y
 
 ## Ejecutar
 
-Desde la raíz del repositorio, con Node.js 24 o posterior:
+Desde `plataforma/`, con Node.js 24 o posterior:
 
 ```powershell
 npm --prefix frontend ci

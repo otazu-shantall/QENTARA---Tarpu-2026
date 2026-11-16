@@ -8,6 +8,8 @@ from __future__ import annotations
 from pathlib import Path
 
 from tarpu_datos.coordenada import trabajos
+from tarpu_datos.archivos import relativa
+from tarpu_datos.repositorio import obtener as repositorio
 
 from . import config, errores, geometria
 
@@ -65,8 +67,18 @@ def _en_almacen(ruta: str, almacen: Path) -> Path:
 def archivo(ruta: str) -> dict:
     almacen = config.obtener().almacen_dir.resolve()
     p = _en_almacen(ruta, almacen)
+    if not p.is_relative_to(almacen) or p.suffix not in (".csv", ".json"):
+        raise errores.datos_invalidos([{"campo": "ruta", "mensaje": "solo archivos .csv o .json dentro del almacén"}])
+    nombre = relativa(p.relative_to(almacen).as_posix())
+    repo = repositorio()
+    if repo.nombre == 'supabase':
+        contenido = repo.leer_archivo(nombre)
+        if contenido is not None:
+            return {"ruta": nombre, "bytes": len(contenido), "recortado": len(contenido) > MAX_BYTES,
+                    "contenido": contenido[:MAX_BYTES].decode('utf-8', errors='replace')}
     if not p.is_relative_to(almacen) or p.suffix not in (".csv", ".json") or not p.is_file():
         raise errores.datos_invalidos([{"campo": "ruta", "mensaje": "solo archivos .csv o .json dentro del almacén"}])
     tam = p.stat().st_size
-    texto = p.read_text(encoding="utf-8", errors="replace")[:MAX_BYTES]
+    with p.open('rb') as f:
+        texto = f.read(MAX_BYTES).decode('utf-8', errors='replace')
     return {"ruta": str(p.relative_to(almacen)), "bytes": tam, "recortado": tam > MAX_BYTES, "contenido": texto}

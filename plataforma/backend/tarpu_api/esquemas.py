@@ -74,6 +74,19 @@ class RotacionEntrada(_Estricto):
     contexto: ContextoEntrada = Field(default_factory=ContextoEntrada)
 
 
+class MensajeIA(_Estricto):
+    role: Literal['user', 'assistant']
+    text: Annotated[str, Field(max_length=2000)]
+
+
+class ConsultaIAEntrada(_Estricto):
+    pregunta: Annotated[str, Field(min_length=1, max_length=700)]
+    lat: Annotated[float | None, Field(ge=-90, le=90)] = None
+    lon: Annotated[float | None, Field(ge=-180, le=180)] = None
+    contorno: dict[str, Any] | None = None
+    historial: Annotated[list[MensajeIA], Field(max_length=6)] = Field(default_factory=list)
+
+
 class PreguntaEntrada(_Estricto):
     parcela_id: str
     pregunta: Annotated[str, Field(min_length=1, max_length=300)]

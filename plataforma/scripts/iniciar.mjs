@@ -9,8 +9,11 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..')
-const SIN_DOCKER = process.argv.includes('--sin-docker')
-const WEB = 'http://127.0.0.1:5174/'
+// Modo personal: OAuth de ChatGPT únicamente en el proceso local del usuario (Codex; registro de IA).
+const PERSONAL = process.argv.includes('--personal')
+const SIN_DOCKER = PERSONAL || process.argv.includes('--sin-docker')
+if (PERSONAL) process.env.TARPU_CHATGPT_LOCAL = '1'
+let WEB = 'http://127.0.0.1:5174/'
 const API = SIN_DOCKER ? 'http://127.0.0.1:8000' : 'http://127.0.0.1:8010'
 const windows = process.platform === 'win32'
 const procesos = []
@@ -29,7 +32,7 @@ function silencioso(comando) {
 async function esperarUrl(url, segundos, nombre) {
   for (let i = 0; i < segundos; i++) {
     try {
-      const r = await fetch(url)
+      const r = await fetch(url, { signal: AbortSignal.timeout(2000) })
       if (r.ok) return
     } catch {}
     if (i && i % 15 === 0) aviso(`… sigo esperando ${nombre} (${i} s)`)
@@ -90,6 +93,15 @@ async function backendDocker() {
 
 async function backendLocal() {
   paso(1, 'API con Python, sin Docker (modo archivos)')
+  const existing = await fetch(`${API}/api/meta`, { signal: AbortSignal.timeout(1500) }).then((r) => r.ok).catch(() => false)
+  if (existing) {
+    if (PERSONAL) {
+      const state = await fetch(`${API}/api/ia/estado`).then((r) => r.json())
+      if (!state.data?.chatgpt?.disponible) throw new Error('La API del puerto 8000 está en otro modo. Cierra ese proceso de TARPU y vuelve a ejecutar start:personal.')
+    }
+    aviso(`la API ya está disponible en ${API}: se reutiliza`)
+    return
+  }
   const python = join(RAIZ, 'backend', '.venv', windows ? 'Scripts/python.exe' : 'bin/python')
   if (!existsSync(python))
     throw new Error('Falta backend/.venv. Créalo: python -m venv backend/.venv y pip install -r backend/requirements.txt')
@@ -108,9 +120,19 @@ async function web() {
     aviso('instalando dependencias del frontend…')
     correr('npm --prefix frontend ci')
   }
-  const yaEncendida = await fetch(WEB).then((r) => r.ok).catch(() => false)
-  if (yaEncendida) aviso('la web ya estaba encendida en el puerto 5174: se reutiliza')
-  const vite = yaEncendida ? null : spawn('npm --prefix frontend run dev', {
+  let yaEncendida = false
+  let port = 5174
+  for (; port < 5185; port++) {
+    WEB = `http://127.0.0.1:${port}/`
+    const active = await fetch(WEB, { signal: AbortSignal.timeout(1500) }).then((r) => r.ok).catch(() => false)
+    if (!active) break
+    const module = await fetch(`${WEB}src/services/api.ts`).then((r) => r.text()).catch(() => '')
+    const connected = module.match(/VITE_TARPU_API["']?\s*:\s*["']([^"']+)/)?.[1]
+    if (connected === API) { yaEncendida = true; aviso(`la web del puerto ${port} usa ${API}: se reutiliza`); break }
+    aviso(`el puerto ${port} usa otra configuración: se conserva y se busca otro puerto`)
+  }
+  if (port >= 5185) throw new Error('No hay un puerto libre para abrir la web de TARPU.')
+  const vite = yaEncendida ? null : spawn(`npm --prefix frontend run dev -- --port ${port}`, {
     cwd: RAIZ,
     shell: true,
     stdio: 'inherit',

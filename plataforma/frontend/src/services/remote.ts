@@ -3,6 +3,7 @@
 // cuando el campo ya tiene su trabajo. Sin reglas agronómicas: solo copia valores con su fecha y unidad.
 // Escrito con asistencia de IA (Claude Code). Registro en entrega/uso-de-ia.md.
 import { evidenceSchema } from '../types/domain'
+import { mergeSatellite } from '../lib/satellite'
 import type { Evidence, Observation, Parcel } from '../types/domain'
 import type { EvidenceRepository } from './contracts'
 import { evidenceRepository as localRepository } from './local'
@@ -85,23 +86,20 @@ function attach(
   const { columns, rows } = parseCsv(csv)
   const v = columns.findIndex(column)
   if (v < 0) return 0
-  const byDate = new Map(points.map((p) => [p.date, p]))
-  let n = 0
-  for (const row of rows) {
-    const value = cell(row[v])
-    const point = byDate.get(row[0])
-    if (point && value !== null) {
-      point[key] = keep(value, row)
-      n++
-    }
-  }
-  return n
+  return mergeSatellite(points, rows, v, key, keep)
 }
 
 const cache = new Map<string, Promise<BaseParcel | null>>()
+const expires = new Map<string, number>()
+export function invalidateBase() {
+  cache.clear()
+  expires.clear()
+}
 export function cachedBase(parcel: Parcel) {
   const key = `${parcel.id}:${JSON.stringify(parcel.boundary)}:${JSON.stringify(parcel.point)}`
-  if (!cache.has(key))
+  if ((expires.get(key) ?? 0) <= Date.now()) cache.delete(key)
+  if (!cache.has(key)) {
+    expires.set(key, Date.now() + 60_000)
     cache.set(
       key,
       readBase(parcel).catch((error) => {
@@ -109,6 +107,7 @@ export function cachedBase(parcel: Parcel) {
         throw error
       }),
     )
+  }
   return cache.get(key)!
 }
 
@@ -184,12 +183,14 @@ export const remoteEvidenceRepository: EvidenceRepository = {
     const evidence: Evidence = evidenceSchema.parse({
       source: products.length > 1 ? 'NASA POWER y MODIS' : 'NASA POWER',
       product: products.join(' · '),
-      period: `${base.clima?.desde ?? points[0]?.date} / ${base.clima?.hasta ?? points.at(-1)?.date}`,
+      period: `${points[0]?.date} / ${points.at(-1)?.date}`,
       requestedAt: new Date().toISOString(),
       url: `${API_BASE}/api/archivo?ruta=${encodeURIComponent(path)}`,
       support:
         'Clima: celda de NASA POWER de ≈ 55 × 67 km que contiene tu campo; no es una medición dentro de la parcela.' +
-        (products.length > 1 ? ' Vegetación y superficie: píxel de MODIS que contiene el centro del campo.' : ''),
+        (products.length > 1
+          ? ' Vegetación y superficie: píxel de MODIS que contiene el centro del campo.'
+          : ''),
       units,
       origin: 'provider',
       cadence: 'Registro diario de POWER; MODIS cada 8 o 16 días. El servidor actualiza la serie.',

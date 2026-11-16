@@ -68,6 +68,10 @@ La IA no debe usarse para idear la solución. La idea, el alcance y los límites
 | 15/11/2026 | Shantall · frontend | OpenAI Codex | Selector de tema público con persistencia, actualización del recurso QENTARA y retirada de galería adicional | `frontend/`, documentación del área | ✅ encabezados de código; nuevo logo copiado sin edición ni generación |
 | 15/11/2026 | Shantall · frontend | OpenAI Codex | Integración con el repositorio compartido, conciliación de documentación, traslado de entrada de frontend y retirada de Codigo conservando historial | `frontend/`, `docs/`, `AGENTS.md`, `.claude/launch.json` | ✅ encabezados de código existentes y registro |
 
+| Fecha | Área | Herramienta | Asistencia y alcance | Archivos | Revisión |
+|---|---|---|---|---|---|
+| 15/11/2026 | Backend y frontend · pedido de Erick | OpenAI Codex | Correcciones de rotación, series, Storage, tutorial, chat/voz con orbe; adaptadores de IA y SIWC local de ChatGPT; pruebas y documentación | `plataforma/backend/`, `plataforma/frontend/`, `plataforma/scripts/`, ejemplos de entorno y `docs/informes/23-correcciones-chat-voz-publicacion.md` | Build, 14 pruebas de frontend, 37 de backend y dos recorridos Chrome; cuenta de IA y despliegue remoto sin verificar |
+
 ## Pendientes
 
 - [ ] Confirmar cómo se hicieron `Logo Tarpu.png` y `Tarpu_ Branding.png`. Si son generados con IA y se muestran en la entrega, necesitan **marca de agua visible**.

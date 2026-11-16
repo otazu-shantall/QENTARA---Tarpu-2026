@@ -22,7 +22,11 @@ type VoiceWindow = Window & {
   SpeechRecognition?: new () => Recognition
   webkitSpeechRecognition?: new () => Recognition
 }
-export function useVoiceConversation(parcel: Parcel, evidence: Evidence | null) {
+export function useVoiceConversation(
+  parcel: Parcel,
+  evidence: Evidence | null,
+  respond?: (text: string, signal: AbortSignal) => Promise<{ text: string }>,
+) {
   const [state, setState] = useState<VoiceState>('idle'),
     [error, setError] = useState(''),
     [caption, setCaption] = useState('')
@@ -33,6 +37,8 @@ export function useVoiceConversation(parcel: Parcel, evidence: Evidence | null) 
     utterance = useRef<SpeechSynthesisUtterance | null>(null),
     timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const source = useRef({ parcel, evidence })
+  const responder = useRef(respond)
+  responder.current = respond
   source.current = { parcel, evidence }
   const supported =
     Boolean(
@@ -111,12 +117,14 @@ export function useVoiceConversation(parcel: Parcel, evidence: Evidence | null) 
     const current = new AbortController()
     request.current = current
     try {
-      const response = await assistantService.answer(
-        text,
-        source.current.parcel,
-        source.current.evidence,
-        current.signal,
-      )
+      const response = responder.current
+        ? await responder.current(text, current.signal)
+        : await assistantService.answer(
+            text,
+            source.current.parcel,
+            source.current.evidence,
+            current.signal,
+          )
       if (current.signal.aborted || !live.current || !mounted.current) return
       setCaption(response.text)
       request.current = null
@@ -202,5 +210,20 @@ export function useVoiceConversation(parcel: Parcel, evidence: Evidence | null) 
       clearIO()
     }
   }, [])
-  return { state, error, caption, start, pause, end, preview, supported }
+  return {
+    state,
+    error,
+    caption,
+    start,
+    pause,
+    end,
+    preview,
+    supported,
+    speak: (text: string) => {
+      live.current = false
+      clearIO()
+      setError('')
+      play(text, false)
+    },
+  }
 }

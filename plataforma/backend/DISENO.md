@@ -1,5 +1,7 @@
 # Diseño del backend de TARPU
 
+> **Corrección vigente · 15/11/2026 (Codex):** la API interna sirve los archivos de extracción desde Storage cuando `TARPU_ALMACEN=supabase`; el trabajador publica normalizados y procedencia antes de registrar la celda. `POST /api/ia/responder` prepara evidencia en el servidor y comparte su texto entre chat y voz. Las API de Claude, OpenAI y Gemini son configurables; SIWC de ChatGPT está limitado a una instalación local personal (`start:personal`), sin reutilizar credenciales de Codex. El motor conserva sus reglas y no delega cálculos agronómicos a la IA. Detalles y límites en [informe 23](../../docs/informes/23-correcciones-chat-voz-publicacion.md).
+
 > **15/11/2026:** las fuentes vigentes son las de **DT-19** y el enfoque de datos es el **esquema mixto (DT-22)**, en [docs/11](../../docs/11-esquema-mixto.md). Donde este diseño hable de tres fuentes (DT-17) o de una web sin servidor, manda docs/11.
 >
 > Área de **Erick**. 14/11/2026: revisado para quitar todo supuesto (DT-16), ajustado a las tres fuentes de la demo (DT-17) y alineado con el código ya construido. Explica **cómo se conecta todo**:

@@ -68,9 +68,15 @@ Documentación técnica del backend: [DISENO.md](backend/DISENO.md), [MODULOS.md
 - La web solo habla con la API (`VITE_TARPU_API`). No lleva claves.
 - La API lee la base de Arequipa al instante y crea trabajos por coordenada; el trabajador los toma, extrae y guarda por celda o píxel (reutilización entre parcelas vecinas, DT-23).
 
-## Desplegar
+## Conexión personal de ChatGPT
 
-Cada pieza sale de su carpeta, sin cambiar código (docs/12):
+Con las dependencias instaladas, `npm run start:personal` abre una instalación local de un usuario, sin Docker. En el chat, «Conexión de IA» permite iniciar el flujo oficial de OpenAI y autorizar el uso del plan elegible. No activa una cuenta compartida para la web. Las credenciales quedan en memoria; tras reiniciar hay que volver a iniciar sesión. Cuenta real todavía sin verificar. [Configuración, fuentes y límites](../docs/informes/23-correcciones-chat-voz-publicacion.md).
+
+## Despliegue
+
+**Corrección del 15/11/2026 (Codex):** la lectura de los CSV del trabajador ya tiene una vía por Storage. Antes de separar servicios, publicar también los archivos de trabajos anteriores con `python -m tarpu_datos.publicar_archivos` desde backend y las credenciales del repositorio Supabase. No se ha probado un despliegue remoto; la persistencia de las rutas antiguas de parcelas sigue en JSON local. La tabla siguiente expresa los destinos propuestos, sin acreditar que todo el recorrido ya funcione allí.
+
+Cada pieza sale de su carpeta (docs/12):
 
 | Pieza | Carpeta | Plataforma |
 |---|---|---|

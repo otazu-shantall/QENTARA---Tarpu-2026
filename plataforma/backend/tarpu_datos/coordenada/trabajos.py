@@ -177,6 +177,8 @@ def _modis(lat: float, lon: float, nombre: str, parar: threading.Event) -> dict:
         cob = repo.cobertura(p, celda['clave'])
         archivos = (cob or {}).get('archivos') or {}
         if cob and _reciente(cob.get('actualizado'), VIGENCIA_DIAS[p]) and Path(archivos.get('normalizado', '')).exists():
+            if repo.nombre == 'supabase':
+                repo.publicar_archivos(archivos)
             productos[p] = {'estado': 'listo', 'archivos': archivos, 'motivo': None, 'vacios_del_proveedor': [],
                             'fallos_de_descarga': [],
                             'reutilizado': {'de': 'otra parcela en el mismo píxel', 'celda': celda['clave'],

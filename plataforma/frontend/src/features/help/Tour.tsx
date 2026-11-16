@@ -2,7 +2,8 @@
 // El de cada sección se abre la primera vez que se entra a ella (y el del asistente, la primera vez que se abre);
 // todos se pueden repetir desde «Ayuda y fuentes».
 // Escrito con asistencia de IA (Claude Code). Registro en entrega/uso-de-ia.md.
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { tourLayout } from '../../lib/tourLayout'
 import { useWorkspace } from '../../app/WorkspaceContext'
 import { Icon } from '../../components/ui/Icon'
 import { AGENT } from '../../lib/agent'
@@ -36,7 +37,9 @@ export const TOURS: Record<string, { name: string; path: string; steps: Step[] }
       {
         target: '.page-actions .button-green',
         title: 'Dibuja tu parcela',
-        text: ['Con «Nueva parcela» buscas tu terreno en el mapa de Arequipa y marcas sus esquinas una por una.'],
+        text: [
+          'Con «Nueva parcela» buscas tu terreno en el mapa de Arequipa y marcas sus esquinas una por una.',
+        ],
       },
       {
         target: '.big-map',
@@ -65,7 +68,9 @@ export const TOURS: Record<string, { name: string; path: string; steps: Step[] }
       {
         target: '.sidebar nav',
         title: 'Las demás secciones',
-        text: ['Historial, Rotación de cultivos e Informes están aquí. Cada una te mostrará su recorrido al entrar.'],
+        text: [
+          'Historial, Rotación de cultivos e Informes están aquí. Cada una te mostrará su recorrido al entrar.',
+        ],
       },
       {
         target: '.sidebar-assistant',
@@ -103,7 +108,9 @@ export const TOURS: Record<string, { name: string; path: string; steps: Step[] }
       {
         target: '.variable-chips',
         title: 'Elige qué ver',
-        text: ['Temperatura, frío de la noche, lluvia, verdor y más. Solo aparecen las variables que ya tienen datos.'],
+        text: [
+          'Temperatura, frío de la noche, lluvia, verdor y más. Solo aparecen las variables que ya tienen datos.',
+        ],
       },
       {
         target: '.year-chips',
@@ -121,7 +128,9 @@ export const TOURS: Record<string, { name: string; path: string; steps: Step[] }
       {
         target: '.history-facts',
         title: 'El resumen del año',
-        text: ['El total o el promedio del año, y sus meses más alto y más bajo. Debajo está la tabla mes por mes.'],
+        text: [
+          'El total o el promedio del año, y sus meses más alto y más bajo. Debajo está la tabla mes por mes.',
+        ],
       },
     ],
   },
@@ -148,7 +157,9 @@ export const TOURS: Record<string, { name: string; path: string; steps: Step[] }
       {
         target: '.zone-crops',
         title: 'Lo que se siembra en tu zona',
-        text: ['La lista del censo agropecuario de 2012 para tu zona. Describe lo que hay; no es una recomendación.'],
+        text: [
+          'La lista del censo agropecuario de 2012 para tu zona. Describe lo que hay; no es una recomendación.',
+        ],
       },
     ],
   },
@@ -159,12 +170,16 @@ export const TOURS: Record<string, { name: string; path: string; steps: Step[] }
       {
         target: '.report-actions',
         title: 'Tu informe',
-        text: ['Una hoja con lo que TARPU encontró en este lugar. Puedes imprimirla, guardarla como PDF o descargar sus datos.'],
+        text: [
+          'Una hoja con lo que TARPU encontró en este lugar. Puedes imprimirla, guardarla como PDF o descargar sus datos.',
+        ],
       },
       {
         target: '.report-sheet',
         title: 'Qué contiene',
-        text: ['El lugar, el suelo, el clima del último año y los cultivos de la zona frente al pH, cada dato con su fuente.'],
+        text: [
+          'El lugar, el suelo, el clima del último año y los cultivos de la zona frente al pH, cada dato con su fuente.',
+        ],
       },
     ],
   },
@@ -210,7 +225,10 @@ export const TOURS: Record<string, { name: string; path: string; steps: Step[] }
       {
         target: '.yq-input',
         title: 'Escribe o habla',
-        text: ['Escribe tu pregunta y envíala, o pulsa el micrófono para conversar con voz.', 'En cada respuesta, «Escuchar» la lee en voz alta.'],
+        text: [
+          'Escribe tu pregunta y envíala, o pulsa el micrófono para conversar con voz.',
+          'En cada respuesta, «Escuchar» la lee en voz alta.',
+        ],
       },
     ],
   },
@@ -220,6 +238,9 @@ export function Tour() {
   const { tourOpen, tourKey, closeTour } = useWorkspace()
   const [index, setIndex] = useState(0)
   const [box, setBox] = useState<DOMRect | null>(null)
+  const card = useRef<HTMLDivElement>(null)
+  const [size, setSize] = useState({ width: 420, height: 300 })
+  const [viewport, setViewport] = useState({ width: window.innerWidth, height: window.innerHeight })
   const steps = (TOURS[tourKey] ?? TOURS.campo).steps
   const step = steps[Math.min(index, steps.length - 1)]
 
@@ -233,7 +254,7 @@ export function Tour() {
       setBox(null)
       return
     }
-    element.scrollIntoView({ block: 'center', behavior: 'instant' })
+    element.scrollIntoView({ block: 'nearest', behavior: 'instant' })
     const measure = () => setBox(element.getBoundingClientRect())
     measure()
     const timer = setTimeout(measure, 250)
@@ -245,9 +266,60 @@ export function Tour() {
       window.removeEventListener('scroll', measure, true)
     }
   }, [tourOpen, index, step.target])
+  useLayoutEffect(() => {
+    if (!tourOpen || !card.current) return
+    const measure = () => {
+      const rect = card.current!.getBoundingClientRect()
+      setSize((old) =>
+        old.width === rect.width && old.height === rect.height
+          ? old
+          : { width: rect.width, height: rect.height },
+      )
+      setViewport({
+        width: window.visualViewport?.width ?? window.innerWidth,
+        height: window.visualViewport?.height ?? window.innerHeight,
+      })
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(card.current)
+    window.addEventListener('resize', measure)
+    window.visualViewport?.addEventListener('resize', measure)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+      window.visualViewport?.removeEventListener('resize', measure)
+    }
+  }, [tourOpen, index, tourKey])
+  useEffect(() => {
+    if (!tourOpen) return
+    const previous = document.activeElement as HTMLElement | null
+    const overflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    card.current?.focus()
+    return () => {
+      document.body.style.overflow = overflow
+      previous?.focus({ preventScroll: true })
+    }
+  }, [tourOpen])
   useEffect(() => {
     if (!tourOpen) return
     const keys = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        const buttons = [...(card.current?.querySelectorAll<HTMLButtonElement>('button') ?? [])]
+        const first = buttons[0],
+          last = buttons.at(-1)
+        if (
+          e.shiftKey &&
+          (document.activeElement === first || document.activeElement === card.current)
+        ) {
+          e.preventDefault()
+          last?.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first?.focus()
+        }
+      }
       if (e.key === 'Escape') closeTour()
       if (e.key === 'ArrowRight') setIndex((i) => Math.min(i + 1, steps.length - 1))
       if (e.key === 'ArrowLeft') setIndex((i) => Math.max(i - 1, 0))
@@ -259,28 +331,34 @@ export function Tour() {
 
   const margin = 8
   const spot = box
-    ? { left: box.left - margin, top: box.top - margin, width: box.width + margin * 2, height: Math.min(box.height + margin * 2, window.innerHeight * 0.6) }
-    : null
-  // La tarjeta va debajo del elemento si hay espacio; si no, arriba; sin elemento, al centro.
-  const below = spot ? spot.top + spot.height + 16 : 0
-  const cardStyle: React.CSSProperties = spot
     ? {
-        left: Math.max(16, Math.min(spot.left, window.innerWidth - 436)),
-        ...(below + 260 < window.innerHeight ? { top: below } : { bottom: Math.max(16, window.innerHeight - spot.top + 16) }),
+        left: Math.max(8, box.left - margin),
+        top: Math.max(8, box.top - margin),
+        width: Math.max(
+          0,
+          Math.min(box.right + margin, viewport.width - 8) - Math.max(8, box.left - margin),
+        ),
+        height: Math.max(
+          0,
+          Math.min(box.bottom + margin, viewport.height - 8) - Math.max(8, box.top - margin),
+        ),
       }
-    : { left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+    : null
+  const cardStyle = tourLayout(spot, size, viewport.width, viewport.height)
   const last = index >= steps.length - 1
   return (
     <div className="tour" role="dialog" aria-modal="true" aria-label="Recorrido guiado de TARPU">
       {spot ? <div className="tour-spot" style={spot} /> : <div className="tour-shade" />}
-      <div className="tour-card" style={cardStyle}>
+      <div ref={card} tabIndex={-1} className="tour-card" style={cardStyle}>
         <span className="tour-count">
           {(TOURS[tourKey] ?? TOURS.campo).name} · paso {index + 1} de {steps.length}
         </span>
         <h2>{step.title}</h2>
-        {step.text.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
+        <div className="tour-copy">
+          {step.text.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
         <div className="tour-actions">
           <button className="text-link" onClick={closeTour}>
             Salir del recorrido
@@ -291,7 +369,10 @@ export function Tour() {
                 <Icon name="back" size={16} /> Atrás
               </button>
             )}
-            <button className="button button-green" onClick={() => (last ? closeTour() : setIndex(index + 1))}>
+            <button
+              className="button button-green"
+              onClick={() => (last ? closeTour() : setIndex(index + 1))}
+            >
               {last ? 'Terminar' : 'Siguiente'} <Icon name={last ? 'check' : 'arrow'} size={16} />
             </button>
           </span>

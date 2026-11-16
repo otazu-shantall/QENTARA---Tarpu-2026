@@ -3,9 +3,19 @@
 // Escrito con asistencia de IA (Claude Code). Registro en entrega/uso-de-ia.md.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ApiError, FINISHED, cancelJobs, job as getJob, jobName, parseCsv, rawFile, startJob, startJobAt } from './api'
+import {
+  ApiError,
+  FINISHED,
+  cancelJobs,
+  job as getJob,
+  jobName,
+  parseCsv,
+  rawFile,
+  startJob,
+  startJobAt,
+} from './api'
 import type { BaseParcel, Job } from './api'
-import { cachedBase, centerOf, jobAt, modisFile } from './remote'
+import { cachedBase, centerOf, jobAt, modisFile, invalidateBase } from './remote'
 import type { Parcel } from '../types/domain'
 
 export interface Loadable<T> {
@@ -72,8 +82,10 @@ export function useParcelData(parcel: Parcel): ParcelData {
           if (current.current !== mine) return
           setJob({ state: 'ok', data })
           // Al terminar, la serie de la parcela incorpora MODIS.
-          if (FINISHED.includes(data.estado))
+          if (FINISHED.includes(data.estado)) {
+            invalidateBase()
             void queryClient.invalidateQueries({ queryKey: ['evidence', mine] })
+          }
         })
         .catch(() => undefined)
     }, 3000)
@@ -108,7 +120,13 @@ export function useParcelData(parcel: Parcel): ParcelData {
     }
     request
       .then((data) => {
-        if (current.current === mine) setJob({ state: 'ok', data })
+        if (current.current === mine) {
+          setJob({ state: 'ok', data })
+          if (FINISHED.includes(data.estado)) {
+            invalidateBase()
+            void queryClient.invalidateQueries({ queryKey: ['evidence', mine] })
+          }
+        }
       })
       .catch((error) => {
         if (current.current === mine) setJob({ state: 'error', error: message(error) })
@@ -117,11 +135,16 @@ export function useParcelData(parcel: Parcel): ParcelData {
 
   const cancel = useCallback(() => {
     if (!key) return
+    const mine = parcel.id
     cancelJobs([key])
       .then(() => getJob(key))
-      .then((data) => setJob({ state: 'ok', data }))
-      .catch((error) => setJob((previous) => ({ ...previous, error: message(error) })))
-  }, [key])
+      .then((data) => {
+        if (current.current === mine) setJob({ state: 'ok', data })
+      })
+      .catch((error) => {
+        if (current.current === mine) setJob((previous) => ({ ...previous, error: message(error) }))
+      })
+  }, [key, parcel.id])
 
   return {
     base,
@@ -131,6 +154,10 @@ export function useParcelData(parcel: Parcel): ParcelData {
     extracted: !!job.data || job.state === 'loading',
     extract,
     cancel,
-    retry: () => setAttempt((n) => n + 1),
+    retry: () => {
+      invalidateBase()
+      setAttempt((n) => n + 1)
+      void queryClient.invalidateQueries({ queryKey: ['evidence', parcel.id] })
+    },
   }
 }

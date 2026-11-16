@@ -59,10 +59,7 @@ function readParcels() {
   }
 }
 function useWorkspaceState() {
-  const [parcels, setParcels] = useState<Parcel[]>(() => [
-    ...references,
-    ...readParcels(),
-  ])
+  const [parcels, setParcels] = useState<Parcel[]>(() => [...references, ...readParcels()])
   const [selected, setSelected] = useState(() => {
     try {
       const saved = localStorage.getItem('tarpu.prototype.selected')
@@ -87,7 +84,7 @@ function useWorkspaceState() {
   const query = useQuery({
     queryKey: ['evidence', parcel.id],
     queryFn: ({ signal }) => evidenceRepository.read(parcel, signal),
-    staleTime: Infinity,
+    staleTime: 60_000,
   })
   useEffect(() => {
     document.documentElement.dataset.theme = theme

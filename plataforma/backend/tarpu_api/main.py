@@ -12,11 +12,13 @@ from contextlib import asynccontextmanager
 from fastapi import BackgroundTasks, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
 from . import __version__, agente, almacen, base, coordenada, catalogo, config, datos_detallados, errores, geometria, ia, indicadores, meta, motor, parcelas, procesamiento
+from . import chatgpt, contexto_ia
+from .esquemas import ConsultaIAEntrada
 from .esquemas import CancelarEntrada, ContornoEntrada, TrabajoEntrada, ContextoEntrada, ContornoNuevo, ParcelaNueva, NaturalizarEntrada, PreguntaEntrada, RotacionEntrada, Sobre, sobre
 
 @asynccontextmanager
@@ -34,7 +36,15 @@ async def _ciclo(_: FastAPI):
 
 app = FastAPI(title="TARPU API", version=__version__, lifespan=_ciclo,
               description="Backend de TARPU (QENTARA · NASA Space Apps 2026). Datos reales con procedencia; sin supuestos (DT-16).")
-app.add_middleware(CORSMiddleware, allow_origins=config.obtener().cors, allow_methods=["GET", "POST", "PUT"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=config.obtener().cors, allow_methods=["GET", "POST", "PUT"], allow_headers=["*"], allow_credentials=True)
+
+
+@app.middleware('http')
+async def _ia_privada(request: Request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith('/api/ia/'):
+        response.headers['Cache-Control'] = 'no-store'
+    return response
 
 
 @app.exception_handler(errores.ErrorTarpu)
@@ -202,9 +212,89 @@ def get_rotaciones(parcela_id: str):
 
 
 @app.get("/api/ia/estado", response_model=Sobre, tags=["agente"])
-def get_ia_estado():
+def get_ia_estado(request: Request):
     """Qué proveedor de IA está conectado en el servidor y qué hace cada parte. Nunca devuelve claves."""
-    return sobre(ia.estado())
+    return sobre(ia.estado(_sesion_chatgpt(request)))
+
+
+def _sesion_chatgpt(request: Request):
+    try:
+        chatgpt.comprobar_local(request)
+        return chatgpt.sesion(request.cookies.get(chatgpt.COOKIE))
+    except ValueError:
+        return None
+
+
+@app.post('/api/ia/chatgpt/iniciar', tags=['agente'])
+def post_chatgpt_iniciar(request: Request):
+    try:
+        chatgpt.comprobar_local(request)
+        sid, url = chatgpt.iniciar(str(request.url_for('get_chatgpt_callback')))
+    except ValueError as e:
+        return JSONResponse(sobre({'motivo': str(e)}), status_code=403)
+    response = JSONResponse(sobre({'url': url}))
+    response.set_cookie(chatgpt.COOKIE, sid, httponly=True, samesite='lax', max_age=8 * 3600, path='/api/ia')
+    response.headers['Cache-Control'] = 'no-store'
+    return response
+
+
+@app.get('/api/ia/chatgpt/callback', tags=['agente'])
+def get_chatgpt_callback(request: Request):
+    try:
+        chatgpt.comprobar_local(request)
+        chatgpt.completar(request.cookies.get(chatgpt.COOKIE), dict(request.query_params))
+        message = 'Cuenta vinculada. Vuelve al chat de TARPU; ya puedes cerrar esta ventana.'
+    except Exception:
+        message = 'No se completó la conexión. Vuelve a TARPU y revisa la conexión de IA.'
+    return HTMLResponse(f'<!doctype html><html lang="es"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width"><title>Conexión TARPU</title><body style="font:20px system-ui;max-width:600px;margin:15vh auto;padding:24px"><h1>TARPU</h1><p>{message}</p></body></html>', headers={'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'"})
+
+
+@app.post('/api/ia/chatgpt/salir', tags=['agente'])
+def post_chatgpt_salir(request: Request):
+    try:
+        chatgpt.comprobar_local(request)
+    except ValueError:
+        return JSONResponse(sobre({'motivo': 'Conexión local no habilitada.'}), status_code=403)
+    chatgpt.cerrar(request.cookies.get(chatgpt.COOKIE))
+    response = JSONResponse(sobre({'cerrada': True}))
+    response.delete_cookie(chatgpt.COOKIE, path='/api/ia')
+    return response
+
+
+@app.post('/api/ia/responder', response_model=Sobre, tags=['agente'])
+def post_ia_responder(entrada: ConsultaIAEntrada, request: Request):
+    _solo_en_vivo()
+    session = _sesion_chatgpt(request)
+    if not ia.estado(session)['activo']:
+        return sobre({'texto': '', 'con_ia': False, 'fuente': '', 'motivo': 'Modo guiado: no hay un proveedor de IA conectado.'})
+    if entrada.contorno:
+        lugar = base.en_parcela(entrada.contorno)
+    elif entrada.lat is not None and entrada.lon is not None:
+        lugar = base.en_punto(entrada.lat, entrada.lon)
+    else:
+        raise errores.datos_invalidos([{'campo': 'lugar', 'mensaje': 'falta el punto o contorno'}])
+    climate = None
+    path = ((lugar.get('clima') or {}).get('archivos') or {}).get('normalizado')
+    if path:
+        file = coordenada.archivo(path)
+        if not file['recortado']:
+            climate = file['contenido']
+    point = lugar.get('centroide') or lugar.get('punto') or {'lat': entrada.lat, 'lon': entrada.lon}
+    satellite = {}
+    if point.get('lat') is not None and point.get('lon') is not None:
+        job = coordenada.de_punto(point['lat'], point['lon']) or {}
+        products = ((job.get('fuentes') or {}).get('modis') or {}).get('productos') or {}
+        for product in ('MOD13Q1', 'MOD11A2'):
+            path = ((products.get(product) or {}).get('archivos') or {}).get('normalizado')
+            if path:
+                try:
+                    file = coordenada.archivo(path)
+                    if not file['recortado']:
+                        satellite[product] = file['contenido']
+                except Exception:
+                    pass  # La serie ausente queda ausente; no se reemplaza por un dato de ejemplo.
+    context = contexto_ia.preparar(lugar, climate, satellite)
+    return sobre(ia.responder(entrada.pregunta, context, [m.model_dump() for m in entrada.historial], session), base.procedencia(lugar))
 
 
 @app.post("/api/ia/naturalizar", response_model=Sobre, tags=["agente"])
@@ -242,8 +332,9 @@ def post_rotaciones(entrada: RotacionEntrada):
     capa = ((lugar.get("suelo") or {}).get("capas") or {}).get("phh2o_0-5cm_mean") or {}
     ph = capa.get("media", capa.get("valor"))
     if ph is not None:  # pH de SoilGrids leído de la base de Arequipa (0–5 cm)
-        ind = {**ind, "data": {**ind["data"], "suelo": {"ph": ph}}}
-    resultado = motor.comparar(p, parcelas.leer_contexto(p["id"]), ind)
+        ind = {**ind, "data": {**ind["data"], "suelo": {"ph": ph}},
+               "procedencia": [*ind['procedencia'], {'fuente': 'SoilGrids (ISRIC)', 'variable': 'phh2o', 'profundidad': '0–5 cm', 'escala': '250 m', 'origen': 'fuente'}]}
+    resultado = motor.comparar(p, entrada.contexto.model_dump(), ind)
     return sobre({**resultado, "parcela_id": p["id"], "sector": lugar.get("sector")}, ind["procedencia"],
                  ind["avisos"] + ["Sin puntaje: compara cada criterio con su rango citado de FAO EcoCrop."])
 

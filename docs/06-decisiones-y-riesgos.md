@@ -236,6 +236,15 @@ Detalle en [backend/DISENO.md](../plataforma/backend/DISENO.md).
 - Se dejó el repositorio de siempre (`otazu-shantall/QENTARA---Tarpu-2026`); el intento de mudarlo a otro repositorio se descartó.
 - Detalle en [informe 18](informes/18-carpeta-plataforma.md).
 
+### DT-28 · Conversación de IA dentro del chat y conexiones verificables
+
+**Indicada por Erick · 15/11/2026.** Alcance de esta sesión; no se atribuye una aprobación general al equipo.
+
+- Conversación de voz en el propio chat, con orbe animado durante escucha y habla, sin abrir la ventana de conversación separada. Texto y voz comparten respuesta y evidencia.
+- El asistente puede usar IA para explicar la evidencia de TARPU; los cálculos y reglas citadas permanecen en TARPU. Amplía el reparto «solo reformular para la voz» del informe 21. DT-16 se mantiene.
+- Se pide investigar la viabilidad de suscripciones antes de ofrecerlas. La implementación local personal de ChatGPT sigue SIWC; una cuenta real y el alojamiento remoto siguen pendientes de verificación y habilitación. Claude y Gemini se ofrecen por API, sin fingir inicio de sesión de suscripción.
+- Correcciones de rotación, calendarios satelitales, lectura entre servicios y tutorial incluidas en [informe 23](informes/23-correcciones-chat-voz-publicacion.md).
+
 ## Riesgos
 
 Prioridades cualitativas del informe (SUP-032), sin probabilidad medida.

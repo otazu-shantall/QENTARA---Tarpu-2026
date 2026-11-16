@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node scripts/iniciar.mjs",
     "start:sin-docker": "node scripts/iniciar.mjs --sin-docker",
+    "start:personal": "node scripts/iniciar.mjs --personal",
     "detener": "node scripts/detener.mjs",
     "estado": "supabase status && docker compose -f infra/docker-compose.yml --env-file infra/.env ps",
     "pruebas": "npm --prefix frontend test && cd backend && .venv\\Scripts\\python -m pytest -q",

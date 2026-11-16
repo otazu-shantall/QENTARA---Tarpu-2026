@@ -2,7 +2,7 @@
 // compara cada cultivo del catálogo con el clima y el suelo del lugar, criterio por criterio y con cita.
 // Sin puntaje, sin pesos y sin «apto / no apto» (DT-16): la interfaz solo muestra lo que devuelve el motor.
 // Escrito con asistencia de IA (Claude Code). Registro en entrega/uso-de-ia.md.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { useWorkspace } from '../../app/WorkspaceContext'
 import { catalog, rotations } from '../../services/api'
@@ -42,7 +42,9 @@ function StrategyCard({ strategy }: { strategy: Strategy }) {
           <h3>{capital(strategy.cultivo)}</h3>
           <p className="strategy-sub">
             <em>{strategy.nombre_cientifico}</em> · familia {strategy.familia}
-            {strategy.ciclo_dias ? ` · ciclo de ${strategy.ciclo_dias[0]} a ${strategy.ciclo_dias[1]} días` : ''}
+            {strategy.ciclo_dias
+              ? ` · ciclo de ${strategy.ciclo_dias[0]} a ${strategy.ciclo_dias[1]} días`
+              : ''}
           </p>
         </div>
         <a
@@ -103,6 +105,12 @@ function StrategyCard({ strategy }: { strategy: Strategy }) {
 
 export function RotationPage() {
   const { parcel } = useWorkspace()
+  return <RotationForm key={parcel.id} />
+}
+
+function RotationForm() {
+  const { parcel } = useWorkspace()
+  const request = useRef<AbortController | null>(null)
   const key = `tarpu.rotacion.${parcel.id}`
   const saved = (() => {
     try {
@@ -112,7 +120,9 @@ export function RotationPage() {
     }
   })()
   const [crops, setCrops] = useState<string[]>([])
-  const [zoneCrops, setZoneCrops] = useState<{ zone?: string; name?: string; crops: string[] }>({ crops: [] })
+  const [zoneCrops, setZoneCrops] = useState<{ zone?: string; name?: string; crops: string[] }>({
+    crops: [],
+  })
   const [crop, setCrop] = useState<string>(saved?.cultivo_actual ?? '')
   const [water, setWater] = useState<string>(saved?.agua ?? '')
   const [months, setMonths] = useState<number[]>(saved?.meses_campana ?? [])
@@ -128,19 +138,28 @@ export function RotationPage() {
   useEffect(() => {
     setResult(null)
     setZoneCrops({ crops: [] })
+    let live = true
     cachedBase(parcel)
-      .then((base) =>
-        setZoneCrops({
-          zone: base?.sector?.sector,
-          name: base?.sector?.nombre,
-          crops: base?.sector?.cultivos_principales ?? [],
-        }),
-      )
+      .then((base) => {
+        if (live)
+          setZoneCrops({
+            zone: base?.sector?.sector,
+            name: base?.sector?.nombre,
+            crops: base?.sector?.cultivos_principales ?? [],
+          })
+      })
       .catch(() => undefined)
+    return () => {
+      live = false
+      request.current?.abort()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parcel.id])
 
   function compare() {
+    request.current?.abort()
+    const current = new AbortController()
+    request.current = current
     const contexto: RotationContext = {
       cultivo_actual: crop || null,
       agua: (water || null) as RotationContext['agua'],
@@ -151,15 +170,19 @@ export function RotationPage() {
     } catch {}
     setState('loading')
     setError('')
-    rotations(parcel, contexto)
+    rotations(parcel, contexto, current.signal)
       .then((data) => {
+        if (current.signal.aborted) return
         setResult(data)
         setState('idle')
         requestAnimationFrame(() =>
-          document.querySelector('.rotation-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+          document
+            .querySelector('.rotation-results')
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
         )
       })
       .catch((e: Error) => {
+        if (current.signal.aborted) return
         setError(e.message)
         setState('error')
       })
@@ -213,7 +236,9 @@ export function RotationPage() {
                   className={on ? 'on' : ''}
                   onClick={() =>
                     setMonths((previous) =>
-                      previous.includes(month) ? previous.filter((m) => m !== month) : [...previous, month],
+                      previous.includes(month)
+                        ? previous.filter((m) => m !== month)
+                        : [...previous, month],
                     )
                   }
                 >
@@ -224,7 +249,11 @@ export function RotationPage() {
           </div>
           <small>Con los meses se calcula la temperatura y las noches de frío de tu campaña.</small>
         </fieldset>
-        <button className="button button-green extract-button" onClick={compare} disabled={state === 'loading'}>
+        <button
+          className="button button-green extract-button"
+          onClick={compare}
+          disabled={state === 'loading'}
+        >
           <Icon name={state === 'loading' ? 'loader' : 'sprout'} size={19} />
           {state === 'loading' ? 'Comparando…' : 'Comparar cultivos para rotar'}
         </button>
@@ -250,14 +279,16 @@ export function RotationPage() {
             </div>
           </div>
           <div className="state-legend" aria-label="Qué significa cada marca">
-            {(['dentro_optimo', 'dentro_absoluto', 'fuera_absoluto', 'sin_dato'] as const).map((s) => (
-              <span key={s} className={`criterion tone-${STATE[s].tone}`}>
-                <span className="criterion-icon">
-                  <Icon name={STATE[s].icon} size={13} />
+            {(['dentro_optimo', 'dentro_absoluto', 'fuera_absoluto', 'sin_dato'] as const).map(
+              (s) => (
+                <span key={s} className={`criterion tone-${STATE[s].tone}`}>
+                  <span className="criterion-icon">
+                    <Icon name={STATE[s].icon} size={13} />
+                  </span>
+                  {STATE[s].label}
                 </span>
-                {STATE[s].label}
-              </span>
-            ))}
+              ),
+            )}
             <Link to="/app/ayuda?tab=fuentes#ecocrop" className="info-link">
               <span className="info-dot small">i</span> De dónde salen los rangos
             </Link>
@@ -269,7 +300,8 @@ export function RotationPage() {
           </div>
           {result.no_incluidos.length > 0 && (
             <p className="small-note">
-              No se incluyen: {result.no_incluidos.map((n) => `${n.cultivo} (${n.motivo})`).join('; ')}
+              No se incluyen:{' '}
+              {result.no_incluidos.map((n) => `${n.cultivo} (${n.motivo})`).join('; ')}
             </p>
           )}
           {(result.vacios_generales.length > 0 || result.advertencias_catalogo.length > 0) && (
@@ -293,13 +325,17 @@ export function RotationPage() {
         <section className="card zone-crops">
           <h2>
             Lo que más se siembra en tu zona
-            <Link to="/app/ayuda?tab=fuentes#cenagro" className="info-dot small" aria-label="Fuente: censo 2012">
+            <Link
+              to="/app/ayuda?tab=fuentes#cenagro"
+              className="info-dot small"
+              aria-label="Fuente: censo 2012"
+            >
               i
             </Link>
           </h2>
           <p>
-            Zona {zoneCrops.zone}, {zoneCrops.name?.toLowerCase()}. Ordenado por superficie sembrada en el
-            censo agropecuario de 2012. Describe la zona; no es una recomendación.
+            Zona {zoneCrops.zone}, {zoneCrops.name?.toLowerCase()}. Ordenado por superficie sembrada
+            en el censo agropecuario de 2012. Describe la zona; no es una recomendación.
           </p>
           <ol className="crop-ranking">
             {zoneCrops.crops.map((c) => (

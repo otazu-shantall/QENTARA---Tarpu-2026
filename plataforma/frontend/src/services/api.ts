@@ -5,8 +5,8 @@ import type { Coordinate } from '../types/domain'
 
 /** Dirección de la API. En desarrollo, el backend local; al desplegar se fija con VITE_TARPU_API. */
 export const API_BASE = (
-  (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env
-    ?.VITE_TARPU_API ?? 'http://127.0.0.1:8000'
+  (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env?.VITE_TARPU_API ??
+  'http://127.0.0.1:8000'
 ).replace(/\/$/, '')
 
 export class ApiError extends Error {
@@ -26,6 +26,7 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
       headers: { 'content-type': 'application/json', ...init?.headers },
     })
   } catch {
+    init?.signal?.throwIfAborted()
     throw new ApiError(
       'No se pudo conectar con el servidor de TARPU. Revisa que esté encendido.',
       'sin_conexion',
@@ -244,8 +245,7 @@ export const startJobAt = (lat: number, lon: number, name?: string) =>
     method: 'POST',
     body: JSON.stringify({ lat, lon, ...(name ? { nombre: name } : {}) }),
   })
-export const job = (key: string) =>
-  request<Job>(`/api/trabajos/${encodeURIComponent(key)}`)
+export const job = (key: string) => request<Job>(`/api/trabajos/${encodeURIComponent(key)}`)
 export const jobs = () => request<Job[]>('/api/trabajos')
 export const cancelJobs = (keys: string[]) =>
   request<unknown>('/api/trabajos/cancelar', {
@@ -300,7 +300,12 @@ export interface Criterion {
   titulo: string
   estado: CriterionState
   dato: Record<string, unknown> | null
-  regla: { optimo?: [number, number]; absoluto?: [number, number]; unidad?: string; cita?: { fuente: string; url: string } } | null
+  regla: {
+    optimo?: [number, number]
+    absoluto?: [number, number]
+    unidad?: string
+    cita?: { fuente: string; url: string }
+  } | null
   nota: string | null
 }
 export interface Strategy {
@@ -334,8 +339,10 @@ export interface RotationContext {
 export const rotations = (
   place: { name: string; boundary: Coordinate[]; point?: { lat: number; lon: number } },
   contexto: RotationContext,
+  signal?: AbortSignal,
 ) =>
   request<Rotations>('/api/rotaciones', {
+    signal,
     method: 'POST',
     body: JSON.stringify({
       nombre: place.name.slice(0, 80),
@@ -345,16 +352,29 @@ export const rotations = (
       contexto,
     }),
   })
-export const catalog = () => request<{ cultivo: string; nombre_cientifico: string; familia: string }[]>('/api/catalogo')
+export const catalog = () =>
+  request<{ cultivo: string; nombre_cientifico: string; familia: string }[]>('/api/catalogo')
 
 // ------------------------------------------------------------------ conector de IA (solo voz natural)
 export interface AiStatus {
-  proveedores: { id: string; nombre: string; variable: string; estado: string; motivo: string | null }[]
+  proveedores: {
+    id: string
+    nombre: string
+    variable: string
+    estado: string
+    motivo: string | null
+  }[]
   activo: string | null
   modelo: string | null
   reparto: { tarpu: string[]; ia: string[] }
+  chatgpt?: {
+    disponible: boolean
+    vinculado: boolean
+    permiso_plan: boolean
+    email?: string | null
+  }
 }
-export const aiStatus = () => request<AiStatus>('/api/ia/estado')
+export const aiStatus = () => request<AiStatus>('/api/ia/estado', { credentials: 'include' })
 /** La IA reescribe, para decirla en voz alta, una respuesta que TARPU ya preparó. Sin IA devuelve el mismo texto. */
 export const naturalize = (pregunta: string, respuesta: string) =>
   request<{ texto: string; con_ia: boolean; motivo: string | null }>('/api/ia/naturalizar', {

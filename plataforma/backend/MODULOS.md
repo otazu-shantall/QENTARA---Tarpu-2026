@@ -1,5 +1,7 @@
 # Módulos del backend de TARPU
 
+> **Actualización · 15/11/2026 (Codex):** `contexto_ia.py` resume evidencia de la API para `ia.py`; `chatgpt.py` implementa OAuth PKCE/OIDC local con sesiones aisladas, firma verificada y permiso de uso del plan. `ia.py` explica esa evidencia con un proveedor configurado; ante fallos la web conserva el modo guiado. `tarpu_datos/archivos.py` define rutas portables y `publicar_archivos.py` publica archivos de trabajos anteriores. El repositorio Supabase publica/lee esos archivos en Storage. Los rótulos históricos «solo voz natural» de abajo quedan reemplazados para la implementación vigente por [informe 23](../../docs/informes/23-correcciones-chat-voz-publicacion.md).
+
 > Versión escrita del mapa [diagramas/tarpu-backend-mapa.pdf](diagramas/tarpu-backend-mapa.pdf) ([PNG](diagramas/tarpu-backend-mapa.png)). 14/11/2026: sin supuestos (DT-16), con las tres fuentes de la demo (DT-17) y **construido**. Decisiones: DT-13 (FastAPI con exportación a JSON), DT-14 (agente guiado), DT-15 (Vercel o Netlify), DT-16 (cero supuestos) y DT-17 (solo POWER, MODIS y SoilGrids).
 >
 > **Cómo se conectan** (recorrido por módulo, herramientas, interfaces, errores, pruebas y orden de construcción): [DISENO.md](DISENO.md).
