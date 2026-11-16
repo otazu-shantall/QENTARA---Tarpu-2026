@@ -215,8 +215,8 @@ export function AccessPage() {
           <div className="access-notice">
             <Icon name="shield" />
             <p>
-              <strong>Estás explorando un prototipo</strong>Usa datos de ejemplo. No se crea una
-              cuenta real ni se guardan el DNI o las contraseñas.
+              <strong>Estás explorando un prototipo</strong>Los datos son reales, pero el acceso es de
+              prueba: no se crea una cuenta ni se guardan el DNI o las contraseñas.
             </p>
           </div>
           <button className="button button-outline full" onClick={() => enter()}>

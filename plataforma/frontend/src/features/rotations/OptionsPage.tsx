@@ -28,16 +28,8 @@ export function OptionsPage() {
     <>
       <section className="crop-intro">
         <div>
-          <span className="eyebrow">EXPLORAR ANTES DE DECIDIR</span>
-          <h2>
-            Las mejores opciones,
-            <br />
-            <em>primero.</em>
-          </h2>
-          <p>
-            Verduras y hortalizas, legumbres, frutas y flores: conoce qué revisar antes de elegir un
-            cultivo para tu parcela en Arequipa.
-          </p>
+          <h2>Fichas de cultivos</h2>
+          <p>Qué revisar antes de elegir un cultivo.</p>
         </div>
         <div className="current-crop">
           <Icon name="sprout" size={28} />

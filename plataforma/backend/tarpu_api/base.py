@@ -7,13 +7,14 @@ from __future__ import annotations
 
 from tarpu_datos.base import leer as _leer
 
-from . import errores, geometria
+from . import errores, geometria, lectura
 
 
 def en_punto(lat: float, lon: float) -> dict:
     if not (-90 <= lat <= 90 and -180 <= lon <= 180):
         raise errores.datos_invalidos([{"campo": "lat/lon", "mensaje": "coordenadas fuera de rango"}])
-    return _leer.leer(lat, lon)
+    r = _leer.leer(lat, lon)
+    return {**r, "lectura": lectura.leer(r)} if r.get("estado") == "listo" else r
 
 
 def procedencia(resultado: dict) -> list[dict]:
@@ -40,4 +41,5 @@ def ruta_mapa_sectores():
 def en_parcela(contorno: dict) -> dict:
     """Capa 1 en todo el espacio de una parcela dibujada (contorno GeoJSON validado por geometria)."""
     medidas = geometria.medir(contorno)
-    return {**_leer.leer_parcela(contorno), "geometria": medidas}
+    r = {**_leer.leer_parcela(contorno), "geometria": medidas}
+    return {**r, "lectura": lectura.leer(r)} if r.get("estado") == "listo" else r

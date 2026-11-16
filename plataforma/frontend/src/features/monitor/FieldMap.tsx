@@ -7,6 +7,8 @@ import type { Coordinate } from '../../types/domain'
 import { buildParcelOverlay, parcelLayers } from '../../lib/parcelOverlay'
 import type { ParcelLayer } from '../../lib/parcelOverlay'
 import { Icon } from '../../components/ui/Icon'
+import { sectorImage, sectorMap } from '../../services/api'
+import type { SectorMap } from '../../services/api'
 
 const AREQUIPA: L.LatLngTuple = [-16.2, -72.3]
 
@@ -42,6 +44,8 @@ export function FieldMap({
   const [locationMessage, setLocationMessage] = useState('')
   const [retry, setRetry] = useState(0)
   const [layers, setLayers] = useState(false)
+  const [zones, setZones] = useState<SectorMap | null>(null)
+  const [showZones, setShowZones] = useState(true)
   useEffect(() => {
     if (!container.current) return
     const instance = L.map(container.current, {
@@ -167,6 +171,40 @@ export function FieldMap({
         { padding: illustrative ? [42, 42] : [60, 60], maxZoom: 18 },
       )
   }, [closed])
+  // Zonas de Arequipa por altitud (S1, S2, S3) y el recuadro que cubre la base de datos.
+  useEffect(() => {
+    let alive = true
+    sectorMap()
+      .then((value) => alive && setZones(value))
+      .catch(() => undefined)
+    return () => {
+      alive = false
+    }
+  }, [])
+  useEffect(() => {
+    const instance = map.current
+    if (!instance || !zones || !showZones) return
+    const image = L.imageOverlay(sectorImage, zones.limites_mapa, {
+      opacity: 0.45,
+      interactive: false,
+    }).addTo(instance)
+    const box = L.rectangle(zones.limites_mapa, {
+      color: '#ffffff',
+      weight: 2,
+      dashArray: '8 6',
+      fill: false,
+      interactive: false,
+    }).addTo(instance)
+    // Muy cerca, las celdas de ≈ 1 km tapan el campo: se atenúan.
+    const fade = () => image.setOpacity(instance.getZoom() >= 14 ? 0.12 : 0.45)
+    fade()
+    instance.on('zoomend', fade)
+    return () => {
+      instance.off('zoomend', fade)
+      image.remove()
+      box.remove()
+    }
+  }, [zones, showZones])
   // Lugar de referencia: un punto de consulta, no un contorno.
   useEffect(() => {
     const instance = map.current
@@ -319,6 +357,16 @@ export function FieldMap({
           >
             Mapa de calles {basemap === 'streets' && <Icon name="check" size={16} />}
           </button>
+          {zones && (
+            <button
+              onClick={() => {
+                setShowZones(!showZones)
+                setLayers(false)
+              }}
+            >
+              Zonas de Arequipa {showZones && <Icon name="check" size={16} />}
+            </button>
+          )}
           <p>
             Imagen nítida de Esri hasta el zoom 17 en el campo; más cerca, se amplía la última
             imagen real.
@@ -379,14 +427,20 @@ export function FieldMap({
           </div>
         </div>
       )}
-      <div className="map-legend">
-        <span className="north">N ↑</span>
-        <span>
-          {illustrative && analysisLayer !== 'none'
-            ? 'Patrón sintético · no es un dato satelital'
-            : 'Imagen Esri · los datos están en las tarjetas'}
-        </span>
-      </div>
+      {zones && showZones && (
+        <div className="zone-legend" aria-label="Zonas de Arequipa por altitud">
+          {Object.entries(zones.sectores).map(([key, zone]) => (
+            <span key={key}>
+              <i style={{ background: `rgb(${zone.color_rgba.slice(0, 3).join(',')})` }} />
+              {key} · {zone.altitud_m[0]}–{zone.altitud_m[1]} m
+            </span>
+          ))}
+          <span>
+            <i className="zone-box" />
+            Área de la base de datos
+          </span>
+        </div>
+      )}
     </div>
   )
 }

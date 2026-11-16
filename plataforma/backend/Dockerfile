@@ -13,6 +13,8 @@ RUN pip install -r requirements.txt
 COPY tarpu_api ./tarpu_api
 COPY tarpu_datos ./tarpu_datos
 COPY catalogo ./catalogo
+# Fichas EcoCrop de los cultivos de Arequipa: las usa tarpu_api/lectura.py para explicar el pH.
+COPY investigacion ./investigacion
 COPY contrato ./contrato
 COPY prueba_web ./prueba_web
 COPY docker/entrada.sh /entrada.sh

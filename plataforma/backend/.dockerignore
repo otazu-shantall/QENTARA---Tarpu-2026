@@ -3,7 +3,8 @@ almacen/
 **/__pycache__/
 .pytest_cache/
 tests/
-investigacion/
+investigacion/*
+!investigacion/cultivos_arequipa_2026-11-14.json
 herramientas/
 diagramas/
 .env

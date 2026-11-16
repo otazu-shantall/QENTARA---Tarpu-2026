@@ -184,6 +184,7 @@ No usa un modelo de IA (DT-14), no inventa observaciones y no cambia las reglas.
 | Módulo | Hace |
 |---|---|
 | `esquemas.py` | Contrato Pydantic. Sobre común: `data`, `procedencia`, `avisos`, `modo` y `generado`. Cada valor indica si viene de una **fuente** o fue **declarado por el usuario**. `python -m tarpu_api.esquemas` escribe `contrato/esquemas/` |
+| `lectura.py` | Lo que significa cada dato de la base, con cita (15/11/2026): clase de pendiente FAO (2006, cuadro 7), pH frente al rango de FAO EcoCrop de cada cultivo de la zona (`dentro_optimo`, `dentro_absoluto`, `fuera_absoluto`, `sin_regla`) y qué fracción del suelo predomina. La clase textural USDA queda `sin_regla` hasta copiar sus límites de la fuente. Se añade como `lectura` en `/api/base` y `/api/base/parcela` |
 | `main.py` | Rutas FastAPI, manejo de errores y documentación en `/docs` |
 | `meta.py` | Versión, modo (`en_vivo` o `publicado`), fuentes con su estado y período de POWER |
 | `procesamiento.py` | `POST …/procesar` y `GET …/procesamiento`: estado por fuente (listo, parcial, en proceso o no disponible) con el motivo real |

@@ -83,3 +83,20 @@ def test_power_se_lee_de_la_celda_de_la_base():
     r = trabajos._power_de_la_base(-15.64, -71.60)
     assert r["reutilizado"]["celda"] == "POWER:-15.500,-71.875"
     assert r["reutilizado"]["elevacion_celda_m"] == 4351.89
+
+
+def test_lectura_compara_ph_con_ecocrop_sin_inventar():
+    """La lectura del pH usa los rangos de EcoCrop; un cultivo sin ficha sale sin_regla, nunca un valor inventado."""
+    from tarpu_api import lectura
+    base = {
+        'relieve': {'estado': 'listo', 'pendiente_pct': {'mediana': 3.1}},
+        'sector': {'cultivos_principales': ['alfalfa', 'cultivo_inexistente']},
+        'suelo': {'capas': {'phh2o_0-5cm_mean': {'media': 7.0}, 'sand_0-5cm_mean': {'media': 60.0},
+                            'silt_0-5cm_mean': {'media': 25.0}, 'clay_0-5cm_mean': {'media': 15.0}}},
+    }
+    r = lectura.leer(base)
+    assert r['pendiente']['clase'] == 'suave'  # FAO (2006): 2 a 5 %
+    estados = {c['cultivo']: c['estado'] for c in r['ph']['cultivos_de_la_zona']}
+    assert estados['alfalfa'] == 'dentro_optimo'  # EcoCrop: óptimo 6,5 a 7,5
+    assert estados['cultivo_inexistente'] == 'sin_regla'
+    assert r['textura']['predomina'] == 'arena' and r['textura']['clase_usda'] is None

@@ -140,6 +140,27 @@ export interface BaseParcel {
   }
   avisos?: string[]
   cobertura?: Record<string, string>
+  lectura?: Reading
+}
+
+/** Lo que significa cada dato, con su cita (backend/tarpu_api/lectura.py). */
+export interface CropPh {
+  cultivo: string
+  estado: 'dentro_optimo' | 'dentro_absoluto' | 'fuera_absoluto' | 'sin_regla'
+  ph_optimo?: [number, number]
+  ph_absoluto?: [number, number]
+  fuente?: string
+  motivo?: string
+}
+export interface Reading {
+  pendiente: { valor_pct: number | null; clase: string | null; cita: string }
+  ph: { valor: number | null; escala: string; cultivos_de_la_zona: CropPh[]; cita: string }
+  textura: {
+    fracciones_pct: Record<'arena' | 'limo' | 'arcilla', number | null>
+    predomina: 'arena' | 'limo' | 'arcilla' | null
+    clase_usda: string | null
+    motivo_clase: string
+  }
 }
 
 export const baseParcel = (coordinates: Coordinate[]) =>
@@ -155,7 +176,13 @@ export interface SectorMap {
   metodo: string
   aviso: string
 }
-export const sectorMap = () => request<SectorMap>('/api/base/sectores')
+let sectors: Promise<SectorMap> | null = null
+/** Mapa de zonas de Arequipa (una sola petición compartida). */
+export const sectorMap = () =>
+  (sectors ??= request<SectorMap>('/api/base/sectores').catch((error) => {
+    sectors = null
+    throw error
+  }))
 export const sectorImage = `${API_BASE}/api/base/sectores.png`
 
 // ------------------------------------------------------------------ capa 2: trabajos por coordenada
@@ -210,6 +237,12 @@ export const startJob = (coordinates: Coordinate[], name?: string) =>
       contorno: polygon(coordinates),
       ...(name ? { nombre: name } : {}),
     }),
+  })
+/** Trabajo para un punto de consulta (lugar de referencia), sin contorno. */
+export const startJobAt = (lat: number, lon: number, name?: string) =>
+  request<Job>('/api/trabajos', {
+    method: 'POST',
+    body: JSON.stringify({ lat, lon, ...(name ? { nombre: name } : {}) }),
   })
 export const job = (key: string) =>
   request<Job>(`/api/trabajos/${encodeURIComponent(key)}`)

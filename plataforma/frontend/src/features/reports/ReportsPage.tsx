@@ -56,9 +56,8 @@ export function ReportsPage() {
           <Icon name="report" size={28} />
         </span>
         <div>
-          <span className="eyebrow">CONSERVA LA CONSULTA</span>
-          <h2>Un resumen que puedes volver a mirar.</h2>
-          <p>Guarda una copia de la evidencia disponible y sus límites en este navegador.</p>
+          <h2>Mis resúmenes guardados</h2>
+          <p>Guarda una copia de los datos de tu parcela en este navegador.</p>
         </div>
         <button className="button button-green" disabled={!evidence} onClick={save}>
           <Icon name="plus" size={17} /> Guardar resumen actual

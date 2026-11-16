@@ -1,4 +1,5 @@
 // Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md.
+// 15/11/2026 (Claude Code): encabezado compacto (solo el nombre de la página), sin textos de relleno.
 import { useState } from 'react'
 import { NavLink, Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router'
 import { useWorkspace } from '../../app/WorkspaceContext'
@@ -43,7 +44,7 @@ export function WorkspaceLayout() {
         <Link to="/" className="sidebar-brand" aria-label="TARPU, inicio">
           <img src="brand/tarpu-logo-white.png" alt="TARPU" />
         </Link>
-        <div className="workspace-label">TU ESPACIO DE TRABAJO</div>
+        <div className="workspace-label">MENÚ</div>
         <nav aria-label="Menú principal">
           {navigation.map((item) => (
             <NavLink
@@ -68,17 +69,13 @@ export function WorkspaceLayout() {
             <i />
             <i />
           </div>
-          <strong>
-            Una pregunta puede
-            <br />
-            abrir otra perspectiva.
-          </strong>
+          <strong>¿Tienes una pregunta sobre tus datos?</strong>
           <button onClick={() => setAssistantOpen(true)}>
             Pregunta a Tarpu <Icon name="upRight" size={16} />
           </button>
         </div>
         <div className="sidebar-bottom">
-          <span className="workspace-label">PROFUNDIZA A TU MANERA</span>
+          <span className="workspace-label">MÁS DETALLE</span>
           <NavLink className="nav-item" to="/app/estudio-tecnico">
             <Icon name="data" />
             <span>Estudio técnico</span>
@@ -139,29 +136,7 @@ export function WorkspaceLayout() {
         </header>
         <main id="workspace-main" tabIndex={-1} className="workspace-main">
           <div className="page-heading">
-            <div>
-              <span className="eyebrow">TU CAMPO, CON EVIDENCIA</span>
-              <h1>
-                {current === 'Mi campo'
-                  ? 'Cada campo, una historia.'
-                  : current === 'Historial'
-                    ? 'El pasado también cuenta.'
-                    : current === 'Recomendaciones'
-                      ? 'Explora lo que viene después.'
-                      : current === 'Estudio técnico'
-                        ? 'Estudio técnico de tu parcela.'
-                        : current === 'Mis informes'
-                          ? 'Tu evidencia, a mano.'
-                          : 'Aquí empieza tu parcela.'}
-              </h1>
-              <p>
-                {current === 'Mi campo'
-                  ? 'Una mirada a la información disponible, con sus alcances y sus límites.'
-                  : current === 'Estudio técnico'
-                    ? 'Registros y procedencia de la misma consulta, sin evaluación agronómica.'
-                    : 'Comprende la evidencia. Conserva el contexto. Decide con claridad.'}
-              </p>
-            </div>
+            <h1 className="page-title">{current}</h1>
             <div className="page-actions">
               <label className="parcel-select">
                 <Icon name="pin" size={18} />
@@ -185,38 +160,12 @@ export function WorkspaceLayout() {
               )}
             </div>
           </div>
-          <div className={`source-context ${parcel.kind === 'example' ? 'is-example' : ''}`}>
-            <Icon name={parcel.kind === 'example' ? 'layers' : 'shield'} size={19} />
-            <p>
-              <strong>
-                {parcel.kind === 'example'
-                  ? 'Datos y contorno de ejemplo'
-                  : parcel.kind === 'reference'
-                    ? `Lugar de referencia real · ${parcel.location}`
-                    : 'Tu parcela · contorno declarado por ti'}
-              </strong>
-              <span>
-                {parcel.kind === 'example'
-                  ? 'Valores ficticios para explorar la interfaz. No son un diagnóstico ni una recomendación.'
-                  : parcel.kind === 'reference'
-                    ? 'Punto de consulta con datos de NASA y del censo, leídos del servidor. No es el límite de una parcela.'
-                    : 'Los datos de tu campo se leen del servidor, cada uno con su fuente y su escala.'}
-              </span>
-            </p>
-            {parcel.kind !== 'declared' && (
-              <Link className="text-link" to="/app/parcela/nueva">
-                Analizar mi campo
-                <Icon name="upRight" size={16} />
-              </Link>
-            )}
-          </div>
           <Outlet />
         </main>
         <footer className="workspace-footer">
           <span>
             TARPU <i>·</i> QENTARA
           </span>
-          <span>Datos con contexto. Decisiones en tus manos.</span>
           <span>Arequipa, Perú</span>
         </footer>
       </div>

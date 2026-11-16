@@ -3,7 +3,7 @@
 // Escrito con asistencia de IA (Claude Code). Registro en entrega/uso-de-ia.md.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { ApiError, FINISHED, cancelJobs, job as getJob, jobName, parseCsv, rawFile, startJob } from './api'
+import { ApiError, FINISHED, cancelJobs, job as getJob, jobName, parseCsv, rawFile, startJob, startJobAt } from './api'
 import type { BaseParcel, Job } from './api'
 import { cachedBase, centerOf, jobAt, modisFile } from './remote'
 import type { Parcel } from '../types/domain'
@@ -18,6 +18,8 @@ export interface ParcelData {
   job: Loadable<Job>
   landCover: { date: string; code: number } | null
   running: boolean
+  /** Ya se pidió la extracción completa (o el servidor ya tenía el trabajo de este lugar). */
+  extracted: boolean
   extract: () => void
   cancel: () => void
   retry: () => void
@@ -93,12 +95,15 @@ export function useParcelData(parcel: Parcel): ParcelData {
   const extract = useCallback(() => {
     const mine = parcel.id
     setJob((previous) => ({ state: 'loading', data: previous.data }))
+    const center = centerOf(parcel, base.data ?? null)
     const request =
       parcel.boundary.length > 2
         ? startJob(parcel.boundary, jobName(parcel.name))
-        : null
+        : center
+          ? startJobAt(center.lat, center.lon, jobName(parcel.name))
+          : null
     if (!request) {
-      setJob({ state: 'error', error: 'Dibuja el contorno de tu campo para traer sus datos satelitales.' })
+      setJob({ state: 'error', error: 'Falta la ubicación de este lugar.' })
       return
     }
     request
@@ -108,7 +113,7 @@ export function useParcelData(parcel: Parcel): ParcelData {
       .catch((error) => {
         if (current.current === mine) setJob({ state: 'error', error: message(error) })
       })
-  }, [parcel])
+  }, [parcel, base.data])
 
   const cancel = useCallback(() => {
     if (!key) return
@@ -123,6 +128,7 @@ export function useParcelData(parcel: Parcel): ParcelData {
     job,
     landCover,
     running,
+    extracted: !!job.data || job.state === 'loading',
     extract,
     cancel,
     retry: () => setAttempt((n) => n + 1),

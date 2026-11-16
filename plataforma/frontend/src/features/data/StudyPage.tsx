@@ -76,16 +76,8 @@ export function StudyPage() {
     <>
       <section className="study-hero">
         <div>
-          <span className="eyebrow">ESPACIO PARA INVESTIGACIÓN AGRONÓMICA</span>
-          <h2>
-            De la observación
-            <br />
-            <em>al estudio completo.</em>
-          </h2>
-          <p>
-            Consulta series, unidades, procedencia y calidad. Descarga la selección para continuar
-            el análisis en tus propias herramientas.
-          </p>
+          <h2>Todos los registros y sus fuentes</h2>
+          <p>Series, unidades, procedencia y descargas en CSV, JSON o GeoJSON.</p>
         </div>
         <div className="study-stamp">
           <Icon name="study" size={42} />

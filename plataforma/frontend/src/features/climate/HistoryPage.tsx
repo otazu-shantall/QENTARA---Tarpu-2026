@@ -33,11 +33,8 @@ export function HistoryPage() {
       <section className="card history-card">
         <div className="section-title">
           <div>
-            <span className="eyebrow">LA HISTORIA DE {parcel.name}</span>
-            <h2>Acércate a cada momento.</h2>
-            <p className="muted">
-              Días para mirar el detalle. Semanas y meses para reconocer cambios.
-            </p>
+            <h2>Clima y satélite de {parcel.name}, día a día</h2>
+            <p className="muted">Agrupa por días, semanas o meses y elige qué variable ver.</p>
           </div>
           <span className="status-pill">
             {evidence?.origin === 'synthetic'
