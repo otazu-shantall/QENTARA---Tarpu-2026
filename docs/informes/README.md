@@ -35,6 +35,7 @@ Las fechas son las de cuando ocurrió el trabajo; no son plazos.
 | 19 | Mi campo más simple: mapa grande con zonas, «Extraer datos completos» y resultados explicados | 15/11/2026 | [19-mi-campo-simple.md](19-mi-campo-simple.md) |
 | 20 | Pulido: tarjetas interactivas, rotación con el motor, historial por año, ayuda, tutorial y asistente | 15/11/2026 | [20-pulido-interactivo.md](20-pulido-interactivo.md) |
 | 21 | Asistente rehecho, conector de IA (solo voz natural), ventanas amplias y recorridos por sección | 15/11/2026 | [21-asistente-conector-ia.md](21-asistente-conector-ia.md) |
+| 22 | Revisión del código vigente y puntos pendientes para publicar | 15/11/2026 | [22-revision-codigo-publicacion.md](22-revision-codigo-publicacion.md) |
 | **En curso** | — | — | [en-curso.md](en-curso.md) (bitácora para retomar si algo se corta) |
 
 Antes del 24/10/2026 el trabajo fue solo documental: las versiones 0.1 a 0.4 del informe maestro. Su historial está en el anexo G del informe.

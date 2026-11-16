@@ -4,7 +4,7 @@
 > Se actualiza al terminar cada paso, al encontrar un error y antes de cada proceso largo. Al cerrar el trabajo, su contenido pasa a un informe nuevo y esta página se vacía para el siguiente.
 
 **Trabajo:** Hackathon · **fase 1 del [ROADMAP](../../ROADMAP.md)**: cada área planifica su parte y llena su [plantilla de propuesta](../areas/).
-**Último trabajo cerrado:** 16 · Integración del frontend en el repositorio compartido (15/11/2026) → [16-integracion-repositorio-frontend.md](16-integracion-repositorio-frontend.md). Se conservan los avances de las otras áreas y la fase organizativa.
+**Último trabajo cerrado:** 22 · Revisión del código vigente para preparar correcciones (15/11/2026) → [22-revision-codigo-publicacion.md](22-revision-codigo-publicacion.md). Build, 11 pruebas de frontend y 22 de backend aprobadas. Hallazgos documentados; pendiente concretar las correcciones solicitadas por Erick. El producto está en `plataforma/` (DT-27). Las notas organizativas de abajo se conservan como antecedente; no describen por sí solas el estado técnico actual.
 
 ## Pendiente de la demo (no olvidar)
 
