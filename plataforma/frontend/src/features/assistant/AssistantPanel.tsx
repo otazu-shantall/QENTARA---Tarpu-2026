@@ -6,14 +6,16 @@ import { assistantService } from '../../services/local'
 import { VoiceRoom } from './VoiceRoom'
 import { useBrowserVoice } from './useBrowserVoice'
 import { Icon } from '../../components/ui/Icon'
+import { AGENT } from '../../lib/agent'
 type Message = { id: string; role: 'user' | 'assistant'; text: string; evidence?: string | null }
 export function AssistantPanel() {
-  const { parcel, evidence, setAssistantOpen } = useWorkspace()
+  const { parcel, evidence, setAssistantOpen, assistantQuestion, clearAssistantQuestion } =
+    useWorkspace()
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       role: 'assistant',
-      text: 'Hola, soy Tarpu. Podemos explorar juntos los datos de tu campo. ¿Qué te gustaría comprender?',
+      text: `Hola, soy ${AGENT}, el asistente de TARPU. Te explico los datos de tu campo con sus fuentes. ¿Qué te gustaría entender?`,
     },
   ])
   const [voiceOpen, setVoiceOpen] = useState(false)
@@ -71,6 +73,18 @@ export function AssistantPanel() {
       if (!request.signal.aborted) setPending(false)
     }
   }
+  // Si se abrió desde una tarjeta, la pregunta se envía sola.
+  useEffect(() => {
+    if (!assistantQuestion) return
+    const question = assistantQuestion
+    // Con un temporizador, el modo estricto de React (que monta dos veces) la envía una sola vez.
+    const timer = setTimeout(() => {
+      clearAssistantQuestion()
+      void send(question)
+    }, 60)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [assistantQuestion])
   return (
     <>
       {' '}
@@ -78,14 +92,14 @@ export function AssistantPanel() {
         className="assistant-panel"
         role="dialog"
         aria-modal="false"
-        aria-label="Asistente Tarpu"
+        aria-label={`Asistente ${AGENT}`}
       >
         <header className="assistant-header">
           <span className="assistant-logo">
             <img src="brand/tarpu-mark-white.png" alt="" />
           </span>
           <div>
-            <h2>Conversa con Tarpu</h2>
+            <h2>Conversa con {AGENT}</h2>
             <small>
               <span className="live-dot" /> {parcel.name}
             </small>
@@ -110,7 +124,7 @@ export function AssistantPanel() {
         <div className="assistant-messages" role="log" aria-label="Conversación">
           {messages.map((message) => (
             <article key={message.id} className={`message ${message.role}`}>
-              <span>{message.role === 'user' ? 'Tú' : 'Tarpu'}</span>
+              <span>{message.role === 'user' ? 'Tú' : AGENT}</span>
               <p>{message.text}</p>
               {message.role === 'assistant' && message.id !== 'welcome' && (
                 <div className="message-actions">
@@ -156,7 +170,7 @@ export function AssistantPanel() {
           >
             <input
               ref={inputRef}
-              aria-label="Tu pregunta a Tarpu"
+              aria-label={`Tu pregunta a ${AGENT}`}
               placeholder="Escribe tu pregunta…"
               value={input}
               maxLength={700}

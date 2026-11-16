@@ -108,13 +108,15 @@ async function web() {
     aviso('instalando dependencias del frontend…')
     correr('npm --prefix frontend ci')
   }
-  const vite = spawn('npm --prefix frontend run dev', {
+  const yaEncendida = await fetch(WEB).then((r) => r.ok).catch(() => false)
+  if (yaEncendida) aviso('la web ya estaba encendida en el puerto 5174: se reutiliza')
+  const vite = yaEncendida ? null : spawn('npm --prefix frontend run dev', {
     cwd: RAIZ,
     shell: true,
     stdio: 'inherit',
     env: { ...process.env, VITE_TARPU_API: API },
   })
-  procesos.push(vite)
+  if (vite) procesos.push(vite)
   await esperarUrl(WEB, 60, 'la página web')
   console.log(`\n\x1b[32mTARPU está listo:\x1b[0m ${WEB}`)
   console.log(`  API: ${API}   ·   Supabase Studio: ${SIN_DOCKER ? '(sin Docker)' : 'http://127.0.0.1:55323'}`)

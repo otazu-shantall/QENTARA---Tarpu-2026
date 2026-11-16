@@ -1,33 +1,55 @@
 // Desarrollo asistido por IA. Registro: entrega/uso-de-ia.md.
 // 15/11/2026 (Claude Code): encabezado compacto (solo el nombre de la página), sin textos de relleno.
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, Link, Navigate, Outlet, useLocation, useNavigate } from 'react-router'
 import { useWorkspace } from '../../app/WorkspaceContext'
 import { Icon } from '../ui/Icon'
 import type { IconName } from '../ui/Icon'
-import { Dialog } from '../ui/Dialog'
 import { AIAccountDialog } from '../../features/assistant/AIAccountDialog'
 import { AssistantPanel } from '../../features/assistant/AssistantPanel'
+import { Tour } from '../../features/help/Tour'
+import { AGENT } from '../../lib/agent'
 const navigation: { to: string; label: string; icon: IconName }[] = [
   { to: '/app', label: 'Mi campo', icon: 'home' },
   { to: '/app/historial', label: 'Historial', icon: 'history' },
-  { to: '/app/opciones', label: 'Recomendaciones', icon: 'sprout' },
+  { to: '/app/rotacion', label: 'Rotación de cultivos', icon: 'sprout' },
   { to: '/app/informes', label: 'Mis informes', icon: 'report' },
 ]
 export function WorkspaceLayout() {
-  const { parcel, parcels, selectParcel, theme, setTheme, assistantOpen, setAssistantOpen } =
-    useWorkspace()
+  const {
+    parcel,
+    parcels,
+    selectParcel,
+    theme,
+    setTheme,
+    assistantOpen,
+    setAssistantOpen,
+    startTour,
+  } = useWorkspace()
   const [account, setAccount] = useState(false)
-  const [help, setHelp] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
   const name = sessionStorage.getItem('tarpu.prototype.session')
+  // La primera vez que se entra a «Mi campo» se abre el recorrido guiado.
+  useEffect(() => {
+    if (!name || location.pathname !== '/app') return
+    try {
+      if (localStorage.getItem('tarpu.tour.visto')) return
+    } catch {
+      return
+    }
+    const timer = setTimeout(startTour, 900)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   if (!name) return <Navigate to="/acceso" replace />
   const current = location.pathname.includes('nueva')
     ? 'Delimitar parcela'
     : location.pathname.includes('datos') || location.pathname.includes('estudio-tecnico')
       ? 'Estudio técnico'
-      : (navigation.find((item) => item.to === location.pathname)?.label ?? 'Mi campo')
+      : location.pathname.includes('ayuda')
+        ? 'Ayuda y fuentes'
+        : (navigation.find((item) => item.to === location.pathname)?.label ?? 'Mi campo')
   return (
     <div className="workspace-shell">
       <a
@@ -71,7 +93,7 @@ export function WorkspaceLayout() {
           </div>
           <strong>¿Tienes una pregunta sobre tus datos?</strong>
           <button onClick={() => setAssistantOpen(true)}>
-            Pregunta a Tarpu <Icon name="upRight" size={16} />
+            Pregunta a {AGENT} <Icon name="upRight" size={16} />
           </button>
         </div>
         <div className="sidebar-bottom">
@@ -85,10 +107,10 @@ export function WorkspaceLayout() {
             <Icon name="settings" />
             <span>Mi proveedor de IA</span>
           </button>
-          <button className="nav-item" onClick={() => setHelp(true)}>
+          <NavLink className="nav-item" to="/app/ayuda">
             <Icon name="help" />
             <span>Ayuda y fuentes</span>
-          </button>
+          </NavLink>
           <div className="sidebar-profile">
             <span className="profile-avatar">{name[0].toUpperCase()}</span>
             <div>
@@ -171,31 +193,7 @@ export function WorkspaceLayout() {
       </div>
       {assistantOpen && <AssistantPanel key={parcel.id} />}
       {account && <AIAccountDialog onClose={() => setAccount(false)} />}{' '}
-      {help && (
-        <Dialog title="Una demostración con límites claros" onClose={() => setHelp(false)}>
-          <p>
-            Los datos llegan del servidor de TARPU: clima diario de NASA POWER (celda regional),
-            relieve de NASADEM, suelo estimado de SoilGrids, cultivos del censo 2012 y, al pedirlos,
-            datos satelitales de MODIS. El mapa base utiliza Esri u OpenStreetMap.
-          </p>
-          <p>
-            Majes, Cabanaconde y Chivay son puntos de consulta, no límites de parcelas. Las parcelas
-            que dibujas se guardan en este navegador. El asistente usa respuestas guiadas; todavía no
-            hay un modelo de IA conectado.
-          </p>
-          <a
-            href="https://power.larc.nasa.gov/docs/services/api/temporal/daily/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-link"
-          >
-            Documentación de NASA POWER <Icon name="external" size={16} />
-          </a>
-          <button className="button button-green" onClick={() => setHelp(false)}>
-            Entendido <Icon name="check" size={17} />
-          </button>
-        </Dialog>
-      )}
+      <Tour />
     </div>
   )
 }

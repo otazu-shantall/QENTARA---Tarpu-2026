@@ -51,7 +51,7 @@ export function FieldMap({
     const instance = L.map(container.current, {
       // Sin contorno ni punto, se abre sobre toda Arequipa para ubicar el terreno.
       center: center ? [center.lat, center.lon] : AREQUIPA,
-      zoom: center ? 14 : drawing ? 8 : 14,
+      zoom: center ? 16 : drawing ? 8 : 14,
       zoomControl: false,
       zoomAnimation: false,
       fadeAnimation: false,
@@ -209,7 +209,7 @@ export function FieldMap({
   useEffect(() => {
     const instance = map.current
     if (!instance || !center || points.length) return
-    instance.setView([center.lat, center.lon], 14, { animate: false })
+    instance.setView([center.lat, center.lon], 16, { animate: false })
     const marker = L.circleMarker([center.lat, center.lon], {
       radius: 9,
       color: '#ffffff',
@@ -243,6 +243,18 @@ export function FieldMap({
       if (instance.hasLayer(image)) image.remove()
     }
   }, [points, analysisLayer, illustrative, drawing, closed])
+  /** Acerca el mapa al campo (contorno) o al punto de consulta. */
+  function goToField() {
+    const instance = map.current
+    if (!instance) return
+    if (points.length > 1)
+      instance.fitBounds(
+        points.map(([lng, lat]) => [lat, lng] as L.LatLngTuple),
+        { padding: [60, 60], maxZoom: 18 },
+      )
+    else if (center) instance.setView([center.lat, center.lon], 16)
+    else instance.setView(AREQUIPA, 8)
+  }
   function locate() {
     if (!navigator.geolocation) {
       setLocationMessage('Ubicación no disponible. Puedes navegar por el mapa.')
@@ -318,6 +330,11 @@ export function FieldMap({
         >
           <Icon name="layers" />
         </button>
+        {(points.length > 1 || center) && (
+          <button title="Ir a mi campo" aria-label="Ir a mi campo" onClick={goToField}>
+            <Icon name="pin" />
+          </button>
+        )}
         <button
           title="Ver toda Arequipa"
           aria-label="Ver toda Arequipa"

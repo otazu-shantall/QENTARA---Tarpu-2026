@@ -11,8 +11,11 @@ import { OverviewPage } from '../features/dashboard/OverviewPage'
 const HistoryPage = lazy(() =>
   import('../features/climate/HistoryPage').then((m) => ({ default: m.HistoryPage })),
 )
-const OptionsPage = lazy(() =>
-  import('../features/rotations/OptionsPage').then((m) => ({ default: m.OptionsPage })),
+const RotationPage = lazy(() =>
+  import('../features/rotations/RotationPage').then((m) => ({ default: m.RotationPage })),
+)
+const HelpPage = lazy(() =>
+  import('../features/help/HelpPage').then((m) => ({ default: m.HelpPage })),
 )
 const StudyPage = lazy(() =>
   import('../features/data/StudyPage').then((m) => ({ default: m.StudyPage })),
@@ -53,7 +56,9 @@ export function App() {
               <Route path="/app" element={<WorkspaceLayout />}>
                 <Route index element={<OverviewPage />} />
                 <Route path="historial" element={<HistoryPage />} />
-                <Route path="opciones" element={<OptionsPage />} />
+                <Route path="rotacion" element={<RotationPage />} />
+                <Route path="opciones" element={<Navigate to="/app/rotacion" replace />} />
+                <Route path="ayuda" element={<HelpPage />} />
                 <Route path="datos" element={<Navigate to="/app/estudio-tecnico" replace />} />
                 <Route path="estudio-tecnico" element={<StudyPage />} />
                 <Route path="informes" element={<ReportsPage />} />

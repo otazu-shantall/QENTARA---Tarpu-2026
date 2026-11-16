@@ -59,6 +59,15 @@ class ContextoEntrada(_Estricto):
     prioridades: list[Criterio] = Field(default_factory=list, description="Orden en que el usuario quiere ver los criterios. No son pesos.")
 
 
+class RotacionEntrada(_Estricto):
+    """Comparación de rotaciones en una sola llamada: el lugar (contorno o punto) y lo que declara el usuario."""
+    nombre: Annotated[str, Field(min_length=1, max_length=80)] = "mi campo"
+    contorno: dict[str, Any] | None = Field(None, description="GeoJSON Polygon [lon, lat]; si falta, se usa el punto")
+    lat: Annotated[float | None, Field(ge=-90, le=90)] = None
+    lon: Annotated[float | None, Field(ge=-180, le=180)] = None
+    contexto: ContextoEntrada = Field(default_factory=ContextoEntrada)
+
+
 class PreguntaEntrada(_Estricto):
     parcela_id: str
     pregunta: Annotated[str, Field(min_length=1, max_length=300)]

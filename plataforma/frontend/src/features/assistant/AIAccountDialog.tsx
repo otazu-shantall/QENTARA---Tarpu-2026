@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Dialog } from '../../components/ui/Dialog'
 import { Icon } from '../../components/ui/Icon'
+import { AGENT } from '../../lib/agent'
 export const providers = [
   {
     id: 'openai',
@@ -33,10 +34,23 @@ export function AIAccountDialog({ onClose }: { onClose: () => void }) {
     ),
     [saved, setSaved] = useState(false)
   return (
-    <Dialog title="Mi proveedor de IA" onClose={onClose}>
+    <Dialog title="Mi proveedor de IA" onClose={onClose} className="ai-dialog">
+      <div className="ai-now">
+        <span className="how-icon">
+          <Icon name="send" size={22} />
+        </span>
+        <div>
+          <strong>Hoy, {AGENT} funciona sin proveedor</strong>
+          <p>
+            Responde con explicaciones preparadas a partir de tus datos y sus fuentes. No usa un
+            modelo de IA ni consume ninguna cuenta.
+          </p>
+        </div>
+      </div>
+      <h3>Más adelante: conecta el modelo que prefieras</h3>
       <p>
-        Elige qué proveedor te gustaría utilizar con Tarpu. Tu cuenta de TARPU y la cuenta del
-        proveedor son independientes.
+        Cuando TARPU conecte un modelo de IA, podrás elegir con cuál conversar. Deja aquí tu
+        preferencia; tu cuenta de TARPU y la del proveedor son independientes.
       </p>
       <div className="provider-options" role="group" aria-label="Proveedor de IA">
         {providers.map((p) => (
@@ -59,15 +73,11 @@ export function AIAccountDialog({ onClose }: { onClose: () => void }) {
       </div>
       <div className="account-state">
         <span className="status-pill neutral">Cuenta sin vincular</span>
-        <p>
-          Esta versión permite explorar el diseño. La vinculación, la autorización de consumo y el
-          saldo aún no están disponibles.
-        </p>
-        <p>
-          Una suscripción al chat no se convierte automáticamente en tokens para TARPU. La API tiene
-          condiciones propias; algunos planes pueden ofrecer créditos vinculables. No hay un plan ni
-          un precio contratado aquí.
-        </p>
+        <ul>
+          <li>Todavía no se vincula ninguna cuenta ni se cobra nada.</li>
+          <li>Aquí no se guardan claves ni contraseñas, solo tu preferencia.</li>
+          <li>Una suscripción al chat de un proveedor no equivale a su API: tienen condiciones propias.</li>
+        </ul>
       </div>
       <a
         className="text-link"

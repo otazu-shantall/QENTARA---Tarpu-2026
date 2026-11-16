@@ -10,6 +10,7 @@ import './styles/expansion.css'
 import './styles/polish.css'
 import './styles/landing-codex.css'
 import './styles/glass.css'
+import './styles/extras.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useWorkspace } from '../../app/WorkspaceContext'
 import { Dialog } from '../../components/ui/Dialog'
 import { Icon } from '../../components/ui/Icon'
+import { AGENT } from '../../lib/agent'
 import { useVoiceConversation } from './useVoiceConversation'
 import { AIAccountDialog } from './AIAccountDialog'
 export function VoiceRoom({ onClose }: { onClose: () => void }) {
@@ -15,7 +16,7 @@ export function VoiceRoom({ onClose }: { onClose: () => void }) {
     connecting: 'Preparando el audio…',
     listening: 'Te escucho.',
     thinking: 'Un momento, estoy revisando.',
-    speaking: 'Tarpu está hablando.',
+    speaking: `${AGENT} está hablando.`,
     paused: 'Tomamos una pausa.',
     error: 'Podemos volver a intentarlo.',
   }
@@ -23,7 +24,7 @@ export function VoiceRoom({ onClose }: { onClose: () => void }) {
   return (
     <>
       <Dialog
-        title="Conversación con Tarpu"
+        title={`Conversación con ${AGENT}`}
         className="voice-dialog"
         onClose={() => {
           voice.end()
@@ -61,7 +62,7 @@ export function VoiceRoom({ onClose }: { onClose: () => void }) {
           <span className="eyebrow">CONVERSA, PREGUNTA, EXPLORA</span>
           <h2 role="status">{labels[voice.state]}</h2>
           <p className="voice-room-copy">
-            Habla con naturalidad. En la prueba, Tarpu responde y vuelve a escucharte sin pulsar un
+            Habla con naturalidad. En la prueba, {AGENT} responde y vuelve a escucharte sin pulsar un
             botón en cada turno.
           </p>
           {voice.error && (
@@ -105,7 +106,7 @@ export function VoiceRoom({ onClose }: { onClose: () => void }) {
           </button>
           {captions && (
             <p className="voice-caption">
-              {voice.caption || 'La respuesta aparecerá aquí cuando Tarpu hable.'}
+              {voice.caption || `La respuesta aparecerá aquí cuando ${AGENT} hable.`}
             </p>
           )}
           <div className="voice-demo-note">

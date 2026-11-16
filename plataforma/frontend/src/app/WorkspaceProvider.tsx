@@ -75,6 +75,10 @@ function useWorkspaceState() {
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
   const [assistantOpen, setAssistantOpen] = useState(false)
+  // Pregunta con la que se abre el asistente (desde «Explorar con Yachaq» de una tarjeta).
+  const [assistantQuestion, setAssistantQuestion] = useState('')
+  // Recorrido guiado: se abre solo la primera vez (se recuerda en este navegador).
+  const [tourOpen, setTourOpen] = useState(false)
   const [theme, setTheme] = useState<'light' | 'dark'>(() =>
     localStorage.getItem('tarpu.prototype.theme') === 'dark' ? 'dark' : 'light',
   )
@@ -131,6 +135,20 @@ function useWorkspaceState() {
     setTheme,
     assistantOpen,
     setAssistantOpen,
+    assistantQuestion,
+    askAssistant: (question: string) => {
+      setAssistantQuestion(question)
+      setAssistantOpen(true)
+    },
+    clearAssistantQuestion: () => setAssistantQuestion(''),
+    tourOpen,
+    startTour: () => setTourOpen(true),
+    closeTour: () => {
+      setTourOpen(false)
+      try {
+        localStorage.setItem('tarpu.tour.visto', '1')
+      } catch {}
+    },
   }
 }
 export type Workspace = ReturnType<typeof useWorkspaceState>

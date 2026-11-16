@@ -284,3 +284,65 @@ export function jobName(name: string) {
       .slice(0, 40) || undefined
   )
 }
+
+// ------------------------------------------------------------------ rotación de cultivos (motor sin puntaje)
+export type CriterionState =
+  | 'dentro_optimo'
+  | 'dentro_absoluto'
+  | 'fuera_absoluto'
+  | 'medido'
+  | 'informativo'
+  | 'conflicto_entre_fuentes'
+  | 'sin_dato'
+  | 'sin_regla'
+export interface Criterion {
+  criterio: string
+  titulo: string
+  estado: CriterionState
+  dato: Record<string, unknown> | null
+  regla: { optimo?: [number, number]; absoluto?: [number, number]; unidad?: string; cita?: { fuente: string; url: string } } | null
+  nota: string | null
+}
+export interface Strategy {
+  id: string
+  cultivo: string
+  tipo: 'repetir_actual' | 'cambiar_de_familia' | 'cultivo_del_catalogo'
+  por_que_aparece: string
+  nombre_cientifico: string
+  familia: string
+  ciclo_dias: [number, number] | null
+  criterios: Criterion[]
+  frases: string[]
+  vacios: string[]
+  conflictos: string[]
+  beneficios: { estado: string; nota?: string }
+  cita: { fuente: string; url: string; consultado: string; nivel?: string }
+}
+export interface Rotations {
+  cultivo_actual: string | null
+  estrategias: Strategy[]
+  no_incluidos: { cultivo: string; motivo: string }[]
+  vacios_generales: string[]
+  advertencias_catalogo: string[]
+  nota: string
+}
+export interface RotationContext {
+  cultivo_actual: string | null
+  agua: 'riego' | 'secano' | null
+  meses_campana: number[] | null
+}
+export const rotations = (
+  place: { name: string; boundary: Coordinate[]; point?: { lat: number; lon: number } },
+  contexto: RotationContext,
+) =>
+  request<Rotations>('/api/rotaciones', {
+    method: 'POST',
+    body: JSON.stringify({
+      nombre: place.name.slice(0, 80),
+      ...(place.boundary.length > 2
+        ? { contorno: polygon(place.boundary) }
+        : { lat: place.point?.lat, lon: place.point?.lon }),
+      contexto,
+    }),
+  })
+export const catalog = () => request<{ cultivo: string; nombre_cientifico: string; familia: string }[]>('/api/catalogo')

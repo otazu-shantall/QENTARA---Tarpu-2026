@@ -41,7 +41,15 @@ def _clave_punto(lat: float, lon: float, inicio: str, fin: str) -> str:
 
 
 def _power(*, lat: float, lon: float, inicio: str, fin: str, **_: object) -> dict:
-    """Invoca datos/power/consulta_power.py. Reutiliza la caché si ya están los tres archivos."""
+    """POWER de la base de Arequipa (DT-22): la celda que contiene el punto, sin descargar nada.
+    Si la base no tiene la celda, invoca datos/power/consulta_power.py (reutiliza su caché)."""
+    from tarpu_datos.base import leer as _base
+    celda = _base.power_celda(lat, lon)
+    raiz = config.obtener().almacen_dir.resolve()  # solo si la base está dentro del almacén configurado
+    if celda.get("estado") == "listo" and all(
+            Path(r).exists() and raiz in Path(r).resolve().parents for r in celda["archivos"].values()):
+        return {"estado": "listo", "archivos": celda["archivos"], "cache": True, "motivo": None,
+                "celda": celda["celda"]}
     clave = _clave_punto(lat, lon, inicio, fin)
     carpeta = almacen.carpeta_cache("power", clave)
     ini, fi = inicio.replace("-", ""), fin.replace("-", "")

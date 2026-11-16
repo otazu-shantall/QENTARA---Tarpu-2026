@@ -12,6 +12,9 @@ import type { BaseParcel, CropPh, SectorMap, SourceResult } from '../../services
 import { number } from '../../lib/evidence'
 import { Icon } from '../../components/ui/Icon'
 import type { IconName } from '../../components/ui/Icon'
+import { Dialog } from '../../components/ui/Dialog'
+import { AGENT } from '../../lib/agent'
+import { ABOUT } from './about'
 
 // Clases IGBP de MCD12Q1 LC_Type1 (MODIS Land Cover Type User Guide, C6.1, cuadro 3).
 const IGBP: Record<number, string> = {
@@ -153,6 +156,7 @@ function Finding({
   unit,
   children,
   source,
+  about,
 }: {
   icon: IconName
   title: string
@@ -160,19 +164,55 @@ function Finding({
   unit?: string
   children: React.ReactNode
   source: string
+  about: keyof typeof ABOUT
 }) {
+  const [open, setOpen] = useState(false)
+  const { askAssistant } = useWorkspace()
+  const info = ABOUT[about]
   return (
-    <article className="card finding">
-      <span className="finding-title">
-        <Icon name={icon} size={18} /> {title}
-      </span>
-      <strong className="finding-value">
-        {value}
-        {unit && <small>{unit}</small>}
-      </strong>
-      <div className="finding-text">{children}</div>
-      <span className="finding-source">{source}</span>
-    </article>
+    <>
+      <article className="card finding">
+        <span className="finding-title">
+          <Icon name={icon} size={18} /> {title}
+        </span>
+        <strong className="finding-value">
+          {value}
+          {unit && <small>{unit}</small>}
+        </strong>
+        <div className="finding-text">{children}</div>
+        <span className="finding-source">{source}</span>
+        <button className="finding-open" onClick={() => setOpen(true)}>
+          <Icon name="help" size={16} /> ¿Qué es este dato?
+        </button>
+      </article>
+      {open && (
+        <Dialog title={title} onClose={() => setOpen(false)} className="about-dialog">
+          {info.what.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <p className="about-source">
+            <Icon name="shield" size={16} /> Fuente: {info.source}.{' '}
+            <Link to={`/app/ayuda?tab=fuentes#${info.anchor}`} onClick={() => setOpen(false)}>
+              Ver en Ayuda y fuentes
+            </Link>
+          </p>
+          <div className="about-actions">
+            <button
+              className="button button-green"
+              onClick={() => {
+                setOpen(false)
+                askAssistant(info.ask)
+              }}
+            >
+              <Icon name="send" size={17} /> Explorar más con {AGENT}
+            </button>
+            <button className="button button-outline" onClick={() => setOpen(false)}>
+              Cerrar
+            </button>
+          </div>
+        </Dialog>
+      )}
+    </>
   )
 }
 
@@ -249,6 +289,9 @@ function Findings({ base, data }: { base: BaseParcel; data: ParcelData }) {
   const minima = year.map((p) => p.minimum).filter((v): v is number => v !== null)
   const frost = minima.filter((v) => v < 0).length
   const ndvi = [...(evidence?.points ?? [])].reverse().find((p) => p.vegetation != null)
+  const humid = year.map((p) => p.humidity).filter((v): v is number => v !== null)
+  const sun = year.map((p) => p.solarRadiation).filter((v): v is number => v != null)
+  const lst = [...(evidence?.points ?? [])].reverse().find((p) => p.surfaceTemperature != null)
   const ph = reading?.ph.valor ?? null
   const texture = reading?.textura
 
@@ -258,6 +301,7 @@ function Findings({ base, data }: { base: BaseParcel; data: ParcelData }) {
       <div className="findings-grid">
         <Finding
           icon="compass"
+          about="altitud"
           title="Altitud y zona"
           value={number(altitude, 0)}
           unit={altitude !== null ? 'm' : undefined}
@@ -275,6 +319,7 @@ function Findings({ base, data }: { base: BaseParcel; data: ParcelData }) {
 
         <Finding
           icon="layers"
+          about="pendiente"
           title="Inclinación del terreno"
           value={number(reading?.pendiente.valor_pct ?? null)}
           unit={reading?.pendiente.valor_pct != null ? '%' : undefined}
@@ -291,6 +336,7 @@ function Findings({ base, data }: { base: BaseParcel; data: ParcelData }) {
 
         <Finding
           icon="sprout"
+          about="ph"
           title="Acidez del suelo (pH)"
           value={number(ph)}
           source="SoilGrids (estimado, 0–5 cm) · rangos de FAO EcoCrop"
@@ -305,6 +351,7 @@ function Findings({ base, data }: { base: BaseParcel; data: ParcelData }) {
 
         <Finding
           icon="leaf"
+          about="textura"
           title="De qué está hecho el suelo"
           value={texture?.predomina ? `Más ${texture.predomina}` : 'Sin dato'}
           source="SoilGrids · estimación, no análisis de laboratorio"
@@ -325,6 +372,7 @@ function Findings({ base, data }: { base: BaseParcel; data: ParcelData }) {
 
         <Finding
           icon="temperature"
+          about="clima"
           title="El clima del último año"
           value={number(temps.length ? temps.reduce((a, b) => a + b, 0) / temps.length : null)}
           unit={temps.length ? '°C' : undefined}
@@ -350,7 +398,7 @@ function Findings({ base, data }: { base: BaseParcel; data: ParcelData }) {
         {ndvi ? (
           <Finding
             icon="leaf"
-            title="Verdor de la vegetación"
+            about="verdor" title="Verdor de la vegetación"
             value={number(ndvi.vegetation ?? null, 2)}
             source={`MODIS · píxel de 250 m · ${ndvi.date}`}
           >
@@ -360,15 +408,68 @@ function Findings({ base, data }: { base: BaseParcel; data: ParcelData }) {
             </p>
           </Finding>
         ) : data.extracted ? (
-          <Finding icon="leaf" title="Verdor de la vegetación" value="…" source="MODIS">
+          <Finding icon="leaf" about="verdor" title="Verdor de la vegetación" value="…" source="MODIS">
             <p>Aparece cuando termine la extracción del satélite.</p>
           </Finding>
         ) : null}
 
+        {lst && (
+          <Finding
+            icon="sun"
+            about="superficie"
+            title="Temperatura de la superficie"
+            value={number(lst.surfaceTemperature ?? null)}
+            unit="°C"
+            source={`MODIS · píxel de 1 km · de día · ${lst.date}`}
+          >
+            <p>La del suelo y las plantas vista por el satélite. No es la del aire.</p>
+          </Finding>
+        )}
+
+        {humid.length > 0 && (
+          <Finding
+            icon="humidity"
+            about="humedad"
+            title="Humedad del aire"
+            value={number(humid.reduce((a, b) => a + b, 0) / humid.length, 0)}
+            unit="%"
+            source="NASA POWER · promedio del último año"
+          >
+            <p>Cuánto vapor de agua tiene el aire. No es la humedad del suelo.</p>
+          </Finding>
+        )}
+
+        {sun.length > 0 && (
+          <Finding
+            icon="sun"
+            about="radiacion"
+            title="Energía del sol"
+            value={number(sun.reduce((a, b) => a + b, 0) / sun.length)}
+            unit="MJ/m² por día"
+            source="NASA POWER · promedio del último año"
+          >
+            <p>La energía solar que llega al suelo cada día, en promedio.</p>
+          </Finding>
+        )}
+
+        {base.geometria && (
+          <Finding
+            icon="scan"
+            about="area"
+            title="Tamaño de tu parcela"
+            value={number(base.geometria.area_ha, 2)}
+            unit="ha"
+            source="Medido sobre tu dibujo"
+          >
+            <p>Perímetro: {number(base.geometria.perimetro_m, 0)} m. Una hectárea son 10 000 m².</p>
+          </Finding>
+        )}
+
         {data.landCover && (
           <Finding
             icon="map"
-            title="Qué cubre el terreno"
+            about="cobertura"
+          title="Qué cubre el terreno"
             value={IGBP[data.landCover.code] ?? `Clase ${data.landCover.code}`}
             source={`MODIS MCD12Q1 · píxel de 500 m · ${data.landCover.date.slice(0, 4)}`}
           >

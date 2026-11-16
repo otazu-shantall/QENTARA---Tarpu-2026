@@ -16,8 +16,8 @@ from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
-from . import __version__, agente, almacen, base, coordenada, catalogo, config, datos_detallados, errores, indicadores, meta, motor, parcelas, procesamiento
-from .esquemas import CancelarEntrada, ContornoEntrada, TrabajoEntrada, ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, Sobre, sobre
+from . import __version__, agente, almacen, base, coordenada, catalogo, config, datos_detallados, errores, geometria, indicadores, meta, motor, parcelas, procesamiento
+from .esquemas import CancelarEntrada, ContornoEntrada, TrabajoEntrada, ContextoEntrada, ContornoNuevo, ParcelaNueva, PreguntaEntrada, RotacionEntrada, Sobre, sobre
 
 @asynccontextmanager
 async def _ciclo(_: FastAPI):
@@ -199,6 +199,39 @@ def get_rotaciones(parcela_id: str):
     resultado = motor.comparar(p, parcelas.leer_contexto(parcela_id), ind)
     almacen.guardar(parcela_id, "rotaciones", resultado)
     return sobre(resultado, ind["procedencia"], ind["avisos"] + ["Sin puntaje: compara cada criterio con su rango citado de FAO EcoCrop."])
+
+
+@app.post("/api/rotaciones", response_model=Sobre, tags=["resultados"])
+def post_rotaciones(entrada: RotacionEntrada):
+    """Rotaciones en una llamada (pantalla «Rotación de cultivos»): prepara el lugar con la base de Arequipa
+    (POWER de la celda y pH de SoilGrids) y devuelve la comparación del motor, sin puntaje."""
+    _solo_en_vivo()
+    contorno = entrada.contorno
+    if contorno is None:
+        if entrada.lat is None or entrada.lon is None:
+            raise errores.datos_invalidos([{"campo": "contorno", "mensaje": "falta el contorno o el punto"}])
+        # Punto de consulta: el motor trabaja con el centroide; este cuadrado mínimo solo lo transporta.
+        d, x, y = 0.00015, entrada.lon, entrada.lat
+        contorno = {"type": "Polygon", "coordinates": [[[x - d, y - d], [x + d, y - d], [x + d, y + d], [x - d, y + d], [x - d, y - d]]]}
+        lugar = base.en_punto(y, x)
+    else:
+        lugar = base.en_parcela(contorno)
+    medidas = geometria.medir(contorno)
+    centro = medidas["centroide"]
+    existente = next((p for p in parcelas.listar() if p["nombre"] == entrada.nombre
+                      and abs(p["centroide"]["lat"] - centro["lat"]) < 1e-6 and abs(p["centroide"]["lon"] - centro["lon"]) < 1e-6), None)
+    p = parcelas.obtener(existente["id"]) if existente else parcelas.crear(entrada.nombre, contorno)
+    parcelas.guardar_contexto(p["id"], entrada.contexto.model_dump())
+    procesamiento.iniciar(p["id"])
+    procesamiento.procesar(p["id"])
+    ind = indicadores.leer(p["id"], p["version"])
+    capa = ((lugar.get("suelo") or {}).get("capas") or {}).get("phh2o_0-5cm_mean") or {}
+    ph = capa.get("media", capa.get("valor"))
+    if ph is not None:  # pH de SoilGrids leído de la base de Arequipa (0–5 cm)
+        ind = {**ind, "data": {**ind["data"], "suelo": {"ph": ph}}}
+    resultado = motor.comparar(p, parcelas.leer_contexto(p["id"]), ind)
+    return sobre({**resultado, "parcela_id": p["id"], "sector": lugar.get("sector")}, ind["procedencia"],
+                 ind["avisos"] + ["Sin puntaje: compara cada criterio con su rango citado de FAO EcoCrop."])
 
 
 @app.get("/api/parcelas/{parcela_id}/agente", response_model=Sobre, tags=["agente"])
